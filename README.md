@@ -1,8 +1,8 @@
 #  Laboratorio de Programación Avanzada 2025 ⌨️
 
 ### ⬇️  Para contribuir al código:
-1. Crear una nueva branch
-2. (En caso de ya tener una branch) hacer un git pull para obtener el código más reciente.
+1. Crear una nueva branch para cada funcionalidad
+2. Hacer un git pull para obtener el código más reciente.
 3. Codear lo que quieras, centrarse en agregar una funcionalidad X, separar bien los commits.
 4. Agregar los testeos de la funcionalidad en test.cpp
 5. Actualizar el makefile en caso de agregar nuevos archivos que deben ser compilados.
