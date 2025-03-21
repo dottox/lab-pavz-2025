@@ -36,4 +36,5 @@ jobs:
       
     - name: Test make
       run: |
+        pwd
         make run
