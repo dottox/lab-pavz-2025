@@ -9,22 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  checking:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Check testing file
-      run: |
-        if [ ! -f "${{ env.lab }}/testing/makefile" ]; then
-          echo "Testing file not found"
-          exit 1
-        fi
 
   testing:
-    needs: checking
     runs-on: ubuntu-latest
 
     steps:
