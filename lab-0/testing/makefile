@@ -1,11 +1,11 @@
-all: main.o
-	g++ main.o -o programa
+all: test.o
+	g++ test.o -o programa
 
-main.o:
-	g++ -c "../main.cpp"
+test.o:
+	g++ -c "../test.cpp"
 
 clean:
-	rm -f "main.o" "programa"
+	rm -f "test.o" "programa"
 
 run:
 	make clean
