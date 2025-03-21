@@ -17,10 +17,11 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Check testing file
-      if: ${{ hashFiles('${{ env.lab }}/testing/makefile') == '' }}
       run: |
-        echo "Testing file not finded"
-        exit 1
+        if [ ! -f "${{ env.lab }}/testing/makefile" ]; then
+          echo "Testing file not found"
+          exit 1
+        fi
 
   testing:
     needs: checking
