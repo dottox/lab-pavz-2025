@@ -27,10 +27,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        path: 'lab-0/testing'
+        path: 'lab-0/testing/'
     
     - name: Setup Cpp
       uses: aminya/setup-cpp@v0.37.0
+      with:
+        compiler: gcc
       
     - name: Test make
       run: |
