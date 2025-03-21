@@ -1,0 +1,36 @@
+name: C/C++ CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  checking:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Check testing file
+      if: ${{ hashFiles('lab-0/testing/makefile') == '' }}
+      run: |
+        echo "Testing file not finded"
+        exit 1
+
+  testing:
+    needs: checking
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        path: 'lab-0/testing'
+    
+    - name: Setup Cpp
+      uses: aminya/setup-cpp@v0.37.0
+      
+    - name: Test make
+      run: |
+        make run
