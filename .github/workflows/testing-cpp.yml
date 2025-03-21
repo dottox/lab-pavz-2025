@@ -1,5 +1,8 @@
 name: C/C++ CI
 
+env:
+  lab: 'lab-0'
+
 on:
   pull_request:
     branches: [ "main" ]
@@ -14,10 +17,11 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Check testing file
-      if: ${{ hashFiles('lab-0/testing/makefile') == '' }}
       run: |
-        echo "Testing file not finded"
-        exit 1
+        if [ ! -f "${{ env.lab }}/testing/makefile" ]; then
+          echo "Testing file not found"
+          exit 1
+        fi
 
   testing:
     needs: checking
@@ -34,6 +38,6 @@ jobs:
       
     - name: Test make
       run: |
-        cd lab-0/testing
+        cd ${{ env.lab }}/testing
         pwd
         make run
