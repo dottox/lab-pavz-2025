@@ -14,9 +14,6 @@ using namespace std;
             dtSpinning(int cantBicicletas){
                 this->cantBicicletas = cantBicicletas;
             };
-            void setCantBicicletas(int cantBicicletas){
-                this->cantBicicletas = cantBicicletas;
-            };
             int getCantBicicletas(){
                 return this->cantBicicletas;
             };
