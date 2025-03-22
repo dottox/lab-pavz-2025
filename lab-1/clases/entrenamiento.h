@@ -5,6 +5,7 @@
 #include "clase.h"
 using namespace std;
 
+#include "../dataStructures/dtEntrenamiento.cpp"
 
 /**
  * @class Entrenamiento
@@ -17,7 +18,7 @@ class Entrenamiento : public Clase{
   private: 
     bool enRambla;
   public:
-    Entrenamiento(DtClase, bool);
+    Entrenamiento(DtEntrenamiento);
     int cupo();
     bool getRambla();
     ~Entrenamiento();

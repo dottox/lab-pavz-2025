@@ -11,11 +11,12 @@ class DtClase{
         Turno turno;
     public:
         DtClase(){
-            this->id = 0;
-            this->nombre = "";
-            this->turno = Manana;
-        };
-        DtClase(int, string, Turno){
+            throw invalid_argument("Constructor vacio no permitido\n");
+        }
+        DtClase(int id, string nombre, Turno turn){
+            if(turn < Manana || turn > Noche){
+                throw invalid_argument("Turno invalido\n");
+            }
             this->id = id;
             this->nombre = nombre;
             this->turno = turno;

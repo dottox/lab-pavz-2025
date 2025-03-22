@@ -11,9 +11,9 @@ class DtSpinning : public DtClase{
         int cantBicicletas;
     public:
         DtSpinning(){
-            this->cantBicicletas = 1;
+            throw invalid_argument("Constructor vacio no permitido\n");
         };
-        DtSpinning(int cantBicicletas){
+        DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtClase(id, nom, turn){
             if(cantBicicletas > 50 || cantBicicletas < 1){
                 throw invalid_argument("Cantidad de bicicletas invalida (1-50)\n");
             }

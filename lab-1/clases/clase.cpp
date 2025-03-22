@@ -1,9 +1,5 @@
 #include "clase.h"
 
-Clase::Clase(){
-    throw invalid_argument("No se puede crear una Clase sin datos");
-}
-
 Clase::Clase(DtClase claseData){
     this->id = claseData.getId();
     this->nombre = claseData.getNombre();
