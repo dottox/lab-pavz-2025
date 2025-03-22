@@ -7,8 +7,8 @@ using namespace std;
 
 #define MAX_SOCIOS 10
 
-void test_unit_socio() {
-    Socio** listaSocios = new Socio*[MAX_SOCIOS];
+int main() {
+  Socio** listaSocios = new Socio*[MAX_SOCIOS];
 
     // Test of constructor
     listaSocios[0] = new Socio("12345", "nombre1");
@@ -36,10 +36,6 @@ void test_unit_socio() {
     delete[] listaSocios;
 
     cout << "All tests passed" << endl;
-}
-
-int main() {
-  test_unit_socio();
 
   return 0;
 }
