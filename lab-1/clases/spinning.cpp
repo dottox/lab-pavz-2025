@@ -1,16 +1,21 @@
 #include "spinning.h"
 
-int Spinning::cupo(int cantBicicletas){
-    return cantBicicletas;
+Spinning::Spinning(int id, string nom, Turno t, int cantBici) : Clase(id, nom, t) {
+    this->cantBicicletas = cantBici;
 };
-int Spinning::cupo(){
+
+int Spinning::cupo() {
     return this->getCantBicicletas();
 };
 
-void Spinning::setCantBicicletas(int cantBicicletas){
-    this->cantBicicletas=cantBicicletas;
+void Spinning::setCantBicicletas(int cantBici) {
+    this->cantBicicletas = cantBici;
 };
 
-int Spinning::getCantBicicletas(){
+int Spinning::getCantBicicletas() {
     return this->cantBicicletas;
+};
+
+Spinning::~Spinning() {
+    cout << "Spinning destruído" << endl;
 };
