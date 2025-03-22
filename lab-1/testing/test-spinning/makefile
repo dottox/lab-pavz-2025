@@ -8,10 +8,10 @@ spinning.o:
 	g++ -c "../../clases/spinning.cpp"
 
 clase.o:
-	g++ -c ../../clases/clase.cpp
+	g++ -c "../../clases/clase.cpp"
 
 clean:
-	rm -f *.o "programa"
+	del test.o spinning.o programa
 
 run:
 	make clean
