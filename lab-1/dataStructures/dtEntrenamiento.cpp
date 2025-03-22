@@ -15,9 +15,6 @@ class DtEntrenamiento{
         DtEntrenamiento(bool b){
             this->enRambla = b;
         };
-        void setRambla(bool b){
-            this->enRambla = b;
-        };
         bool getRambla(){
             return this->enRambla;
         };
