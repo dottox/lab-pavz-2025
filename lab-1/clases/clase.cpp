@@ -1,9 +1,9 @@
 #include "clase.h"
 
-Clase::Clase(DtClase * claseData){
-    this->id = claseData->getId();
-    this->nombre = claseData->getNombre();
-    this->turno = claseData->getTurno();
+Clase::Clase(DtClase claseData){
+    this->id = claseData.getId();
+    this->nombre = claseData.getNombre();
+    this->turno = claseData.getTurno();
 };
 
 int Clase::getId(){

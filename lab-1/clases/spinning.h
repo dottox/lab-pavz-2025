@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "clase.h"
-#include "../dataStructures/turno.cpp"
 
 using namespace std;
 
@@ -16,12 +15,11 @@ using namespace std;
  * attributes and methods specific to spinning classes, such as the number
  * of bicycles available.
  */
-class Spinning : Clase {
+class Spinning : public Clase {
   private:
     int cantBicicletas;
-
   public:
-    Spinning(int, string, Turno, int);
+    Spinning(DtClase, int);
     int cupo();
     void setCantBicicletas(int);
     int getCantBicicletas();
