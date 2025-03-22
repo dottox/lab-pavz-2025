@@ -21,5 +21,6 @@ class Sistema {
 };
 
 int main() {
+  cout << "asd" << endl;
   return 0;
 }
