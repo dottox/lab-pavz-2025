@@ -1,3 +1,17 @@
+# Detect the operating system
+OS := $(shell uname -s)
+
+# Set the MAKE variable based on the OS
+ifeq ($(OS),Linux)
+    MAKE := make
+else ifeq ($(OS),Darwin)  # macOS is also Unix-based
+    MAKE := make
+else ifeq ($(findstring MSYS_NT,$(OS)),MSYS_NT)  # Windows with MSYS/MinGW
+    MAKE := mingw32-make
+else
+    $(error Unsupported OS: $(OS))
+endif
+
 all: test.o socio.o
 	g++ testSocio.o socio.o -o programa
 
@@ -11,7 +25,7 @@ clean:
 	rm -f *.o "programa"
 
 run:
-	make clean
-	make all
+	$(MAKE) clean
+	$(MAKE) all
 	./programa
-	make clean
+	$(MAKE) clean
