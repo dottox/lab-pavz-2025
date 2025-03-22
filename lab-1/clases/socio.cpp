@@ -10,9 +10,9 @@
  * @param ci The CI (identification number) of the socio.
  * @param nom The name of the socio.
  */
-Socio::Socio(string ci, string nom){
-    this->ci = ci;
-    this->nombre = nom;
+Socio::Socio(DtSocio * socioData){
+    this->ci = socioData->getCi();
+    this->nombre = socioData->getNombre();
 };
 
 
