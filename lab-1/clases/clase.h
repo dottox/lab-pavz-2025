@@ -7,15 +7,15 @@ using namespace std;
 #include "../dataStructures/turno.cpp"
 
 class Clase{
-    public:
+    private:
         int id;
         string nombre;
         Turno turno;
-    private:
+    public:
         Clase(int, string, Turno);
         int getId();
         virtual int cupo() = 0;
-        ~Clase();
+        virtual ~Clase();
 };
 
 #endif
