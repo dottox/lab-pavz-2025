@@ -1,6 +1,6 @@
 #include "spinning.h"
 
-Spinning::Spinning(int id, string nom, Turno t, int cantBici) : Clase::Clase(id, nom, t) {
+Spinning::Spinning(DtClase claseData, int cantBici) : Clase(claseData) {
     this->cantBicicletas = cantBici;
 };
 

@@ -13,7 +13,7 @@ class Clase{
         string nombre;
         Turno turno;
     public:
-        Clase(DtClase*);
+        Clase(DtClase);
         int getId();
         string getNombre();
         Turno getTurno();
