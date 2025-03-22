@@ -4,6 +4,7 @@
 #include <iostream>
 
 using namespace std;
+#include "../dataStructures/dtSocio.cpp"
 
 /**
  * @class Socio
@@ -18,7 +19,7 @@ class Socio {
         string ci;
         string nombre;
     public:
-        Socio(string, string);
+        Socio(DtSocio*);
         void setCI(string);
         void setNombre(string);
         string getCI();
