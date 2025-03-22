@@ -4,24 +4,26 @@
 #include <iostream>
 using namespace std;
 
-    class dtSpinning{
-        private:
-            int cantBicicletas;
-        public:
-            dtSpinning(){
-                this->cantBicicletas = 0;
-            };
-            dtSpinning(int cantBicicletas){
-                this->cantBicicletas = cantBicicletas;
-            };
-            void setCantBicicletas(int cantBicicletas){
-                this->cantBicicletas = cantBicicletas;
-            };
-            int getCantBicicletas(){
-                return this->cantBicicletas;
-            };
-            ~dtSpinning(){};
-    };
+#include "dtClase.cpp"
+
+class DtSpinning : public DtClase{
+    private:
+        int cantBicicletas;
+    public:
+        DtSpinning(){
+            this->cantBicicletas = 1;
+        };
+        DtSpinning(int cantBicicletas){
+            if(cantBicicletas > 50 || cantBicicletas < 1){
+                throw invalid_argument("Cantidad de bicicletas invalida (1-50)\n");
+            }
+            this->cantBicicletas = cantBicicletas;
+        };
+        int getCantBicicletas(){
+            return this->cantBicicletas;
+        };
+        ~DtSpinning(){};
+};
 
 
 #endif

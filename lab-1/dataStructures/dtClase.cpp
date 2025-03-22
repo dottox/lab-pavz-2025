@@ -1,5 +1,5 @@
-#ifndef DT_SOCIO
-#define DT_SOCIO
+#ifndef DT_CLASE
+#define DT_CLASE
 #include "turno.cpp"
 #include <iostream>
 using namespace std;
@@ -20,15 +20,6 @@ class DtClase{
             this->nombre = nombre;
             this->turno = turno;
         };
-        void setId(int){
-            this->id = id;
-        };
-        void setNombre(string){
-            this->nombre = nombre;
-        };
-        void setTurno(Turno){
-            this->turno = turno;
-        };
         int getId(){
             return this->id;
         };
@@ -39,7 +30,7 @@ class DtClase{
             return this->turno;
         };
 
-        ~DtClase(){};
+        virtual ~DtClase(){};
 };  
 
 

@@ -4,8 +4,9 @@
 #include <iostream>
 using namespace std;
 
+#include "dtClase.cpp"
 
-class DtEntrenamiento{
+class DtEntrenamiento : public DtClase{
     private:
         bool enRambla;
     public:
@@ -13,9 +14,6 @@ class DtEntrenamiento{
             this->enRambla = false;
         };
         DtEntrenamiento(bool b){
-            this->enRambla = b;
-        };
-        void setRambla(bool b){
             this->enRambla = b;
         };
         bool getRambla(){
