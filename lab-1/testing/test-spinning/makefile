@@ -3,15 +3,19 @@ OS := $(shell uname -s)
 
 # Set the MAKE and DELETE variable based on the OS
 ifeq ($(OS),Linux)
+		echo "Linux"
     MAKE := make
 		DELETE := rm -f
 else ifeq ($(OS),Darwin)  # macOS is also Unix-based
+		echo "Darwin"
     MAKE := make
 		DELETE := rm -f
 else ifeq ($(findstring MSYS_NT,$(OS)),MSYS_NT)  # Windows with MSYS/MinGW
+		echo "MSYS_NT"
     MAKE := mingw32-make
 		DELETE := rm -f
 else ifeq($(OS),"")
+		echo "Nothing"
 		MAKE := mingw32-make
 		DELETE := del
 else
