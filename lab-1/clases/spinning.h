@@ -1,7 +1,10 @@
 #ifndef SPINNING_H
 #define SPINNING_H
 #include <iostream>
+
 #include "clase.h"
+#include "../dataStructures/turno.cpp"
+
 using namespace std;
 
 class Spinning : Clase {
