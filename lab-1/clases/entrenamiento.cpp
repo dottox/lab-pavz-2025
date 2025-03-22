@@ -1,6 +1,18 @@
 
 #include "entrenamiento.h"
 
+/**
+ * @brief Constructor for the Entrenamiento class.
+ * 
+ * Initializes an Entrenamiento object with the specified data.
+ * 
+ * @param claseData The data for the training session, represented as a DtClase object.
+ * @param enRambla Indicates whether the training session is at the Rambla.
+ */
+Entrenamiento::Entrenamiento(DtClase claseData, bool enRambla) : Clase::Clase(claseData){
+    this->enRambla = enRambla;
+};
+
 
 /**
  * @brief Calculates the maximum capacity (cupo) for the training session.
@@ -28,3 +40,9 @@ int Entrenamiento::cupo(){
 bool Entrenamiento::getRambla(){
     return this->enRambla;
 };
+
+
+/**
+ * @brief Destructor for the Entrenamiento class.
+ */
+Entrenamiento::~Entrenamiento(){};
