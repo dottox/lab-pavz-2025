@@ -10,6 +10,7 @@ using namespace std;
 void test_unit_socio() {
     Socio** listaSocios = new Socio*[MAX_SOCIOS];
 
+    // Test of constructor
     listaSocios[0] = new Socio("12345", "nombre1");
     listaSocios[1] = new Socio("23456", "nombre2");
     listaSocios[2] = new Socio("34567", "nombre3");
@@ -30,10 +31,15 @@ void test_unit_socio() {
     // Test of setNombre
     listaSocios[1]->setNombre("nombre20");
     assert(listaSocios[1]->getNombre() == "nombre20");
+
+    // Clean up
+    delete[] listaSocios;
+
+    cout << "All tests passed" << endl;
 }
 
 int main() {
-  
+  test_unit_socio();
 
   return 0;
 }

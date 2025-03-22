@@ -1,4 +1,4 @@
-enum turno{
+enum Turno{
     Manana,
     Tarde,
     Noche
