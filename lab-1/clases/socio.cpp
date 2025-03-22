@@ -10,8 +10,8 @@ void Socio::setCI(string ci){
     this->ci = ci;
 };
 
-void Socio::setNombre(string ci){
-    this->nombre = nombre;
+void Socio::setNombre(string nom){
+    this->nombre = nom;
 };
 
 string Socio::getCI(){
