@@ -9,7 +9,7 @@
  * @param claseData The data for the training session, represented as a DtClase object.
  * @param enRambla Indicates whether the training session is at the Rambla.
  */
-Entrenamiento::Entrenamiento(DtClase claseData, bool enRambla) : Clase::Clase(claseData){
+Entrenamiento::Entrenamiento(DtEntrenamiento claseData) : Clase::Clase(claseData){
     this->enRambla = enRambla;
 };
 

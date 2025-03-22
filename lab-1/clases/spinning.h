@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "clase.h"
+#include "../dataStructures/dtSpinning.cpp"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Spinning : public Clase {
     int cantBicicletas;
   public:
     Spinning(); 
-    Spinning(DtClase, int);
+    Spinning(DtSpinning);
     int cupo();
     void setCantBicicletas(int);
     int getCantBicicletas();

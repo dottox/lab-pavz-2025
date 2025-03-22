@@ -10,10 +10,7 @@ class DtEntrenamiento : public DtClase{
     private:
         bool enRambla;
     public:
-        DtEntrenamiento(){
-            this->enRambla = false;
-        };
-        DtEntrenamiento(bool b){
+        DtEntrenamiento(int id, string nom, Turno turn, bool b) : DtClase(id, nom, turn){
             this->enRambla = b;
         };
         bool getRambla(){

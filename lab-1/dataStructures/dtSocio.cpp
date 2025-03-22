@@ -10,9 +10,8 @@ class DtSocio{
         string nombre;
     public:
         DtSocio(){
-            this->ci = 0;
-            this->nombre = "";
-        }
+            throw invalid_argument("Constructor vacio no permitido\n");
+        };
         DtSocio(int ci, string nombre){
             this->ci = ci;
             this->nombre = nombre;
