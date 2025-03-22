@@ -10,9 +10,9 @@ class Clase{
     public:
         int id;
         string nombre;
-        Turno turno;
+        turno turno;
     private:
-        Clase(int, string, Turno);
+        Clase(int, string, turno);
         virtual int cupo() = 0;
         ~Clase();
 };

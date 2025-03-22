@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Socio{
+class Socio {
     private:
         string ci;
         string nombre;
