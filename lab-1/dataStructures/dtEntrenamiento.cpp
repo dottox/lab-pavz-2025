@@ -4,8 +4,9 @@
 #include <iostream>
 using namespace std;
 
+#include "dtClase.cpp"
 
-class DtEntrenamiento{
+class DtEntrenamiento : public DtClase{
     private:
         bool enRambla;
     public:
