@@ -4,18 +4,18 @@
 #include <iostream>
 using namespace std;
 
-class DtSocio{
+class DtClase{
     private:
         int id;
         string nombre;
         Turno turno;
     public:
-        DtSocio(){
+        DtClase(){
             this->id = 0;
             this->nombre = "";
             this->turno = Manana;
         };
-        DtSocio(int, string, Turno){
+        DtClase(int, string, Turno){
             this->id = id;
             this->nombre = nombre;
             this->turno = turno;
@@ -26,7 +26,7 @@ class DtSocio{
         void setNombre(string){
             this->nombre = nombre;
         };
-        void  setTurno(Turno){
+        void setTurno(Turno){
             this->turno = turno;
         };
         int getId(){
@@ -39,7 +39,7 @@ class DtSocio{
             return this->turno;
         };
 
-        ~DtSocio(){};
+        ~DtClase(){};
 };  
 
 
