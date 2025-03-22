@@ -1,18 +1,11 @@
-#ifndef INSCRIPCION_H
-#define INSCRIPCION_H
+#include "Inscripcion.h"
 
-#include <iostream>
-using namespace std;
-
-#include "../dataStructures/DtFecha.cpp"
-
-class Inscripcion{
-    private:
-        DtFecha fecha;
-    public:
-        Inscripcion(DtFecha);
-        DtFecha getFecha();
-        ~Inscripcion();
+Inscripcion::Inscripcion(DtFecha date){
+    this->fecha = date;
 };
 
-#endif
+DtFecha Inscripcion::getFecha(){
+    return this->fecha;
+};
+
+Inscripcion::~Inscripcion(){};	
