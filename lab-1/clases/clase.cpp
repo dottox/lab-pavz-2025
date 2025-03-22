@@ -11,5 +11,5 @@ int Clase::getId(){
 };
 
 Clase::~Clase(){
-    cout << "Clase: " << this->getId() << "destruida" << endl;
+    cout << "Clase: destruida" << endl;
 };

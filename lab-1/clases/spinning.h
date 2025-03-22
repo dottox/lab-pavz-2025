@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Spinning : Clase {
+class Spinning : public Clase {
     private:
         int cantBicicletas;
     public:
