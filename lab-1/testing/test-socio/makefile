@@ -1,11 +1,11 @@
 all: test.o socio.o
-	g++ test.o socio.o -o programa
+	g++ testSocio.o socio.o -o programa
 
 test.o:
-	g++ -c "test.cpp"
+	g++ -c "testSocio.cpp"
 
 socio.o:
-	g++ -c "../clases/socio.cpp"
+	g++ -c "../../clases/socio.cpp"
 
 clean:
 	rm -f *.o "programa"
