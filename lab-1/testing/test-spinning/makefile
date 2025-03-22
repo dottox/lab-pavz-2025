@@ -1,5 +1,5 @@
-all: test.o spinning.o
-	g++ testSpinning.o spinning.o -o programa
+all: test.o spinning.o clase.o
+	g++ testSpinning.o spinning.o clase.o -o programa
 
 test.o:
 	g++ -c "testSpinning.cpp"
@@ -7,8 +7,11 @@ test.o:
 spinning.o:
 	g++ -c "../../clases/spinning.cpp"
 
+clase.o:
+	g++ -c "../../clases/clase.cpp"
+
 clean:
-	rm -f *.o "programa"
+	del test.o spinning.o programa
 
 run:
 	mingw32-make clean

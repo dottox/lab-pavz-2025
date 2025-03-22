@@ -22,24 +22,24 @@ int main()
     assert(TC005.getCantBicicletas() == 51);
     //-----------------------------------------------------
 
-    // // Float inválidos
-    // try{
-    //     Spinning TC000 = Spinning(0.1, "TC006", Manana, 30);
-    // }catch(...){
-    //     cout << "Error esperado" << endl;
-    // }
+    // Float inválidos
+    try{
+        Spinning TC000 = Spinning(0.1, "TC006", Manana, 30);
+    }catch(...){
+        cout << "Error esperado" << endl;
+    }
 
-    // try{
-    //     Spinning TC007 = Spinning(6, "TC006", Tarde, 0.5);
-    // }catch(...){
-    //     cout << "Resultado esperado" << endl;
-    // }
+    try{
+        Spinning TC007 = Spinning(6, "TC006", Tarde, 0.5);
+    }catch(...){
+        cout << "Resultado esperado" << endl;
+    }
     
-    // try{
-    //     Spinning TC008 = Spinning(7.5, "TC006", Noche, 5.1);
-    // }catch(...){
-    //     cout << "Resultado esperado" << endl;
-    // }
+    try{
+        Spinning TC008 = Spinning(7.5, "TC006", Noche, 5.1);
+    }catch(...){
+        cout << "Resultado esperado" << endl;
+    }
     //-----------------------------------------------------
     cout << "Todos los tests pasaron correctamente." << endl;
     return 0;
