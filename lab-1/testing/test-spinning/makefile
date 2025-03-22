@@ -11,7 +11,7 @@ clase.o:
 	g++ -c "../../clases/clase.cpp"
 
 clean:
-	del test.o spinning.o clase.o programa
+	del test.o spinning.o programa
 
 run:
 	mingw32-make clean
