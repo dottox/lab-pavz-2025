@@ -1,12 +1,12 @@
 #include <iostream>
 #include <cassert>
-#include "../clases/spinning.h"
+#include "../../clases/spinning.h"
 
 using namespace std;
 
 int main() {
     // Test constructor por defecto
-    Spinning s1;
+    Spinning s1 = Spinning();
     assert(s1.getCantBicicletas() == 0);
 
     // Test setter y getter
