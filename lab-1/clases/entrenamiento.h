@@ -1,7 +1,7 @@
 #ifndef ENTRENAMIENTO_H
 #define ENTRENAMIENTO_H
 #include <iostream>
-
+#include "clase.h"
 using namespace std;
 
 class Entrenamiento : Clase{

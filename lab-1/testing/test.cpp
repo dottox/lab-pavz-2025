@@ -29,7 +29,7 @@ void test_unit_socio() {
 
     // Test of setNombre
     listaSocios[1]->setNombre("nombre20");
-    assert(listaSocios[1]->getNombre == "nombre20");
+    assert(listaSocios[1]->getNombre() == "nombre20");
 }
 
 int main() {
