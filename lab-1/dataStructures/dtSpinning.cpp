@@ -9,9 +9,12 @@ using namespace std;
             int cantBicicletas;
         public:
             dtSpinning(){
-                this->cantBicicletas = 0;
+                this->cantBicicletas = 1;
             };
             dtSpinning(int cantBicicletas){
+                if(cantBicicletas > 50 || cantBicicletas < 1){
+                    throw invalid_argument("Cantidad de bicicletas invalida (1-50)\n");
+                }
                 this->cantBicicletas = cantBicicletas;
             };
             int getCantBicicletas(){
