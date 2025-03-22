@@ -1,6 +1,6 @@
 # Detect the operating system
 OS := $(shell uname -s)
-
+DELETE := del
 # Set the MAKE variable based on the OS
 ifeq ($(OS),Linux)
     MAKE := make
@@ -8,6 +8,7 @@ else ifeq ($(OS),Darwin)  # macOS is also Unix-based
     MAKE := make
 else ifeq ($(findstring MSYS_NT,$(OS)),MSYS_NT)  # Windows with MSYS/MinGW
     MAKE := mingw32-make
+	DELETE := rm -f
 else
     $(error Unsupported OS: $(OS))
 endif
@@ -25,7 +26,7 @@ clase.o:
 	g++ -c "../../clases/clase.cpp"
 
 clean:
-	del test.o spinning.o programa
+	$(DELETE) test.o spinning.o programa
 
 run:
 	$(MAKE) clean
