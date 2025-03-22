@@ -1,17 +1,23 @@
 # Detect the operating system
 OS := $(shell uname -s)
-DELETE := del
-# Set the MAKE variable based on the OS
+
+# Set the MAKE and DELETE variable based on the OS
 ifeq ($(OS),Linux)
     MAKE := make
+		DELETE := rm -f
 else ifeq ($(OS),Darwin)  # macOS is also Unix-based
     MAKE := make
+		DELETE := rm -f
 else ifeq ($(findstring MSYS_NT,$(OS)),MSYS_NT)  # Windows with MSYS/MinGW
     MAKE := mingw32-make
-	DELETE := rm -f
+		DELETE := rm -f
+else ifeq($(OS),"")
+		MAKE := mingw32-make
+		DELETE := del
 else
     $(error Unsupported OS: $(OS))
 endif
+
 
 all: test.o spinning.o clase.o
 	g++ testSpinning.o spinning.o clase.o -o programa
