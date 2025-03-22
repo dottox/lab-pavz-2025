@@ -30,7 +30,7 @@ class DtClase{
             return this->turno;
         };
 
-        ~DtClase(){};
+        virtual ~DtClase(){};
 };  
 
 
