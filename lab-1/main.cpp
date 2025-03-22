@@ -21,5 +21,6 @@ class Sistema {
 };
 
 int main() {
+  cout << "waza" << endl;
   return 0;
 }
