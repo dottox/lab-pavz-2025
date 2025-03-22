@@ -13,11 +13,13 @@ using namespace std;
  * This class extends the functionality of the Clase class by adding a specific
  * attribute to indicate whether the training session takes place at the Rambla.
  */
-class Entrenamiento : Clase{
-    private: 
-        bool enRambla;
-    public:
-        int cupo();
-        bool getRambla();
+class Entrenamiento : public Clase{
+  private: 
+    bool enRambla;
+  public:
+    Entrenamiento(DtClase, bool);
+    int cupo();
+    bool getRambla();
+    ~Entrenamiento();
 };
 #endif
