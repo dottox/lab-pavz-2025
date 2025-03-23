@@ -37,6 +37,9 @@ dtSpinning.o: dtClase.o
 dtEntrenamiento.o: dtClase.o
 	g++ -c "dataStructures/dtEntrenamiento.cpp"
 
+turno.o:
+	g++ -c "dataStructures/turno.cpp"
+
 ######################################################
 
 
