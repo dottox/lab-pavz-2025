@@ -1,5 +1,5 @@
 
-#include "Inscripcion.h"
+#include "inscripcion.h"
 
 /**
  * @brief Constructor for the Inscripcion class.
@@ -8,8 +8,9 @@
  * 
  * @param date The date of the inscription, represented as a DtFecha object.
  */
-Inscripcion::Inscripcion(DtFecha date){
+Inscripcion::Inscripcion(DtFecha date, Socio* socio){
     this->fecha = date;
+    this->socio = socio;
 };
 
 
@@ -20,6 +21,10 @@ Inscripcion::Inscripcion(DtFecha date){
  */
 DtFecha Inscripcion::getFecha(){
     return this->fecha;
+};
+
+Socio* Inscripcion::getSocio(){
+    return this->socio;
 };
 
 
