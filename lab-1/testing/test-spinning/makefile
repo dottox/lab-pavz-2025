@@ -18,10 +18,10 @@ endif
 
 
 all: test.o spinning.o clase.o
-	g++ testSpinning.o spinning.o clase.o -o programa
+	g++ test-spinning.o spinning.o clase.o -o programa
 
 test.o:
-	g++ -c "testSpinning.cpp"
+	g++ -c "test-spinning.cpp"
 
 spinning.o:
 	g++ -c "../../clases/spinning.cpp"
