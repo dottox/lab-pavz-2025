@@ -2,7 +2,6 @@
 #include <cassert>
 #include <limits.h>
 #include "../../clases/spinning.h"
-#include "../../dataStructures/turno.cpp"
 using namespace std;
 int main()
 {
