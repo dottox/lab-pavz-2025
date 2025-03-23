@@ -18,10 +18,10 @@ endif
 
 
 all: test.o socio.o
-	g++ test-socio.o socio.o -o programa
+	g++ test-sistema.o socio.o -o programa
 
 test.o:
-	g++ -c "test-socio.cpp"
+	g++ -c "test-sistema.cpp"
 
 socio.o:
 	g++ -c "../../clases/socio.cpp"
