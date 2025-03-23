@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cassert>
-
+#include <limits.h>
 #include "../../clases/socio.h"
-
 using namespace std;
 
 #define MAX_SOCIOS 10
@@ -10,32 +9,21 @@ using namespace std;
 int main() {
   Socio** listaSocios = new Socio*[MAX_SOCIOS];
 
-    // Test of constructor
-    listaSocios[0] = new Socio("12345", "nombre1");
-    listaSocios[1] = new Socio("23456", "nombre2");
-    listaSocios[2] = new Socio("34567", "nombre3");
-    listaSocios[3] = new Socio("34567", "nombre3");
+  listaSocios[0] = new Socio(DtSocio("1", "Juan"));
 
-    // Test of getCI
-    assert(listaSocios[0]->getCI() == "12345");
-    assert(listaSocios[3]->getCI() == "34567");
+  //Test for CI and Nombre
+  assert(listaSocios[0]->getCI() == "1");
+  assert(listaSocios[0]->getNombre() == "Juan");  
 
-    // Test of getNombre
-    assert(listaSocios[1]->getNombre() == "nombre2");
-    assert(listaSocios[2]->getNombre() == "nombre3");
+  //Test for setCI and setNombre
+  listaSocios[0]->setCI("9");
+  assert(listaSocios[0]->getCI() == "9");
+  listaSocios[0]->setNombre("Jorge");
+  assert(listaSocios[0]->getNombre() == "Jorge");
 
-    // Test of setCI
-    listaSocios[0]->setCI("12340");
-    assert(listaSocios[0]->getCI() == "12340");
+  cout << "Funcionó pa" << endl;
 
-    // Test of setNombre
-    listaSocios[1]->setNombre("nombre20");
-    assert(listaSocios[1]->getNombre() == "nombre20");
-
-    // Clean up
-    delete[] listaSocios;
-
-    cout << "All tests passed" << endl;
+  delete[] listaSocios;
 
   return 0;
 }
