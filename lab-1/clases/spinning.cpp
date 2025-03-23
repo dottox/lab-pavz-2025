@@ -1,7 +1,7 @@
 #include "spinning.h"
 
-Spinning::Spinning(int id, string nom, Turno t, int cantBici) : Clase(id, nom, t) {
-    this->cantBicicletas = cantBici;
+Spinning::Spinning(DtSpinning claseData) : Clase(claseData) {
+    this->cantBicicletas = claseData.getCantBicicletas();
 };
 
 int Spinning::cupo() {
@@ -16,6 +16,4 @@ int Spinning::getCantBicicletas() {
     return this->cantBicicletas;
 };
 
-Spinning::~Spinning() {
-    cout << "Spinning destruído" << endl;
-};
+Spinning::~Spinning() {};

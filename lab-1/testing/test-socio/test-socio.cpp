@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 
-#include "../clases/socio.h"
+#include "../../clases/socio.h"
 
 using namespace std;
 

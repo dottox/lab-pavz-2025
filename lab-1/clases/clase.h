@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "../dataStructures/turno.cpp"
+#include "../dataStructures/dtClase.cpp"
 
 class Clase{
     private:
@@ -12,8 +13,10 @@ class Clase{
         string nombre;
         Turno turno;
     public:
-        Clase(int, string, Turno);
+        Clase(DtClase);
         int getId();
+        string getNombre();
+        Turno getTurno();
         virtual int cupo() = 0;
         virtual ~Clase();
 };
