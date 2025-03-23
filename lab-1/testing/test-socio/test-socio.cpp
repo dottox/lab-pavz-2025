@@ -4,26 +4,23 @@
 #include "../../clases/socio.h"
 using namespace std;
 
-#define MAX_SOCIOS 10
-
 int main() {
-  Socio** listaSocios = new Socio*[MAX_SOCIOS];
 
-  listaSocios[0] = new Socio(DtSocio("1", "Juan"));
+  Socio* dataSocio = new Socio(DtSocio("1", "Juan"));
 
   //Test for CI and Nombre
-  assert(listaSocios[0]->getCI() == "1");
-  assert(listaSocios[0]->getNombre() == "Juan");  
+  assert(dataSocio->getCI() == "1");
+  assert(dataSocio->getNombre() == "Juan");  
 
   //Test for setCI and setNombre
-  listaSocios[0]->setCI("9");
-  assert(listaSocios[0]->getCI() == "9");
-  listaSocios[0]->setNombre("Jorge");
-  assert(listaSocios[0]->getNombre() == "Jorge");
+  dataSocio->setCI("9");
+  assert(dataSocio->getCI() == "9");
+  dataSocio->setNombre("Jorge");
+  assert(dataSocio->getNombre() == "Jorge");
 
   cout << "[----------------------------/ Funciono pa' /----------------------------]" << endl;
 
-  delete[] listaSocios;
+  delete dataSocio;
 
   return 0;
 }
