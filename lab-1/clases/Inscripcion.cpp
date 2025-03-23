@@ -1,5 +1,5 @@
 
-#include "inscripcion.h"
+#include "./inscripcion.h"
 
 /**
  * @brief Constructor for the Inscripcion class.
