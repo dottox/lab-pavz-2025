@@ -1,5 +1,5 @@
 
-#include "entrenamiento.h"
+#include "./entrenamiento.h"
 
 /**
  * @brief Constructor for the Entrenamiento class.
