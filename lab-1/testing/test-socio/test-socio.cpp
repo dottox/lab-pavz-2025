@@ -21,7 +21,7 @@ int main() {
   listaSocios[0]->setNombre("Jorge");
   assert(listaSocios[0]->getNombre() == "Jorge");
 
-  cout << "Funcionó pa" << endl;
+  cout << "[----------------------------/ Funciono pa' /----------------------------]" << endl;
 
   delete[] listaSocios;
 

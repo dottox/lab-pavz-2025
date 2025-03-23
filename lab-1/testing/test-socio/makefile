@@ -16,6 +16,7 @@ else
 		DELETE := del
 endif
 
+
 all: test.o socio.o
 	g++ test-socio.o socio.o -o programa
 
@@ -26,7 +27,7 @@ socio.o:
 	g++ -c "../../clases/socio.cpp"
 
 clean:
-	rm -f *.o "programa"
+	$(DELETE) *.o programa
 
 run:
 	$(MAKE) clean
