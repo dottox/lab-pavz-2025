@@ -25,5 +25,15 @@ jobs:
     - name: Test make
       run: |
         cd ${{ env.lab }}/testing
-        pwd
-        make run
+        for dir in */ ; do
+          if [ -d "$dir" ]; then
+              echo "Entering $dir"
+              cd "$dir"
+              
+              echo "Running make run in $dir"
+              make run
+              
+              cd ..  
+          fi
+        done
+
