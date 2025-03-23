@@ -19,7 +19,7 @@ class DtClase{
             }
             this->id = id;
             this->nombre = nombre;
-            this->turno = turno;
+            this->turno = turn;
         };
         int getId(){
             return this->id;
