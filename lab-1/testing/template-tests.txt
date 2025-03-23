@@ -1,0 +1,19 @@
+// CASO OBJETO INVÁLIDO
+
+// Crear un objeto inválido
+//   - Si permite crear el objeto -> Tirar un terminate para que no se siga ejecutandose el programa (Test fallado)
+//   - Si no permite crear el objeto -> Seguir con la ejecución del programa (Test funcional)
+
+
+try { // TEST INVERSO (invalido)
+    Objeto obj = Objeto(bad_argument);
+
+    // No debería llegar acá si el programa funciona correctamente
+    throw runtime_error("Error: Se permitió un objeto invalido (TC001)");
+} 
+catch (invalid_argument &e) { // Camino invalid argument, el objeto no se creó (deseado)
+    cout << "Test inválido TC001 pasó correctamente" << endl;
+}
+catch (runtime_error &e) { // Camino runtime error, el objeto se creó (no deseado)
+    terminate();
+}
