@@ -6,7 +6,7 @@ using namespace std;
 
 #include "../dataStructures/turno.cpp"
 #include "../dataStructures/dtClase.cpp"
-#include "../clases/Inscripcion.cpp"
+#include "inscripcion.cpp"
 
 class Clase{
     private:
