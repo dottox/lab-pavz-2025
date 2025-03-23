@@ -1,4 +1,5 @@
 .*
 lab-0/*.o
-lab-0/testing/*.o
-lab-0/testing/programa
+lab-0/test-*/*.o
+lab-0/test-*/programa
+lab-0/test-*/programa.exe
