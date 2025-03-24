@@ -60,5 +60,5 @@ string Socio::getNombre(){
  * @brief Destructor for the Socio class.
  */
 Socio::~Socio(){
-    cout << "Socio: " << this->getNombre() <<  "destruido" << endl; 
+    cout << "Socio: " << this->getNombre() <<  " erradicado" << endl; 
 }

@@ -11,7 +11,7 @@ Sistema::Sistema(){
 // std::invalid_argument.
 void Sistema::agregarSocio(string ci, string nombre){
     if(this->cantSocios >= MAX_SOCIOS){
-      throw invalid_argument("No se pueden agregar más socios");
+      throw invalid_argument("No se pueden agregar mas socios");
     }
     for(int i = 0; i < cantSocios; i++){
       if(socios[i]->getCI() == ci){
@@ -21,7 +21,6 @@ void Sistema::agregarSocio(string ci, string nombre){
     DtSocio socioData = DtSocio(ci, nombre);
     this->socios[cantSocios] = new Socio(socioData);
     this->cantSocios++;
-    delete &socioData;
 }
 
 Socio* Sistema::getSocio(string ci){
