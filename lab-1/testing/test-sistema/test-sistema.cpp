@@ -5,7 +5,6 @@ using namespace std;
 int main(){
     Sistema* sistema = new Sistema();
 
-    // This should be in main.cpp
     sistema->agregarSocio("1", "Juan");
     sistema->agregarSocio("2", "Maria");
     sistema->agregarSocio("3", "Nacho");
@@ -17,25 +16,25 @@ int main(){
     sistema->agregarSocio("9", "Eduardo");
     sistema->agregarSocio("10", "Wally");
 
-    try{
+    try {
         sistema->agregarSocio("11", "Lol");
-    }catch(...){
-        cout << "Error: No se pueden agregar mas socios" << endl;
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
     }
 
-    try{
+    try {
         sistema->agregarSocio("1", "Maria");
-    }catch(...){
-        cout << "Error: Socio con CI repetida" << endl;
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
     }
 
-    try{
+    try {
         sistema->getSocio("1387");
-    }catch(...){
-        cout << "Error: Socio no encontrado" << endl;
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
     }
-
-    cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
 
     delete sistema;
+
+    cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
 }
