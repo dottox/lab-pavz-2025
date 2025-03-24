@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../../clases/sistema.h"
+#include "../../clases/entrenamiento.h"
 
 using namespace std;
 int main(){
@@ -16,23 +17,35 @@ int main(){
     sistema->agregarSocio("9", "Eduardo");
     sistema->agregarSocio("10", "Wally");
 
-    try {
-        sistema->agregarSocio("11", "Lol");
-    } catch (const invalid_argument e) {
-        cout << "Error: " << e.what() << endl;
-    }
+    sistema->agregarClase(DtEntrenamiento(1, "Yoga", Manana,true));
+    sistema->agregarClase(DtEntrenamiento(2, "Crossfit", Tarde,false));
+    sistema->agregarClase(DtEntrenamiento(3, "Pilates", Noche,true));
+    sistema->agregarClase(DtSpinning(4, "Spinning", Tarde, 10));
+    sistema->agregarClase(DtSpinning(5, "Spinning", Noche, 10));
 
-    try {
-        sistema->agregarSocio("1", "Maria");
-    } catch (const invalid_argument e) {
-        cout << "Error: " << e.what() << endl;
-    }
 
-    try {
-        sistema->getSocio("1387");
-    } catch (const invalid_argument e) {
-        cout << "Error: " << e.what() << endl;
-    }
+    sistema->agregarInscripcion("1", 1, DtFecha(1, 1, 2021));
+    // sistema->agregarInscripcion("3", 3, DtFecha(1, 1, 2021));
+    // sistema->agregarInscripcion("4", 4, DtFecha(1, 1, 2021));
+
+
+    // try {
+    //     sistema->agregarSocio("11", "Lol");
+    // } catch (const invalid_argument e) {
+    //     cout << "Error: " << e.what() << endl;
+    // }
+
+    // try {
+    //     sistema->agregarSocio("1", "Maria");
+    // } catch (const invalid_argument e) {
+    //     cout << "Error: " << e.what() << endl;
+    // }
+
+    // try {
+    //     sistema->getSocio("1387");
+    // } catch (const invalid_argument e) {
+    //     cout << "Error: " << e.what() << endl;
+    // }
 
     delete sistema;
 
