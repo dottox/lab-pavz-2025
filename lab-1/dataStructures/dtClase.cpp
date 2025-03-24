@@ -1,38 +1,30 @@
-#ifndef DT_CLASE
-#define DT_CLASE
-#include "turno.cpp"
-#include <iostream>
+#include "./dtClase.h"
+#include <stdexcept>
 using namespace std;
 
-class DtClase{
-    private:
-        int id;
-        string nombre;
-        Turno turno;
-    public:
-        DtClase(){
-            throw invalid_argument("Constructor vacio no permitido\n");
-        }
-        DtClase(int id, string nombre, Turno turn){
-            if(turn < Manana || turn > Noche){
-                throw invalid_argument("Turno invalido\n");
-            }
-            this->id = id;
-            this->nombre = nombre;
-            this->turno = turn;
-        };
-        int getId(){
-            return this->id;
-        };
-        string getNombre(){
-            return this->nombre;
-        };
-        Turno getTurno(){
-            return this->turno;
-        };
+DtClase::DtClase() {
+  throw invalid_argument("Constructor vacio no permitido\n");
+}
 
-        virtual ~DtClase(){};
-};  
+DtClase::DtClase(int id, string nombre, Turno turn) {
+  if (turn < Manana || turn > Noche) {
+    throw invalid_argument("Turno invalido\n");
+  }
+  this->id = id;
+  this->nombre = nombre;
+  this->turno = turn;
+}
 
+int DtClase::getId() {
+  return this->id;
+}
 
-#endif
+string DtClase::getNombre() {
+  return this->nombre;
+}
+
+Turno DtClase::getTurno() {
+  return this->turno;
+}
+
+DtClase::~DtClase() {}

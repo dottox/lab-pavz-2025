@@ -1,22 +1,12 @@
-#ifndef DT_ENTRENAMIENTO
-#define DT_ENTRENAMIENTO
+#include "dtEntrenamiento.h"
 
-#include <iostream>
-using namespace std;
+DtEntrenamiento::DtEntrenamiento(int id, string nom, Turno turn, bool b) 
+  : DtClase(id, nom, turn) {
+  this->enRambla = b;
+}
 
-#include "dtClase.cpp"
+bool DtEntrenamiento::getRambla() {
+  return this->enRambla;
+}
 
-class DtEntrenamiento : public DtClase{
-    private:
-        bool enRambla;
-    public:
-        DtEntrenamiento(int id, string nom, Turno turn, bool b) : DtClase(id, nom, turn){
-            this->enRambla = b;
-        };
-        bool getRambla(){
-            return this->enRambla;
-        };
-        ~DtEntrenamiento(){};
-};
-
-#endif
+DtEntrenamiento::~DtEntrenamiento() {}

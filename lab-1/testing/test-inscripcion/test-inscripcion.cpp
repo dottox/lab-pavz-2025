@@ -1,8 +1,9 @@
 #include <iostream>
 #include <cassert>
 #include <limits.h>
-#include "../../clases/Inscripcion.h"
-#
+#include "../../clases/inscripcion.h"
+#include "../../clases/socio.h"
+
 using namespace std;
 /*
     private:
@@ -183,7 +184,8 @@ int main()
     try
     {
         DtFecha fecha = DtFecha(5, 7, 2022);
-        Inscripcion inscripcion = Inscripcion(fecha);
+        Socio* socio = new Socio(DtSocio("1", "Juan"));
+        Inscripcion inscripcion = Inscripcion(fecha, socio);
         assert(inscripcion.getFecha().getDia() == 5);
         assert(inscripcion.getFecha().getMes() == 7);
         assert(inscripcion.getFecha().getAnio() == 2022);
@@ -191,6 +193,8 @@ int main()
         assert(inscripcion.getFecha().getDia() != 3);
         assert(inscripcion.getFecha().getMes() != 8);
         assert(inscripcion.getFecha().getAnio() != 2023);
+
+        delete socio;
         cout << "TC013: Inscripcion creada correctamente" << endl;
     }
     catch (...)
@@ -200,7 +204,8 @@ int main()
     try
     {
         DtFecha fecha = DtFecha(0, 0, 0);
-        Inscripcion inscripcion = Inscripcion(fecha);
+        Socio* socio = new Socio(DtSocio("1", "Juan"));
+        Inscripcion inscripcion = Inscripcion(fecha, socio);
         assert(inscripcion.getFecha().getDia() == 0);
         assert(inscripcion.getFecha().getMes() == 0);
         assert(inscripcion.getFecha().getAnio() == 0);
@@ -208,11 +213,12 @@ int main()
         assert(inscripcion.getFecha().getDia() != 1);
         assert(inscripcion.getFecha().getMes() != 1);
         assert(inscripcion.getFecha().getAnio() != 1);
+
+        delete socio;
         throw runtime_error("Error: Se permitio una fecha invalida (TC014)");
-    }catch(invalid_argument &e){
+    } catch (invalid_argument &e){
         cout << "Test fecha invalida TC014 paso correctamente" << endl;
-    }
-    catch (...)
+    } catch (...)
     {
         terminate();
     }
@@ -220,7 +226,8 @@ int main()
     try
     {
         DtFecha fecha = DtFecha(50, 51, 52);
-        Inscripcion inscripcion = Inscripcion(fecha);
+        Socio* socio = new Socio(DtSocio("1", "Juan"));
+        Inscripcion inscripcion = Inscripcion(fecha, socio);
         assert(inscripcion.getFecha().getDia() == 50);
         assert(inscripcion.getFecha().getMes() == 51);
         assert(inscripcion.getFecha().getAnio() == 52);

@@ -1,29 +1,16 @@
-#ifndef DT_SOCIO
-#define DT_SOCIO
+#include "dtSocio.h"
 
-#include <iostream>
-using namespace std;
+DtSocio::DtSocio(string ci, string nombre) {
+  this->ci = ci;
+  this->nombre = nombre;
+}
 
-class DtSocio{
-    private:
-        string ci;
-        string nombre;
-    public:
-        DtSocio(){
-            throw invalid_argument("Constructor vacio no permitido\n");
-        };
-        DtSocio(string ci, string nombre){
-            this->ci = ci;
-            this->nombre = nombre;
-        };
-        string getCi(){
-            return this->ci;
-        }
-        string getNombre(){
-            return this->nombre;
-        }
+string DtSocio::getCi() {
+  return this->ci;
+}
 
-        ~DtSocio(){}
-};
+string DtSocio::getNombre() {
+  return this->nombre;
+}
 
-#endif
+DtSocio::~DtSocio() {}

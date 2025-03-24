@@ -17,17 +17,20 @@ else
 endif
 
 
-all: test.o socio.o
-	g++ test-socio.o socio.o -o programa
+all: test.o socio.o dtSocio.o
+	g++ test-socio.o dtSocio.o socio.o -o programa
 
 test.o:
 	g++ -c "test-socio.cpp"
 
-socio.o:
+dtSocio.o:
+	g++ -c "../../dataStructures/dtSocio.cpp"
+
+socio.o: dtSocio.o
 	g++ -c "../../clases/socio.cpp"
 
 clean:
-	$(DELETE) *.o programa
+	$(DELETE) *.o programa*
 
 run:
 	$(MAKE) clean

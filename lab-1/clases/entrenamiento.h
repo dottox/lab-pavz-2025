@@ -1,11 +1,9 @@
-
-#ifndef ENTRENAMIENTO_H
-#define ENTRENAMIENTO_H
+#pragma once
 #include <iostream>
-#include "clase.h"
+#include "./clase.h"
 using namespace std;
 
-#include "../dataStructures/dtEntrenamiento.cpp"
+#include "../dataStructures/dtEntrenamiento.h"
 
 /**
  * @class Entrenamiento
@@ -23,4 +21,3 @@ class Entrenamiento : public Clase{
     bool getRambla();
     ~Entrenamiento();
 };
-#endif

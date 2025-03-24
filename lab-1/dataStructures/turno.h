@@ -1,5 +1,4 @@
-#ifndef TURNO_CPP
-#define TURNO_CPP
+#pragma once 
 
 enum Turno{
     Manana,
@@ -7,4 +6,3 @@ enum Turno{
     Noche
 };
 
-#endif
