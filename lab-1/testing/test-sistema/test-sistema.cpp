@@ -24,28 +24,23 @@ int main(){
     sistema->agregarClase(DtSpinning(5, "Spinning", Noche, 10));
 
 
-    sistema->agregarInscripcion("1", 1, DtFecha(1, 1, 2021));
-    // sistema->agregarInscripcion("3", 3, DtFecha(1, 1, 2021));
-    // sistema->agregarInscripcion("4", 4, DtFecha(1, 1, 2021));
+    try {
+        sistema->agregarSocio("11", "Lol");
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
+    }
 
+    try {
+        sistema->agregarSocio("1", "Maria");
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
+    }
 
-    // try {
-    //     sistema->agregarSocio("11", "Lol");
-    // } catch (const invalid_argument e) {
-    //     cout << "Error: " << e.what() << endl;
-    // }
-
-    // try {
-    //     sistema->agregarSocio("1", "Maria");
-    // } catch (const invalid_argument e) {
-    //     cout << "Error: " << e.what() << endl;
-    // }
-
-    // try {
-    //     sistema->getSocio("1387");
-    // } catch (const invalid_argument e) {
-    //     cout << "Error: " << e.what() << endl;
-    // }
+    try {
+        sistema->getSocio("1387");
+    } catch (const invalid_argument e) {
+        cout << "Error: " << e.what() << endl;
+    }
 
     delete sistema;
 

@@ -23,16 +23,16 @@ all: test.o dtSocio.o dtFecha.o dtEntrenamiento.o dtSpinning.o dtClase.o socio.o
 test.o:
 	g++ -c "test-sistema.cpp"
 
-entrenamiento.o: dtEntrenamiento.o
+entrenamiento.o: dtEntrenamiento.o clase.o
 	g++ -c "../../clases/entrenamiento.cpp"
 
-spinning.o: dtSpinning.o
+spinning.o: dtSpinning.o 
 	g++ -c "../../clases/spinning.cpp"
 
 dtSocio.o:
 	g++ -c "../../dataStructures/dtSocio.cpp"
 
-dtEntrenamiento.o:
+dtEntrenamiento.o: dtClase.o
 	g++ -c "../../dataStructures/dtEntrenamiento.cpp"
 
 dtSpinning.o:
