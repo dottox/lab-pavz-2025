@@ -1,109 +1,129 @@
 #include <iostream>
-#include "../clases/Inscripcion.h"
-#include "../clases/Entrenamiento.h"
-#include "../clases/Socio.h"
+#include "../clases/inscripcion.h"
+#include "../clases/entrenamiento.h"
+#include "../clases/socio.h"
 #include "../dataStructures/dtFecha.cpp"
 #include "../dataStructures/dtEntrenamiento.cpp"
 #include "../dataStructures/dtSocio.cpp"
+
+#include <stdexcept>
 
 using namespace std;
 
 class Sistema {
   private:
-    /*
-    - Lista de clases
-    - Lista de socios
-    - 
-    */
+    Clase ** clases;
+    int cantClases;
 
-    Clase ** clases = new Clase*[100];
-    int cantClases = 0;
+    Socio ** socios;
+    int cantSocios;
 
-    Socio ** socios = new Socio*[100];
-    int cantSocios = 0;
-
-    Inscripcion ** inscripciones = new Inscripcion*[100];
-    int cantInscripciones = 0;
-
-    
+    Inscripcion ** inscripciones;
+    int cantInscripciones;
 
   public:
-    Sistema() {
-      cout << "Sistema creado" << endl;
-    }
+    Sistema();
+    Socio* getSocio(string ci);
+    Clase* getClase(int id);
+    Inscripcion* getInscripcion(string ciSocio, int idClase, DtFecha fecha);
 
-    ~Sistema() {
-      cout << "Sistema destruído" << endl;
-    }
+    void agregarInscripcion(string ciSocio, int idClase, DtFecha fecha);
+    void agregarClase(DtEntrenamiento dtEntrenamiento);
+    void agregarSocio(DtSocio dtSocio);
 
-    void agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
-
-        //Socio existe
-
-        Socio * socio;
-
-        for (int i =0;i<cantSocios;i++){
-            if (socios[i]->getCI() == ciSocio){
-                socio = socios[i];
-                break;
-            }
-        }
-
-        if (socio == NULL) __throw_invalid_argument( "No se encontró el socio.");
-        //Clase existe
-        Clase * clase;
-
-        for (int i =0;i<cantClases;i++){
-            if (clases[i]->getId() == idClase){
-                clase = clases[i];
-                break;
-            }
-        }
-
-        if (socio == NULL || clase == NULL) __throw_invalid_argument( "No se encontró la clase ingresada.");
-
-        if(clase->cupo() == 0) __throw_invalid_argument( "No hay cupo en la clase");
-
-        //Inscripcion existe
-
-        Inscripcion ** inscripcionesClase = clase->getInscripciones();
-
-        for (int i =0;i<clase->getCantInscripciones();i++){
-            if (inscripcionesClase[i]->getSocio()->getCI() == ciSocio && inscripcionesClase[i]->getFecha() == fecha){
-                __throw_invalid_argument( "Ya existe una inscripción para ese socio en esa fecha");
-            }
-        }
-
-        delete inscripcionesClase;
-
-        Inscripcion * inscripcion = new Inscripcion(fecha,socio);
-
-        clase->agregarInscripcion(inscripcion);
-
-        inscripciones[cantInscripciones] = inscripcion;
-        cantInscripciones++;
-        
-    }
-
-    void agregarClase(DtEntrenamiento dtEntrenamiento){
-        
-        Entrenamiento * entrenamiento = new Entrenamiento(dtEntrenamiento);
-        clases[cantClases] = entrenamiento;
-        cantClases++;
-    }
-
-    void agregarSocio(DtSocio dtSocio){
-        Socio * socio = new Socio(dtSocio);
-        socios[cantSocios] = socio;
-        cantSocios++;
-    }
-
+    ~Sistema();
 };
+
+Sistema::Sistema() {
+  clases = new Clase*[100];
+  cantClases = 0;
+
+  socios = new Socio*[100];
+  cantSocios = 0;
+
+  inscripciones = new Inscripcion*[100];
+  cantInscripciones = 0;
+}
+
+Socio* Sistema::getSocio(string ci) {
+  for (int i = 0; i < cantSocios; i++) {
+    if (socios[i]->getCI() == ci) {
+      return socios[i];
+    }
+  }
+  return nullptr;
+}
+
+Clase* Sistema::getClase(int id) {
+  for (int i = 0; i < this->cantClases; i++) {
+    if (this->clases[i]->getId() == id) {
+      return this->clases[i];
+    }
+  }
+  return nullptr;
+}
+
+Inscripcion* Sistema::getInscripcion(string ciSocio, int idClase, DtFecha fecha) {
+  for (int i = 0; i < this->cantClases; i++) {
+    if (this->clases[i]->getId() == idClase)
+    { // Encuentra la clase con el idClase
+      for (int j = 0; j < this->clases[i]->getCantInscripciones(); j++) 
+      { // Recorre las inscripciones de la clase
+        Inscripcion * inscripcion = this->clases[i]->getInscripciones()[j];
+        if (inscripcion->getSocio()->getCI() == ciSocio && inscripcion->getFecha() == fecha) 
+        { // Encuentra la inscripcion con el socio y la fecha
+          return inscripcion;
+        }
+      }
+    }
+  }
+  return nullptr;
+}
+
+void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha) {
+
+  // Check: socio existe
+  Socio* socio = getSocio(ciSocio);
+  if (socio == nullptr) {
+    throw invalid_argument("No se encontró el socio.");
+  }
+
+  // Check: clase existe
+  Clase* clase = getClase(idClase);
+  if (clase == nullptr) {
+    throw invalid_argument("No se encontró la clase.");
+  }
+
+  // Check: clase tiene cupo
+  if (clase->cupo() == 0) {
+    throw invalid_argument("La clase ingresada no tiene cupo.");
+  }
+
+  // Check: inscripcion no existe
+  if (this->getInscripcion(ciSocio,idClase,fecha) != nullptr) {
+    throw invalid_argument("Ya existe una inscripción para el socio en la clase en la fecha ingresada.");
+  }
+
+  Inscripcion * inscripcion = new Inscripcion(fecha, socio);
+
+  clase->agregarInscripcion(inscripcion);
+
+  this->inscripciones[cantInscripciones] = inscripcion;
+  cantInscripciones++;
+  
+}
+
+Sistema::~Sistema() {
+  delete[] clases;
+  delete[] socios;
+  delete[] inscripciones;
+}
+
 
 int main() {
     cout << "asd" << endl;
     Sistema * sistema = new Sistema();
-    sistema->agregarSocio(DtSocio(123, "Juan"));
+    sistema->agregarSocio(DtSocio("123", "Juan"));
     sistema->agregarClase(DtEntrenamiento(1, "Entrenamiento 1", Manana, true));
     sistema->agregarInscripcion("123", 1, DtFecha(1, 1, 2021));
 
