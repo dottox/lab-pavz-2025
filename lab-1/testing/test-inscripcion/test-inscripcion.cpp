@@ -201,6 +201,7 @@ int main()
     {
         cout << "Error inesperado en TC013" << endl;
     }
+<<<<<<< HEAD
     try
     {
         DtFecha fecha = DtFecha(0, 0, 0);
@@ -243,6 +244,9 @@ int main()
     {
         terminate();
     }
+=======
+    
+>>>>>>> 2c02938866b878ec825fb86e67a6e0f6bd65541c
 
     return 0;
 }
