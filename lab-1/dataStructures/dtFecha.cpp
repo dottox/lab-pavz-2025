@@ -30,6 +30,10 @@ class DtFecha{
         int getAnio(){
             return this->anio;
         };
+
+        bool operator==(const DtFecha& other) const {
+            return dia == other.dia && mes == other.mes && anio == other.anio;
+        }
         ~DtFecha(){};
 };
 

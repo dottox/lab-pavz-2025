@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "../dataStructures/dtFecha.cpp"
+#include "../clases/socio.cpp"
 
 /**
  * @class Inscripcion
@@ -18,10 +19,13 @@ using namespace std;
 class Inscripcion{
     private:
         DtFecha fecha;
+        Socio*  socio;
     public:
-        Inscripcion(DtFecha);
+        Inscripcion(DtFecha, Socio*);
         DtFecha getFecha();
         ~Inscripcion();
+        Socio* getSocio();
+
 };
 
 #endif

@@ -18,6 +18,19 @@ Turno Clase::getTurno(){
     return this->turno;
 };
 
+void Clase::agregarInscripcion(Inscripcion* inscripcion){
+    this->inscripciones[this->cantInscripciones] = inscripcion;
+    this->cantInscripciones++;
+};
+
+Inscripcion** Clase::getInscripciones(){
+    return inscripciones;
+};
+
+int Clase::getCantInscripciones(){
+    return this->cantInscripciones;
+};
+
 Clase::~Clase(){
     cout << "Clase: " << this->getId() << " destruida" << endl;
 };

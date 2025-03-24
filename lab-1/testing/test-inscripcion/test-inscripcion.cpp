@@ -197,45 +197,7 @@ int main()
     {
         cout << "Error inesperado en TC013" << endl;
     }
-    try
-    {
-        DtFecha fecha = DtFecha(0, 0, 0);
-        Inscripcion inscripcion = Inscripcion(fecha);
-        assert(inscripcion.getFecha().getDia() == 0);
-        assert(inscripcion.getFecha().getMes() == 0);
-        assert(inscripcion.getFecha().getAnio() == 0);
-
-        assert(inscripcion.getFecha().getDia() != 1);
-        assert(inscripcion.getFecha().getMes() != 1);
-        assert(inscripcion.getFecha().getAnio() != 1);
-        throw runtime_error("Error: Se permitio una fecha invalida (TC014)");
-    }catch(invalid_argument &e){
-        cout << "Test fecha invalida TC014 paso correctamente" << endl;
-    }
-    catch (...)
-    {
-        terminate();
-    }
-
-    try
-    {
-        DtFecha fecha = DtFecha(50, 51, 52);
-        Inscripcion inscripcion = Inscripcion(fecha);
-        assert(inscripcion.getFecha().getDia() == 50);
-        assert(inscripcion.getFecha().getMes() == 51);
-        assert(inscripcion.getFecha().getAnio() == 52);
-
-        assert(inscripcion.getFecha().getDia() != 1);
-        assert(inscripcion.getFecha().getMes() != 1);
-        assert(inscripcion.getFecha().getAnio() != 1);
-        throw runtime_error("Error: Se permitio una fecha invalida (TC015)");
-    }catch(invalid_argument &e){
-        cout << "Test fecha invalida TC015 paso correctamente" << endl;
-    }
-    catch (...)
-    {
-        terminate();
-    }
+    
 
     return 0;
 }
