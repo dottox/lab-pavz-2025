@@ -1,50 +1,7 @@
 #include <iostream>
-#include "../../clases/socio.h"
-#define MAX_SOCIOS 10
+#include "../../clases/sistema.h"
 
 using namespace std;
-
-class Sistema {
-  private:
-    int cantSocios = 0;
-    Socio** socios = new Socio*[MAX_SOCIOS];
-
-  public:
-    Sistema() {
-      cout << "Sistema creado" << endl;
-    }
-
-    // void agregarSocio(string ci, string nombre)
-    // Crea un nuevo socio en el sistema. En caso de ya existir, levanta la excepción
-    // std::invalid_argument.
-    void agregarSocio(string ci, string nombre){
-      if(this->cantSocios >= MAX_SOCIOS){
-        throw invalid_argument("No se pueden agregar más socios");
-      }
-      for(int i = 0; i < cantSocios; i++){
-        if(socios[i]->getCI() == ci){
-          throw invalid_argument("Ya existe un socio con esa CI");
-        }
-      }
-      DtSocio socioData = DtSocio(ci, nombre);
-      this->socios[cantSocios] = new Socio(socioData);
-      this->cantSocios++;
-    };
-
-    Socio* getSocio(string ci){
-      for(int i = 0; i < cantSocios; i++){
-        if(socios[i]->getCI() == ci){
-          return socios[i];
-        }
-      }
-      throw invalid_argument("No existe un socio con esa CI");
-    }
-
-    ~Sistema() {
-      cout << "Sistema destruido" << endl;
-    }
-};
-
 int main(){
     Sistema* sistema = new Sistema();
 
