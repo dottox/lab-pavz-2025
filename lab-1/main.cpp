@@ -10,6 +10,9 @@
 
 using namespace std;
 
+#define MAX_SOCIOS 20
+
+
 class Sistema {
   private:
     Clase ** clases;
@@ -24,12 +27,17 @@ class Sistema {
   public:
     Sistema();
     Socio* getSocio(string ci);
+    int getCantSocios() { return this->cantSocios; }
+
     Clase* getClase(int id);
+    int getCantClases() { return this->cantClases; }
+
     Inscripcion* getInscripcion(string ciSocio, int idClase, DtFecha fecha);
+    int getCantInscripciones() { return this->cantInscripciones; }
 
     void agregarInscripcion(string ciSocio, int idClase, DtFecha fecha);
-    void agregarClase(DtEntrenamiento dtEntrenamiento);
-    void agregarSocio(DtSocio dtSocio);
+    void agregarClase(DtEntrenamiento entrenamiento);
+    void agregarSocio(DtSocio socioData);
 
     ~Sistema();
 };
@@ -111,6 +119,23 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha) {
   this->inscripciones[cantInscripciones] = inscripcion;
   cantInscripciones++;
   
+}
+
+
+// void agregarSocio(DtSocio socioData);
+// Crea un nuevo socio en el sistema. En caso de ya existir, levanta la excepción
+// std::invalid_argument.
+void Sistema::agregarSocio(DtSocio socioData) {
+  if(this->getCantSocios() >= MAX_SOCIOS){
+    throw invalid_argument("No se pueden agregar mas socios");
+  }
+  
+  if (this->getSocio(socioData.getCi()) != nullptr) {
+    throw invalid_argument("Ya existe un socio con esa CI.");
+  }
+
+  this->socios[cantSocios] = new Socio(socioData);
+  this->cantSocios++;
 }
 
 Sistema::~Sistema() {
