@@ -1,5 +1,5 @@
 
-#include "entrenamiento.h"
+#include "./entrenamiento.h"
 
 /**
  * @brief Constructor for the Entrenamiento class.
@@ -10,7 +10,7 @@
  * @param enRambla Indicates whether the training session is at the Rambla.
  */
 Entrenamiento::Entrenamiento(DtEntrenamiento claseData) : Clase::Clase(claseData){
-    this->enRambla = enRambla;
+    this->enRambla = claseData.getRambla();
 };
 
 

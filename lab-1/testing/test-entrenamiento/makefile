@@ -17,14 +17,17 @@ else
 endif
 
 
-all: test.o socio.o
-	g++ test-socio.o socio.o -o programa
+all: test.o entrenamiento.o clase.o
+	g++ test-entrenamiento.o entrenamiento.o clase.o -o programa
 
 test.o:
-	g++ -c "test-socio.cpp"
+	g++ -c "test-entrenamiento.cpp"
 
-socio.o:
-	g++ -c "../../clases/socio.cpp"
+entrenamiento.o:
+	g++ -c "../../clases/entrenamiento.cpp"
+
+clase.o:
+	g++ -c "../../clases/clase.cpp"
 
 clean:
 	$(DELETE) *.o programa
