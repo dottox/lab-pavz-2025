@@ -1,12 +1,11 @@
-#ifndef CLASE_H
-#define CLASE_H
+#pragma once
 
 #include <iostream>
 using namespace std;
 
-#include "../dataStructures/turno.cpp"
-#include "../dataStructures/dtClase.cpp"
-#include "inscripcion.cpp"
+#include "../dataStructures/turno.h"
+#include "../dataStructures/dtClase.h"
+#include "./inscripcion.h"
 
 class Clase{
     private:
@@ -26,5 +25,3 @@ class Clase{
         int getCantInscripciones();
         Inscripcion** getInscripciones();
 };
-
-#endif

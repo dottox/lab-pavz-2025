@@ -1,10 +1,8 @@
-
-#ifndef SOCIO_H
-#define SOCIO_H
+#pragma once
 #include <iostream>
 
 using namespace std;
-#include "../dataStructures/dtSocio.cpp"
+#include "../dataStructures/dtSocio.h"
 
 /**
  * @class Socio
@@ -26,5 +24,3 @@ class Socio {
         string getNombre();
         ~Socio();
 };
-
-#endif

@@ -17,17 +17,36 @@ else
 endif
 
 
-all: test.o spinning.o clase.o
-	g++ test-spinning.o spinning.o clase.o -o programa
+all: test.o socio.o inscripcion.o dtFecha.o dtSocio.o dtClase.o dtSpinning.o clase.o spinning.o
+	g++ test-spinning.o socio.o inscripcion.o dtFecha.o dtSocio.o dtClase.o dtSpinning.o spinning.o clase.o -o programa
 
 test.o:
 	g++ -c "test-spinning.cpp"
 
-spinning.o:
-	g++ -c "../../clases/spinning.cpp"
+dtClase.o:
+	g++ -c "../../dataStructures/dtClase.cpp"
 
-clase.o:
+dtSocio.o:
+	g++ -c "../../dataStructures/dtSocio.cpp"
+
+dtSpinning.o: dtClase.o
+	g++ -c "../../dataStructures/dtSpinning.cpp"
+
+dtFecha.o:
+	g++ -c "../../dataStructures/dtFecha.cpp"
+
+
+socio.o: dtSocio.o
+	g++ -c "../../clases/socio.cpp"
+
+inscripcion.o: socio.o dtFecha.o
+	g++ -c "../../clases/inscripcion.cpp"
+
+clase.o: dtClase.o inscripcion.o
 	g++ -c "../../clases/clase.cpp"
+
+spinning.o: dtSpinning.o clase.o
+	g++ -c "../../clases/spinning.cpp"
 
 clean:
 	$(DELETE) *.o programa

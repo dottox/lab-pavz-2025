@@ -1,12 +1,9 @@
-
-#ifndef INSCRIPCION_H
-#define INSCRIPCION_H
-
+#pragma once
 #include <iostream>
 using namespace std;
 
-#include "../dataStructures/dtFecha.cpp"
-#include "../clases/socio.cpp"
+#include "../dataStructures/dtFecha.h"
+#include "../clases/socio.h"
 
 /**
  * @class Inscripcion
@@ -19,7 +16,7 @@ using namespace std;
 class Inscripcion{
     private:
         DtFecha fecha;
-        Socio*  socio;
+        Socio* socio;
     public:
         Inscripcion(DtFecha, Socio*);
         DtFecha getFecha();
@@ -27,5 +24,3 @@ class Inscripcion{
         Socio* getSocio();
 
 };
-
-#endif

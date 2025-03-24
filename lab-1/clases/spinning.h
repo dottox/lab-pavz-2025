@@ -1,10 +1,9 @@
+#pragma once
 
-#ifndef SPINNING_H
-#define SPINNING_H
 #include <iostream>
 
 #include "clase.h"
-#include "../dataStructures/dtSpinning.cpp"
+#include "../dataStructures/dtSpinning.h"
 
 using namespace std;
 
@@ -27,4 +26,3 @@ class Spinning : public Clase {
     int getCantBicicletas();
     ~Spinning();
 };
-#endif
