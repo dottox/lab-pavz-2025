@@ -19,7 +19,6 @@ class Spinning : public Clase {
   private:
     int cantBicicletas;
   public:
-    Spinning(); 
     Spinning(DtSpinning);
     int cupo();
     void setCantBicicletas(int);

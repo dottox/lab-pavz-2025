@@ -4,6 +4,8 @@ Clase::Clase(DtClase claseData){
     this->id = claseData.getId();
     this->nombre = claseData.getNombre();
     this->turno = claseData.getTurno();
+    this->cantInscripciones = 0;
+    this->inscripciones = new Inscripcion* [MAX_INSCRIPCIONES];
 };
 
 int Clase::getId(){

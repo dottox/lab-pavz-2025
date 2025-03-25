@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DTENTRENAMIENTO_H
+#define DTENTRENAMIENTO_H
 
 #include <iostream>
 using namespace std;
@@ -13,3 +14,5 @@ class DtEntrenamiento : public DtClase{
     bool getRambla();
     ~DtEntrenamiento();
 };
+
+#endif

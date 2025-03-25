@@ -6,6 +6,7 @@ using namespace std;
 #include "../dataStructures/turno.h"
 #include "../dataStructures/dtClase.h"
 #include "./inscripcion.h"
+#define MAX_INSCRIPCIONES 3
 
 class Clase{
     private:

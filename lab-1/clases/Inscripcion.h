@@ -20,7 +20,6 @@ class Inscripcion{
     public:
         Inscripcion(DtFecha, Socio*);
         DtFecha getFecha();
-        ~Inscripcion();
         Socio* getSocio();
-
+        ~Inscripcion();
 };
