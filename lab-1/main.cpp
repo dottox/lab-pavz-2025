@@ -20,9 +20,6 @@ private:
     Socio **socios;
     int cantSocios;
 
-    Inscripcion **inscripciones;
-    int cantInscripciones;
-
 public:
     Sistema();
     Socio *getSocio(string ci);
@@ -44,9 +41,6 @@ Sistema::Sistema()
 
     socios = new Socio *[100];
     cantSocios = 0;
-
-    inscripciones = new Inscripcion *[100];
-    cantInscripciones = 0;
 }
 
 Socio *Sistema::getSocio(string ci)
@@ -124,9 +118,6 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha)
     Inscripcion *inscripcion = new Inscripcion(fecha, socio);
 
     clase->agregarInscripcion(inscripcion);
-
-    this->inscripciones[cantInscripciones] = inscripcion;
-    cantInscripciones++;
 }
 
 void Sistema::agregarClase(DtEntrenamiento entrenamiento)
@@ -147,7 +138,6 @@ Sistema::~Sistema()
 {
     delete[] clases;
     delete[] socios;
-    delete[] inscripciones;
 }
 
 int main()

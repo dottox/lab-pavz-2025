@@ -1,36 +1,46 @@
 #include "clase.h"
 
-Clase::Clase(DtClase claseData){
+Clase::Clase(DtClase claseData)
+{
     this->id = claseData.getId();
     this->nombre = claseData.getNombre();
     this->turno = claseData.getTurno();
+    this->cantInscripciones = 0;
+    this->inscripciones = new Inscripcion *[MAX_INSCRIPCIONES];
 };
 
-int Clase::getId(){
+int Clase::getId()
+{
     return this->id;
 };
 
-string Clase::getNombre(){
+string Clase::getNombre()
+{
     return this->nombre;
 };
 
-Turno Clase::getTurno(){
+Turno Clase::getTurno()
+{
     return this->turno;
 };
 
-void Clase::agregarInscripcion(Inscripcion* inscripcion){
+void Clase::agregarInscripcion(Inscripcion *inscripcion)
+{
     this->inscripciones[this->cantInscripciones] = inscripcion;
     this->cantInscripciones++;
 };
 
-Inscripcion** Clase::getInscripciones(){
+Inscripcion **Clase::getInscripciones()
+{
     return inscripciones;
 };
 
-int Clase::getCantInscripciones(){
+int Clase::getCantInscripciones()
+{
     return this->cantInscripciones;
 };
 
-Clase::~Clase(){
+Clase::~Clase()
+{
     cout << "Clase: " << this->getId() << " destruida" << endl;
 };
