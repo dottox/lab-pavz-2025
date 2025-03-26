@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include "./dtClase.h"
+#include "../globals/constants.h"
+#define MIN_BICICLETAS 1
+#define MAX_BICICLETAS 50
 
 class DtSpinning : public DtClase {
   private:

@@ -1,9 +1,10 @@
 #pragma once
 
 #include "turno.h"
-
+#include "../globals/constants.h"
 #include <string>
 #include <stdexcept>
+
 
 class DtClase {
   private:

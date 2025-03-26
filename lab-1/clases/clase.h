@@ -7,6 +7,7 @@ using namespace std;
 #include "../dataStructures/dtClase.h"
 #include "./inscripcion.h"
 #define MAX_INSCRIPCIONES 100
+#define DEFAULT_INSCRIPCIONES 0
 
 class Clase
 {
@@ -22,9 +23,11 @@ public:
     int getId();
     string getNombre();
     Turno getTurno();
-    virtual int cupo() = 0;
-    virtual ~Clase();
+    
+    virtual int cupo() = 0; // Funcion polimorfica
     void agregarInscripcion(Inscripcion *);
     int getCantInscripciones();
     Inscripcion **getInscripciones();
+    
+    virtual ~Clase();
 };
