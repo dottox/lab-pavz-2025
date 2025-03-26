@@ -7,10 +7,6 @@ using namespace std;
 int main() {
     Sistema* sistema = new Sistema();
 
-<<<<<<< HEAD
-    // Test agregarSocio
-    
-=======
     sistema->agregarSocio("1", "Juan");
     sistema->agregarSocio("2", "Maria");
     sistema->agregarSocio("3", "Nacho");
@@ -29,7 +25,6 @@ int main() {
     sistema->agregarClase(DtSpinning(5, "Spinning", Noche, 10));
 
 
->>>>>>> 7ff3d03bdb934d8933b0b2d9a11c05d3ed84beaf
     try {
         sistema->agregarSocio("1", "Juan");
     } catch(const invalid_argument& e) {
