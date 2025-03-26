@@ -1,6 +1,4 @@
-#ifndef DTSOCIO_H
-#define DTSOCIO_H
-
+#pragma once
 
 #include <string>
 using namespace std;
@@ -17,4 +15,3 @@ public:
   ~DtSocio();
 };
 
-#endif

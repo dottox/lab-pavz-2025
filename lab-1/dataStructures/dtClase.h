@@ -1,5 +1,4 @@
-#ifndef DTCLASE_H
-#define DTCLASE_H
+#pragma once
 
 #include <iostream>
 #include "turno.h"
@@ -21,5 +20,3 @@ class DtClase {
     Turno getTurno();
     virtual ~DtClase();
 };
-
-#endif

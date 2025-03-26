@@ -52,24 +52,22 @@ bool Sistema::buscarClase(int idClase){
 }
 
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
-  Socio * socio = getSocio(ciSocio);
-  Clase * clase = getClase(idClase);
+  Socio* socio = getSocio(ciSocio);
+  Clase* clase = getClase(idClase);
 
   if(clase->cupo() == 0){throw invalid_argument("No hay cupo en la clase");}
 
   //Inscripcion existe
-  Inscripcion ** inscripcionesClase = clase->getInscripciones();
-
+  Inscripcion** inscripcionesClase = clase->getInscripciones();
+  
   for (int i=0; i < clase->getCantInscripciones(); i++){
     if (inscripcionesClase[i]->getSocio()->getCI() == ciSocio && inscripcionesClase[i]->getFecha() == fecha){
       throw invalid_argument("Ya existe una inscripcion para ese socio en esa fecha");
     }
   }
   
-  delete inscripcionesClase;
-
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
-  clase->agregarInscripcion(inscripcion);  
+  clase->agregarInscripcion(inscripcion);
 }
 
 void Sistema::agregarClase(DtSpinning clase) {

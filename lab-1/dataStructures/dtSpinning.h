@@ -1,5 +1,4 @@
-#ifndef DTSPINNING_H
-#define DTSPINNING_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -14,6 +13,3 @@ class DtSpinning : public DtClase {
     int getCantBicicletas();
     ~DtSpinning();
 };
-
-
-#endif

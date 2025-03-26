@@ -1,5 +1,4 @@
-#ifndef DTFECHA_H
-#define DTFECHA_H
+#pragma once
 
 #include <iostream>
 using namespace std;
@@ -19,4 +18,3 @@ class DtFecha {
     ~DtFecha();
 };
 
-#endif // DTFECHA_H

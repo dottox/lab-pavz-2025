@@ -1,10 +1,7 @@
-#ifndef TURNO_H
-#define TURNO_H
+#pragma once
 
 enum Turno{
     Manana,
     Tarde,
     Noche
 };
-
-#endif

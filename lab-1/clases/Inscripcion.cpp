@@ -32,5 +32,5 @@ Socio* Inscripcion::getSocio(){
  * @brief Destructor for the Inscripcion class.
  */
 Inscripcion::~Inscripcion(){
-    cout << "Inscripcion eliminada" << endl;
+    cout << "Inscripcion eliminada: " << this->getFecha().getDia() << "/" << this->getFecha().getMes() << "/" << this->getFecha().getAnio() << endl;
 };	
