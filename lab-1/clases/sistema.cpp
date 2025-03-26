@@ -65,8 +65,6 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
       throw invalid_argument("Ya existe una inscripcion para ese socio en esa fecha");
     }
   }
-  
-  delete inscripcionesClase;
 
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
