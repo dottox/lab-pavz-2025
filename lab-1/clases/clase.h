@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <iostream>
@@ -8,6 +9,13 @@ using namespace std;
 #include "./inscripcion.h"
 #define MAX_INSCRIPCIONES 3
 
+/**
+ * @class Clase
+ * @brief Represents a class with an ID, name, schedule (turno), and a list of inscriptions.
+ * 
+ * This is an abstract base class that provides a common interface for different types of classes.
+ * It includes methods to manage inscriptions and retrieve class details.
+ */
 class Clase{
     private:
         int id;

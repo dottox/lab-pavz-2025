@@ -1,5 +1,3 @@
 .*
-lab-0/*.o
-lab-0/test-*/*.o
-lab-0/test-*/programa
-lab-0/test-*/programa.exe
+*.o
+[!.]*
