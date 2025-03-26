@@ -73,22 +73,26 @@ int main() {
 
     // Test agregarInscripcion
     DtFecha date = DtFecha(1, 1, 2021); // Example date
-    DtFecha date2 = DtFecha(1, 2, 2021); // Example date
+    DtFecha date2 = DtFecha(15, 3, 2022); // Example date
+    DtFecha date3 = DtFecha(20, 4, 2023); // Example date
+    DtFecha date4 = DtFecha(10, 5, 2024); // Example date
     
     try{
         sistema->agregarInscripcion("2", 1, date);
+        sistema->agregarInscripcion("1", 1, date2);
+        sistema->agregarInscripcion("3", 1, date3);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
 
     try{
-        sistema->agregarInscripcion("3", 2, date);
+        sistema->agregarInscripcion("3", 2, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
 
     try{
-        sistema->agregarInscripcion("2", 1, date);
+        sistema->agregarInscripcion("4", 1, date);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }

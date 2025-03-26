@@ -14,6 +14,7 @@ class DtFecha {
     int getDia();
     int getMes();
     int getAnio();
-    bool operator==(const DtFecha&) const;
+    bool operator==(const DtFecha& other) const;
     ~DtFecha();
 };
+

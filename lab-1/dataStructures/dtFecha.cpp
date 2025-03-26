@@ -6,7 +6,6 @@ DtFecha::DtFecha() {
   this->dia = 1;
   this->mes = 1;
   this->anio = 1900;
-  cout << "Se hizo una fecha por defecto" << endl;
 }
 
 DtFecha::DtFecha(int dia, int mes, int anio) {

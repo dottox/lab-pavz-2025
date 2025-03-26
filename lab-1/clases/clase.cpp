@@ -6,7 +6,7 @@ Clase::Clase(DtClase claseData)
     this->nombre = claseData.getNombre();
     this->turno = claseData.getTurno();
     this->cantInscripciones = 0;
-    this->inscripciones = new Inscripcion *[MAX_INSCRIPCIONES];
+    this->inscripciones = new Inscripcion*[MAX_INSCRIPCIONES];
 };
 
 int Clase::getId()
@@ -24,7 +24,7 @@ Turno Clase::getTurno()
     return this->turno;
 };
 
-void Clase::agregarInscripcion(Inscripcion *inscripcion){
+void Clase::agregarInscripcion(Inscripcion* inscripcion){
     this->inscripciones[this->cantInscripciones++] = inscripcion;
 };
 
@@ -38,7 +38,10 @@ int Clase::getCantInscripciones()
     return this->cantInscripciones;
 };
 
-Clase::~Clase()
-{
+Clase::~Clase(){
     cout << "Clase: " << this->getId() << " destruida" << endl;
+    for (int i = 0; i < this->cantInscripciones; i++){
+        delete this->inscripciones[i];
+    }
+    delete[] this->inscripciones;
 };

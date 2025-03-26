@@ -14,7 +14,7 @@ private:
     int id;
     string nombre;
     Turno turno;
-    Inscripcion **inscripciones;
+    Inscripcion** inscripciones;
     int cantInscripciones;
 
 public:

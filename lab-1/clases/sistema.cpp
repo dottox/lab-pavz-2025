@@ -68,6 +68,7 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
 
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
+  DtFecha date = inscripcionesClase[0]->getFecha();
 }
 
 void Sistema::agregarClase(DtSpinning clase) {
