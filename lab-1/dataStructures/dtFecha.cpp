@@ -3,7 +3,10 @@
 using namespace std;
 
 DtFecha::DtFecha() {
-  throw invalid_argument("Constructor vacio no permitido\n");
+  this->dia = 1;
+  this->mes = 1;
+  this->anio = 1900;
+  cout << "Se hizo una fecha por defecto" << endl;
 }
 
 DtFecha::DtFecha(int dia, int mes, int anio) {
@@ -28,7 +31,8 @@ int DtFecha::getAnio() {
 }
 
 bool DtFecha::operator==(const DtFecha& other) const {
-  return dia == other.dia && mes == other.mes && anio == other.anio;
+  return this->dia == other.dia && this->mes == other.mes && this->anio == other.anio;
 }
+
 
 DtFecha::~DtFecha() {}
