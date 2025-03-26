@@ -24,10 +24,8 @@ Turno Clase::getTurno()
     return this->turno;
 };
 
-void Clase::agregarInscripcion(Inscripcion *inscripcion)
-{
-    this->inscripciones[this->cantInscripciones] = inscripcion;
-    this->cantInscripciones++;
+void Clase::agregarInscripcion(Inscripcion *inscripcion){
+    this->inscripciones[this->cantInscripciones++] = inscripcion;
 };
 
 Inscripcion **Clase::getInscripciones()
