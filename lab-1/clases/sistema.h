@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include "socio.h"
 #include "inscripcion.h"
@@ -5,11 +7,6 @@
 #include "entrenamiento.h"
 #include "spinning.h"
 #include "../globals/constants.h"
-
-#define MAX_SOCIOS 3
-#define MAX_CLASES 3
-#define DEFAULT_SOCIOS 0
-#define DEFAULT_CLASES 0
 
 //Fin Errores de clases
 using namespace std;

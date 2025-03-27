@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 using namespace std;
 
@@ -20,7 +21,6 @@ class Inscripcion{
     public:
         Inscripcion(DtFecha, Socio*);
         DtFecha getFecha();
-        ~Inscripcion();
         Socio* getSocio();
-
+        ~Inscripcion();
 };

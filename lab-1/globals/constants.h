@@ -29,3 +29,15 @@
 #define MAX_MESES 12
 #define MIN_ANIO 1900
 //Fin constantes de fecha
+
+//Constantes de clases
+#define MAX_INSCRIPCIONES 100
+#define DEFAULT_INSCRIPCIONES 0
+//Fin constantes de clases
+
+//Constantes de sistema
+#define MAX_SOCIOS 3
+#define MAX_CLASES 3
+#define DEFAULT_SOCIOS 0
+#define DEFAULT_CLASES 0
+//Fin constantes de sistema

@@ -1,21 +1,24 @@
 #pragma once
 
+#include <iostream>
 #include "turno.h"
 #include "../globals/constants.h"
 #include <string>
-#include <stdexcept>
+
+using namespace std;
 
 
 class DtClase {
   private:
     int id;
-    std::string nombre;
+    string nombre;
     Turno turno;
+
   public:
     DtClase();
-    DtClase(int id, std::string nombre, Turno turn);
+    DtClase(int, string, Turno);
     int getId();
-    std::string getNombre();
+    string getNombre();
     Turno getTurno();
     virtual ~DtClase();
 };

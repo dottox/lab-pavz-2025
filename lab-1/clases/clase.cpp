@@ -1,3 +1,4 @@
+
 #include "clase.h"
 
 Clase::Clase(DtClase claseData)
@@ -24,20 +25,40 @@ Turno Clase::getTurno()
     return this->turno;
 };
 
+
+/**
+ * @brief Adds an inscription to the class.
+ * 
+ * @param inscripcion The inscription to add to the class.
+ */
 void Clase::agregarInscripcion(Inscripcion* inscripcion){
     this->inscripciones[this->cantInscripciones++] = inscripcion;
 };
 
-Inscripcion **Clase::getInscripciones()
-{
-    return inscripciones;
+
+/**
+ * @brief Returns the inscriptions of the class.
+ * 
+ * @return An array of Inscripcion objects representing the inscriptions of the class.
+ */
+Inscripcion** Clase::getInscripciones(){
+    return this->inscripciones;
 };
 
-int Clase::getCantInscripciones()
-{
+
+/**
+ * @brief Returns the number of inscriptions in the class.
+ * 
+ * @return The number of inscriptions in the class.
+ */
+int Clase::getCantInscripciones(){
     return this->cantInscripciones;
 };
 
+
+/**
+ * @brief Destructor for the Clase class.
+ */
 Clase::~Clase(){
     cout << "Clase: " << this->getId() << " destruida" << endl;
     for (int i = 0; i < this->cantInscripciones; i++){

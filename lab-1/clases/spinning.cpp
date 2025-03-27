@@ -1,5 +1,6 @@
 #include "spinning.h"
 
+
 Spinning::Spinning(DtSpinning claseData) : Clase(claseData) {
     this->cantBicicletas = claseData.getCantBicicletas();
 };
