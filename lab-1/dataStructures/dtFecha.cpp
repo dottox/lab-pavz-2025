@@ -1,16 +1,15 @@
 #include "dtFecha.h"
 #include <stdexcept>
 using namespace std;
-
 DtFecha::DtFecha() {
-  this->dia = 1;
-  this->mes = 1;
-  this->anio = 1900;
+  this->dia = MIN_DIAS;
+  this->mes = MIN_MESES;
+  this->anio = MIN_ANIO;
 }
 
 DtFecha::DtFecha(int dia, int mes, int anio) {
-  if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1900) {
-    throw invalid_argument("Fecha invalida\n");
+  if (dia < MIN_DIAS || dia > MAX_DIAS || mes < MIN_MESES || mes > MAX_MESES || anio < MIN_ANIO) {
+    throw invalid_argument(ERROR_FECHA_INVALIDA);
   }
   this->dia = dia;
   this->mes = mes;

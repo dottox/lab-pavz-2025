@@ -1,8 +1,8 @@
 #include "sistema.h"
 
 Sistema::Sistema(){
-    this->cantSocios = 0;
-    this->cantClases = 0;
+    this->cantSocios = DEFAULT_SOCIOS;
+    this->cantClases = DEFAULT_CLASES;
     this->socios = new Socio*[MAX_SOCIOS];
     this->clases = new Clase*[MAX_CLASES];
 };
@@ -12,11 +12,11 @@ Sistema::Sistema(){
 // std::invalid_argument.
 void Sistema::agregarSocio(string ci, string nombre){
     if(this->cantSocios >= MAX_SOCIOS){
-      throw invalid_argument("No se pueden agregar mas socios");
+      throw invalid_argument(ERROR_LIMITE_SOCIOS);
     }
     for(int i = 0; i < cantSocios; i++){
       if(socios[i]->getCI() == ci){
-        throw invalid_argument("Ya existe un socio con esa CI");
+        throw invalid_argument(ERROR_MISMA_CI);
       }
     }
     DtSocio socioData = DtSocio(ci, nombre);
@@ -30,7 +30,7 @@ Socio* Sistema::getSocio(string ci){
         return socios[i];
         }
     }
-    throw invalid_argument("No existe un socio con esa CI");
+    throw invalid_argument(ERROR_NO_SOCIO_CI);
 }
 
 Clase* Sistema::getClase(int idClase){
@@ -39,7 +39,7 @@ Clase* Sistema::getClase(int idClase){
     return clases[i];
     }
   }
-  throw invalid_argument("No existe una clase con esa ID");
+  throw invalid_argument(ERROR_NO_CLASE_ID);
 }
 
 bool Sistema::buscarClase(int idClase){
@@ -55,14 +55,14 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Socio* socio = getSocio(ciSocio);
   Clase* clase = getClase(idClase);
 
-  if(clase->cupo() == 0){throw invalid_argument("No hay cupo en la clase");}
+  if(clase->cupo() == 0){throw invalid_argument(ERROR_CUPOS_CERO);}
 
   //Inscripcion existe
   Inscripcion** inscripcionesClase = clase->getInscripciones();
 
   for (int i=0; i < clase->getCantInscripciones(); i++){
     if (inscripcionesClase[i]->getSocio()->getCI() == ciSocio && inscripcionesClase[i]->getFecha() == fecha){
-      throw invalid_argument("Ya existe una inscripcion para ese socio en esa fecha");
+      throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);
     }
   }
 
@@ -73,11 +73,11 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
 
 void Sistema::agregarClase(DtSpinning clase) {
   if (this->cantClases >= MAX_CLASES) {
-    throw invalid_argument("No se pueden agregar mas clases");
+    throw invalid_argument(ERROR_LIMITE_CLASES);
     
   }
   if (buscarClase(clase.getId())){
-    throw invalid_argument("Ya existe una clase con ese ID");
+    throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   }
   Spinning* spinning = new Spinning(clase);
   this->clases[cantClases] = spinning;
@@ -86,10 +86,10 @@ void Sistema::agregarClase(DtSpinning clase) {
 
 void Sistema::agregarClase(DtEntrenamiento clase) {
   if (this->cantClases >= MAX_CLASES) {
-    throw invalid_argument("No se pueden agregar más clases");
+    throw invalid_argument(ERROR_LIMITE_CLASES);
   }
   if (buscarClase(clase.getId())){
-    throw invalid_argument("Ya existe una clase con ese ID");
+    throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   }
   Entrenamiento * entrenamiento = new Entrenamiento(clase);
   this->clases[cantClases] = entrenamiento;

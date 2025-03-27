@@ -4,6 +4,10 @@
 using namespace std;
 
 #include "dtClase.h"
+#include "../globals/constants.h"
+
+
+
 
 class DtEntrenamiento : public DtClase{
   private:

@@ -201,52 +201,7 @@ int main()
     {
         cout << "Error inesperado en TC013" << endl;
     }
-<<<<<<< HEAD
-    try
-    {
-        DtFecha fecha = DtFecha(0, 0, 0);
-        Socio* socio = new Socio(DtSocio("1", "Juan"));
-        Inscripcion inscripcion = Inscripcion(fecha, socio);
-        assert(inscripcion.getFecha().getDia() == 0);
-        assert(inscripcion.getFecha().getMes() == 0);
-        assert(inscripcion.getFecha().getAnio() == 0);
-
-        assert(inscripcion.getFecha().getDia() != 1);
-        assert(inscripcion.getFecha().getMes() != 1);
-        assert(inscripcion.getFecha().getAnio() != 1);
-
-        delete socio;
-        throw runtime_error("Error: Se permitio una fecha invalida (TC014)");
-    } catch (invalid_argument &e){
-        cout << "Test fecha invalida TC014 paso correctamente" << endl;
-    } catch (...)
-    {
-        terminate();
-    }
-
-    try
-    {
-        DtFecha fecha = DtFecha(50, 51, 52);
-        Socio* socio = new Socio(DtSocio("1", "Juan"));
-        Inscripcion inscripcion = Inscripcion(fecha, socio);
-        assert(inscripcion.getFecha().getDia() == 50);
-        assert(inscripcion.getFecha().getMes() == 51);
-        assert(inscripcion.getFecha().getAnio() == 52);
-
-        assert(inscripcion.getFecha().getDia() != 1);
-        assert(inscripcion.getFecha().getMes() != 1);
-        assert(inscripcion.getFecha().getAnio() != 1);
-        throw runtime_error("Error: Se permitio una fecha invalida (TC015)");
-    }catch(invalid_argument &e){
-        cout << "Test fecha invalida TC015 paso correctamente" << endl;
-    }
-    catch (...)
-    {
-        terminate();
-    }
-=======
     
->>>>>>> 2c02938866b878ec825fb86e67a6e0f6bd65541c
 
     return 0;
 }

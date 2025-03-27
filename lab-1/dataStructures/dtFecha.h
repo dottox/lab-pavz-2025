@@ -2,6 +2,7 @@
 
 #include <iostream>
 using namespace std;
+#include "../globals/constants.h"
 
 class DtFecha {
   private:

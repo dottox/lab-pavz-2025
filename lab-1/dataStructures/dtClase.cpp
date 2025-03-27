@@ -3,12 +3,12 @@
 using namespace std;
 
 DtClase::DtClase() {
-  throw invalid_argument("Constructor vacio no permitido\n");
+  throw invalid_argument(ERROR_CONSTRUCTOR_VACIO);
 }
 
 DtClase::DtClase(int id, string nombre, Turno turn) {
   if (turn < Manana || turn > Noche) {
-    throw invalid_argument("Turno invalido\n");
+    throw invalid_argument(ERROR_TURNO_INVALIDO);
   }
   this->id = id;
   this->nombre = nombre;
