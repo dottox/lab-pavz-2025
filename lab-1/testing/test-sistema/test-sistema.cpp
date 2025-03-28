@@ -10,25 +10,25 @@ int main() {
     // Test agregarSocio
 
     try {
-        sistema->agregarSocio("1", "Juan");
+        sistema->agregarSocio("12345678", "Juan");
     } catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
 
     try {
-        sistema->agregarSocio("2", "Maria");
+        sistema->agregarSocio("21345678", "Maria");
     } catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
 
     try {
-        sistema->agregarSocio("3", "Nacho");
+        sistema->agregarSocio("31245678", "Nacho");
     } catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
 
     try {
-        sistema->agregarSocio("4", "Gonzalo");
+        sistema->agregarSocio("41235678", "Gonzalo");
     } catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
@@ -58,19 +58,18 @@ int main() {
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
     try{
         sistema->agregarClase(clase4);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarClase(clase5);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     // Test agregarInscripcion
     DtFecha date = DtFecha(1, 1, 2021); // Example date
     DtFecha date2 = DtFecha(15, 3, 2022); // Example date
@@ -78,38 +77,38 @@ int main() {
     DtFecha date4 = DtFecha(10, 5, 2024); // Example date
     
     try{
-        sistema->agregarInscripcion("2", 1, date);
-        sistema->agregarInscripcion("1", 1, date2);
-        sistema->agregarInscripcion("3", 1, date3);
+        sistema->agregarInscripcion("12345678", 1, date);
+        sistema->agregarInscripcion("21345678", 1, date2);
+        sistema->agregarInscripcion("31245678", 1, date3);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
 
     try{
-        sistema->agregarInscripcion("3", 2, date2);
+        sistema->agregarInscripcion("31245678", 2, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
-        sistema->agregarInscripcion("4", 1, date);
+        sistema->agregarInscripcion("41235678", 1, date);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
-        sistema->agregarInscripcion("1", 4, date2);
+        sistema->agregarInscripcion("21345678", 4, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
-        sistema->agregarInscripcion("4", 2, date2);
+        sistema->agregarInscripcion("41235678", 2, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     delete sistema;
-
+    
     cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
 }
