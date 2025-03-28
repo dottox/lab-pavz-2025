@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "turno.h"
+#include "../globals/constants.h"
 #include <string>
 
 using namespace std;
