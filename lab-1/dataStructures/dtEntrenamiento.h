@@ -4,7 +4,6 @@
 using namespace std;
 
 #include "dtClase.h"
-#include "../globals/constants.h"
 
 
 
