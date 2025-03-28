@@ -14,10 +14,8 @@ void Sistema::agregarSocio(string ci, string nombre){
     if(this->cantSocios >= MAX_SOCIOS){
       throw invalid_argument(ERROR_LIMITE_SOCIOS);
     }
-    for(int i = 0; i < cantSocios; i++){
-      if(socios[i]->getCI() == ci){
-        throw invalid_argument(ERROR_MISMA_CI);
-      }
+    if(getSocio(ci) != nullptr){
+      throw invalid_argument(ERROR_SOCIO_EXISTENTE);
     }
     DtSocio socioData = DtSocio(ci, nombre);
     this->socios[cantSocios] = new Socio(socioData);
@@ -30,7 +28,7 @@ Socio* Sistema::getSocio(string ci){
         return socios[i];
         }
     }
-    throw invalid_argument(ERROR_NO_SOCIO_CI);
+    return nullptr;
 }
 
 Clase* Sistema::getClase(int idClase){
@@ -39,16 +37,7 @@ Clase* Sistema::getClase(int idClase){
     return clases[i];
     }
   }
-  throw invalid_argument(ERROR_NO_CLASE_ID);
-}
-
-bool Sistema::buscarClase(int idClase){
-  for(int i = 0; i < cantClases; i++){
-    if(clases[i]->getId() == idClase){
-      return true;
-    }
-  }
-  return false;
+  return nullptr;
 }
 
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
@@ -57,18 +46,12 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
 
   if(clase->cupo() == 0){throw invalid_argument(ERROR_CUPOS_CERO);}
 
-  //Inscripcion existe
-  Inscripcion** inscripcionesClase = clase->getInscripciones();
-
-  for (int i=0; i < clase->getCantInscripciones(); i++){
-    if (inscripcionesClase[i]->getSocio()->getCI() == ciSocio && inscripcionesClase[i]->getFecha() == fecha){
-      throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);
-    }
-  }
+  if(clase->getInscripcion(ciSocio, fecha) != nullptr){
+    throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);
+  };
 
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
-  DtFecha date = inscripcionesClase[0]->getFecha();
 }
 
 void Sistema::agregarClase(DtSpinning clase) {
@@ -76,7 +59,7 @@ void Sistema::agregarClase(DtSpinning clase) {
     throw invalid_argument(ERROR_LIMITE_CLASES);
     
   }
-  if (buscarClase(clase.getId())){
+  if (getClase(clase.getId()) != nullptr) {
     throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   }
   Spinning* spinning = new Spinning(clase);
@@ -88,7 +71,7 @@ void Sistema::agregarClase(DtEntrenamiento clase) {
   if (this->cantClases >= MAX_CLASES) {
     throw invalid_argument(ERROR_LIMITE_CLASES);
   }
-  if (buscarClase(clase.getId())){
+  if (getClase(clase.getId()) != nullptr){
     throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   }
   Entrenamiento * entrenamiento = new Entrenamiento(clase);

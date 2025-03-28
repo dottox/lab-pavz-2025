@@ -29,6 +29,5 @@ class Sistema {
     void agregarClase(DtEntrenamiento);
     void listarClases();
     void listarSocios();
-    bool buscarClase(int);
     ~Sistema();
 };

@@ -32,6 +32,9 @@ Turno Clase::getTurno()
  * @param inscripcion The inscription to add to the class.
  */
 void Clase::agregarInscripcion(Inscripcion* inscripcion){
+    if(this->cantInscripciones >= MAX_INSCRIPCIONES){
+        throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
+    }
     this->inscripciones[this->cantInscripciones++] = inscripcion;
 };
 
@@ -45,6 +48,15 @@ Inscripcion** Clase::getInscripciones(){
     return this->inscripciones;
 };
 
+
+Inscripcion* Clase::getInscripcion(string ci, DtFecha fecha){
+    for (int i = 0; i < this->cantInscripciones; i++){
+        if (this->inscripciones[i]->getSocio()->getCI() == ci && this->inscripciones[i]->getFecha() == fecha){
+            return this->inscripciones[i];
+        }
+    }
+    return nullptr;
+};
 
 /**
  * @brief Returns the number of inscriptions in the class.
