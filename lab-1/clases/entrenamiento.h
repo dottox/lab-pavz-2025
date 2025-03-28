@@ -1,10 +1,12 @@
 #pragma once
+
 #include <iostream>
 #include "./clase.h"
 using namespace std;
 
 #include "../dataStructures/dtEntrenamiento.h"
-
+#define CUPOS_RAMBLA 20
+#define CUPOS_NO_RAMBLA 10
 /**
  * @class Entrenamiento
  * @brief Represents a training session, inheriting from the Clase class.

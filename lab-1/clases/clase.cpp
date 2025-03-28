@@ -1,46 +1,27 @@
 
 #include "clase.h"
 
-/**
- * @brief Constructor for the Clase class.
- * 
- * Initializes a Clase object using the data provided in a DtClase object.
- * 
- * @param claseData An object of type DtClase containing the initial data for the Clase.
- */
-Clase::Clase(DtClase claseData){
+Clase::Clase(DtClase claseData)
+{
     this->id = claseData.getId();
     this->nombre = claseData.getNombre();
     this->turno = claseData.getTurno();
+    this->cantInscripciones = DEFAULT_INSCRIPCIONES;
+    this->inscripciones = new Inscripcion*[MAX_INSCRIPCIONES];
 };
 
-
-/**
- * @brief Returns the ID of the class.
- * 
- * @return The ID of the class.
- */
-int Clase::getId(){
+int Clase::getId()
+{
     return this->id;
 };
 
-
-/**
- * @brief Returns the name of the class.
- * 
- * @return The name of the class.
- */
-string Clase::getNombre(){
+string Clase::getNombre()
+{
     return this->nombre;
 };
 
-
-/**
- * @brief Returns the schedule of the class.
- * 
- * @return The schedule of the class.
- */
-Turno Clase::getTurno(){
+Turno Clase::getTurno()
+{
     return this->turno;
 };
 
@@ -51,8 +32,10 @@ Turno Clase::getTurno(){
  * @param inscripcion The inscription to add to the class.
  */
 void Clase::agregarInscripcion(Inscripcion* inscripcion){
-    this->inscripciones[this->cantInscripciones] = inscripcion;
-    this->cantInscripciones++;
+    if(this->cantInscripciones >= MAX_INSCRIPCIONES){
+        throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
+    }
+    this->inscripciones[this->cantInscripciones++] = inscripcion;
 };
 
 
@@ -62,9 +45,18 @@ void Clase::agregarInscripcion(Inscripcion* inscripcion){
  * @return An array of Inscripcion objects representing the inscriptions of the class.
  */
 Inscripcion** Clase::getInscripciones(){
-    return inscripciones;
+    return this->inscripciones;
 };
 
+
+Inscripcion* Clase::getInscripcion(string ci, DtFecha fecha){
+    for (int i = 0; i < this->cantInscripciones; i++){
+        if (this->inscripciones[i]->getSocio()->getCI() == ci && this->inscripciones[i]->getFecha() == fecha){
+            return this->inscripciones[i];
+        }
+    }
+    return nullptr;
+};
 
 /**
  * @brief Returns the number of inscriptions in the class.
@@ -81,4 +73,8 @@ int Clase::getCantInscripciones(){
  */
 Clase::~Clase(){
     cout << "Clase: " << this->getId() << " destruida" << endl;
+    for (int i = 0; i < this->cantInscripciones; i++){
+        delete this->inscripciones[i];
+    }
+    delete[] this->inscripciones;
 };

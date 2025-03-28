@@ -2,6 +2,7 @@
 
 #include <iostream>
 using namespace std;
+#include "../globals/constants.h"
 
 class DtFecha {
   private:
@@ -10,10 +11,11 @@ class DtFecha {
     int anio;
   public:
     DtFecha();
-    DtFecha(int dia, int mes, int anio);
+    DtFecha(int, int, int);
     int getDia();
     int getMes();
     int getAnio();
     bool operator==(const DtFecha& other) const;
     ~DtFecha();
 };
+

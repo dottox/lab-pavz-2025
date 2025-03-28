@@ -25,9 +25,9 @@ Entrenamiento::Entrenamiento(DtEntrenamiento claseData) : Clase::Clase(claseData
  */
 int Entrenamiento::cupo(){
     if (this->getRambla()) {
-        return 20;
+        return CUPOS_RAMBLA;
     } else {
-        return 10;
+        return CUPOS_NO_RAMBLA;
     }
 };
 
