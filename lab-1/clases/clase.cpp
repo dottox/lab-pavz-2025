@@ -32,10 +32,11 @@ Turno Clase::getTurno()
  * @param inscripcion The inscription to add to the class.
  */
 void Clase::agregarInscripcion(Inscripcion* inscripcion){
-    if(this->cantInscripciones >= MAX_INSCRIPCIONES){
-        throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
-    }
+    if(this->cupo() == 0) throw invalid_argument(ERROR_CUPOS_CERO);
+    if(this->cantInscripciones >= MAX_INSCRIPCIONES) throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
+
     this->inscripciones[this->cantInscripciones++] = inscripcion;
+    this->cantCupo--;
 };
 
 

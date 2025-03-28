@@ -3,10 +3,11 @@
 
 Spinning::Spinning(DtSpinning claseData) : Clase(claseData) {
     this->cantBicicletas = claseData.getCantBicicletas();
+    this->cantCupo = claseData.getCupo();
 };
 
 int Spinning::cupo() {
-    return this->getCantBicicletas();
+    return this->cantCupo;
 };
 
 void Spinning::setCantBicicletas(int cantBici) {

@@ -5,8 +5,7 @@
 using namespace std;
 
 #include "../dataStructures/dtEntrenamiento.h"
-#define CUPOS_RAMBLA 20
-#define CUPOS_NO_RAMBLA 10
+
 /**
  * @class Entrenamiento
  * @brief Represents a training session, inheriting from the Clase class.
@@ -16,7 +15,9 @@ using namespace std;
  */
 class Entrenamiento : public Clase{
   private: 
+    int cantCupo;
     bool enRambla;
+
   public:
     Entrenamiento(DtEntrenamiento);
     int cupo();
