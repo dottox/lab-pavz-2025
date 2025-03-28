@@ -49,7 +49,6 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   if(clase->cupo() == 0){throw invalid_argument(ERROR_CUPOS_CERO);}
   if(clase->getInscripcion(ciSocio, fecha) != nullptr){throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE); };
   
-  cout << "llegue" << endl;
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
 }
