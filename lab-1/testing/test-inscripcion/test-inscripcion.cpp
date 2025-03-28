@@ -167,7 +167,7 @@ int main()
     {
         DtFecha fecha = DtFecha(1, 1, 1901);
         assert(fecha.getAnio() == 1901);
-        cout << "TC011: Anio valido aprobado" << endl;
+        cout << "TC011: Anio valido aprobadocs" << endl;
     }
     catch (exception &e)
     {
