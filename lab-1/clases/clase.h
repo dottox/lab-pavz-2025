@@ -15,7 +15,7 @@ private:
     Turno turno;
     Inscripcion** inscripciones;
     int cantInscripciones;
-    int cantCupo = 0; //Esto no se si está bien
+    int cantCupo;
 
 public:
     Clase(DtClase);
