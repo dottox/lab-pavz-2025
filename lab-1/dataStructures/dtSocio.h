@@ -2,6 +2,8 @@
 
 #include <string>
 #include <stdexcept>
+#include "../globals/constants.h"
+
 using namespace std;
 #define CI_LENGTH 8
 #define NOMBRE_MIN_LENGTH 1
