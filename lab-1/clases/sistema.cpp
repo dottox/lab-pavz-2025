@@ -20,9 +20,7 @@ void Sistema::agregarSocio(string ci, string nombre){
     DtSocio socioData = DtSocio(ci, nombre);
     this->socios[cantSocios] = new Socio(socioData);
     this->cantSocios++;
-    cout << "Socio agregado: " << this->socios[cantSocios-1]->getCI() << endl;
-    cout << "Nombre: " << this->socios[cantSocios-1]->getNombre() << endl;
-    
+
 }
 
 Socio* Sistema::getSocio(string ci){
