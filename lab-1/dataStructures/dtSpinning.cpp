@@ -11,6 +11,11 @@ DtSpinning::DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtC
     throw invalid_argument(ERROR_CANT_BICICLETA_INVALIDA);
   }
   this->cantBicicletas = cantBicicletas;
+  this->cantCupos = cantBicicletas;
+}
+
+int DtSpinning::getCupo() {
+  return this->cantCupos;
 }
 
 int DtSpinning::getCantBicicletas() {

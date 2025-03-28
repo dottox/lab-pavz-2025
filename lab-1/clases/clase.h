@@ -15,6 +15,7 @@ private:
     Turno turno;
     Inscripcion** inscripciones;
     int cantInscripciones;
+    int cantCupo;
 
 public:
     Clase(DtClase);

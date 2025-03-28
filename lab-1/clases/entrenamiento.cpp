@@ -11,6 +11,7 @@
  */
 Entrenamiento::Entrenamiento(DtEntrenamiento claseData) : Clase::Clase(claseData){
     this->enRambla = claseData.getRambla();
+    this->cantCupo = claseData.getCupo();
 };
 
 
@@ -24,11 +25,7 @@ Entrenamiento::Entrenamiento(DtEntrenamiento claseData) : Clase::Clase(claseData
  * @return int The maximum capacity for the training session.
  */
 int Entrenamiento::cupo(){
-    if (this->getRambla()) {
-        return CUPOS_RAMBLA;
-    } else {
-        return CUPOS_NO_RAMBLA;
-    }
+    return this->cantCupo;
 };
 
 

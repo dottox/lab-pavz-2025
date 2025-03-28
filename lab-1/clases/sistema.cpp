@@ -44,23 +44,17 @@ Clase* Sistema::getClase(int idClase){
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Socio* socio = getSocio(ciSocio);
   Clase* clase = getClase(idClase);
-  if(socio == nullptr){throw invalid_argument(ERROR_NO_SOCIO_CI);}
-  if(clase == nullptr){throw invalid_argument(ERROR_NO_CLASE_ID);}
-  if(clase->cupo() == 0){throw invalid_argument(ERROR_CUPOS_CERO);}
-  if(clase->getInscripcion(ciSocio, fecha) != nullptr){throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE); };
+  if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
+  if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+  if(clase->getInscripcion(ciSocio, fecha) != nullptr) throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);;
   
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
 }
 
 void Sistema::agregarClase(DtSpinning clase) {
-  if (this->cantClases >= MAX_CLASES) {
-    throw invalid_argument(ERROR_LIMITE_CLASES);
-    
-  }
-  if (getClase(clase.getId()) != nullptr) {
-    throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
-  }
+  if (this->cantClases >= MAX_CLASES) throw invalid_argument(ERROR_LIMITE_CLASES);
+  if (getClase(clase.getId()) != nullptr) throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   Spinning* spinning = new Spinning(clase);
   this->clases[cantClases] = spinning;
   this->cantClases++;

@@ -35,6 +35,10 @@
 //Constantes de clases
 #define MAX_INSCRIPCIONES 100
 #define DEFAULT_INSCRIPCIONES 0
+#define CUPOS_RAMBLA 20
+#define CUPOS_NO_RAMBLA 10
+#define MIN_BICICLETAS 1
+#define MAX_BICICLETAS 50
 //Fin constantes de clases
 
 //Constantes de sistema
