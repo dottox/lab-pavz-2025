@@ -1,8 +1,9 @@
 #pragma once
 
 #include <iostream>
-using namespace std;
 #include "../globals/constants.h"
+
+using namespace std;
 
 class DtFecha {
   private:

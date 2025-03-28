@@ -6,6 +6,8 @@ using namespace std;
 #include "../dataStructures/turno.h"
 #include "../dataStructures/dtClase.h"
 #include "./inscripcion.h"
+#include "../globals/constants.h"
+
 
 class Clase{
 

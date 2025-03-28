@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include "./dtClase.h"
-#include "../globals/constants.h"
 
 class DtSpinning : public DtClase {
   private:
