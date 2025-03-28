@@ -58,19 +58,18 @@ int main() {
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
     try{
         sistema->agregarClase(clase4);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarClase(clase5);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     // Test agregarInscripcion
     DtFecha date = DtFecha(1, 1, 2021); // Example date
     DtFecha date2 = DtFecha(15, 3, 2022); // Example date
@@ -84,32 +83,32 @@ int main() {
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarInscripcion("3", 2, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarInscripcion("4", 1, date);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarInscripcion("1", 4, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     try{
         sistema->agregarInscripcion("4", 2, date2);
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
-
+    
     delete sistema;
-
+    
     cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
 }

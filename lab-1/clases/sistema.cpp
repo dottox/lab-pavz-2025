@@ -20,6 +20,9 @@ void Sistema::agregarSocio(string ci, string nombre){
     DtSocio socioData = DtSocio(ci, nombre);
     this->socios[cantSocios] = new Socio(socioData);
     this->cantSocios++;
+    cout << "Socio agregado: " << this->socios[cantSocios-1]->getCI() << endl;
+    cout << "Nombre: " << this->socios[cantSocios-1]->getNombre() << endl;
+    
 }
 
 Socio* Sistema::getSocio(string ci){
@@ -34,7 +37,7 @@ Socio* Sistema::getSocio(string ci){
 Clase* Sistema::getClase(int idClase){
   for(int i = 0; i < cantClases; i++){
     if(clases[i]->getId() == idClase){
-    return clases[i];
+      return clases[i];
     }
   }
   return nullptr;
@@ -43,13 +46,12 @@ Clase* Sistema::getClase(int idClase){
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Socio* socio = getSocio(ciSocio);
   Clase* clase = getClase(idClase);
-
+  if(socio == nullptr){throw invalid_argument(ERROR_NO_SOCIO_CI);}
+  if(clase == nullptr){throw invalid_argument(ERROR_NO_CLASE_ID);}
   if(clase->cupo() == 0){throw invalid_argument(ERROR_CUPOS_CERO);}
-
-  if(clase->getInscripcion(ciSocio, fecha) != nullptr){
-    throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);
-  };
-
+  if(clase->getInscripcion(ciSocio, fecha) != nullptr){throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE); };
+  
+  cout << "llegue" << endl;
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
 }
