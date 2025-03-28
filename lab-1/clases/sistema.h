@@ -18,12 +18,15 @@ class Sistema {
     
     int cantClases;
     Clase** clases;
+    
+    Socio* getSocio(string);
+    Clase* getClase(int);
 
   public:
     Sistema();
+
+    // Funciones de los requerimientos
     void agregarSocio(string, string);
-    Socio* getSocio(string);
-    Clase* getClase(int);
     void agregarInscripcion(string, int, DtFecha);
     void agregarClase(DtSpinning);
     void agregarClase(DtEntrenamiento);
