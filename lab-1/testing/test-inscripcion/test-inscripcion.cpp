@@ -48,9 +48,10 @@ int main()
         assert(fecha.getDia() == 1);
         cout << "TC002: Dia valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC002" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC002: " << errorMessage << endl;
     }
     // Caso fecha valida
     try
@@ -59,7 +60,7 @@ int main()
         assert(fecha.getDia() == 31);
         cout << "TC003: Dia valido aprobado" << endl;
     }
-    catch (...)
+    catch (runtime_error &e)
     {
         cout << "Error inesperado en TC003" << endl;
     }
@@ -73,7 +74,7 @@ int main()
     {
         cout << "Test fecha invalida TC004 paso correctamente" << endl;
     }
-    catch (...)
+    catch (runtime_error &e)
     {
         terminate();
     }
@@ -89,7 +90,7 @@ int main()
     {
         cout << "Test fecha invalida TC005 paso correctamente" << endl;
     }
-    catch (...)
+    catch (runtime_error &e)
     {
         terminate();
     }
@@ -101,9 +102,10 @@ int main()
         assert(fecha.getMes() == 1);
         cout << "TC006: Mes valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC006" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC006: " << errorMessage << endl;
     }
 
     // Caso fecha valida
@@ -113,9 +115,10 @@ int main()
         assert(fecha.getMes() == 12);
         cout << "TC007: Mes valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC007" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC007: " << errorMessage << endl;
     }
 
     // Caso fecha invalida
@@ -128,7 +131,7 @@ int main()
     {
         cout << "Test fecha invalida TC008 paso correctamente" << endl;
     }
-    catch (...)
+    catch (runtime_error &e)
     {
         terminate();
     }
@@ -143,7 +146,7 @@ int main()
     {
         cout << "Test fecha invalida TC004 paso correctamente" << endl;
     }
-    catch (...)
+    catch (runtime_error &e)
     {
         terminate();
     }
@@ -154,9 +157,10 @@ int main()
         assert(fecha.getAnio() == 1900);
         cout << "TC010: Anio valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC010" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC010: " << errorMessage << endl;
     }
 
     try
@@ -165,9 +169,10 @@ int main()
         assert(fecha.getAnio() == 1901);
         cout << "TC011: Anio valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC011" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC011: " << errorMessage << endl;
     }
 
     try
@@ -176,15 +181,16 @@ int main()
         assert(fecha.getAnio() == 2025);
         cout << "TC012: Anio valido aprobado" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC012" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC012: " << errorMessage << endl;
     }
     //---------------------------TEST INSCRIPCION------------------------------------------
     try
     {
         DtFecha fecha = DtFecha(5, 7, 2022);
-        Socio* socio = new Socio(DtSocio("1", "Juan"));
+        Socio* socio = new Socio(DtSocio("12312323", "Juan"));
         Inscripcion inscripcion = Inscripcion(fecha, socio);
         assert(inscripcion.getFecha().getDia() == 5);
         assert(inscripcion.getFecha().getMes() == 7);
@@ -197,9 +203,10 @@ int main()
         delete socio;
         cout << "TC013: Inscripcion creada correctamente" << endl;
     }
-    catch (...)
+    catch (exception &e)
     {
-        cout << "Error inesperado en TC013" << endl;
+      string errorMessage = e.what();
+      cout << "Error en TC013: " << errorMessage << endl;
     }
     
 
