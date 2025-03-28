@@ -1,0 +1,6 @@
+Acuerdense de usar funciones auxiliares dentro de sistema. No repitan codigo.
+
+1. Cambiar de branch para cada funcionalidad
+2. No subir cosas rotas
+3. Usar el Trello
+4. Dejar cosas documentadas si son dificiles de entender

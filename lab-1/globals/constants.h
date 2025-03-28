@@ -18,10 +18,10 @@
 //Fin Errores de clases
 
 //Errores de inscripciones
-#define ERROR_CONSTRUCTOR_VACIO "Constructor vacio no permitido\n"
-#define ERROR_TURNO_INVALIDO "Turno invalido\n"
-#define ERROR_FECHA_INVALIDA "Fecha invalida\n"
-#define ERROR_CANT_BICICLETA_INVALIDA "Cantidad de bicicletas invalida (1-50)\n"
+#define ERROR_CONSTRUCTOR_VACIO "Constructor vacio no permitido"
+#define ERROR_TURNO_INVALIDO "Turno invalido"
+#define ERROR_FECHA_INVALIDA "Fecha invalida"
+#define ERROR_CANT_BICICLETA_INVALIDA "Cantidad de bicicletas invalida (1-50)"
 //Fin Errores de inscripciones
 
 //Constantes de fecha
