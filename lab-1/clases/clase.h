@@ -6,6 +6,8 @@ using namespace std;
 #include "../dataStructures/turno.h"
 #include "../dataStructures/dtClase.h"
 #include "./inscripcion.h"
+#include "../dataStructures/dtFecha.h"
+#include "socio.h"
 #include "../globals/constants.h"
 
 
@@ -26,7 +28,7 @@ public:
     Turno getTurno();
     
     virtual int cupo() = 0; // Funcion polimorfica
-    void agregarInscripcion(Inscripcion *);
+    void agregarInscripcion(Socio*,DtFecha);
     int getCantInscripciones();
     Inscripcion** getInscripciones();
     Inscripcion* getInscripcion(string, DtFecha);

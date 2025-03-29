@@ -46,10 +46,7 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Clase* clase = getClase(idClase);
   if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
   if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  if(clase->getInscripcion(ciSocio, fecha) != nullptr) throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);;
-  
-  Inscripcion* inscripcion = new Inscripcion(fecha, socio);
-  clase->agregarInscripcion(inscripcion);  
+  clase->agregarInscripcion(socio, fecha);
 }
 
 void Sistema::agregarClase(DtSpinning clase) {

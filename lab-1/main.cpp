@@ -69,21 +69,28 @@ Clase *Sistema::getClase(int id)
 
 Inscripcion *Sistema::getInscripcion(string ciSocio, int idClase, DtFecha fecha)
 {
-    for (int i = 0; i < this->cantClases; i++)
+    Socio *socio = getSocio(ciSocio);
+    if (socio == nullptr)
     {
-        if (this->clases[i]->getId() == idClase)
-        { // Encuentra la clase con el idClase
-            for (int j = 0; j < this->clases[i]->getCantInscripciones(); j++)
-            { // Recorre las inscripciones de la clase
-                Inscripcion *inscripcion = this->clases[i]->getInscripciones()[j];
-                if (inscripcion->getSocio()->getCI() == ciSocio && inscripcion->getFecha() == fecha)
-                { // Encuentra la inscripcion con el socio y la fecha
-                    return inscripcion;
-                }
-            }
-        }
+        throw invalid_argument("No se encontró el socio.");
     }
-    return nullptr;
+
+    // Check: clase existe
+    Clase *clase = getClase(idClase);
+    if (clase == nullptr)
+    {
+        throw invalid_argument("No se encontró la clase.");
+    }
+
+    Inscripcion *inscripcion = clase->getInscripcion(ciSocio, fecha);
+
+    // Check: inscripcion existe
+    if (inscripcion == nullptr)
+    {
+        throw invalid_argument("No se encontró la inscripción.");
+    }
+
+    return inscripcion;
 }
 
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha)
@@ -103,21 +110,7 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha)
         throw invalid_argument("No se encontró la clase.");
     }
 
-    // Check: clase tiene cupo
-    if (clase->cupo() == 0)
-    {
-        throw invalid_argument("La clase ingresada no tiene cupo.");
-    }
-
-    // Check: inscripcion no existe
-    if (this->getInscripcion(ciSocio, idClase, fecha) != nullptr)
-    {
-        throw invalid_argument("Ya existe una inscripción para el socio en la clase en la fecha ingresada.");
-    }
-
-    Inscripcion *inscripcion = new Inscripcion(fecha, socio);
-
-    clase->agregarInscripcion(inscripcion);
+    clase->agregarInscripcion(socio,fecha);
 }
 
 void Sistema::agregarClase(DtEntrenamiento entrenamiento)
@@ -133,6 +126,19 @@ void Sistema::agregarClase(DtSpinning spinning)
     this->clases[cantClases] = clase;
     cantClases++;
 }
+
+void Sistema::agregarSocio(DtSocio socioData){
+    if(this->cantSocios >= MAX_SOCIOS){
+      throw invalid_argument(ERROR_LIMITE_SOCIOS);
+    }
+    if(getSocio(socioData.getCi()) != nullptr){
+      throw invalid_argument(ERROR_SOCIO_EXISTENTE);
+    }
+    this->socios[cantSocios] = new Socio(socioData);
+    this->cantSocios++;
+
+}
+
 
 Sistema::~Sistema()
 {

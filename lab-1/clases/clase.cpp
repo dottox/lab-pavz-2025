@@ -31,9 +31,17 @@ Turno Clase::getTurno()
  * 
  * @param inscripcion The inscription to add to the class.
  */
-void Clase::agregarInscripcion(Inscripcion* inscripcion){
+void Clase::agregarInscripcion(Socio* socio, DtFecha fecha){
     if(this->cupo() == 0) throw invalid_argument(ERROR_CUPOS_CERO);
     if(this->cantInscripciones >= MAX_INSCRIPCIONES) throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
+
+     // Check: inscripcion no existe
+     if (this->getInscripcion(socio->getCI(), fecha) != nullptr)
+     {
+         throw invalid_argument("Ya existe una inscripción para el socio en la clase en la fecha ingresada.");
+     }
+
+    Inscripcion *inscripcion = new Inscripcion(fecha, socio);
 
     this->inscripciones[this->cantInscripciones++] = inscripcion;
     this->cantCupo--;
