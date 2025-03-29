@@ -4,6 +4,21 @@
 
 using namespace std;
 
+// DOCUMENTACIÓN DEL TESTEO
+// SE TESTEAN LOS SIGUIENTES REQUERIMIENTOS:
+// 1. Agregar socio
+//   - Agregar socio con CI de otro socio
+//   - Agregar socio sobre el máximo de socios
+// 2. Agregar clase
+//   - Agregar clase que ya existe
+//   - Agregar clase superando el máximo de clases
+// 3. Agregar inscripción
+//   - Agregar inscripción con un socio inválido
+//   - Agregar inscripción con una clase inválida
+//   # TODO: Agregar inscripcion sin más cupos en la clase
+//   - Agregar inscripción que ya existe
+
+
 int main() {
     Sistema* sistema = new Sistema();
 
