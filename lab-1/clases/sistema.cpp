@@ -69,6 +69,14 @@ void Sistema::agregarClase(DtEntrenamiento clase) {
   this->cantClases++;
 };
 
+void Sistema::borrarInscripcion(string ciSocio, int idClase){
+    Socio* socio = getSocio(ciSocio);
+    Clase* clase = getClase(idClase);
+    if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
+    if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+    clase->borrarInscripcion(ciSocio,idClase);
+}
+
 void Sistema::listarClases(){
   cout << "-------- CLASES -----------" << endl;
   for(int i = 0; i < this->cantClases; i++){
@@ -84,7 +92,6 @@ void Sistema::listarSocios(){
   }
   cout << "---------------------------" <<endl;
 }
-
 
 Sistema::~Sistema(){
     for(int i = 0; i < cantSocios; i++){

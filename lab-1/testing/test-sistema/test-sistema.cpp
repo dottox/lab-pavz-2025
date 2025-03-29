@@ -135,6 +135,22 @@ int main() {
         terminate();
     }
     
+     // TC-009 Borrar inscripción
+     //sistema->getClase(1)->listarInscripciones();
+     try{
+        sistema->borrarInscripcion("12345678", 1);
+        sistema->agregarInscripcion("12345678", 1, date);
+        sistema->borrarInscripcion("12345679", 1);
+        //sistema->getClase(1)->listarInscripciones();
+        
+        cout << "TC-009 pasó correctamente." << endl;
+    } catch(const invalid_argument& e){
+        
+        cout << e.what() <<endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
     delete sistema;
     
     cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;

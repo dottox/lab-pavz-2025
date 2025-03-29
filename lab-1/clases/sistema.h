@@ -20,17 +20,19 @@ class Sistema {
     Clase** clases;
     
     Socio* getSocio(string);
-    Clase* getClase(int);
-
-  public:
+    
+    public:
     Sistema();
+    void listarClases();
+    void listarSocios();
+    
+    Clase* getClase(int);
 
     // Funciones de los requerimientos
     void agregarSocio(string, string);
     void agregarInscripcion(string, int, DtFecha);
     void agregarClase(DtSpinning);
     void agregarClase(DtEntrenamiento);
-    void listarClases();
-    void listarSocios();
+    void borrarInscripcion(string, int);
     ~Sistema();
 };

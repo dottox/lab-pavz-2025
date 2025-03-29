@@ -30,6 +30,7 @@ public:
     void agregarClase(DtEntrenamiento dtEntrenamiento);
     void agregarClase(DtSpinning dtSpinning);
     void agregarSocio(DtSocio dtSocio);
+    void borrarInscripcion(string ciSocio, int idClase);
 
     ~Sistema();
 };
@@ -137,6 +138,14 @@ void Sistema::agregarSocio(DtSocio socioData){
     this->socios[cantSocios] = new Socio(socioData);
     this->cantSocios++;
 
+}
+
+void Sistema::borrarInscripcion(string ciSocio, int idClase){
+    Socio* socio = getSocio(ciSocio);
+    Clase* clase = getClase(idClase);
+    if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
+    if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+    clase->borrarInscripcion(ciSocio,idClase);
 }
 
 

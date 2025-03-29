@@ -32,6 +32,9 @@ public:
     int getCantInscripciones();
     Inscripcion** getInscripciones();
     Inscripcion* getInscripcion(string, DtFecha);
+    Inscripcion* getInscripcion(string);
+    void listarInscripciones();
+    void borrarInscripcion(string,int);
     
     virtual ~Clase();
 };
