@@ -8,6 +8,7 @@ Clase::Clase(DtClase claseData)
     this->turno = claseData.getTurno();
     this->cantInscripciones = DEFAULT_INSCRIPCIONES;
     this->inscripciones = new Inscripcion*[MAX_INSCRIPCIONES];
+    this->cantCupo=claseData.getCupo();
 };
 
 int Clase::getId()
@@ -36,7 +37,9 @@ void Clase::agregarInscripcion(Inscripcion* inscripcion){
     if(this->cantInscripciones >= MAX_INSCRIPCIONES) throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
 
     this->inscripciones[this->cantInscripciones++] = inscripcion;
+    cout << "antes cupos " << this->cantCupo << endl;
     this->cantCupo--;
+    cout << "despues cupos " << this->cantCupo << endl;
 };
 
 

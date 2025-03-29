@@ -13,12 +13,14 @@ class DtClase {
     int id;
     string nombre;
     Turno turno;
+    int cantCupo;
 
   public:
     DtClase();
-    DtClase(int, string, Turno);
+    DtClase(int, string, Turno, int);
     int getId();
     string getNombre();
     Turno getTurno();
+    int getCupo();
     virtual ~DtClase();
 };

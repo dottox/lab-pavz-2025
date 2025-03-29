@@ -11,7 +11,8 @@ int main() {
 
     try {
         sistema->agregarSocio("12345678", "Juan");
-    } catch(const invalid_argument& e) {
+    } 
+    catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
 
@@ -32,6 +33,7 @@ int main() {
     } catch(const invalid_argument& e) {
         cout << "Error: " << e.what() << endl;
     }
+
 
     // Test agregarClase with DtSpinning and DtEntrenamiento
 
@@ -107,6 +109,7 @@ int main() {
     }catch(const invalid_argument& e){
         cout << "Error: " << e.what() << endl;
     }
+
     
     delete sistema;
     

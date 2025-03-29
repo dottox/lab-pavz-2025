@@ -17,41 +17,50 @@ else
 endif
 
 
-all: test.o socio.o inscripcion.o dtFecha.o dtSocio.o dtClase.o dtSpinning.o clase.o spinning.o
-	g++ test-spinning.o socio.o inscripcion.o dtFecha.o dtSocio.o dtClase.o dtSpinning.o spinning.o clase.o -o programa
+all: test.o dtSocio.o dtFecha.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o sistema.o clase.o inscripcion.o
+	g++ test-spinning.o dtFecha.o dtSocio.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o clase.o sistema.o inscripcion.o -o programa
 
-test.o:
+test.o: spinning.o
 	g++ -c "test-spinning.cpp"
 
-dtClase.o:
-	g++ -c "../../dataStructures/dtClase.cpp"
-
-dtSocio.o:
+dtSocio.o: 
 	g++ -c "../../dataStructures/dtSocio.cpp"
-
-dtSpinning.o: dtClase.o
-	g++ -c "../../dataStructures/dtSpinning.cpp"
 
 dtFecha.o:
 	g++ -c "../../dataStructures/dtFecha.cpp"
 
-
-socio.o: dtSocio.o
+socio.o: dtSocio.o 
 	g++ -c "../../clases/socio.cpp"
 
-inscripcion.o: socio.o dtFecha.o
-	g++ -c "../../clases/inscripcion.cpp"
+dtSpinning.o: dtClase.o
+	g++ -c "../../dataStructures/dtSpinning.cpp"
 
-clase.o: dtClase.o inscripcion.o
-	g++ -c "../../clases/clase.cpp"
+dtEntrenamiento.o: dtClase.o
+	g++ -c "../../dataStructures/dtEntrenamiento.cpp"
+
+entrenamiento.o: dtEntrenamiento.o clase.o
+	g++ -c "../../clases/entrenamiento.cpp"
 
 spinning.o: dtSpinning.o clase.o
 	g++ -c "../../clases/spinning.cpp"
 
-clean:
-	$(DELETE) *.o programa
+dtClase.o:
+	g++ -c "../../dataStructures/dtClase.cpp"
 
-run:
+sistema.o: socio.o spinning.o entrenamiento.o clase.o inscripcion.o
+	g++ -c "../../clases/sistema.cpp"
+
+clase.o: dtClase.o
+	g++ -c "../../clases/clase.cpp"
+
+inscripcion.o: socio.o dtFecha.o
+	g++ -c "../../clases/inscripcion.cpp"
+
+
+clean:
+	$(DELETE) *.o programa*
+
+run: 
 	$(MAKE) clean
 	$(MAKE) all
 	./programa

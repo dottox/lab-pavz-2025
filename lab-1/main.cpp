@@ -86,39 +86,39 @@ Inscripcion *Sistema::getInscripcion(string ciSocio, int idClase, DtFecha fecha)
     return nullptr;
 }
 
-void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha)
-{
+// void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha)
+// {
 
-    // Check: socio existe
-    Socio *socio = getSocio(ciSocio);
-    if (socio == nullptr)
-    {
-        throw invalid_argument("No se encontró el socio.");
-    }
+//     // Check: socio existe
+//     Socio *socio = getSocio(ciSocio);
+//     if (socio == nullptr)
+//     {
+//         throw invalid_argument("No se encontró el socio.");
+//     }
 
-    // Check: clase existe
-    Clase *clase = getClase(idClase);
-    if (clase == nullptr)
-    {
-        throw invalid_argument("No se encontró la clase.");
-    }
+//     // Check: clase existe
+//     Clase *clase = getClase(idClase);
+//     if (clase == nullptr)
+//     {
+//         throw invalid_argument("No se encontró la clase.");
+//     }
 
-    // Check: clase tiene cupo
-    if (clase->cupo() == 0)
-    {
-        throw invalid_argument("La clase ingresada no tiene cupo.");
-    }
+//     // Check: clase tiene cupo
+//     if (clase->cupo() == 0)
+//     {
+//         throw invalid_argument("La clase ingresada no tiene cupo.");
+//     }
 
-    // Check: inscripcion no existe
-    if (this->getInscripcion(ciSocio, idClase, fecha) != nullptr)
-    {
-        throw invalid_argument("Ya existe una inscripción para el socio en la clase en la fecha ingresada.");
-    }
+//     // Check: inscripcion no existe
+//     if (this->getInscripcion(ciSocio, idClase, fecha) != nullptr)
+//     {
+//         throw invalid_argument("Ya existe una inscripción para el socio en la clase en la fecha ingresada.");
+//     }
 
-    Inscripcion *inscripcion = new Inscripcion(fecha, socio);
+//     Inscripcion *inscripcion = new Inscripcion(fecha, socio);
 
-    clase->agregarInscripcion(inscripcion);
-}
+//     clase->agregarInscripcion(inscripcion);
+// }
 
 void Sistema::agregarClase(DtEntrenamiento entrenamiento)
 {

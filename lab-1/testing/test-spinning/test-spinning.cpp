@@ -2,12 +2,15 @@
 #include <cassert>
 #include <limits.h>
 #include "../../clases/spinning.h"
+#include "../../clases/sistema.h"
+#include "../../clases/socio.h"
 using namespace std;
 int main()
 {
     //TC = TEST CASE
     // ID, nombre, turno, cantBicicletas
     // BVA = Boundary Value Analysis
+    Sistema* sistema = new Sistema();
     try {
         DtSpinning dtTC001=DtSpinning(1, "TC001", Manana,0);
         Spinning * TC001 = new Spinning(dtTC001);
@@ -168,7 +171,29 @@ int main()
         cout << "Resultado esperado constructor vacio en TC019" << endl;
     }
 
+    //Testear cupo
+    try{
+            
+        DtSpinning dtTC020=DtSpinning(20,"DT020",Manana,4);
+        DtFecha dtFecha=DtFecha(12,12,1950);
+        DtFecha dtFecha2=DtFecha(12,12,1951);
+        DtFecha dtFecha3=DtFecha(12,12,1952);
+        DtFecha dtFecha4=DtFecha(12,12,1953);
+        DtFecha dtFecha5=DtFecha(12,12,1954);
+        sistema->agregarClase(dtTC020);
+        sistema->agregarSocio("12312312","Lorenzo");
+        sistema->agregarInscripcion("12312312",20,dtFecha);
+        sistema->agregarInscripcion("12312312",20,dtFecha2);
+        sistema->agregarInscripcion("12312312",20,dtFecha3);
+        sistema->agregarInscripcion("12312312",20,dtFecha4);
+        sistema->agregarInscripcion("12312312",20,dtFecha5);
+
+    }catch(invalid_argument &e){
+        cout << "Error en TC020: " << e.what() << endl;
+    }
     cout << "Todos los tests pasaron correctamente." << endl;
+    
+    delete sistema;
 
     return 0;
 }

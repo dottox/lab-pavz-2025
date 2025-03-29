@@ -6,16 +6,11 @@ DtSpinning::DtSpinning() {
   throw invalid_argument(ERROR_CONSTRUCTOR_VACIO);
 }
 
-DtSpinning::DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtClase(id, nom, turn) {
+DtSpinning::DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtClase(id, nom, turn,cantBicicletas) {
   if (cantBicicletas > MAX_BICICLETAS || cantBicicletas < MIN_BICICLETAS) {
     throw invalid_argument(ERROR_CANT_BICICLETA_INVALIDA);
   }
   this->cantBicicletas = cantBicicletas;
-  this->cantCupos = cantBicicletas;
-}
-
-int DtSpinning::getCupo() {
-  return this->cantCupos;
 }
 
 int DtSpinning::getCantBicicletas() {

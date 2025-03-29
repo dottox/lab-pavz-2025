@@ -6,13 +6,14 @@ DtClase::DtClase() {
   throw invalid_argument(ERROR_CONSTRUCTOR_VACIO);
 }
 
-DtClase::DtClase(int id, string nombre, Turno turn) {
+DtClase::DtClase(int id, string nombre, Turno turn, int cupos) {
   if (turn < Manana || turn > Noche) {
     throw invalid_argument(ERROR_TURNO_INVALIDO);
   }
   this->id = id;
   this->nombre = nombre;
   this->turno = turn;
+  this->cantCupo = cupos;
 }
 
 int DtClase::getId() {
@@ -25,6 +26,9 @@ string DtClase::getNombre() {
 
 Turno DtClase::getTurno() {
   return this->turno;
+}
+int DtClase::getCupo(){
+  return this->cantCupo;
 }
 
 DtClase::~DtClase() {}
