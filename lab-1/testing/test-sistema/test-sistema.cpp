@@ -135,6 +135,18 @@ int main() {
         terminate();
     }
     
+    // --------------------- OBTENER INFO SOCIOS POR CLASE -----------------------------
+    try
+    {
+        int cantidad = 0;
+        sistema->obtenerInfoSociosPorClase(1, cantidad);
+    }
+    catch(invalid_argument e)
+    {
+        cout << e.what() << '\n';
+    }
+    
+
     delete sistema;
     
     cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
