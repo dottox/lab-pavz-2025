@@ -33,6 +33,7 @@ class Sistema {
     void listarClases();
     void listarSocios();
     DtSocio ** obtenerInfoSociosPorClase (int,int &);
+    DtClase* obtenerClase (int);
     ~Sistema();
 
 
