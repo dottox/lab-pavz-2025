@@ -47,3 +47,8 @@
 #define DEFAULT_SOCIOS 0
 #define DEFAULT_CLASES 0
 //Fin constantes de sistema
+
+//Errores de sistema
+#define ERROR_NO_INSCRIPCIONES "No hay socios inscriptos en esta clase"
+#define ERROR_NO_SOCIOS "No hay suficientes socios en la clase"
+//Fin de errores de sistema
