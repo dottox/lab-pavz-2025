@@ -136,14 +136,22 @@ int main() {
     }
     
     // --------------------- OBTENER INFO SOCIOS POR CLASE -----------------------------
-    try
-    {
-        int cantidad = 0;
-        sistema->obtenerInfoSociosPorClase(1, cantidad);
-    }
-    catch(invalid_argument e)
-    {
-        cout << e.what() << '\n';
+
+    
+    int cantidad = 2;
+    DtSocio** oISPC_test = sistema->obtenerInfoSociosPorClase(1, cantidad);
+    delete[] oISPC_test;
+    
+    
+    // TC-009: Obtener información de más socios de los que tiene la clase
+    try{
+        int cantOverMax = 999;
+        DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantOverMax);
+        throw runtime_error("Error: Se permitio saber la información más socios de los que tiene la clase");
+    } catch(const invalid_argument& e){
+        cout << "TC-009 pasó correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
     }
     
 
