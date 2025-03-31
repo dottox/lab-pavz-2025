@@ -103,7 +103,7 @@ Sistema::~Sistema(){
 
 DtSocio ** Sistema::obtenerInfoSociosPorClase (int idClase,int & cantSocios){
   if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  if(getClase(idClase)->getCantInscripciones() < cantSocios) throw invalid_argument(ERROR_NO_SIOCIOS);
+  if(getClase(idClase)->getCantInscripciones() < cantSocios) throw invalid_argument(ERROR_NO_SOCIOS);
   Inscripcion** inscripciones = getClase(idClase)->getInscripciones();
   DtSocio** dtSocios = new DtSocio*[cantSocios];
   for(int i = 0; i < cantSocios; i++){
