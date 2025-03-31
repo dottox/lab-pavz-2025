@@ -50,5 +50,5 @@
 
 //Errores de sistema
 #define ERROR_NO_INSCRIPCIONES "No hay socios inscriptos en esta clase"
-#define ERROR_NO_SIOCIOS "No hay suficientes socios en la clase"
+#define ERROR_NO_SOCIOS "No hay suficientes socios en la clase"
 //Fin de errores de sistema
