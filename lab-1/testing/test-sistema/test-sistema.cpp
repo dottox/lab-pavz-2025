@@ -153,6 +153,8 @@ int main() {
     } catch (const runtime_error& e){
         terminate();
     }
+        // --------------------- OBTENER CLASE -----------------------------
+    // TODO: lo hago yo tranqui att: dotto
     
 
     delete sistema;
