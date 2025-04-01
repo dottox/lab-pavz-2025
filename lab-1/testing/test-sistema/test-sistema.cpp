@@ -154,18 +154,7 @@ int main() {
         terminate();
     }
         // --------------------- OBTENER CLASE -----------------------------
-    try
-    {
-        sistema->obtenerClase(1);
-    }
-    catch(invalid_argument e)
-    {
-        cout << e.what() << '\n';
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    // TODO: lo hago yo tranqui att: dotto
     
 
     delete sistema;
