@@ -97,10 +97,18 @@ int main()
   }
 
   // TC006: Validar Nombre con 1 caracter
-  Socio *s=new Socio(DtSocio("12345678", "A"));
-  assert(s->getNombre() == "A");
-  delete s;
-  cout << "TC006 PASS" << endl;
+  try{
+    Socio *s=new Socio(DtSocio("12345678", "A"));
+    throw runtime_error("TC006 Error: Se permitió un nombre con 1 caracter.");
+  } catch (const invalid_argument &e)
+  {
+    cout << "TC006 funcionó correctamente" << endl;
+  }
+  catch (const runtime_error &e)
+  {
+    cout << e.what() << endl;
+    terminate();
+  }
 
   cout << "[----------------------------/ Funciono pa' /----------------------------]" << endl;
 
