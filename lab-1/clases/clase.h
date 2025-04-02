@@ -11,7 +11,7 @@ using namespace std;
 
 class Clase{
 
-private:
+  protected:
     int id;
     string nombre;
     Turno turno;
@@ -19,17 +19,20 @@ private:
     int cantInscripciones;
     int cantCupo;
 
-public:
+  public:
     Clase(DtClase);
     int getId();
     string getNombre();
     Turno getTurno();
-    
+    int getCantInscripciones();
+
+    void setNombre(string);
+    void setTurno(Turno);
+
     virtual int cupo() = 0; // Funcion polimorfica
     void agregarInscripcion(Inscripcion *);
-    int getCantInscripciones();
-    Inscripcion** getInscripciones();
     Inscripcion* getInscripcion(string, DtFecha);
-    
+    Inscripcion** getInscripciones();
+
     virtual ~Clase();
 };

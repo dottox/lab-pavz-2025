@@ -6,6 +6,7 @@ Clase::Clase(DtClase claseData)
     this->id = claseData.getId();
     this->nombre = claseData.getNombre();
     this->turno = claseData.getTurno();
+    this->cantCupo = claseData.getCupo();
     this->cantInscripciones = DEFAULT_INSCRIPCIONES;
     this->inscripciones = new Inscripcion*[MAX_INSCRIPCIONES];
 };
@@ -68,6 +69,29 @@ int Clase::getCantInscripciones(){
     return this->cantInscripciones;
 };
 
+
+
+/**
+ * @brief Sets the name of the class.
+ * 
+ * @param nombre The new name of the class.
+ */
+void Clase::setNombre(string nombre){
+  this->nombre = nombre;
+};
+
+/**
+ * @brief Sets the turn of the class.
+ * 
+ * @param turno The new turn of the class.
+ */
+void Clase::setTurno(Turno turno){
+  // Validar el turno
+  if (turno > Noche || turno < Manana) {
+    throw invalid_argument(ERROR_TURNO_INVALIDO);
+  }
+  this->turno = turno;
+};
 
 /**
  * @brief Destructor for the Clase class.

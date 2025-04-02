@@ -7,7 +7,6 @@
 class DtSpinning : public DtClase {
   private:
     int cantBicicletas;
-    int cantCupos;
 
   public:
     DtSpinning();

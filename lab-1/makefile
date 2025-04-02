@@ -56,7 +56,6 @@ clase.o: dtClase.o
 inscripcion.o: socio.o dtFecha.o
 	g++ -c "clases/inscripcion.cpp"
 
-
 clean:
 	$(DELETE) *.o programa*
 

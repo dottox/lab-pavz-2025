@@ -9,16 +9,18 @@ using namespace std;
 
 
 class DtClase {
-  private:
+  protected:
     int id;
     string nombre;
     Turno turno;
+    int cantCupos;
 
   public:
     DtClase();
-    DtClase(int, string, Turno);
+    DtClase(int, string, Turno, int);
     int getId();
     string getNombre();
     Turno getTurno();
+    int getCupo();
     virtual ~DtClase();
 };

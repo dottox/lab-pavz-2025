@@ -18,7 +18,6 @@ using namespace std;
 class Spinning : public Clase {
   private:
     int cantBicicletas;
-    int cantCupo;
 
   public:
     Spinning(DtSpinning);
