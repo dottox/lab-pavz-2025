@@ -1,8 +1,12 @@
 #include "dtSocio.h"
 
 DtSocio::DtSocio(string ci, string nombre) {
-  stoi(ci);
-  
+  try {
+    stoi(ci);
+  } catch (const invalid_argument&) {
+    throw invalid_argument(ERROR_CI_INVALIDA);
+  }
+
   if(ci.length() != CI_LENGTH) {
     throw invalid_argument(ERROR_CI_INVALIDA);
   }
