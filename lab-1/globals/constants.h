@@ -34,7 +34,7 @@
 //Fin constantes de fecha
 
 //Constantes de clases
-#define MAX_INSCRIPCIONES 3
+#define MAX_INSCRIPCIONES 10
 #define DEFAULT_INSCRIPCIONES 0
 #define CUPOS_RAMBLA 20
 #define CUPOS_NO_RAMBLA 10

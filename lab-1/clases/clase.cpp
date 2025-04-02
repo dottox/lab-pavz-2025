@@ -1,4 +1,3 @@
-
 #include "clase.h"
 
 Clase::Clase(DtClase claseData)
@@ -100,6 +99,7 @@ Clase::~Clase(){
     cout << "Clase: " << this->getId() << " destruida" << endl;
     for (int i = 0; i < this->cantInscripciones; i++){
         delete this->inscripciones[i];
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
     }
     delete[] this->inscripciones;
 };

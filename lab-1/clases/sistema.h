@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+
 #include "socio.h"
 #include "inscripcion.h"
 #include "clase.h"
@@ -21,13 +22,11 @@ class Sistema {
     int cantClases;
     Clase** clases;
     
-    Socio* getSocio(string);
-    Clase* getClase(int);
-
-  public:
+    
+    public:
     Sistema();
     Sistema(int,int);
-
+    
     // Funciones de los requerimientos
     void agregarSocio(string, string);
     void agregarInscripcion(string, int, DtFecha);
@@ -37,6 +36,8 @@ class Sistema {
     void listarSocios();
     int getCantSocios();
     int getCantClases();
+    Socio* getSocio(string);
+    Clase* getClase(int);
     DtSocio ** obtenerInfoSociosPorClase(int, int &);
     DtClase obtenerClase(int);
     ~Sistema();

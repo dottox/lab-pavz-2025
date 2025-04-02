@@ -26,8 +26,8 @@ string DtSocio::getNombre() {
 }
 
 ostream& operator<<(ostream& os, const DtSocio& dt) {
-  os << "CI: " << dt.ci << endl;
   os << "Nombre: " << dt.nombre << endl;
+  os << "CI: " << dt.ci << endl;
   return os;
 }
 
