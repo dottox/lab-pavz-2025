@@ -10,6 +10,10 @@ DtClase::DtClase(int id, string nombre, Turno turn, int cantCupos) {
   if (turn < Manana || turn > Noche) {
     throw invalid_argument(ERROR_TURNO_INVALIDO);
   }
+
+  if(id < 0) {
+    throw invalid_argument(ERROR_ID_INVALIDO);
+  }
   this->id = id;
   this->nombre = nombre;
   this->turno = turn;
