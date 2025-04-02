@@ -17,19 +17,20 @@ else
 endif
 
 
-all: dtSocio.o dtFecha.o dtClase.o dtSpinning.o dtEntrenamiento.o socio.o inscripcion.o clase.o spinning.o entrenamiento.o main.o
-	g++ dtSocio.o dtFecha.o dtClase.o dtSpinning.o dtEntrenamiento.o socio.o inscripcion.o clase.o spinning.o entrenamiento.o main.o -o programa
+all: main.o dtSocio.o dtFecha.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o sistema.o clase.o inscripcion.o
+	g++ main.o dtFecha.o dtSocio.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o clase.o sistema.o inscripcion.o -o programa -Wall
 
-################### Data structures ##################
+main.o: sistema.o
+	g++ -c "main.cpp"
 
-dtSocio.o:
+dtSocio.o: 
 	g++ -c "dataStructures/dtSocio.cpp"
 
 dtFecha.o:
 	g++ -c "dataStructures/dtFecha.cpp"
 
-dtClase.o:
-	g++ -c "dataStructures/dtClase.cpp"
+socio.o: dtSocio.o 
+	g++ -c "clases/socio.cpp"
 
 dtSpinning.o: dtClase.o
 	g++ -c "dataStructures/dtSpinning.cpp"
@@ -37,42 +38,30 @@ dtSpinning.o: dtClase.o
 dtEntrenamiento.o: dtClase.o
 	g++ -c "dataStructures/dtEntrenamiento.cpp"
 
-turno.o:
-	g++ -c "dataStructures/turno.cpp"
+entrenamiento.o: dtEntrenamiento.o clase.o
+	g++ -c "clases/entrenamiento.cpp"
 
-######################################################
+spinning.o: dtSpinning.o clase.o
+	g++ -c "clases/spinning.cpp"
 
+dtClase.o:
+	g++ -c "dataStructures/dtClase.cpp"
 
-################### Clases ###########################
+sistema.o: socio.o spinning.o entrenamiento.o clase.o inscripcion.o
+	g++ -c "clases/sistema.cpp"
 
-
-socio.o: dtSocio.o
-	g++ -c "clases/socio.cpp"
+clase.o: dtClase.o
+	g++ -c "clases/clase.cpp"
 
 inscripcion.o: socio.o dtFecha.o
 	g++ -c "clases/inscripcion.cpp"
 
-clase.o: turno.o dtClase.o inscripcion.o
-	g++ -c "clases/clase.cpp"
-
-spinning.o: clase.o dtSpinning.o
-	g++ -c "clases/spinning.cpp"
-
-entrenamiento.o: clase.o dtEntrenamiento.o
-	g++ -c "clases/entrenamiento.cpp"
-
-######################################################
-
-
-main.o:
-	g++ -c "main.cpp"
-
 
 clean:
-	$(DELETE) *.o programa
+	$(DELETE) *.o programa*
 
-run:
+run: 
 	$(MAKE) clean
 	$(MAKE) all
-	./programa
+	./programa.exe
 	$(MAKE) clean
