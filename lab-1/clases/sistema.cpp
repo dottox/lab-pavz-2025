@@ -114,6 +114,6 @@ DtSocio ** Sistema::obtenerInfoSociosPorClase (int idClase,int & cantSocios){
 
 DtClase* Sistema::obtenerClase (int idClase){
   if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  DtClase * dtClase = new DtClase(getClase(idClase)->getId(), getClase(idClase)->getNombre(), getClase(idClase)->getTurno());
+  DtClase * dtClase = new DtClase(getClase(idClase)->getId(), getClase(idClase)->getNombre(), getClase(idClase)->getTurno(), getClase(idClase)->cupo());
   return dtClase;
 }
