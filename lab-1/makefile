@@ -37,9 +37,6 @@ dtSpinning.o: dtClase.o
 dtEntrenamiento.o: dtClase.o
 	g++ -c "dataStructures/dtEntrenamiento.cpp"
 
-turno.o:
-	g++ -c "dataStructures/turno.cpp"
-
 ######################################################
 
 
@@ -52,7 +49,7 @@ socio.o: dtSocio.o
 inscripcion.o: socio.o dtFecha.o
 	g++ -c "clases/inscripcion.cpp"
 
-clase.o: turno.o dtClase.o inscripcion.o
+clase.o: dtClase.o inscripcion.o
 	g++ -c "clases/clase.cpp"
 
 spinning.o: clase.o dtSpinning.o
