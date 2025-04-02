@@ -18,7 +18,7 @@ endif
 
 
 all: test.o dtSocio.o dtFecha.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o sistema.o clase.o inscripcion.o
-	g++ test-sistema.o dtFecha.o dtSocio.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o clase.o sistema.o inscripcion.o -o programa -Wall
+	g++ test-sistema.o dtFecha.o dtSocio.o socio.o dtSpinning.o dtEntrenamiento.o entrenamiento.o spinning.o dtClase.o clase.o sistema.o inscripcion.o -o programa
 
 test.o: sistema.o
 	g++ -c "test-sistema.cpp"
