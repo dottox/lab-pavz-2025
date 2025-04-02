@@ -88,19 +88,6 @@ void Sistema::listarSocios(){
   cout << "---------------------------" <<endl;
 }
 
-
-Sistema::~Sistema(){
-    for(int i = 0; i < cantSocios; i++){
-        delete socios[i];
-    }
-    delete[] socios;
-    
-    for(int i = 0; i < cantClases; i++){
-        delete clases[i];
-    }
-    delete[] clases;
-}
-
 DtSocio** Sistema::obtenerInfoSociosPorClase(int idClase,int & cantSocios){
   if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
   if(getClase(idClase)->getCantInscripciones() < cantSocios || cantSocios <= 0) throw invalid_argument(ERROR_NO_SOCIOS);
@@ -117,3 +104,16 @@ DtClase Sistema::obtenerClase(int idClase){
   DtClase dtClase = DtClase(getClase(idClase)->getId(), getClase(idClase)->getNombre(), getClase(idClase)->getTurno());
   return dtClase;
 }
+
+Sistema::~Sistema(){
+    for(int i = 0; i < cantSocios; i++){
+        delete socios[i];
+    }
+    delete[] socios;
+    
+    for(int i = 0; i < cantClases; i++){
+        delete clases[i];
+    }
+    delete[] clases;
+}
+

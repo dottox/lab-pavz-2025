@@ -18,4 +18,4 @@ int Spinning::getCantBicicletas() {
     return this->cantBicicletas;
 };
 
-Spinning::~Spinning() {};
+Spinning::~Spinning(){};

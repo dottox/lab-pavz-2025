@@ -20,6 +20,10 @@ using namespace std;
 //   - Obtener información de más socios de los que tiene la clase
 //   - Obtener información de cantidad negativa de socios
 //   - Obtener información de 0 socios
+// 5. Obtener clase
+//   - Obtener clase con ID válido
+//   - Obtener clase con ID inválido
+
 
 
 int main() {
@@ -180,16 +184,19 @@ int main() {
     }
         // --------------------- OBTENER CLASE -----------------------------
     
-        try{
-            int cantZero = 0;
-            DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantZero);
-            throw runtime_error("Error: Se permitio saber la información de 0 socios");
-        } catch(const invalid_argument& e){
-            cout << "TC-011 paso correctamente." << endl;
-        } catch (const runtime_error& e){
-            terminate();
-        }
+    // TC-012: Obtener clase con ID válido
+    DtClase tc_zero_twelve = sistema->obtenerClase(1);
+    cout << "TC-012 paso correctamente." << endl;
     
+    // TC-013: Obtener clase con ID inválido
+    try{
+        DtClase tc_zero_thirteen = sistema->obtenerClase(1337);
+        throw runtime_error("Error: Se obtuvo la clase con id Inválido");
+    } catch(const invalid_argument& e){
+        cout << "TC-013 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
 
     delete sistema;
     
