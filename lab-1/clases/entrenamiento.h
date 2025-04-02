@@ -15,7 +15,6 @@ using namespace std;
  */
 class Entrenamiento : public Clase{
   private: 
-    int cantCupo;
     bool enRambla;
 
   public:

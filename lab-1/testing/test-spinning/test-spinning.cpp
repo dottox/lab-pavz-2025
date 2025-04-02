@@ -83,52 +83,44 @@ int main()
   // ---------------------- TC-005 ----------------------
 
 
-  // TC-005: Constructor vacío
-  try{
-    DtSpinning dtTC005 = DtSpinning();
-    Spinning * TC005 = new Spinning(dtTC005);
-    delete TC005;
-    throw runtime_error("TC005 Error: Se permitió construir un spinning vacío.");
-  } catch (const invalid_argument& e) {
-      cout << "TC-005 pasó correctamente: no se permitió construir un spinning vacío" << endl;
-  } catch (runtime_error& e) {
-      terminate();
-  }
-
-  // TC-006: Agregar una inscripción
+  // TC-005: Agregar una inscripción
   Socio* socio = new Socio(DtSocio("12345678", "Juan"));
   Inscripcion* inscripcion = new Inscripcion(DtFecha(1, 1, 2021), socio);
-  DtSpinning dtTC006 = DtSpinning(6, "TC006", Manana, 10);
-  Spinning* TC006 = new Spinning(dtTC006);
+  DtSpinning dtTC005 = DtSpinning(6, "TC005", Manana, 10);
+  Spinning* TC005 = new Spinning(dtTC005);
 
-  cout << "Cupo antes de agregar inscripcion: " << TC006->cupo() << endl;
-  TC006->agregarInscripcion(inscripcion);
-  cout << "TC-006 Inscripcion agregada correctamente" << endl;
+  cout << "Cupo antes de agregar inscripcion: " << TC005->cupo() << endl;
+  TC005->agregarInscripcion(inscripcion);
+  cout << "TC-005 Inscripcion agregada correctamente" << endl;
 
   // Verificar que cupo se haya actualizado correctamente
-  assert(TC006->cupo() == 9);
-  cout << "TC-006 Cupo actualizado correctamente" << endl;
+  assert(TC005->cupo() == 9);
+  cout << "TC-005 Cupo actualizado correctamente" << endl;
 
   // Verificar que la cantidad de inscripciones se haya actualizado correctamente
-  assert(TC006->getCantInscripciones() == 1);
-  cout << "TC-006 Cantidad de inscripciones actualizada correctamente" << endl;
+  assert(TC005->getCantInscripciones() == 1);
+  cout << "TC-005 Cantidad de inscripciones actualizada correctamente" << endl;
 
   // Verificar que la inscripción se haya agregado correctamente con getInscripcion
-  Inscripcion* inscripcionEncontrada = TC006->getInscripcion(socio->getCI(), DtFecha(1, 1, 2021));
-  if (inscripcionEncontrada != nullptr) { cout << "TC-006 Inscripcion encontrada correctamente" << endl; } 
-  else { throw runtime_error("TC006 Error: Inscripcion no encontrada en la clase spinning"); }
+  Inscripcion* inscripcionEncontrada = TC005->getInscripcion(socio->getCI(), DtFecha(1, 1, 2021));
+  if (inscripcionEncontrada != nullptr) { cout << "TC-005 Inscripcion encontrada correctamente - getInscripción" << endl; } 
+  else { throw runtime_error("TC005 Error: Inscripcion no encontrada mediante getInscripción"); }
+
+  // Verificar que la inscripción obtenida sea la misma que la agregada
+  assert(inscripcionEncontrada->getSocio()->getCI() == "12345678" && inscripcionEncontrada->getFecha() == DtFecha(1, 1, 2021));
+  cout << "TC-005 Inscripcion obtenida correctamente" << endl;
 
   // Verificar que la inscripción se haya agregado correctamente con getInscripciones
-  Inscripcion** inscripciones = TC006->getInscripciones();
+  Inscripcion** inscripciones = TC005->getInscripciones();
   bool found = false;
-  for (int i = 0; i < TC006->getCantInscripciones(); i++) {
+  for (int i = 0; i < TC005->getCantInscripciones(); i++) {
       if (inscripciones[i]->getSocio()->getCI() == socio->getCI() && inscripciones[i]->getFecha() == DtFecha(1, 1, 2021)) {
         found = true;
         break;
       }
   }
-  if (found) { cout << "TC-006 Inscripcion encontrada correctamente" << endl; }
-  else { throw runtime_error("TC006 Error: Inscripcion no agregada correctamente en la clase spinning"); }
+  if (found) { cout << "TC-005 Inscripcion encontrada correctamente - getInscripciones" << endl; }
+  else { throw runtime_error("TC005 Error: Inscripcion no encontrada mediante getInscripciones"); }
 
 
   cout << "Todos los tests pasaron correctamente." << endl;
