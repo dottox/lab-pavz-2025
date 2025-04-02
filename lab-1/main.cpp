@@ -5,6 +5,7 @@
 #define SOCIOS_MAX 15
 #define CLASES_MAX 15
 
+void cleanScreen(){system("cls");};
 
 void mostrarMenu(Sistema* s){
     system("cls");
@@ -35,7 +36,7 @@ int main(){
     Sistema* s = new Sistema(SOCIOS_MAX, CLASES_MAX);
     
     bool salir = true, r;
-    int opcion, idClase, cantBicis, turno, rambla;
+    int opcion, idClase, cantBicis, turno, rambla, dia, mes, anio;
     string nombre, ci;
     Turno t;
     
@@ -171,7 +172,38 @@ int main(){
                 system("pause");
                 break;
             case 3:
-                // Llamar a agregar inscripcion
+                cleanScreen();
+                cout << "[Agregando inscripcion]" << endl;
+                cout << "Cedula del socio: ";
+                cin >> ci;
+                cout << "ID de la clase: ";
+                cin >> idClase;
+                cout << "Fecha de Inscripcion (DD/MM/AAAA)\nDia:";
+                cin >> dia; 
+                cout << "Mes:";
+                cin >> mes;
+                cout << "Anio:";
+                cin >> anio;
+                if(cin.fail()){
+                    limpiarCin();
+                    continue;
+                }
+                try{
+                    DtFecha fecha = DtFecha(dia, mes, anio);
+                    s->agregarInscripcion(ci, idClase, fecha);
+                }catch(invalid_argument &e){
+                    cleanScreen();
+                    cout << "Error: " << e.what() << endl;
+                    system("pause");
+                    continue;
+                }
+                cleanScreen();
+                cout << "Inscripcion creada correctamente." << endl;
+                cout << "Socio: " << ci << endl;
+                cout << "ID: " << idClase << endl;
+                cout << "Fecha: " << dia << "/" << mes << "/" << anio << endl;
+                system("pause");
+                break;
             case 4:
                 system("cls");
                 s->listarClases();
