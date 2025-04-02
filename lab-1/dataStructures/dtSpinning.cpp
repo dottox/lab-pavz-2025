@@ -2,9 +2,6 @@
 #include <stdexcept>
 using namespace std;
 
-DtSpinning::DtSpinning() {
-  throw invalid_argument(ERROR_CONSTRUCTOR_VACIO);
-}
 
 DtSpinning::DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtClase(id, nom, turn, cantBicicletas) {
   // Validar la cantidad de bicicletas
