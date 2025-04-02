@@ -42,33 +42,31 @@ int main()
     }
 
     // Caso fecha valida
+    DtFecha fecha02 = DtFecha(31, 1, 1900);
+    assert(fecha02.getDia() == 31);
+    assert(fecha02.getMes() == 1);
+    assert(fecha02.getAnio() == 1900);
+
+    // Caso día Invalida
     try
     {
-        DtFecha fecha = DtFecha(1, 5, 1925);
-        assert(fecha.getDia() == 1);
-        cout << "TC002: Dia valido aprobado" << endl;
+        DtFecha fecha03 = DtFecha(32, 1, 1900);
+        throw runtime_error("Error: Se permitio una fecha invalida (TC003)");
     }
-    catch (exception &e)
+    catch (invalid_argument &e)
     {
-      string errorMessage = e.what();
-      cout << "Error en TC002: " << errorMessage << endl;
-    }
-    // Caso fecha valida
-    try
-    {
-        DtFecha fecha = DtFecha(31, 1, 1900);
-        assert(fecha.getDia() == 31);
-        cout << "TC003: Dia valido aprobado" << endl;
+        cout << "Test fecha invalida TC003 paso correctamente" << endl;
     }
     catch (runtime_error &e)
     {
-        cout << "Error inesperado en TC003" << endl;
+        terminate();
     }
-    // Caso fecha Invalida
+
+    // Caso mes invaldia
     try
     {
-        DtFecha fecha = DtFecha(32, 1, 1900);
-        throw runtime_error("Error: Se permitio una fecha invalida (TC001)");
+        DtFecha fecha04 = DtFecha(1, 0, 1900);
+        throw runtime_error("Error: Se permitio una fecha invalida (TC004)");
     }
     catch (invalid_argument &e)
     {
@@ -79,11 +77,10 @@ int main()
         terminate();
     }
 
-    // Caso fecha invaldia
+    // Caso año invalido
     try
     {
-        DtFecha fecha = DtFecha(1, 0, 1900);
-        assert(fecha.getMes() == 0);
+        DtFecha fecha05 = DtFecha(1, 1, 1899);
         throw runtime_error("Error: Se permitio una fecha invalida (TC005)");
     }
     catch (invalid_argument &e)
@@ -95,119 +92,33 @@ int main()
         terminate();
     }
 
-    // Caso fecha valida
-    try
-    {
-        DtFecha fecha = DtFecha(1, 1, 1900);
-        assert(fecha.getMes() == 1);
-        cout << "TC006: Mes valido aprobado" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC006: " << errorMessage << endl;
-    }
+    DtFecha fecha06 = DtFecha(1, 1, 1900);
+    assert(fecha06.getAnio() == 1900);
+    cout << "TC010: Anio valido aprobado" << endl;
 
-    // Caso fecha valida
-    try
-    {
-        DtFecha fecha = DtFecha(1, 12, 1900);
-        assert(fecha.getMes() == 12);
-        cout << "TC007: Mes valido aprobado" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC007: " << errorMessage << endl;
-    }
 
-    // Caso fecha invalida
-    try
-    {
-        DtFecha fecha = DtFecha(1, 13, 1900);
-        throw runtime_error("Error: Se permitio una fecha invalida (TC008)");
-    }
-    catch (invalid_argument &e)
-    {
-        cout << "Test fecha invalida TC008 paso correctamente" << endl;
-    }
-    catch (runtime_error &e)
-    {
-        terminate();
-    }
+    DtFecha fecha07 = DtFecha(1, 1, 1901);
+    assert(fecha07.getAnio() == 1901);
+    cout << "TC011: Anio valido aprobadocs" << endl;
 
-    try
-    {
-        DtFecha fecha = DtFecha(1, 1, 1899);
-
-        throw runtime_error("Error: Se permitio una fecha invalida (TC009)");
-    }
-    catch (invalid_argument &e)
-    {
-        cout << "Test fecha invalida TC004 paso correctamente" << endl;
-    }
-    catch (runtime_error &e)
-    {
-        terminate();
-    }
-
-    try
-    {
-        DtFecha fecha = DtFecha(1, 1, 1900);
-        assert(fecha.getAnio() == 1900);
-        cout << "TC010: Anio valido aprobado" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC010: " << errorMessage << endl;
-    }
-
-    try
-    {
-        DtFecha fecha = DtFecha(1, 1, 1901);
-        assert(fecha.getAnio() == 1901);
-        cout << "TC011: Anio valido aprobadocs" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC011: " << errorMessage << endl;
-    }
-
-    try
-    {
-        DtFecha fecha = DtFecha(1, 1, 2025);
-        assert(fecha.getAnio() == 2025);
-        cout << "TC012: Anio valido aprobado" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC012: " << errorMessage << endl;
-    }
+    DtFecha fecha08 = DtFecha(1, 1, 2025);
+    assert(fecha08.getAnio() == 2025);
+    cout << "TC012: Anio valido aprobado" << endl;
     //---------------------------TEST INSCRIPCION------------------------------------------
-    try
-    {
-        DtFecha fecha = DtFecha(5, 7, 2022);
-        Socio* socio = new Socio(DtSocio("12312323", "Juan"));
-        Inscripcion inscripcion = Inscripcion(fecha, socio);
-        assert(inscripcion.getFecha().getDia() == 5);
-        assert(inscripcion.getFecha().getMes() == 7);
-        assert(inscripcion.getFecha().getAnio() == 2022);
 
-        assert(inscripcion.getFecha().getDia() != 3);
-        assert(inscripcion.getFecha().getMes() != 8);
-        assert(inscripcion.getFecha().getAnio() != 2023);
+    DtFecha fechaValida = DtFecha(5, 7, 2022);
+    Socio* socio = new Socio(DtSocio("12312323", "Juan"));
+    Inscripcion inscripcion = Inscripcion(fechaValida, socio);
+    assert(inscripcion.getFecha().getDia() == 5);
+    assert(inscripcion.getFecha().getMes() == 7);
+    assert(inscripcion.getFecha().getAnio() == 2022);
 
-        delete socio;
-        cout << "TC013: Inscripcion creada correctamente" << endl;
-    }
-    catch (exception &e)
-    {
-      string errorMessage = e.what();
-      cout << "Error en TC013: " << errorMessage << endl;
-    }
+    assert(inscripcion.getFecha().getDia() != 3);
+    assert(inscripcion.getFecha().getMes() != 8);
+    assert(inscripcion.getFecha().getAnio() != 2023);
+
+    delete socio;
+    cout << "TC013: Inscripcion creada correctamente" << endl;
     
 
     return 0;

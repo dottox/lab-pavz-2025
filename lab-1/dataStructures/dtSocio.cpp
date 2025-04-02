@@ -2,6 +2,7 @@
 
 DtSocio::DtSocio(string ci, string nombre) {
   stoi(ci);
+  
   if(ci.length() != CI_LENGTH) {
     throw invalid_argument(ERROR_CI_INVALIDA);
   }

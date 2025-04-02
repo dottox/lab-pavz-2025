@@ -22,6 +22,11 @@ Socio::Socio(DtSocio socioData){
  * @param ci The CI (identification number) of the socio.
  */
 void Socio::setCI(string ci){
+    try {
+        stoi(ci);
+    } catch (const invalid_argument& e) {
+        throw invalid_argument(ERROR_CI_INVALIDA);
+    }
     this->ci = ci;
 };
 

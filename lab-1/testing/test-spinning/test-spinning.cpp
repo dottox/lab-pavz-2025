@@ -33,6 +33,7 @@ int main()
   } catch (const invalid_argument& e) {
     cout << "TC-001 pasó correctamente: no se permitió agregar una cantidad de bicicletas mayor a lo esperado" << e.what() << endl;
   } catch (runtime_error& e) {
+    cout << e.what() << endl;
     terminate();
   }
 
@@ -46,6 +47,7 @@ int main()
   } catch (const invalid_argument& e) {
     cout << "TC-002 pasó correctamente: no se permitió agregar una cantidad de bicicletas menor a lo esperado" << e.what() << endl;
   } catch (runtime_error& e) {
+    cout << e.what() << endl;
     terminate();
   }
 
