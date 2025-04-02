@@ -63,5 +63,5 @@ clean:
 run: 
 	$(MAKE) clean
 	$(MAKE) all
-	./programa.exe
+	./programa
 	$(MAKE) clean
