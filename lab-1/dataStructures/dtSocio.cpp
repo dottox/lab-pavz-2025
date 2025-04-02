@@ -7,7 +7,7 @@ DtSocio::DtSocio(string ci, string nombre) {
     throw invalid_argument(ERROR_CI_INVALIDA);
   }
 
-  if(ci.length() != CI_LENGTH || ci < "0"){
+  if(ci.length() != CI_LENGTH || stoi(ci) < 0){
     throw invalid_argument(ERROR_CI_INVALIDA);
   }
   if(nombre.length() < NOMBRE_MIN_LENGTH) {
