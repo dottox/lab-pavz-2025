@@ -36,7 +36,7 @@ inscripcion.o: socio.o dtFecha.o
 	g++ -c "../../clases/inscripcion.cpp"
 
 clean:
-	$(DELETE) *.o programa
+	$(DELETE) *.o programa*
 
 run:
 	$(MAKE) clean

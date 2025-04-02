@@ -49,7 +49,7 @@ spinning.o: dtSpinning.o clase.o
 	g++ -c "../../clases/spinning.cpp"
 
 clean:
-	$(DELETE) *.o programa
+	$(DELETE) *.o programa*
 
 run:
 	$(MAKE) clean
