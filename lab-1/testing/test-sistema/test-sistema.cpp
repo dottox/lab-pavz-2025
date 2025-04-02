@@ -171,7 +171,7 @@ int main() {
     // TC-011: Obtener información de 0 socios
     try{
         int cantZero = 0;
-        DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantZero);
+        DtSocio** tc_zero_eleven = sistema->obtenerInfoSociosPorClase(1, cantZero);
         throw runtime_error("Error: Se permitio saber la información de 0 socios");
     } catch(const invalid_argument& e){
         cout << "TC-011 paso correctamente." << endl;
@@ -179,7 +179,16 @@ int main() {
         terminate();
     }
         // --------------------- OBTENER CLASE -----------------------------
-    // TODO: lo hago yo tranqui att: dotto
+    
+        try{
+            int cantZero = 0;
+            DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantZero);
+            throw runtime_error("Error: Se permitio saber la información de 0 socios");
+        } catch(const invalid_argument& e){
+            cout << "TC-011 paso correctamente." << endl;
+        } catch (const runtime_error& e){
+            terminate();
+        }
     
 
     delete sistema;
