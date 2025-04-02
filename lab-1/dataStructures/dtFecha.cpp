@@ -32,5 +32,9 @@ bool DtFecha::operator==(const DtFecha& other) const {
   return this->dia == other.dia && this->mes == other.mes && this->anio == other.anio;
 }
 
+ostream& operator<<(ostream& os, const DtFecha& dt) {
+  os << dt.dia << "/" << dt.mes << "/" << dt.anio;
+  return os;
+}
 
 DtFecha::~DtFecha() {}

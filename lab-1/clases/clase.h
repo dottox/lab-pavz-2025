@@ -1,11 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 #include "../dataStructures/turno.h"
 #include "../dataStructures/dtClase.h"
-#include "./inscripcion.h"
+#include "inscripcion.h"
 #include "../globals/constants.h"
 
 
