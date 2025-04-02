@@ -116,4 +116,3 @@ Sistema::~Sistema(){
     }
     delete[] clases;
 }
-

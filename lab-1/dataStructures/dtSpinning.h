@@ -9,7 +9,6 @@ class DtSpinning : public DtClase {
     int cantBicicletas;
 
   public:
-    DtSpinning();
     DtSpinning(int id, string nom, Turno turn, int cantBicicletas);
     int getCupo();
     int getCantBicicletas();

@@ -11,7 +11,6 @@ using namespace std;
 class DtEntrenamiento : public DtClase{
   private:
     bool enRambla;
-    int cantCupo;
 
   public:
     DtEntrenamiento(int id, string nom, Turno turn, bool b);
