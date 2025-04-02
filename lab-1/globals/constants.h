@@ -23,6 +23,7 @@
 #define ERROR_TURNO_INVALIDO "Turno invalido"
 #define ERROR_FECHA_INVALIDA "Fecha invalida"
 #define ERROR_CANT_BICICLETA_INVALIDA "Cantidad de bicicletas invalida (1-50)"
+#define ERROR_NO_INSCRIPCION "No se encontro la inscripcion con ese CI"
 //Fin Errores de inscripciones
 
 //Constantes de fecha
