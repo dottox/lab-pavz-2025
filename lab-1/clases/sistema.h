@@ -32,8 +32,10 @@ class Sistema {
     void agregarClase(DtEntrenamiento);
     void listarClases();
     void listarSocios();
-    DtSocio ** obtenerInfoSociosPorClase (int,int &);
-    DtClase obtenerClase (int);
+    int getCantSocios();
+    int getCantClases();
+    DtSocio ** obtenerInfoSociosPorClase(int, int &);
+    DtClase obtenerClase(int);
     ~Sistema();
 
 

@@ -52,3 +52,7 @@
 #define ERROR_NO_INSCRIPCIONES "No hay socios inscriptos en esta clase"
 #define ERROR_NO_SOCIOS "No hay suficientes socios en la clase"
 //Fin de errores de sistema
+
+//Constantes de Socio
+#define CI_LENGTH 8
+#define NOMBRE_MIN_LENGTH 3

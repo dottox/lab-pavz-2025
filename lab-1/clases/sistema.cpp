@@ -41,6 +41,14 @@ Clase* Sistema::getClase(int idClase){
   return nullptr;
 }
 
+int Sistema::getCantSocios(){
+  return this->cantSocios;
+}
+
+int Sistema::getCantClases(){
+  return this->cantClases;
+}
+
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Socio* socio = getSocio(ciSocio);
   Clase* clase = getClase(idClase);

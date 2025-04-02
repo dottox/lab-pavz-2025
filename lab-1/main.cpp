@@ -3,8 +3,10 @@
 #include <limits>
 #include "./clases/sistema.h"
 
-void mostrarMenu(){
+void mostrarMenu(Sistema* s){
     system("cls");
+    cout << "Cantidad de usuarios: " << s->getCantSocios() << endl;
+    cout << "Cantidad de clases: " << s->getCantClases() << endl << endl;
     cout << "Ingrese una opcion: " << endl;
     cout << "1. Agregar socio" << endl;
     cout << "2. Agregar clase" << endl;
@@ -19,11 +21,12 @@ int main(){
     Sistema* s = new Sistema();
     
     bool salir = true;
+    int opcion;
+    string nombre, ci;
     
     while(salir){
-        int opcion;
 
-        mostrarMenu();
+        mostrarMenu(s);
 
         cin >> opcion;
 
@@ -38,16 +41,35 @@ int main(){
 
         switch(opcion){
             case 1:
-                // Llamar a agregar socio
+                system("cls");
+                cout << "[Agregando socio]" << endl;
+                cout << "Cedula: ";
+                cin >> ci;
+                cout << endl << "Nombre: ";
+                cin >> nombre;
+                try{
+                    s->agregarSocio(ci, nombre);
+                }catch(invalid_argument &e){
+                    cout << "Error: " << e.what() << endl;
+                    system("pause");
+                    continue;
+                }
+                system("cls");
+                cout << "El usuario\n\nNombre: " << nombre << "\nCi: " << ci << "\n\nHa sido creado correctamente." << endl;
+                system("pause");
                 break;
             case 2:
                 // Llamar a agregar clase
                 break;
             case 3:
+                system("cls");
                 s->listarClases();
+                system("pause");
                 break;
             case 4:
+                system("cls");
                 s->listarSocios();
+                system("pause");
                 break;
             case 5:
                 // Llamar a obtener info socios por clase
