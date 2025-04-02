@@ -88,6 +88,22 @@ void Sistema::listarSocios(){
   cout << "---------------------------" <<endl;
 }
 
+DtSocio** Sistema::obtenerInfoSociosPorClase(int idClase,int & cantSocios){
+  if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+  if(getClase(idClase)->getCantInscripciones() < cantSocios || cantSocios <= 0) throw invalid_argument(ERROR_NO_SOCIOS);
+  Inscripcion** inscripciones = getClase(idClase)->getInscripciones();
+  DtSocio** dtSocios = new DtSocio*[cantSocios];
+  for(int i = 0; i < cantSocios; i++){
+    dtSocios[i] = new DtSocio(inscripciones[i]->getSocio()->getCI(), inscripciones[i]->getSocio()->getNombre());
+  }
+  return dtSocios;
+}
+
+DtClase Sistema::obtenerClase(int idClase){
+  if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+  DtClase dtClase = DtClase(getClase(idClase)->getId(), getClase(idClase)->getNombre(), getClase(idClase)->getTurno(), getClase(idClase)->cupo());
+  return dtClase;
+}
 
 Sistema::~Sistema(){
     for(int i = 0; i < cantSocios; i++){
@@ -99,21 +115,4 @@ Sistema::~Sistema(){
         delete clases[i];
     }
     delete[] clases;
-}
-
-DtSocio ** Sistema::obtenerInfoSociosPorClase (int idClase,int & cantSocios){
-  if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  if(getClase(idClase)->getCantInscripciones() < cantSocios) throw invalid_argument(ERROR_NO_SOCIOS);
-  Inscripcion** inscripciones = getClase(idClase)->getInscripciones();
-  DtSocio** dtSocios = new DtSocio*[cantSocios];
-  for(int i = 0; i < cantSocios; i++){
-    dtSocios[i] = new DtSocio(inscripciones[i]->getSocio()->getCI(), inscripciones[i]->getSocio()->getNombre());
-  }
-  return dtSocios;
-}
-
-DtClase* Sistema::obtenerClase (int idClase){
-  if(getClase(idClase) == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  DtClase * dtClase = new DtClase(getClase(idClase)->getId(), getClase(idClase)->getNombre(), getClase(idClase)->getTurno(), getClase(idClase)->cupo());
-  return dtClase;
 }

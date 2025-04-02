@@ -1,6 +1,5 @@
 #include <iostream>
 #include "../../clases/sistema.h"
-#include "../../clases/entrenamiento.h"
 
 using namespace std;
 
@@ -17,6 +16,14 @@ using namespace std;
 //   - Agregar inscripción con una clase inválida
 //   # TODO: Agregar inscripcion sin más cupos en la clase
 //   - Agregar inscripción que ya existe
+// 4. Obtener información de socios por clase
+//   - Obtener información de más socios de los que tiene la clase
+//   - Obtener información de cantidad negativa de socios
+//   - Obtener información de 0 socios
+// 5. Obtener clase
+//   - Obtener clase con ID válido
+//   - Obtener clase con ID inválido
+
 
 
 int main() {
@@ -33,7 +40,7 @@ int main() {
         sistema->agregarSocio("12345678", "Gonzalo");
         throw runtime_error("Error: Se permitio agregar un socio con la misma CI que otro");
     } catch(const invalid_argument& e) {
-        cout << "TC-001 pasó correctamente." << endl;
+        cout << "TC-001 paso correctamente." << endl;
     } catch (const runtime_error& e) {
         terminate();
     }
@@ -46,7 +53,7 @@ int main() {
       sistema->agregarSocio("12312312", "Gonzalo");
       throw runtime_error("Error: Se permitio agregar un socio superando el limite máximo");
     } catch(const invalid_argument& e) {
-        cout << "TC-002 pasó correctamente." << endl;
+        cout << "TC-002 paso correctamente." << endl;
     } catch (const runtime_error& e) {
         terminate();
     }
@@ -70,7 +77,7 @@ int main() {
         sistema->agregarClase(clase2);
         throw runtime_error("Error: Se permitio agregar una clase ya existente");
     } catch(const invalid_argument& e) {
-        cout << "TC-003 pasó correctamente" << endl;
+        cout << "TC-003 paso correctamente" << endl;
     } catch (const runtime_error& e) {
         terminate();
     }
@@ -83,7 +90,7 @@ int main() {
         sistema->agregarClase(clase4);
         throw runtime_error("Error: Se permitio agregar una clase superando el limite maximo");
     } catch(const invalid_argument& e) {
-        cout << "TC-004 pasó correctamente." << endl;
+        cout << "TC-004 paso correctamente." << endl;
     } catch (const runtime_error& e) {
         terminate();
     }
@@ -108,7 +115,7 @@ int main() {
         sistema->agregarInscripcion("00001111", 1, date4);
         throw runtime_error("Error: Se permitio agregar una inscripcion con un socio invalido");
     } catch(const invalid_argument& e){
-        cout << "TC-005 pasó correctamente." << endl;
+        cout << "TC-005 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
@@ -118,7 +125,7 @@ int main() {
         sistema->agregarInscripcion("12345678", 1337, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion con una clase invalida");
     } catch(const invalid_argument& e){
-        cout << "TC-006 pasó correctamente." << endl;
+        cout << "TC-006 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
@@ -130,7 +137,7 @@ int main() {
         sistema->agregarInscripcion("12345678", 1, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion que ya existe");
     } catch(const invalid_argument& e){
-        cout << "TC-008 pasó correctamente." << endl;
+        cout << "TC-008 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
@@ -149,13 +156,47 @@ int main() {
         DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantOverMax);
         throw runtime_error("Error: Se permitio saber la información de más socios de los que tiene la clase");
     } catch(const invalid_argument& e){
-        cout << "TC-009 pasó correctamente." << endl;
+        cout << "TC-009 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
+    // TC-010: Obtener información socios negativos
+    try{
+        int cantBelowZero = -999;
+        DtSocio** tc_zero_ten = sistema->obtenerInfoSociosPorClase(1, cantBelowZero);
+        throw runtime_error("Error: Se permitio saber la información de cantidad negativa de socios");
+    } catch(const invalid_argument& e){
+        cout << "TC-010 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
+    // TC-011: Obtener información de 0 socios
+    try{
+        int cantZero = 0;
+        DtSocio** tc_zero_eleven = sistema->obtenerInfoSociosPorClase(1, cantZero);
+        throw runtime_error("Error: Se permitio saber la información de 0 socios");
+    } catch(const invalid_argument& e){
+        cout << "TC-011 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
         // --------------------- OBTENER CLASE -----------------------------
-    // TODO: lo hago yo tranqui att: dotto
     
+    // TC-012: Obtener clase con ID válido
+    DtClase tc_zero_twelve = sistema->obtenerClase(1);
+    cout << "TC-012 paso correctamente." << endl;
+    
+    // TC-013: Obtener clase con ID inválido
+    try{
+        DtClase tc_zero_thirteen = sistema->obtenerClase(1337);
+        throw runtime_error("Error: Se obtuvo la clase con id Inválido");
+    } catch(const invalid_argument& e){
+        cout << "TC-013 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
 
     delete sistema;
     

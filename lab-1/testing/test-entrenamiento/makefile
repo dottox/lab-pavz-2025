@@ -48,7 +48,7 @@ dtFecha.o:
 	g++ -c "../../dataStructures/dtFecha.cpp"
 
 clean:
-	$(DELETE) *.o programa
+	$(DELETE) *.o programa*
 
 run:
 	$(MAKE) clean
