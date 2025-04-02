@@ -31,7 +31,7 @@ int main(){
             system("cls");
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Has ingreasdo una opcion invalida: " << to_string(opcion) << endl << endl;
+            cout << "Has ingreasdo una opcion invalida." << endl << endl;
             system("pause");
             continue;
         }
@@ -61,7 +61,7 @@ int main(){
                 break;
             default:
                 system("cls");
-                cout << "Has ingresado una opcion invalida: " << opcion << endl << endl;
+                cout << "Has ingresado una opcion invalida." << opcion << endl << endl;
                 system("pause");
                 break;
         }
