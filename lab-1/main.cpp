@@ -34,7 +34,7 @@ void limpiarCin(){
 
 int main(){
     Sistema* s = new Sistema(SOCIOS_MAX, CLASES_MAX);
-    
+
     bool salir = true, r;
     int opcion, idClase, cantBicis, turno, rambla, dia, mes, anio;
     string nombre, ci;
@@ -82,7 +82,7 @@ int main(){
                     system("pause");
                     continue;
                 }
-                cout << "Sistema poblado." << endl;
+                cout << "Sistema poblado." << endl << endl;
                 system("pause");
                 break;
             case 1:
@@ -100,7 +100,7 @@ int main(){
                     continue;
                 }
                 system("cls");
-                cout << "El usuario\n\nNombre: " << nombre << "\nCi: " << ci << "\n\nHa sido creado correctamente." << endl;
+                cout << "[Usuario creado correctamente]\n\nNombre: " << nombre << "\nCi: " << ci << endl << endl;
                 system("pause");
                 break;
             case 2:
@@ -168,12 +168,13 @@ int main(){
                         break;
                 }
                 system("cls");
-                cout << s->obtenerClase(idClase);
+                cout << "[Clase creada correctamente]" << endl << endl;
+                cout << s->obtenerClase(idClase) << endl;
                 system("pause");
                 break;
             case 3:
                 cleanScreen();
-                cout << "[Agregando inscripcion]" << endl;
+                cout << "[Agregando inscripcion]" << endl << endl;
                 cout << "Cedula del socio: ";
                 cin >> ci;
                 cout << "ID de la clase: ";
@@ -198,10 +199,10 @@ int main(){
                     continue;
                 }
                 cleanScreen();
-                cout << "Inscripcion creada correctamente." << endl;
+                cout << "[Inscripcion creada correctamente]" << endl << endl;
                 cout << "Socio: " << ci << endl;
                 cout << "ID: " << idClase << endl;
-                cout << "Fecha: " << dia << "/" << mes << "/" << anio << endl;
+                cout << "Fecha: " << dia << "/" << mes << "/" << anio << endl << endl;
                 system("pause");
                 break;
             case 4:
@@ -228,8 +229,8 @@ int main(){
                 }
                 system("cls");
                 try{
-                    cout << "[Info de la Clase]\n" << endl;
-                    cout << s->obtenerClase(idClase);
+                    cout << "[Info de la Clase]\n" << endl << endl;
+                    cout << s->obtenerClase(idClase) << endl;
                 }catch(invalid_argument &e){
                     system("cls");
                     cout << "Error: " << e.what() << endl;
