@@ -166,7 +166,8 @@ int main(){
                         }
                         break;
                 }
-                cout << "Clase\n\nID: " << idClase << "\nNombre: " << nombre << "\nTurno: " << t << "\n\nAgregada correctamente." << endl;
+                system("cls");
+                cout << s->obtenerClase(idClase);
                 system("pause");
                 break;
             case 3:
@@ -185,7 +186,25 @@ int main(){
                 // Obtener info socios por clase
                 break;
             case 7:
-                // Obtener clase
+                system("cls");
+                cout << "[Obteniendo clase]" << endl;
+                cout << "ID: ";
+                cin >> idClase;
+                if(cin.fail()){
+                    limpiarCin();
+                    continue;
+                }
+                system("cls");
+                try{
+                    cout << "[Info de la Clase]\n" << endl;
+                    cout << s->obtenerClase(idClase);
+                }catch(invalid_argument &e){
+                    system("cls");
+                    cout << "Error: " << e.what() << endl;
+                    system("pause");
+                    continue;
+                }
+                system("pause");
                 break;
             case 8:
                 // Borrar inscripcion

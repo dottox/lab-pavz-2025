@@ -89,19 +89,21 @@ void Sistema::agregarClase(DtEntrenamiento clase) {
 };
 
 void Sistema::listarClases(){
-  cout << "-------- CLASES -----------" << endl;
+  cout << "----------- CLASES -----------" << endl;
+  cout << "--- [ ID | Nombre | Cupo ] ---" << endl;
   for(int i = 0; i < this->cantClases; i++){
-    cout << this->clases[i]->getId() << " " << this->clases[i]->getNombre() << endl;
+    cout << this->clases[i]->getId() << " " << this->clases[i]->getNombre() << " " << this->clases[i]->cupo() << endl;
   }
-  cout << "---------------------------" <<endl;
+  cout << "------------------------------" <<endl;
 }
 
 void Sistema::listarSocios(){
-  cout << "-------- SOCIOS -----------" << endl;
+  cout << "----------- Socios -----------" << endl;
+  cout << "------- [ CI | Nombre ] ------" << endl;
   for(int i = 0; i < this->cantSocios; i++){
     cout << this->socios[i]->getCI() << " " << this->socios[i]->getNombre() << endl;
   }
-  cout << "---------------------------" <<endl;
+  cout << "------------------------------" <<endl;
 }
 
 DtSocio** Sistema::obtenerInfoSociosPorClase(int idClase,int & cantSocios){

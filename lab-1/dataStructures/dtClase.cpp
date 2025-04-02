@@ -36,4 +36,23 @@ int DtClase::getCupo() {
   return this->cantCupos;
 }
 
+ostream& operator<<(ostream& os, const DtClase& dt) {
+  os << "ID: " << dt.id << endl;
+  os << "Nombre: " << dt.nombre << endl;
+  os << "Turno: ";
+  switch(dt.turno) {
+    case Manana:
+      os << "Manana";
+      break;
+    case Tarde:
+      os << "Tarde";
+      break;
+    case Noche:
+      os << "Noche";
+      break;
+  }
+  os << endl;
+  return os;
+}
+
 DtClase::~DtClase() {}
