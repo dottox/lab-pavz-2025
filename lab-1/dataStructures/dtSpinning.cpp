@@ -8,12 +8,6 @@ DtSpinning::DtSpinning(int id, string nom, Turno turn, int cantBicicletas) : DtC
   if (cantBicicletas > MAX_BICICLETAS || cantBicicletas < MIN_BICICLETAS) {
     throw invalid_argument(ERROR_CANT_BICICLETA_INVALIDA);
   }
-  
-  // Validar el turno
-  if (turn > Noche || turn < Manana) {
-    throw invalid_argument(ERROR_TURNO_INVALIDO);
-  }
-
   this->cantBicicletas = cantBicicletas;
 }
 

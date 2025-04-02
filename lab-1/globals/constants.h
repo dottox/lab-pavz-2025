@@ -10,6 +10,7 @@
 
 //Errores de clases
 #define ERROR_NO_CLASE_ID "No se encontro la clase con ese ID"
+#define ERROR_ID_INVALIDO "ID invalido"
 #define ERROR_CUPOS_CERO "No hay cupo en la clase"
 #define ERROR_INSCRIPCION_EXISTENTE "Ya existe una inscripcion para ese socio en esa fecha"
 #define ERROR_LIMITE_INSCRIPCIONES "No se pueden agregar mas inscripciones"
@@ -52,3 +53,7 @@
 #define ERROR_NO_INSCRIPCIONES "No hay socios inscriptos en esta clase"
 #define ERROR_NO_SOCIOS "No hay suficientes socios en la clase"
 //Fin de errores de sistema
+
+//Constantes de Socio
+#define CI_LENGTH 8
+#define NOMBRE_MIN_LENGTH 3

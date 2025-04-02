@@ -26,7 +26,7 @@ int main()
     dataSocio->setCI("asdqwe");
     throw runtime_error("TC001 Error: Se permitió settear un CI inválido.");
   } catch (const invalid_argument &e) {
-    cout << "TC001 funcionó correctamente" << endl;
+    cout << "TC001 funciono correctamente" << endl;
   } catch (const runtime_error &e) {
     cout << e.what() << endl;
     terminate();
@@ -43,7 +43,7 @@ int main()
   }
   catch (const invalid_argument &e)
   {
-    cout << "TC002 funcionó correctamente" << endl;
+    cout << "TC002 funciono correctamente" << endl;
   }
   catch (const runtime_error &e)
   {
@@ -60,7 +60,7 @@ int main()
   }
   catch (const invalid_argument &e)
   {
-    cout << "TC003 funcionó correctamente" << endl;
+    cout << "TC003 funciono correctamente" << endl;
   }
   catch (const runtime_error &e)
   {
@@ -74,7 +74,7 @@ int main()
     throw runtime_error("TC004 Error: Se permitió un CI inválido con letras.");
   } catch (const invalid_argument &e)
   {
-    cout << "TC004 funcionó correctamente" << endl;
+    cout << "TC004 funciono correctamente" << endl;
   }
   catch (const runtime_error &e)
   {
@@ -88,7 +88,7 @@ int main()
     throw runtime_error("TC005 Error: Se permitió un nombre vacío.");
   } catch (const invalid_argument &e)
   {
-    cout << "TC005 funcionó correctamente" << endl;
+    cout << "TC005 funciono correctamente" << endl;
   }
   catch (const runtime_error &e)
   {
@@ -97,10 +97,32 @@ int main()
   }
 
   // TC006: Validar Nombre con 1 caracter
-  Socio *s=new Socio(DtSocio("12345678", "A"));
-  assert(s->getNombre() == "A");
-  delete s;
-  cout << "TC006 PASS" << endl;
+  try{
+    Socio *s=new Socio(DtSocio("12345678", "A"));
+    throw runtime_error("TC006 Error: Se permitió un nombre con 1 caracter.");
+  } catch (const invalid_argument &e)
+  {
+    cout << "TC006 funciono correctamente" << endl;
+  }
+  catch (const runtime_error &e)
+  {
+    cout << e.what() << endl;
+    terminate();
+  }
+
+  // TC007: Validar Nombre con 1 caracter
+  try{
+    Socio *s=new Socio(DtSocio("-1234568", "Abc"));
+    throw runtime_error("TC007 Error: Se permitió un CI con numero negativo.");
+  } catch (const invalid_argument &e)
+  {
+    cout << "TC007 funciono correctamente" << endl;
+  }
+  catch (const runtime_error &e)
+  {
+    cout << e.what() << endl;
+    terminate();
+  }
 
   cout << "[----------------------------/ Funciono pa' /----------------------------]" << endl;
 

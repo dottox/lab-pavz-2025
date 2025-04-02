@@ -1,17 +1,25 @@
 #include "sistema.h"
 
 Sistema::Sistema(){
-    this->cantSocios = DEFAULT_SOCIOS;
-    this->cantClases = DEFAULT_CLASES;
-    this->socios = new Socio*[MAX_SOCIOS];
-    this->clases = new Clase*[MAX_CLASES];
+  this->MAXSOCIOS = MAX_SOCIOS;
+  this->cantSocios = DEFAULT_SOCIOS;
+  this->MAXCLASES = MAX_CLASES;
+  this->cantClases = DEFAULT_CLASES;
+  this->socios = new Socio*[this->MAXSOCIOS];
+  this->clases = new Clase*[this->MAXCLASES];
 };
 
-// void agregarSocio(string ci, string nombre)
-// Crea un nuevo socio en el sistema. En caso de ya existir, levanta la excepción
-// std::invalid_argument.
+Sistema::Sistema(int socios, int clases){
+  this->MAXSOCIOS = socios;
+  this->cantSocios = DEFAULT_SOCIOS;
+  this->MAXCLASES = clases;
+  this->cantClases = DEFAULT_CLASES;
+  this->socios = new Socio*[this->MAXSOCIOS];
+  this->clases = new Clase*[this->MAXCLASES];
+};
+
 void Sistema::agregarSocio(string ci, string nombre){
-    if(this->cantSocios >= MAX_SOCIOS){
+    if(this->cantSocios >= this->MAXSOCIOS){
       throw invalid_argument(ERROR_LIMITE_SOCIOS);
     }
     if(getSocio(ci) != nullptr){
@@ -41,6 +49,14 @@ Clase* Sistema::getClase(int idClase){
   return nullptr;
 }
 
+int Sistema::getCantSocios(){
+  return this->cantSocios;
+}
+
+int Sistema::getCantClases(){
+  return this->cantClases;
+}
+
 void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Socio* socio = getSocio(ciSocio);
   Clase* clase = getClase(idClase);
@@ -53,7 +69,7 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
 }
 
 void Sistema::agregarClase(DtSpinning clase) {
-  if (this->cantClases >= MAX_CLASES) throw invalid_argument(ERROR_LIMITE_CLASES);
+  if (this->cantClases >= this->MAXCLASES) throw invalid_argument(ERROR_LIMITE_CLASES);
   if (getClase(clase.getId()) != nullptr) throw invalid_argument(ERROR_CLASE_EXISTENTE_ID);
   Spinning* spinning = new Spinning(clase);
   this->clases[cantClases] = spinning;
@@ -61,7 +77,7 @@ void Sistema::agregarClase(DtSpinning clase) {
 };
 
 void Sistema::agregarClase(DtEntrenamiento clase) {
-  if (this->cantClases >= MAX_CLASES) {
+  if (this->cantClases >= this->MAXCLASES) {
     throw invalid_argument(ERROR_LIMITE_CLASES);
   }
   if (getClase(clase.getId()) != nullptr){
@@ -73,19 +89,21 @@ void Sistema::agregarClase(DtEntrenamiento clase) {
 };
 
 void Sistema::listarClases(){
-  cout << "-------- CLASES -----------" << endl;
+  cout << "----------- CLASES -----------" << endl;
+  cout << "--- [ ID | Nombre | Cupo ] ---" << endl;
   for(int i = 0; i < this->cantClases; i++){
-    cout << this->clases[i]->getId() << " " << this->clases[i]->getNombre() << endl;
+    cout << this->clases[i]->getId() << " " << this->clases[i]->getNombre() << " " << this->clases[i]->cupo() << endl;
   }
-  cout << "---------------------------" <<endl;
+  cout << "------------------------------" <<endl;
 }
 
 void Sistema::listarSocios(){
-  cout << "-------- SOCIOS -----------" << endl;
+  cout << "----------- Socios -----------" << endl;
+  cout << "------- [ CI | Nombre ] ------" << endl;
   for(int i = 0; i < this->cantSocios; i++){
     cout << this->socios[i]->getCI() << " " << this->socios[i]->getNombre() << endl;
   }
-  cout << "---------------------------" <<endl;
+  cout << "------------------------------" <<endl;
 }
 
 DtSocio** Sistema::obtenerInfoSociosPorClase(int idClase,int & cantSocios){

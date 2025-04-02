@@ -22,5 +22,9 @@ class DtClase {
     string getNombre();
     Turno getTurno();
     int getCupo();
+
+    // Sobrecarga de cout
+    friend ostream& operator<<(ostream&, const DtClase&);
+
     virtual ~DtClase();
 };

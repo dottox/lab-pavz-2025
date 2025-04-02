@@ -13,9 +13,11 @@ using namespace std;
 
 class Sistema {
   private:
+    int MAXSOCIOS;
     int cantSocios;
     Socio** socios;
     
+    int MAXCLASES;
     int cantClases;
     Clase** clases;
     
@@ -24,6 +26,7 @@ class Sistema {
 
   public:
     Sistema();
+    Sistema(int,int);
 
     // Funciones de los requerimientos
     void agregarSocio(string, string);
@@ -32,8 +35,10 @@ class Sistema {
     void agregarClase(DtEntrenamiento);
     void listarClases();
     void listarSocios();
-    DtSocio ** obtenerInfoSociosPorClase (int,int &);
-    DtClase obtenerClase (int);
+    int getCantSocios();
+    int getCantClases();
+    DtSocio ** obtenerInfoSociosPorClase(int, int &);
+    DtClase obtenerClase(int);
     ~Sistema();
 
 
