@@ -5,9 +5,24 @@
 #define SOCIOS_MAX 15
 #define CLASES_MAX 15
 
+void cleanScreen(){
+    #if defined(_WIN32)
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void pause(){
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    std::string dummy;
+    std::cout << "Presiona cualquier tecla para continuar.";
+    std::getline(std::cin, dummy);
+}
 
 void mostrarMenu(Sistema* s){
-    system("cls");
+    cleanScreen();
     cout << "Cantidad de usuarios: " << s->getCantSocios() << "/" << SOCIOS_MAX << endl;
     cout << "Cantidad de clases: " << s->getCantClases() << "/" << CLASES_MAX << endl << endl;
     cout << "Ingrese una opcion: " << endl;
@@ -24,21 +39,21 @@ void mostrarMenu(Sistema* s){
 }
 
 void limpiarCin(){
-    system("cls");
+    cleanScreen();
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "Has ingresado una opcion invalida." << endl << endl;
-    system("pause");
+    pause();
 }
 
 int main(){
     Sistema* s = new Sistema(SOCIOS_MAX, CLASES_MAX);
-    
+
     bool salir = true, r;
-    int opcion, idClase, cantBicis, turno, rambla;
+    int opcion, idClase, cantBicis, turno, rambla, dia, mes, anio, cantSocios;
     string nombre, ci;
     Turno t;
-    
+
     while(salir){
 
         mostrarMenu(s);
@@ -52,7 +67,7 @@ int main(){
 
         switch(opcion){
             case 0:
-                system("cls");
+                cleanScreen();
                 try{
 
                     s->agregarSocio("87654321", "Jose_Jerbacio");
@@ -75,17 +90,51 @@ int main(){
                     s->agregarClase(DtEntrenamiento(8, "Clase_Gym_Principiantes", Tarde, false));
                     s->agregarClase(DtSpinning(9, "Clase_9F", Noche, 28));
                     s->agregarClase(DtEntrenamiento(10, "Clase_Gym_Cardio", Manana, true));
-                    s->agregarInscripcion("87654321", 1, DtFecha(1, 8, 2043));
+                    s->agregarInscripcion("87654325", 1, DtFecha(1, 8, 2043));
+                    s->agregarInscripcion("87654326", 1, DtFecha(2, 8, 2043));
+                    s->agregarInscripcion("87654327", 1, DtFecha(3, 8, 2043));
+                    s->agregarInscripcion("87654328", 2, DtFecha(4, 8, 2043));
+                    s->agregarInscripcion("87654329", 2, DtFecha(5, 8, 2043));
+                    s->agregarInscripcion("87654321", 2, DtFecha(6, 8, 2043));
+                    s->agregarInscripcion("12345679", 2, DtFecha(7, 8, 2043));
+                    s->agregarInscripcion("87654322", 3, DtFecha(8, 8, 2043));
+                    s->agregarInscripcion("87654323", 3, DtFecha(9, 8, 2043));
+                    s->agregarInscripcion("87654324", 3, DtFecha(10, 8, 2043));
+                    s->agregarInscripcion("87654325", 3, DtFecha(11, 8, 2043));
+                    s->agregarInscripcion("87654326", 4, DtFecha(12, 8, 2043));
+                    s->agregarInscripcion("87654327", 4, DtFecha(13, 8, 2043));
+                    s->agregarInscripcion("87654328", 4, DtFecha(14, 8, 2043));
+                    s->agregarInscripcion("87654329", 5, DtFecha(15, 8, 2043));
+                    s->agregarInscripcion("87654321", 5, DtFecha(16, 8, 2043));
+                    s->agregarInscripcion("12345679", 5, DtFecha(17, 8, 2043));
+                    s->agregarInscripcion("87654322", 5, DtFecha(18, 8, 2043));
+                    s->agregarInscripcion("87654323", 6, DtFecha(19, 8, 2043));
+                    s->agregarInscripcion("87654324", 6, DtFecha(20, 8, 2043));
+                    s->agregarInscripcion("87654325", 6, DtFecha(21, 8, 2043));
+                    s->agregarInscripcion("87654326", 6, DtFecha(22, 8, 2043));
+                    s->agregarInscripcion("87654327", 7, DtFecha(23, 8, 2043));
+                    s->agregarInscripcion("87654328", 7, DtFecha(24, 8, 2043));
+                    s->agregarInscripcion("87654329", 7, DtFecha(25, 8, 2043));
+                    s->agregarInscripcion("87654321", 8, DtFecha(26, 8, 2043));
+                    s->agregarInscripcion("12345679", 8, DtFecha(27, 8, 2043));
+                    s->agregarInscripcion("87654322", 8, DtFecha(28, 8, 2043));
+                    s->agregarInscripcion("87654323", 9, DtFecha(29, 8, 2043));
+                    s->agregarInscripcion("87654324", 9, DtFecha(30, 8, 2043));
+                    s->agregarInscripcion("87654325", 9, DtFecha(31, 8, 2043));
+                    s->agregarInscripcion("87654326", 10, DtFecha(1, 9, 2043));
+                    s->agregarInscripcion("87654327", 10, DtFecha(2, 9, 2043));
+                    s->agregarInscripcion("87654328", 10, DtFecha(3, 9, 2043));
+                    s->agregarInscripcion("87654329", 10, DtFecha(4, 9, 2043));
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
-                cout << "Sistema poblado." << endl;
-                system("pause");
+                cout << "Sistema poblado." << endl << endl;
+                pause();
                 break;
             case 1:
-                system("cls");
+                cleanScreen();
                 cout << "[Agregando socio]" << endl;
                 cout << "Cedula: ";
                 cin >> ci;
@@ -95,15 +144,16 @@ int main(){
                     s->agregarSocio(ci, nombre);
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
-                system("cls");
+
+                cleanScreen();
                 cout << "El usuario\n\nNombre: " << nombre << "\nCi: " << ci << "\n\nHa sido creado correctamente." << endl;
-                system("pause");
+                pause();
                 break;
             case 2:
-                system("cls");
+                cleanScreen();
                 cout << "[Agregando clase]" << endl << endl;
                 cout << "[Seleccione un tipo]\n\n1. Spinning\n2. Entrenamiento" << endl;
                 cin >> opcion;
@@ -111,12 +161,12 @@ int main(){
                     limpiarCin();
                     continue;
                 }
-                system("cls");
+                cleanScreen();
                 cout << "ID: ";
                 cin >> idClase;
                 cout << "Nombre: ";
                 cin >> nombre;
-                system("cls");
+                cleanScreen();
                 cout << "[Seleccione un Turno]\n\n1. Manana\n2. Tarde\n3. Noche" << endl;
                 cin >> turno;
                 if(cin.fail() || turno < 1 || turno > 3){
@@ -130,7 +180,7 @@ int main(){
                 }else if(turno == 3){
                     t = Noche;
                 }
-                system("cls");
+                cleanScreen();
                 switch(opcion){
                     case 1:
                         cout << "Cantidad de bicicletas: ";
@@ -138,9 +188,9 @@ int main(){
                         try{
                             s->agregarClase(DtSpinning(idClase, nombre, t, cantBicis));
                         }catch(invalid_argument &e){
-                            system("cls");
+                            cleanScreen();
                             cout << "Error: " << e.what() << endl;
-                            system("pause");
+                            pause();
                             continue;
                         }
                         break;
@@ -159,34 +209,105 @@ int main(){
                         try{
                             s->agregarClase(DtEntrenamiento(idClase, nombre, t, r));
                         }catch(invalid_argument &e){
-                            system("cls");
+                            cleanScreen();
                             cout << "Error: " << e.what() << endl;
-                            system("pause");
+                            pause();
                             continue;
                         }
                         break;
                 }
-                system("cls");
+
+                cleanScreen();
                 cout << s->obtenerClase(idClase);
-                system("pause");
+                pause();
                 break;
             case 3:
-                // Llamar a agregar inscripcion
+                cleanScreen();
+                cout << "[Agregando inscripcion]" << endl << endl;
+                cout << "Cedula del socio: ";
+                cin >> ci;
+                cout << "ID de la clase: ";
+                cin >> idClase;
+                cout << "Fecha de Inscripcion (DD/MM/AAAA)\nDia:";
+                cin >> dia; 
+                cout << "Mes:";
+                cin >> mes;
+                cout << "Anio:";
+                cin >> anio;
+                if(cin.fail()){
+                    limpiarCin();
+                    continue;
+                }
+                try{
+                    DtFecha fecha = DtFecha(dia, mes, anio);
+                    s->agregarInscripcion(ci, idClase, fecha);
+                }catch(invalid_argument &e){
+                    cleanScreen();
+                    cout << "Error: " << e.what() << endl;
+                    pause();
+                    continue;
+                }
+                cleanScreen();
+                cout << "[Inscripcion creada correctamente]" << endl << endl;
+                cout << "Socio: " << ci << endl;
+                cout << "ID: " << idClase << endl;
+                cout << "Fecha: " << dia << "/" << mes << "/" << anio << endl << endl;
+                pause();
+                break;
             case 4:
-                system("cls");
+                cleanScreen();
                 s->listarClases();
-                system("pause");
+                pause();
                 break;
             case 5:
-                system("cls");
+                cleanScreen();
                 s->listarSocios();
-                system("pause");
+                pause();
                 break;
             case 6:
-                // Obtener info socios por clase
+                cleanScreen();
+                cout << "[Obteniendo info de socios por clase]" << endl << endl;
+                cout << "ID de la clase: ";
+                cin >> idClase;
+                cleanScreen();
+                try{
+                    Clase* clase = s->getClase(idClase);
+                    if(clase == NULL){
+                        throw invalid_argument(ERROR_NO_CLASE_ID);
+                    }
+                    if(clase->getCantInscripciones() == 0){
+                        throw invalid_argument(ERROR_NO_INSCRIPCIONES);
+                    }
+                    cout << "La clase tiene " << clase->getCantInscripciones() << " socios inscriptos." << endl;
+                }catch(invalid_argument &e){
+                    cout << "Error: " << e.what() << endl;
+                    pause();
+                    continue;
+                }
+                cout << "Cant de socios: ";
+                cin >> cantSocios;
+                if(cin.fail()){
+                    limpiarCin();
+                    continue;
+                }
+                cleanScreen();
+                try{
+                    DtSocio** sociosPorClase = s->obtenerInfoSociosPorClase(idClase, cantSocios);
+                    cout << "---------- [Socios] ----------" << endl;
+                    cout << "------- [ CI | Nombre ] ------";
+                    for(int i = 0; i < cantSocios; i++){
+                        cout << endl << *sociosPorClase[i];
+                    }
+                }catch(invalid_argument &e){
+                    cout << "Error: " << e.what() << endl;
+                    pause();
+                    continue;
+                }
+                cout << "-------[Fin de la lista]------" << endl << endl;
+                pause();
                 break;
             case 7:
-                system("cls");
+                cleanScreen();
                 cout << "[Obteniendo clase]" << endl;
                 cout << "ID: ";
                 cin >> idClase;
@@ -194,36 +315,38 @@ int main(){
                     limpiarCin();
                     continue;
                 }
-                system("cls");
+                cleanScreen();
                 try{
-                    cout << "[Info de la Clase]\n" << endl;
-                    cout << s->obtenerClase(idClase);
+                    cout << "[Info de la Clase]\n" << endl << endl;
+                    cout << s->obtenerClase(idClase) << endl;
                 }catch(invalid_argument &e){
-                    system("cls");
+                    cleanScreen();
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
-                system("pause");
+                pause();
                 break;
             case 8:
                 // Borrar inscripcion
                 break;
             case 9:
-                system("cls");
+                cleanScreen();
                 salir = false;
                 break;
             default:
-                system("cls");
+                cleanScreen();
                 cout << "Has ingresado una opcion invalida." << endl << endl;
-                system("pause");
+                pause();
                 break;
         }
     }
+    cleanScreen();
     cout << "Borrando el sistema" << endl;
     delete s;
-    system("pause");
-    system("cls");
     cout << "Sistema borrado" << endl << endl;
+    pause();
+    cleanScreen();
     return 0;
 }
+

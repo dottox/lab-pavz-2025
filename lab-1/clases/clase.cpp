@@ -1,4 +1,3 @@
-
 #include "clase.h"
 
 Clase::Clase(DtClase claseData)

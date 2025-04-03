@@ -13,4 +13,11 @@ int DtEntrenamiento::getCupo() {
   return this->cantCupos;
 }
 
+ostream& operator<<(ostream& os, const DtEntrenamiento& dt) {
+  os << "ID: " << dt.id << endl;
+  os << "Nombre: " << dt.nombre << endl;
+  os << "Turno: " << dt.turno << endl;
+  return os;
+}
+
 DtEntrenamiento::~DtEntrenamiento() {}

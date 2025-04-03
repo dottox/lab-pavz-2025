@@ -17,6 +17,7 @@ class DtFecha {
     int getMes();
     int getAnio();
     bool operator==(const DtFecha& other) const;
+    friend ostream& operator<<(ostream&, const DtFecha&);
     ~DtFecha();
 };
 

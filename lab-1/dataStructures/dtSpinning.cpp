@@ -19,4 +19,12 @@ int DtSpinning::getCantBicicletas() {
   return this->cantBicicletas;
 }
 
+ostream& operator<<(ostream& os, const DtSpinning& dt) {
+  os << "ID: " << dt.id << endl;
+  os << "Nombre: " << dt.nombre << endl;
+  os << "Turno: " << dt.turno << endl;
+  os << "Cantidad de bicicletas: " << dt.cantBicicletas << endl;
+  return os;
+}
+
 DtSpinning::~DtSpinning() {}

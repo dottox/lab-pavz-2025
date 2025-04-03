@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <stdexcept>
 #include "../globals/constants.h"
@@ -15,6 +16,7 @@ public:
   DtSocio(string ci, string nombre);
   string getCi();
   string getNombre();
+  friend ostream& operator<<(ostream&, const DtSocio&);
   ~DtSocio();
 };
 
