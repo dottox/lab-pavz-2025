@@ -5,10 +5,6 @@ Spinning::Spinning(DtSpinning claseData) : Clase(claseData) {
     this->cantBicicletas = claseData.getCantBicicletas();
 };
 
-int Spinning::cupo() {
-    return this->cantCupo;
-};
-
 void Spinning::setCantBicicletas(int cantBici) {
   if (cantBici > MAX_BICICLETAS || cantBici < MIN_BICICLETAS) {
     throw invalid_argument(ERROR_CANT_BICICLETA_INVALIDA);

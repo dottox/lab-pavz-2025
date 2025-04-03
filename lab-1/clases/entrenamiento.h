@@ -19,7 +19,6 @@ class Entrenamiento : public Clase{
 
   public:
     Entrenamiento(DtEntrenamiento);
-    int cupo();
     bool getRambla();
     ~Entrenamiento();
 };

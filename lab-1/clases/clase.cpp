@@ -1,5 +1,12 @@
 #include "clase.h"
 
+/*
+  * @brief Constructor for the Clase class.
+  * 
+  * Initializes a Clase object with the specified data.
+  * 
+  * @param claseData The data for the class, represented as a DtClase object.
+*/
 Clase::Clase(DtClase claseData)
 {
     this->id = claseData.getId();
@@ -10,16 +17,41 @@ Clase::Clase(DtClase claseData)
     this->inscripciones = new Inscripcion*[MAX_INSCRIPCIONES];
 };
 
+/**
+ * @brief Returns the available spots (cupo) in the class.
+ * 
+ * @return The number of available spots in the class.
+ */
+int Clase::cupo()
+{
+    return this->cantCupo;
+};
+
+/**
+ * @brief Returns the ID of the class.
+ * 
+ * @return The ID of the class as an integer.
+ */
 int Clase::getId()
 {
     return this->id;
 };
 
+/**
+ * @brief Returns the name of the class.
+ * 
+ * @return The name of the class as a string.
+ */
 string Clase::getNombre()
 {
     return this->nombre;
 };
 
+/**
+ * @brief Returns the turn of the class.
+ * 
+ * @return The turn of the class as a Turno enum value.
+ */
 Turno Clase::getTurno()
 {
     return this->turno;
@@ -51,6 +83,12 @@ Inscripcion** Clase::getInscripciones(){
 };
 
 
+/**
+ * @brief Returns the inscription of a specific socio.
+ * 
+ * @param ci The CI of the socio whose inscription is to be retrieved.
+ * @return The Inscripcion object associated with the specified socio, or nullptr if not found.
+ */
 Inscripcion* Clase::getInscripcion(string ci){
     for (int i = 0; i < this->cantInscripciones; i++){
         if (this->inscripciones[i]->getSocio()->getCI() == ci){
@@ -60,6 +98,12 @@ Inscripcion* Clase::getInscripcion(string ci){
     return nullptr;
 };
 
+/**
+ * @brief Deletes an inscription for a specific socio.
+ * 
+ * @param ciSocio The CI of the socio whose inscription is to be deleted.
+ * @throws invalid_argument if the inscription is not found.
+ */
 void Clase::borrarInscripcion(string ciSocio){
     Inscripcion* inscripcion = this->getInscripcion(ciSocio);
     if (inscripcion == nullptr) throw invalid_argument(ERROR_NO_INSCRIPCION);
@@ -86,7 +130,6 @@ int Clase::getCantInscripciones(){
 };
 
 
-
 /**
  * @brief Sets the name of the class.
  * 
@@ -95,6 +138,7 @@ int Clase::getCantInscripciones(){
 void Clase::setNombre(string nombre){
   this->nombre = nombre;
 };
+
 
 /**
  * @brief Sets the turn of the class.
@@ -108,6 +152,7 @@ void Clase::setTurno(Turno turno){
   }
   this->turno = turno;
 };
+
 
 /**
  * @brief Destructor for the Clase class.

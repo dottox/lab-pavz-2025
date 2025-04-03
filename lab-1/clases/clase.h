@@ -29,7 +29,7 @@ class Clase{
     void setNombre(string);
     void setTurno(Turno);
 
-    virtual int cupo() = 0; // Funcion polimorfica
+    int cupo();
     void agregarInscripcion(Inscripcion *);
     Inscripcion* getInscripcion(string);
     Inscripcion** getInscripciones();
