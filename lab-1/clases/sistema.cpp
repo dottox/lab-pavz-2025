@@ -127,13 +127,11 @@ DtClase Sistema::obtenerClase(int idClase){
 Sistema::~Sistema(){
     for(int i = 0; i < cantSocios; i++){
         delete socios[i];
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
     delete[] socios;
     
     for(int i = 0; i < cantClases; i++){
       delete clases[i];
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
     delete[] clases;
 }

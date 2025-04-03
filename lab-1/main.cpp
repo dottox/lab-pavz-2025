@@ -13,6 +13,14 @@ void cleanScreen(){
     #endif
 }
 
+void pause(){
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    std::string dummy;
+    std::cout << "Presiona cualquier tecla para continuar.";
+    std::getline(std::cin, dummy);
+}
+
 void mostrarMenu(Sistema* s){
     cleanScreen();
     cout << "Cantidad de usuarios: " << s->getCantSocios() << "/" << SOCIOS_MAX << endl;
@@ -35,7 +43,7 @@ void limpiarCin(){
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "Has ingresado una opcion invalida." << endl << endl;
-    system("pause");
+    pause();
 }
 
 int main(){
@@ -119,11 +127,11 @@ int main(){
                     s->agregarInscripcion("87654329", 10, DtFecha(4, 9, 2043));
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
                 cout << "Sistema poblado." << endl << endl;
-                system("pause");
+                pause();
                 break;
             case 1:
                 cleanScreen();
@@ -136,13 +144,13 @@ int main(){
                     s->agregarSocio(ci, nombre);
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
 
                 cleanScreen();
                 cout << "El usuario\n\nNombre: " << nombre << "\nCi: " << ci << "\n\nHa sido creado correctamente." << endl;
-                system("pause");
+                pause();
                 break;
             case 2:
                 cleanScreen();
@@ -182,7 +190,7 @@ int main(){
                         }catch(invalid_argument &e){
                             cleanScreen();
                             cout << "Error: " << e.what() << endl;
-                            system("pause");
+                            pause();
                             continue;
                         }
                         break;
@@ -203,7 +211,7 @@ int main(){
                         }catch(invalid_argument &e){
                             cleanScreen();
                             cout << "Error: " << e.what() << endl;
-                            system("pause");
+                            pause();
                             continue;
                         }
                         break;
@@ -211,7 +219,7 @@ int main(){
 
                 cleanScreen();
                 cout << s->obtenerClase(idClase);
-                system("pause");
+                pause();
                 break;
             case 3:
                 cleanScreen();
@@ -236,7 +244,7 @@ int main(){
                 }catch(invalid_argument &e){
                     cleanScreen();
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
                 cleanScreen();
@@ -244,17 +252,17 @@ int main(){
                 cout << "Socio: " << ci << endl;
                 cout << "ID: " << idClase << endl;
                 cout << "Fecha: " << dia << "/" << mes << "/" << anio << endl << endl;
-                system("pause");
+                pause();
                 break;
             case 4:
                 cleanScreen();
                 s->listarClases();
-                system("pause");
+                pause();
                 break;
             case 5:
                 cleanScreen();
                 s->listarSocios();
-                system("pause");
+                pause();
                 break;
             case 6:
                 cleanScreen();
@@ -273,7 +281,7 @@ int main(){
                     cout << "La clase tiene " << clase->getCantInscripciones() << " socios inscriptos." << endl;
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
                 cout << "Cant de socios: ";
@@ -292,11 +300,11 @@ int main(){
                     }
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
                 cout << "-------[Fin de la lista]------" << endl << endl;
-                system("pause");
+                pause();
                 break;
             case 7:
                 cleanScreen();
@@ -314,10 +322,10 @@ int main(){
                 }catch(invalid_argument &e){
                     cleanScreen();
                     cout << "Error: " << e.what() << endl;
-                    system("pause");
+                    pause();
                     continue;
                 }
-                system("pause");
+                pause();
                 break;
             case 8:
                 // Borrar inscripcion
@@ -329,15 +337,16 @@ int main(){
             default:
                 cleanScreen();
                 cout << "Has ingresado una opcion invalida." << endl << endl;
-                system("pause");
+                pause();
                 break;
         }
     }
+    cleanScreen();
     cout << "Borrando el sistema" << endl;
     delete s;
-    system("pause");
-    cleanScreen();
     cout << "Sistema borrado" << endl << endl;
+    pause();
+    cleanScreen();
     return 0;
 }
 

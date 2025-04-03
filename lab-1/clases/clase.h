@@ -1,8 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <chrono>
-#include <thread>
 using namespace std;
 
 #include "../dataStructures/turno.h"
