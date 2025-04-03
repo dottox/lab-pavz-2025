@@ -125,6 +125,11 @@ int main(){
                     s->agregarInscripcion("87654327", 10, DtFecha(2, 9, 2043));
                     s->agregarInscripcion("87654328", 10, DtFecha(3, 9, 2043));
                     s->agregarInscripcion("87654329", 10, DtFecha(4, 9, 2043));
+                    //eliminar las incripciones de la clase 10
+                    s->borrarInscripcion("87654326", 10);
+                    s->borrarInscripcion("87654327", 10);
+                    s->borrarInscripcion("87654328", 10);
+                    s->borrarInscripcion("87654329", 10);
                 }catch(invalid_argument &e){
                     cout << "Error: " << e.what() << endl;
                     pause();
@@ -329,6 +334,33 @@ int main(){
                 break;
             case 8:
                 // Borrar inscripcion
+                cleanScreen();
+                cout << "[Borrando inscripcion]" << endl << endl;
+                cout << "Cedula del socio: ";
+                cin >> ci;
+                cout << "ID de la clase: ";
+                cin >> idClase;
+                if(cin.fail()){
+                    limpiarCin();
+                    continue;
+                }
+
+                //Una vez todo validado, borrar inscripcion
+                try{
+                    cout << "[Inscripcion borrada correctamente]" << endl << endl;
+                    cout << "Socio: " << ci << endl;
+                    cout << "ID: " << idClase << endl;
+
+                    s->borrarInscripcion(ci, idClase);
+                    
+                }catch(invalid_argument &e){
+                    cleanScreen();
+                    cout << "Error: " << e.what() << endl;
+                    pause();
+                    continue;
+                }
+
+                cleanScreen();
                 break;
             case 9:
                 cleanScreen();
