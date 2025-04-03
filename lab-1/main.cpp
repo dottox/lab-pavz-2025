@@ -322,8 +322,8 @@ int main(){
                 }
                 cleanScreen();
                 try{
-                    cout << "[Info de la Clase]\n" << endl << endl;
-                    cout << s->obtenerClase(idClase) << endl;
+                  cout << "[Info de la Clase]\n" << endl << endl;
+                  cout << s->obtenerClase(idClase) << endl;
                 }catch(invalid_argument &e){
                     cleanScreen();
                     cout << "Error: " << e.what() << endl;
@@ -347,11 +347,11 @@ int main(){
 
                 //Una vez todo validado, borrar inscripcion
                 try{
+                    s->borrarInscripcion(ci, idClase);
                     cout << "[Inscripcion borrada correctamente]" << endl << endl;
                     cout << "Socio: " << ci << endl;
                     cout << "ID: " << idClase << endl;
-
-                    s->borrarInscripcion(ci, idClase);
+                    pause();
                     
                 }catch(invalid_argument &e){
                     cleanScreen();
