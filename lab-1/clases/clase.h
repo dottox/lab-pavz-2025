@@ -31,8 +31,9 @@ class Clase{
 
     virtual int cupo() = 0; // Funcion polimorfica
     void agregarInscripcion(Inscripcion *);
-    Inscripcion* getInscripcion(string, DtFecha);
+    Inscripcion* getInscripcion(string);
     Inscripcion** getInscripciones();
+    void borrarInscripcion(string,int);
 
     virtual ~Clase();
 };

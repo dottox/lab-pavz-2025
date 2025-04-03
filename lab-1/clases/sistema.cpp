@@ -62,7 +62,7 @@ void Sistema::agregarInscripcion(string ciSocio, int idClase, DtFecha fecha){
   Clase* clase = getClase(idClase);
   if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
   if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
-  if(clase->getInscripcion(ciSocio, fecha) != nullptr) throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);;
+  if(clase->getInscripcion(ciSocio) != nullptr) throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);;
   
   Inscripcion* inscripcion = new Inscripcion(fecha, socio);
   clase->agregarInscripcion(inscripcion);  
@@ -87,6 +87,14 @@ void Sistema::agregarClase(DtEntrenamiento clase) {
   this->clases[cantClases] = entrenamiento;
   this->cantClases++;
 };
+
+void Sistema::borrarInscripcion(string ciSocio, int idClase){
+    Socio* socio = getSocio(ciSocio);
+    Clase* clase = getClase(idClase);
+    if(socio == nullptr) throw invalid_argument(ERROR_NO_SOCIO_CI);
+    if(clase == nullptr) throw invalid_argument(ERROR_NO_CLASE_ID);
+    clase->borrarInscripcion(ciSocio,idClase);
+}
 
 void Sistema::listarClases(){
   cout << "---------- [CLASES] ----------" << endl;

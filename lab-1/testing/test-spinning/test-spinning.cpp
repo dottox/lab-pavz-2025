@@ -104,7 +104,7 @@ int main()
   cout << "TC-005 Cantidad de inscripciones actualizada correctamente" << endl;
 
   // Verificar que la inscripción se haya agregado correctamente con getInscripcion
-  Inscripcion* inscripcionEncontrada = TC005->getInscripcion(socio->getCI(), DtFecha(1, 1, 2021));
+  Inscripcion* inscripcionEncontrada = TC005->getInscripcion(socio->getCI());
   if (inscripcionEncontrada != nullptr) { cout << "TC-005 Inscripcion encontrada correctamente - getInscripción" << endl; } 
   else { throw runtime_error("TC005 Error: Inscripcion no encontrada mediante getInscripción"); }
 

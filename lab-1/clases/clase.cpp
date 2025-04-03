@@ -50,14 +50,28 @@ Inscripcion** Clase::getInscripciones(){
 };
 
 
-Inscripcion* Clase::getInscripcion(string ci, DtFecha fecha){
+Inscripcion* Clase::getInscripcion(string ci){
     for (int i = 0; i < this->cantInscripciones; i++){
-        if (this->inscripciones[i]->getSocio()->getCI() == ci && this->inscripciones[i]->getFecha() == fecha){
+        if (this->inscripciones[i]->getSocio()->getCI() == ci){
             return this->inscripciones[i];
         }
     }
     return nullptr;
 };
+
+void Clase::borrarInscripcion(string ciSocio, int idClase){
+    Inscripcion* inscripcion = this->getInscripcion(ciSocio);
+    if (inscripcion == nullptr) throw invalid_argument(ERROR_NO_INSCRIPCION);
+
+    for (int i = 0; i < this->cantInscripciones; i++){
+        if (this->inscripciones[i] == inscripcion){
+            delete this->inscripciones[i];
+            this->inscripciones[i] = this->inscripciones[this->cantInscripciones - 1];
+            this->cantInscripciones--;
+            break;
+        }
+    }
+}
 
 /**
  * @brief Returns the number of inscriptions in the class.
