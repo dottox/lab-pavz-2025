@@ -34,6 +34,7 @@ Turno Clase::getTurno()
 void Clase::agregarInscripcion(Inscripcion* inscripcion){
     if(this->cupo() == 0) throw invalid_argument(ERROR_CUPOS_CERO);
     if(this->cantInscripciones >= MAX_INSCRIPCIONES) throw invalid_argument(ERROR_LIMITE_INSCRIPCIONES);
+    if(this->getInscripcion(inscripcion->getSocio()->getCI()) != nullptr) throw invalid_argument(ERROR_INSCRIPCION_EXISTENTE);
 
     this->inscripciones[this->cantInscripciones++] = inscripcion;
     this->cantCupo--;
@@ -59,7 +60,7 @@ Inscripcion* Clase::getInscripcion(string ci){
     return nullptr;
 };
 
-void Clase::borrarInscripcion(string ciSocio, int idClase){
+void Clase::borrarInscripcion(string ciSocio){
     Inscripcion* inscripcion = this->getInscripcion(ciSocio);
     if (inscripcion == nullptr) throw invalid_argument(ERROR_NO_INSCRIPCION);
 
@@ -68,6 +69,8 @@ void Clase::borrarInscripcion(string ciSocio, int idClase){
             delete this->inscripciones[i];
             this->inscripciones[i] = this->inscripciones[this->cantInscripciones - 1];
             this->cantInscripciones--;
+            this->cantCupo++;
+            this->inscripciones[this->cantInscripciones] = nullptr;
             break;
         }
     }

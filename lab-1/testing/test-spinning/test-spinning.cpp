@@ -69,18 +69,18 @@ int main()
 
   // ---------------------- TC-004 ----------------------
 
+  DtSpinning dtTC004=DtSpinning(4, "TC003", Manana, 10); // agarro index 999 que no existe
+  Spinning* TC004 = new Spinning(dtTC004);
 
   // TC-004: Settear un turno inválido
   try {
-    DtSpinning dtTC004=DtSpinning(4, "TC003", Manana, 10); // agarro index 999 que no existe
-    Spinning* TC004 = new Spinning(dtTC004);
     TC004->setTurno(static_cast<Turno>(999));
-    delete TC004;
     throw runtime_error("TC004 Error: Se permitió settear un turno inválido.");
   } catch (const invalid_argument& e) {
     cout << "TC-003 pasó correctamente: no se permitió construir un turno inválido" << endl;
   }
-
+  
+  delete TC004;
 
   // ---------------------- TC-005 ----------------------
 
@@ -91,8 +91,9 @@ int main()
   DtSpinning dtTC005 = DtSpinning(6, "TC005", Manana, 10);
   Spinning* TC005 = new Spinning(dtTC005);
 
-  cout << "Cupo antes de agregar inscripcion: " << TC005->cupo() << endl;
+  cout << "TC-005 Cupo antes de agregar inscripcion: " << TC005->cupo() << endl;
   TC005->agregarInscripcion(inscripcion);
+  cout << "TC-005 Cupo despues de agregar inscripcion: " << TC005->cupo() << endl;
   cout << "TC-005 Inscripcion agregada correctamente" << endl;
 
   // Verificar que cupo se haya actualizado correctamente
@@ -112,11 +113,12 @@ int main()
   assert(inscripcionEncontrada->getSocio()->getCI() == "12345678" && inscripcionEncontrada->getFecha() == DtFecha(1, 1, 2021));
   cout << "TC-005 Inscripcion obtenida correctamente" << endl;
 
+
   // Verificar que la inscripción se haya agregado correctamente con getInscripciones
   Inscripcion** inscripciones = TC005->getInscripciones();
   bool found = false;
   for (int i = 0; i < TC005->getCantInscripciones(); i++) {
-      if (inscripciones[i]->getSocio()->getCI() == socio->getCI() && inscripciones[i]->getFecha() == DtFecha(1, 1, 2021)) {
+      if (inscripciones[i]->getSocio()->getCI() == socio->getCI()) {
         found = true;
         break;
       }
@@ -124,8 +126,54 @@ int main()
   if (found) { cout << "TC-005 Inscripcion encontrada correctamente - getInscripciones" << endl; }
   else { throw runtime_error("TC005 Error: Inscripcion no encontrada mediante getInscripciones"); }
 
+  // TC-006: Agregar una inscripción ya existente
+  DtFecha fechaInscripcion = DtFecha(1, 2, 2021);
+  Inscripcion* inscripcionDuplicada = new Inscripcion(fechaInscripcion, socio);
+
+  try {
+    TC005->agregarInscripcion(inscripcionDuplicada);
+    throw runtime_error("TC006 Error: Se permitió agregar una inscripción duplicada.");
+  } catch (const invalid_argument& e) {  
+    cout << "TC-006 pasó correctamente: no se permitió agregar una inscripción duplicada" << endl;
+  } catch (runtime_error& e) {
+    cout << e.what() << endl;
+    terminate();
+  }
+  
+  delete inscripcionDuplicada;
+
+  // TC-007: Borrar una inscripción
+  cout << "Cupo antes de borrar inscripcion: " << TC005->cupo() << endl;
+  TC005->borrarInscripcion(socio->getCI());
+  cout << "Cupo despues de borrar inscripcion: " << TC005->cupo() << endl;
+  cout << "Inscripcion borrada correctamente" << endl;
+
+  // Verificar que la cantidad de inscripciones se haya actualizado correctamente
+  assert(TC005->getCantInscripciones() == 0);
+
+  // Verificar que el cupo se haya actualizado correctamente
+  assert(TC005->cupo() == 10);
+  cout << "TC-007 Cantidad de inscripciones y cupo actualizados correctamente" << endl;
+
+  // Verificar que la inscripción se haya borrado correctamente
+  Inscripcion* inscripcionBorrada = TC005->getInscripcion(socio->getCI());
+  if (inscripcionBorrada == nullptr) { cout << "TC-007 Inscripcion borrada correctamente - getInscripcion" << endl; } 
+  else { throw runtime_error("TC007 Error: Inscripcion no borrada mediante getInscripcion"); }
+
+  // Verificar que la inscripción se haya borrado correctamente con getInscripciones
+  inscripciones = TC005->getInscripciones();
+  found = false;
+  for (int i = 0; i < TC005->getCantInscripciones(); i++) {
+      if (inscripciones[i]->getSocio()->getCI() == socio->getCI()) {
+        found = true;
+        break;
+      }
+  }
+  if (!found) { cout << "TC-007 Pasó correctamente, no se encontró - getInscripciones" << endl; }
+  else { throw runtime_error("TC007 Error: Inscripcion encontrada mediante getInscripciones"); }
+
+  delete socio;
+  delete TC005;
 
   cout << "Todos los tests pasaron correctamente." << endl;
-
-  return 0;
 }

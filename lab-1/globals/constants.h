@@ -12,7 +12,7 @@
 #define ERROR_NO_CLASE_ID "No se encontro la clase con ese ID"
 #define ERROR_ID_INVALIDO "ID invalido"
 #define ERROR_CUPOS_CERO "No hay cupo en la clase"
-#define ERROR_INSCRIPCION_EXISTENTE "Ya existe una inscripcion para ese socio en esa fecha"
+#define ERROR_INSCRIPCION_EXISTENTE "Ya existe una inscripcion de ese socio"
 #define ERROR_LIMITE_INSCRIPCIONES "No se pueden agregar mas inscripciones"
 #define ERROR_LIMITE_CLASES "No se pueden agregar mas clases"
 #define ERROR_CLASE_EXISTENTE_ID "Ya existe una clase con ese ID"

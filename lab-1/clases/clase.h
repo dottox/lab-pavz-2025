@@ -33,7 +33,7 @@ class Clase{
     void agregarInscripcion(Inscripcion *);
     Inscripcion* getInscripcion(string);
     Inscripcion** getInscripciones();
-    void borrarInscripcion(string,int);
+    void borrarInscripcion(string);
 
     virtual ~Clase();
 };
