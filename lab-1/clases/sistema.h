@@ -9,7 +9,6 @@
 #include "spinning.h"
 #include "../globals/constants.h"
 
-//Fin Errores de clases
 using namespace std;
 
 class Sistema {
@@ -23,7 +22,7 @@ class Sistema {
     Clase** clases;
     
     
-    public:
+  public:
     Sistema();
     Sistema(int,int);
     

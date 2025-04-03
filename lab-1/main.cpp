@@ -6,7 +6,11 @@
 #define CLASES_MAX 15
 
 void cleanScreen(){
-    if (system("cls")){system("clear");}
+    #if defined(_WIN32)
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }
 
 void mostrarMenu(Sistema* s){
