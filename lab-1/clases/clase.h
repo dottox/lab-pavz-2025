@@ -9,6 +9,14 @@ using namespace std;
 #include "../globals/constants.h"
 
 
+/*
+  * @class Clase
+  * @brief Represents a class with its details and inscriptions.
+  * 
+  * The Clase class encapsulates the details of a class, including its
+  * ID, name, turn, and the list of inscriptions. It provides methods to manage
+  * the class, including adding and removing inscriptions.
+*/
 class Clase{
 
   protected:

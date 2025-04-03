@@ -11,6 +11,13 @@
 
 using namespace std;
 
+/*
+  * @class Sistema
+  * @brief Represents the system that manages socios and classes.
+  * 
+  * The Sistema class encapsulates the functionality of managing socios and classes,
+  * including adding, listing, and retrieving information about them.
+*/
 class Sistema {
   private:
     int MAXSOCIOS;

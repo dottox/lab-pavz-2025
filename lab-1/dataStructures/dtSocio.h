@@ -7,6 +7,14 @@
 
 using namespace std;
 
+/*
+  * @class DtSocio
+  * @brief Represents a data transfer object for a socio.
+  * 
+  * The DtSocio class encapsulates the details of a socio, including its
+  * CI and name. It provides methods to retrieve this information and to
+  * output it in a formatted manner.
+*/
 class DtSocio {
 private:
   string ci;
