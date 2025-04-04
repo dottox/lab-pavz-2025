@@ -233,14 +233,9 @@ int main() {
 
     // TC-017: Borrar inscripción que existe
 
-    try{
-        sistema->borrarInscripcion("12345678", 1);
-        cout << "TC-017 paso correctamente." << endl;
-    } catch(const invalid_argument& e){
-        cout << "Error: Se permitio borrar una inscripcion que existe" << endl;
-    } catch (const runtime_error& e){
-        terminate();
-    }
+    
+    sistema->borrarInscripcion("12345678", 1);
+    cout << "TC-017 paso correctamente." << endl;
 
     delete sistema;
     
