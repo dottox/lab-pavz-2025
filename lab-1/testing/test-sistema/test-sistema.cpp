@@ -197,6 +197,45 @@ int main() {
     } catch (const runtime_error& e){
         terminate();
     }
+    // --------------------- BORRAR INSCRIPCION -----------------------------
+    // TC-014: Borrar inscripción con ID inválido
+    try{
+        sistema->borrarInscripcion("00001111", 1);
+        throw runtime_error("Error: Se permitio borrar una inscripcion con un socio invalido");
+    } catch(const invalid_argument& e){
+        cout << "TC-014 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
+    // TC-015: Borrar inscripción con clase inválida
+
+    try{
+        sistema->borrarInscripcion("12345678", 1337);
+        throw runtime_error("Error: Se permitio borrar una inscripcion con una clase invalida");
+    } catch(const invalid_argument& e){
+        cout << "TC-015 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
+    // TC-016: Borrar inscripción que no existe
+
+    try{
+        
+        sistema->borrarInscripcion("00000000", 1);
+        throw runtime_error("Error: Se permitio borrar una inscripcion que no existe");
+    } catch(const invalid_argument& e){
+        cout << "TC-016 paso correctamente." << endl;
+    } catch (const runtime_error& e){
+        terminate();
+    }
+
+    // TC-017: Borrar inscripción que existe
+
+    
+    sistema->borrarInscripcion("12345678", 1);
+    cout << "TC-017 paso correctamente." << endl;
 
     delete sistema;
     
