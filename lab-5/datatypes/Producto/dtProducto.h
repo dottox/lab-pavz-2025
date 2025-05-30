@@ -16,7 +16,6 @@ public:
     dtProducto(int, string, string);
     int getId();
     string getDescripcion();
-    int getPrecio();
     string getCodigo();
     dtProducto getProducto();
     ~dtProducto();

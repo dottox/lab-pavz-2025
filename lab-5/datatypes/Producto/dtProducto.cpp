@@ -14,18 +14,14 @@ int dtProducto::getId()
     return this->id;
 }
 
-// string dtProducto::getDescripcion()
-// {
-//     return this->descripcion;
-// }
-// int dtProducto::getPrecio()
-// {
-//     return this->precio;
-// }
-// string dtProducto::getCodigo()
-// {
-//     return this->codigo;
-// }
+string dtProducto::getDescripcion()
+{
+    return this->descripcion;
+}
+string dtProducto::getCodigo()
+{
+    return this->codigo;
+}
 dtProducto dtProducto::getProducto()
 {
     return *this; // Retorna una copia del objeto actual
@@ -33,5 +29,5 @@ dtProducto dtProducto::getProducto()
 
 dtProducto::~dtProducto()
 {
-    // Destructor vacio, no hay recursos que liberar
+
 }
