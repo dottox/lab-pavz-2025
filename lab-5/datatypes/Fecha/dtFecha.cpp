@@ -9,15 +9,15 @@ dtFecha::dtFecha()
     this->anio = MIN_ANIO;
 }
 
-dtFecha::dtFecha(int horas, int mes, int anio)
+dtFecha::dtFecha(int d, int m, int a)
 {
-    if (dia < MIN_HORAS || dia > MAX_DIAS || mes < MIN_MESES || mes > MAX_MESES || anio < MIN_ANIO)
+    if (d < MIN_DIAS || d > MAX_DIAS || m < MIN_MESES || m > MAX_MESES || a < MIN_ANIO)
     {
         throw invalid_argument(ERROR_FECHA_INVALIDA);
     }
-    this->dia = dia;
-    this->mes = mes;
-    this->anio = anio;
+    this->dia = d;
+    this->mes = m;
+    this->anio = a;
 };
 
 int dtFecha::getDia()
