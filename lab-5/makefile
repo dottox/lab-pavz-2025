@@ -12,16 +12,61 @@ else
     DELETE := rm -f  
 endif
 
-INCLUDES = -Idatatypes -Iclases -Iclases/Empleado -Iclases/Repartidor -Iclases/Mesa -Iclases/Mozo
-
 all: programa
 
-programa: main.o dtCliente.o Plato.o Menu.o MenuPlato.o dtFecha.o dtConsumido.o dtHora.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o VentaLocal.o VentaDomicilio.o Venta.o  ProductoVenta.o dtFacturaLocal.o dtFacturaDomicilio.o dtFactura.o dtRepartidor.o dtInfoProducto.o dtMenu.o dtPlato.o dtProducto.o  dtDireccionApto.o dtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o
-	g++ $^ -o programa
+programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o dtCliente.o Plato.o Menu.o MenuPlato.o dtFecha.o dtConsumido.o dtHora.o dtFacturaLocal.o dtFacturaDomicilio.o dtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o dtInfoProducto.o dtMenu.o dtPlato.o dtProducto.o  dtDireccionApto.o dtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
+	g++ $^ -o programa 
+
+ICollectible.o: 
+	g++ -c "ICollection/interfaces/ICollectible.cpp"
+
+ICollection.o:
+	g++ -c "ICollection/interfaces/ICollection.cpp"
+
+IDictionary.o:
+	g++ -c "ICollection/interfaces/IDictionary.cpp"
+
+IIterator.o:
+	g++ -c "ICollection/interfaces/IIterator.cpp"
+
+IKey.o:
+	g++ -c "ICollection/interfaces/IKey.cpp"
+
+OrderedKey.o: IKey.o
+	g++ -c "ICollection/interfaces/OrderedKey.cpp"
+
+Integer.o: ICollectible.o OrderedKey.o
+	g++ -c "ICollection/Integer.cpp"
+
+String.o: ICollectible.o OrderedKey.o
+	g++ -c "ICollection/String.cpp"
+
+List.o: ICollection.o
+	g++ -c "ICollection/collections/List.cpp"
+
+ListIterator.o: IIterator.o
+	g++ -c "ICollection/collections/ListIterator.cpp"
+
+ListNode.o:
+	g++ -c "ICollection/collections/ListNode.cpp"
+
+OrderedDictionary.o: IDictionary.o
+	g++ -c "ICollection/collections/OrderedDictionary.cpp"
+
+OrderedDictionaryEntry.o:
+	g++ -c "ICollection/collections/OrderedDictionaryEntry.cpp"
 
 main.o:
 	g++ -c main.cpp
 
+Sistema.o: ISistema.o 
+	g++ -c "clases/Sistema/Sistema.cpp"
+
+ISistema.o: 
+	g++ -c "clases/Sistema/ISistema.cpp"
+
+Factory.o: ISistema.o Sistema.o
+	g++ -c "clases/Factory/Factory.cpp"
 
 FacturaLocal.o: Factura.o 
 	g++ -c "clases/Factura/FacturaLocal.cpp"
@@ -29,7 +74,7 @@ FacturaLocal.o: Factura.o
 FacturaDomicilio.o: Factura.o
 	g++ -c "clases/Factura/FacturaDomicilio.cpp"
 
-Factura.o: dtConsumido.o dtFecha.o dtHora.o
+Factura.o: dtConsumido.o dtFecha.o dtHora.o dtFactura.o
 	g++ -c "clases/Factura/Factura.cpp"
 
 VentaLocal.o: Venta.o
@@ -38,7 +83,7 @@ VentaLocal.o: Venta.o
 VentaDomicilio.o: Venta.o
 	g++ -c "clases/Venta/VentaDomicilio.cpp"
 
-Venta.o: Producto.o
+Venta.o: Producto.o Factura.o
 	g++ -c "clases/Venta/Venta.cpp"
 
 Plato.o: Producto.o
@@ -48,7 +93,7 @@ Menu.o: Plato.o Producto.o
 	g++ -c "clases/Producto/Menu.cpp"
 
 MenuPlato.o: Plato.o Menu.o
-	g++ -c "clases/MenuPlato/MenuPlato.cpp"
+	g++ -c "clases/Producto/MenuPlato.cpp"
 
 Producto.o: 
 	g++ -c "clases/Producto/Producto.cpp"
@@ -61,9 +106,6 @@ dtFacturaDomicilio.o: dtFactura.o
 
 dtFactura.o: dtConsumido.o dtFecha.o dtHora.o
 	g++ -c "datatypes/Factura/dtFactura.cpp"
-
-dtRepartidor.o: 
-	g++ -c "datatypes/Repartidor/dtRepartidor.cpp"
 
 dtInfoProducto.o: dtProducto.o
 	g++ -c "datatypes/InfoProducto/dtInfoProducto.cpp"
@@ -93,7 +135,7 @@ dtHora.o:
 	g++ -c  "datatypes/Hora/dtHora.cpp"
 
 dtCliente.o: dtDireccion.o
-	g++  -c "datatypes/Cliente/dtCliente.cpp"
+	g++ -c "datatypes/Cliente/dtCliente.cpp"
 
 Cliente.o: dtCliente.o dtDireccion.o
 	g++  -c "clases/Cliente/Cliente.cpp"
@@ -102,10 +144,10 @@ Mesa.o:
 	g++  -c "clases/Mesa/Mesa.cpp"
 
 Mozo.o: Empleado.o 
-	g++  -c "clases/Mozo/Mozo.cpp"
+	g++  -c "clases/Empleado/Mozo.cpp"
 
 Repartidor.o: Empleado.o
-	g++  -c "clases/Repartidor/Repartidor.cpp"
+	g++  -c "clases/Empleado/Repartidor.cpp"
 
 ProductoVenta.o: Producto.o Venta.o
 	g++  -c "clases/ProductoVenta/ProductoVenta.cpp"
@@ -119,4 +161,3 @@ clean:
 run: clean all
 	./programa
 	$(MAKE) clean
-	

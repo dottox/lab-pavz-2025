@@ -18,5 +18,5 @@ public:
     string getDescripcion();
     string getCodigo();
     dtProducto getProducto();
-    ~dtProducto();
+    virtual ~dtProducto();
 };

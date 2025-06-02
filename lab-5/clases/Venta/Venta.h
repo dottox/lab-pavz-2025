@@ -3,25 +3,26 @@
 #include <iostream>
 #include "../Producto/Producto.h"
 #include "../Factura/Factura.h"
+#include "../../ICollection/interfaces/ICollectible.h"
+#include "../../ICollection/interfaces/IDictionary.h"
 
 using namespace std;
 
-class Venta
-{
+class Venta : ICollectible{
 private:
     int codigo;
-    float subtotal;
     int descuento;
-    Producto **productos;
     int cantidadProductos;
-    Factura *factura;
+    float subtotal;
+    Factura * factura;
+    IDictionary * productos;
 
 public:
     Venta(int, float, int, Producto **, int);
     int getCodigo();
     float getSubtotal();
     int getDescuento();
-    Producto **getProductos();
+    //Producto **getProductos();
     int getCantidadProductos();
     bool estaFacturada();
     void setSubtotal(float);

@@ -2,10 +2,11 @@
 
 #include <iostream>
 #include "../../datatypes/Producto/dtProducto.h"
+#include "../../ICollection/interfaces/ICollectible.h"
 
 using namespace std;
 
-class Producto
+class Producto : ICollectible
 {
 private:
     string codigo;

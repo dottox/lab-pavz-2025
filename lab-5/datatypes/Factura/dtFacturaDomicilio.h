@@ -13,7 +13,7 @@ private:
 
 public:
     dtFacturaDomicilio();
-    dtFacturaDomicilio(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, Venta*, string, Transporte);
+    dtFacturaDomicilio(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, string, Transporte);
     string getNombreRepartidor();
     Transporte getTransporte();
     ~dtFacturaDomicilio();

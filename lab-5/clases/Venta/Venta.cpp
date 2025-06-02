@@ -5,7 +5,7 @@ Venta::Venta(int codigo, float subtotal, int descuento, Producto **productos, in
     this->codigo = codigo;
     this->subtotal = subtotal;
     this->descuento = descuento;
-    this->productos = productos;
+    //this->productos = productos; // Hay q cambiar el puntero doble a idictionary
     this->cantidadProductos = cantidadProductos;
     this->factura = NULL;
 }
@@ -25,10 +25,10 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-Producto **Venta::getProductos()
-{
-    return this->productos;
-}
+// Producto **Venta::getProductos()
+// {
+//     // return this->productos;
+// }
 
 int Venta::getCantidadProductos()
 {
@@ -52,7 +52,7 @@ void Venta::setDescuento(int descuento)
 
 void Venta::setProductos(Producto **productos, int cantidadProductos)
 {
-    this->productos = productos;
+    // this->productos = productos;
     this->cantidadProductos = cantidadProductos;
 }
 
@@ -61,7 +61,7 @@ Venta::~Venta()
     // Assuming productos is dynamically allocated, we need to delete it
     for (int i = 0; i < cantidadProductos; ++i)
     {
-        delete productos[i]; // Delete each Producto object
+        // delete productos[i]; // Delete each Producto object
     }
     delete[] productos; // Delete the array of Producto pointers
 }

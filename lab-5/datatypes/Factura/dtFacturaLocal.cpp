@@ -2,8 +2,8 @@
 
 dtFacturaLocal::dtFacturaLocal() {}
 
-dtFacturaLocal::dtFacturaLocal(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, Venta* venta, string nombreMozo)
-    : dtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal, venta){
+dtFacturaLocal::dtFacturaLocal(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreMozo)
+    : dtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal){
     this->nombreMozo = nombreMozo;
 }
 

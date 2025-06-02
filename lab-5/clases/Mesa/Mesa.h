@@ -1,16 +1,18 @@
 #pragma once
 #include <iostream>
-#include "../Venta/VentaLocal.h" // Assuming VentaLocal is defined in this header
-
-class Mozo; // Forward declaration to avoid circular dependency
+#include "../Venta/VentaLocal.h" 
+#include "../Empleado/Mozo.h"
+#include "../../ICollection/interfaces/ICollectible.h"
 
 using namespace std;
 
-class Mesa{
+class Mozo;
+
+class Mesa : ICollectible {
 private:
     int numero;
     Mozo* mozo;
-    VentaLocal *ventaEnCurso; // Assuming VentaLocal is defined elsewhere
+    VentaLocal *ventaEnCurso; 
 
 public:
     Mesa(Mozo*);
@@ -20,6 +22,5 @@ public:
     void setNumero(int);
     void setMozo(Mozo*);
     void setVentaEnCurso(VentaLocal*);
-
     ~Mesa();
 };
