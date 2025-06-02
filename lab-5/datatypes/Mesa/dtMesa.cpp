@@ -1,5 +1,11 @@
 #include "dtMesa.h"
 
+dtMesa::dtMesa(Venta* ventaActual, bool ventaEnCurso) {
+    this->numero = -1; // Default value 
+    this->ventaActual = ventaActual;
+    this->ventaEnCurso = ventaEnCurso;
+}
+
 dtMesa::dtMesa(int numero, Venta* ventaActual, bool ventaEnCurso) {
     this->numero = numero;
     this->ventaActual = ventaActual;

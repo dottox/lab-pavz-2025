@@ -1,9 +1,10 @@
 #include "Producto.h"
+#include "../../utils/utils.h"
 
 Producto::Producto(dtProducto dtProducto)
 {
     
-    this->codigo = dtProducto.getId();
+    this->codigo = dtProducto.getCodigo();
     this->descripcion = dtProducto.getDescripcion();
 
 }

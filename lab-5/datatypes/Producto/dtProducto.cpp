@@ -1,18 +1,12 @@
 #include "dtProducto.h"
-#include "../../utils/utils.h"
 dtProducto::dtProducto() {};
 
-dtProducto::dtProducto(int id, string descripcion, string codigo)
+dtProducto::dtProducto(string codigo, string descripcion)
 {
-    this->codigo = utils::generarNumeroProducto();
-    this->id = id;
+    this->codigo = codigo;
     this->descripcion = descripcion;
 }
 
-int dtProducto::getId()
-{
-    return this->id;
-}
 
 string dtProducto::getDescripcion()
 {

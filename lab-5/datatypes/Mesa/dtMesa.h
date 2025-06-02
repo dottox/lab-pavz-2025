@@ -8,7 +8,8 @@ private:
     Venta *ventaActual;
     bool ventaEnCurso;
 public:
-    dtMesa(int , Venta*, bool);
+    dtMesa(Venta*, bool);
+    dtMesa(int, Venta*, bool);
     int getNumero();
     Venta *getVentaActual();
     bool getVentaEnCurso();

@@ -23,6 +23,7 @@ private:
 public:
     dtFactura();
     dtFactura(int, dtFecha, dtHora, dtConsumido **, float, int, float, float);
+    dtFactura(int, int, dtFecha, dtHora, dtConsumido **, float, int, float, float);
     dtFactura getFactura();
     int getCodigo();
     int getCodigoVenta();

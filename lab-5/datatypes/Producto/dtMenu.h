@@ -9,6 +9,6 @@ class dtMenu : public dtProducto
 {
 public:
     dtMenu();
-    dtMenu(int, string, string, float);
+    dtMenu(string, string, float);
     ~dtMenu();
 };

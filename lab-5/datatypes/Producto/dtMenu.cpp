@@ -2,6 +2,6 @@
 
 dtMenu::dtMenu(){}
 
-dtMenu::dtMenu(int id, string codigo, string descripcion, float precio) : dtProducto(id, codigo, descripcion) {}
+dtMenu::dtMenu(string codigo, string descripcion, float precio) : dtProducto(codigo, descripcion) {}
 
 dtMenu::~dtMenu() {}

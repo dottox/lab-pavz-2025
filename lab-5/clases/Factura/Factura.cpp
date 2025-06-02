@@ -1,7 +1,8 @@
 #include "Factura.h"
+#include "../../utils/utils.h"
 
 Factura::Factura(dtFactura factura){
-    this->codigo = factura.getCodigo();
+    this->codigo = utils::generarNumeroFactura();
     this->codigoVenta = factura.getCodigoVenta();
     this->fecha = factura.getFecha();
     this->hora = factura.getHora();

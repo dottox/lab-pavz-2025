@@ -13,7 +13,7 @@ private:
 
 public:
     dtPlato();
-    dtPlato(int, string, string,float);
+    dtPlato(string, string,float);
     float getPrecio();
     string getDescripcion();
     string getCodigo();
