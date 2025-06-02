@@ -1,5 +1,7 @@
 #include "dtAsignacion.h"
 
+dtAsignacion::dtAsignacion(){}
+
 dtAsignacion::dtAsignacion(int numeroMozo, int numeroMesa)
 {
     this->numeroMozo = numeroMozo;

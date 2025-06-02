@@ -4,13 +4,11 @@
 #include "../Fecha/dtFecha.h"
 #include "../Hora/dtHora.h"
 #include "../Consumido/dtConsumido.h"
-#include "../../clases/Venta/Venta.h"
 
 
 using namespace std;
 
-class dtFactura
-{
+class dtFactura{
 private:
     int codigo;
     int codigoVenta;
@@ -21,11 +19,10 @@ private:
     int descuento;
     float montoTotal;
     float ivaTotal;
-    Venta* venta;
 
 public:
     dtFactura();
-    dtFactura(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, Venta*);
+    dtFactura(int, dtFecha, dtHora, dtConsumido **, float, int, float, float);
     dtFactura getFactura();
     int getCodigo();
     int getCodigoVenta();
@@ -36,6 +33,5 @@ public:
     int getDescuento();
     float getMontoTotal();
     float getIvaTotal();
-    Venta* getVenta();
-    ~dtFactura();
+    virtual ~dtFactura();
 };

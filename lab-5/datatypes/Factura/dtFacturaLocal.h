@@ -12,7 +12,7 @@ private:
 
 public:
     dtFacturaLocal();
-    dtFacturaLocal(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, Venta*, string);
+    dtFacturaLocal(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, string);
     string getNombreMozo();
     ~dtFacturaLocal();
 };

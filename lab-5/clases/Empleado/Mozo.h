@@ -3,7 +3,10 @@
 #include <iostream>
 #include "../Empleado/Empleado.h"
 #include "../Mesa/Mesa.h"
+
 using namespace std;
+
+class Mesa;
 
 class Mozo : public Empleado{
 private:

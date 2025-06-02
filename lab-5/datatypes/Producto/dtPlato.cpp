@@ -1,5 +1,7 @@
 #include "dtPlato.h"
 
+dtPlato::dtPlato(){}
+
 dtPlato::dtPlato(int id, string descripcion, string codigo, float precio) : dtProducto(id, descripcion, codigo)
 {
     this->precio = precio;

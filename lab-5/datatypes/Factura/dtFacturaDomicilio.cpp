@@ -2,8 +2,8 @@
 
 dtFacturaDomicilio::dtFacturaDomicilio() {}
 
-dtFacturaDomicilio::dtFacturaDomicilio(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, Venta* venta, string nombreRepartidor, Transporte transporte) 
-: dtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal, venta){
+dtFacturaDomicilio::dtFacturaDomicilio(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreRepartidor, Transporte transporte) 
+: dtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal){
     this->nombreRepartidor = nombreRepartidor;
     this->transporte = transporte;
 }
