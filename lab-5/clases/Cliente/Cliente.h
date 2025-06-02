@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "../../datatypes/Direccion/dtDireccion.h"
-#include "../../datatypes/Cliente/dtCliente.h"
+#include "../../datatypes/Direccion/DtDireccion.h"
+#include "../../datatypes/Cliente/DtCliente.h"
 
 using namespace std;
 
@@ -10,15 +10,15 @@ class Cliente
 private:
     string nombre;
     string telefono;
-    dtDireccion direccion;
+    DtDireccion direccion;
 
 public:
-    Cliente(dtCliente);
+    Cliente(DtCliente);
     string getNombre();
     string getTelefono();
-    dtDireccion getDireccion();
+    DtDireccion getDireccion();
     void setNombre(string);
     void setTelefono(string);
-    void setDireccion(dtDireccion);
+    void setDireccion(DtDireccion);
     ~Cliente();
 };

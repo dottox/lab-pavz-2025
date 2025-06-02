@@ -10,12 +10,12 @@ class DtCliente
 private:
     string nombre;
     string telefono;
-    dtDireccion direccion;
+    DtDireccion direccion;
 
 public:
-    DtCliente(string, string, dtDireccion);
+    DtCliente(string, string, DtDireccion);
     string getNombre();
-    dtDireccion getDireccion();
+    DtDireccion getDireccion();
     string getTelefono();
     ~DtCliente();
 };

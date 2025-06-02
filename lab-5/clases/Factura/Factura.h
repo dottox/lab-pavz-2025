@@ -1,10 +1,10 @@
 #pragma once
 
 #include <iostream>
-#include "../../datatypes/Fecha/dtFecha.h"
-#include "../../datatypes/Hora/dtHora.h"
-#include "../../datatypes/Consumido/dtConsumido.h"
-#include "../../datatypes/Factura/dtFactura.h"
+#include "../../datatypes/Fecha/DtFecha.h"
+#include "../../datatypes/Hora/DtHora.h"
+#include "../../datatypes/Consumido/DtConsumido.h"
+#include "../../datatypes/Factura/DtFactura.h"
 
 using namespace std;
 
@@ -12,19 +12,19 @@ class Factura{
     private:
         int codigo;
         int codigoVenta;
-        dtFecha fecha;
-        dtHora hora;
-        dtConsumido **productos;
+        DtFecha fecha;
+        DtHora hora;
+        DtConsumido **productos;
         float subtotal;
         int descuento;
         float montoTotal;
         float ivaTotal;
     public:
-        Factura(dtFactura);
+        Factura(DtFactura);
         int getCodigo();
-        dtFecha getFecha();
-        dtHora getHora();
-        dtConsumido **getProductos();
+        DtFecha getFecha();
+        DtHora getHora();
+        DtConsumido **getProductos();
         float getSubtotal();
         int getDescuento();
         float getMontoTotal();

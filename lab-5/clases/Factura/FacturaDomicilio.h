@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Factura.h"
 #include "../../enums/Transporte.h"
-#include "../../datatypes/Factura/dtFacturaDomicilio.h"
+#include "../../datatypes/Factura/DtFacturaDomicilio.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ private:
     Transporte transporte;
 
 public:
-    FacturaDomicilio(dtFacturaDomicilio);
+    FacturaDomicilio(DtFacturaDomicilio);
     string getNombreRepartidor();
     Transporte getTransporte();
     ~FacturaDomicilio();

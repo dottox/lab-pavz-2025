@@ -1,6 +1,6 @@
 #include "Cliente.h"
 
-Cliente::Cliente(dtCliente cliente)
+Cliente::Cliente(DtCliente cliente)
 {
     this->nombre = cliente.getNombre();
     this->telefono = cliente.getTelefono();
@@ -17,7 +17,7 @@ string Cliente::getTelefono()
     return this->telefono;
 }
 
-dtDireccion Cliente::getDireccion()
+DtDireccion Cliente::getDireccion()
 {
     return this->direccion;
 }
@@ -27,7 +27,7 @@ void Cliente::setTelefono(string telefono)
     this->telefono = telefono;
 }
 
-void Cliente::setDireccion(dtDireccion direccion)
+void Cliente::setDireccion(DtDireccion direccion)
 {
     this->direccion = direccion;
 }

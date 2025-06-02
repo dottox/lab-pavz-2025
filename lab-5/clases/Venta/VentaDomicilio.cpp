@@ -1,6 +1,6 @@
 #include "VentaDomicilio.h"
 
-VentaDomicilio::VentaDomicilio(int codigo, float subtotal, int descuento, Producto **productos, int cantidadProductos, dtCliente datosCliente)
+VentaDomicilio::VentaDomicilio(int codigo, float subtotal, int descuento, Producto **productos, int cantidadProductos, DtCliente datosCliente)
     : Venta(codigo, subtotal, descuento, productos, cantidadProductos), datosCliente(datosCliente)
 {
     this->datosCliente = datosCliente;

@@ -1,6 +1,6 @@
 #include "FacturaDomicilio.h"
 
-FacturaDomicilio::FacturaDomicilio(dtFacturaDomicilio factura) : Factura(factura.getFactura())
+FacturaDomicilio::FacturaDomicilio(DtFacturaDomicilio factura) : Factura(factura.getFactura())
 {
     this->nombreRepartidor = factura.getNombreRepartidor();
     this->transporte = factura.getTransporte();

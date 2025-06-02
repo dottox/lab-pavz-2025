@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(dtMenu menu, Plato **platos) : Producto(menu.getProducto())
+Menu::Menu(DtMenu menu, Plato **platos) : Producto(menu.getProducto())
 {
     this->platos = platos;
 }

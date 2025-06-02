@@ -1,6 +1,6 @@
 #include "DtCliente.h"
 
-DtCliente::DtCliente(string nombre, string telefono, dtDireccion direccion)
+DtCliente::DtCliente(string nombre, string telefono, DtDireccion direccion)
 {
     this->nombre = nombre;
     this->telefono = telefono;
@@ -17,7 +17,7 @@ string DtCliente::getTelefono()
     return this->telefono;
 }
 
-dtDireccion DtCliente::getDireccion()
+DtDireccion DtCliente::getDireccion()
 {
     return this->direccion;
 }

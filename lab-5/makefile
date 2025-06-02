@@ -14,7 +14,7 @@ endif
 
 all: programa
 
-programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o dtCliente.o Plato.o Menu.o MenuPlato.o dtFecha.o dtConsumido.o dtHora.o dtFacturaLocal.o dtFacturaDomicilio.o dtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o dtInfoProducto.o dtMenu.o dtPlato.o dtProducto.o  dtDireccionApto.o dtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
+programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o DtCliente.o Plato.o Menu.o MenuPlato.o DtFecha.o DtConsumido.o DtHora.o DtFacturaLocal.o DtFacturaDomicilio.o DtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o DtInfoProducto.o DtMenu.o DtPlato.o DtProducto.o  DtDireccionApto.o DtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
 	g++ $^ -o programa 
 
 ICollectible.o: 
@@ -77,7 +77,7 @@ FacturaLocal.o: Factura.o
 FacturaDomicilio.o: Factura.o
 	g++ -c "clases/Factura/FacturaDomicilio.cpp"
 
-Factura.o: dtConsumido.o dtFecha.o dtHora.o dtFactura.o
+Factura.o: DtConsumido.o DtFecha.o DtHora.o DtFactura.o
 	g++ -c "clases/Factura/Factura.cpp"
 
 VentaLocal.o: Venta.o
@@ -101,46 +101,46 @@ MenuPlato.o: Plato.o Menu.o
 Producto.o: 
 	g++ -c "clases/Producto/Producto.cpp"
 
-dtFacturaLocal.o: dtFactura.o
-	g++ -c "datatypes/Factura/dtFacturaLocal.cpp"
+DtFacturaLocal.o: DtFactura.o
+	g++ -c "datatypes/Factura/DtFacturaLocal.cpp"
 
-dtFacturaDomicilio.o: dtFactura.o
-	g++ -c "datatypes/Factura/dtFacturaDomicilio.cpp"
+DtFacturaDomicilio.o: DtFactura.o
+	g++ -c "datatypes/Factura/DtFacturaDomicilio.cpp"
 
-dtFactura.o: dtConsumido.o dtFecha.o dtHora.o
-	g++ -c "datatypes/Factura/dtFactura.cpp"
+DtFactura.o: DtConsumido.o DtFecha.o DtHora.o
+	g++ -c "datatypes/Factura/DtFactura.cpp"
 
-dtInfoProducto.o: dtProducto.o
-	g++ -c "datatypes/InfoProducto/dtInfoProducto.cpp"
+DtInfoProducto.o: DtProducto.o
+	g++ -c "datatypes/InfoProducto/DtInfoProducto.cpp"
 
-dtMenu.o: dtProducto.o
-	g++ -c "datatypes/Producto/dtMenu.cpp"
+DtMenu.o: DtProducto.o
+	g++ -c "datatypes/Producto/DtMenu.cpp"
 
-dtPlato.o: dtProducto.o
-	g++ -c "datatypes/Producto/dtPlato.cpp"
+DtPlato.o: DtProducto.o
+	g++ -c "datatypes/Producto/DtPlato.cpp"
 
-dtProducto.o:
-	g++ -c "datatypes/Producto/dtProducto.cpp"
+DtProducto.o:
+	g++ -c "datatypes/Producto/DtProducto.cpp"
 
-dtConsumido.o:
-	g++ -c "datatypes/Consumido/dtConsumido.cpp"
+DtConsumido.o:
+	g++ -c "datatypes/Consumido/DtConsumido.cpp"
 
-dtDireccionApto.o:
-	g++ -c  "datatypes/Direccion/dtDireccionApto.cpp"
+DtDireccionApto.o:
+	g++ -c  "datatypes/Direccion/DtDireccionApto.cpp"
 
-dtDireccion.o:
-	g++ -c  "datatypes/Direccion/dtDireccion.cpp"
+DtDireccion.o:
+	g++ -c  "datatypes/Direccion/DtDireccion.cpp"
 
-dtFecha.o:
-	g++ -c  "datatypes/Fecha/dtFecha.cpp"
+DtFecha.o:
+	g++ -c  "datatypes/Fecha/DtFecha.cpp"
 
-dtHora.o:
-	g++ -c  "datatypes/Hora/dtHora.cpp"
+DtHora.o:
+	g++ -c  "datatypes/Hora/DtHora.cpp"
 
-dtCliente.o: dtDireccion.o
-	g++ -c "datatypes/Cliente/dtCliente.cpp"
+DtCliente.o: DtDireccion.o
+	g++ -c "datatypes/Cliente/DtCliente.cpp"
 
-Cliente.o: dtCliente.o dtDireccion.o
+Cliente.o: DtCliente.o DtDireccion.o
 	g++  -c "clases/Cliente/Cliente.cpp"
 
 Mesa.o: 

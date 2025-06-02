@@ -26,7 +26,7 @@ class Sistema : public ISistema {
     public:
 
         void seleccionarTipoProducto(TipoProducto tipo);
-        void crearMenu(dtMenu datosMenu);
+        void crearMenu(DtMenu datosMenu);
         void crearPlato(DtPlato datosPlato);
 
         static Sistema * getInstance();

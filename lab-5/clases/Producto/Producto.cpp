@@ -1,7 +1,7 @@
 #include "Producto.h"
 #include "../../utils/utils.h"
 
-Producto::Producto(dtProducto dtProducto)
+Producto::Producto(DtProducto dtProducto)
 {
     
     this->codigo = dtProducto.getCodigo();

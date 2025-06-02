@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Producto.h"
 #include "Plato.h"
-#include "../../datatypes/Producto/dtMenu.h"
+#include "../../datatypes/Producto/DtMenu.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ private:
     Plato **platos;
 
 public:
-    Menu(dtMenu, Plato **);
+    Menu(DtMenu, Plato **);
     Plato **getPlatos();
     ~Menu();
 };

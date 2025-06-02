@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "../../datatypes/Producto/dtProducto.h"
+#include "../../datatypes/Producto/DtProducto.h"
 #include "../../ICollection/interfaces/ICollectible.h"
 
 using namespace std;
@@ -13,7 +13,7 @@ private:
     string descripcion;
 
 public:
-    Producto(dtProducto);
+    Producto(DtProducto);
     string getCodigo();
     string getDescripcion();
     virtual ~Producto();

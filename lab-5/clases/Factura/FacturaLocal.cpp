@@ -1,6 +1,6 @@
 #include "FacturaLocal.h"
 
-FacturaLocal::FacturaLocal(dtFacturaLocal factura) : Factura(factura.getFactura()){
+FacturaLocal::FacturaLocal(DtFacturaLocal factura) : Factura(factura.getFactura()){
     this->nombreMozo = factura.getNombreMozo();
 };
 

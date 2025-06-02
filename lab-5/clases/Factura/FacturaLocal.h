@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "Factura.h"
-#include "../../datatypes/Factura/dtFacturaLocal.h"
+#include "../../datatypes/Factura/DtFacturaLocal.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ private:
     string nombreMozo;
 
 public:
-    FacturaLocal(dtFacturaLocal);
+    FacturaLocal(DtFacturaLocal);
     string getNombreMozo();
     ~FacturaLocal();
 };

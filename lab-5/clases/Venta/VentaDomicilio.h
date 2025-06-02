@@ -2,16 +2,16 @@
 
 #include <iostream>
 #include "Venta.h"
-#include "../../datatypes/Cliente/dtCliente.h"
+#include "../../datatypes/Cliente/DtCliente.h"
 
 using namespace std;
 
 class VentaDomicilio : public Venta
 {
 private:
-    dtCliente datosCliente;
+    DtCliente datosCliente;
 
 public:
-    VentaDomicilio(int, float, int, Producto **, int, dtCliente);
+    VentaDomicilio(int, float, int, Producto **, int, DtCliente);
     ~VentaDomicilio();
 };
