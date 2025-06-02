@@ -1,22 +1,22 @@
 #pragma once
 
 #include <iostream>
-#include "dtProducto.h"
+#include "DtProducto.h"
 
 using namespace std;
 
-class dtPlato : public dtProducto
+class DtPlato : public DtProducto
 {
 private:
     float precio;
     
 
 public:
-    dtPlato();
-    dtPlato(string, string,float);
+    DtPlato();
+    DtPlato(string, string,float);
     float getPrecio();
     string getDescripcion();
     string getCodigo();
-    ~dtPlato();
+    ~DtPlato();
     
 };

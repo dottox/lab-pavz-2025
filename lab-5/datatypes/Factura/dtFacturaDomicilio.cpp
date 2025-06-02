@@ -1,21 +1,21 @@
-#include "dtFacturaDomicilio.h"
+#include "DtFacturaDomicilio.h"
 
-dtFacturaDomicilio::dtFacturaDomicilio() {}
+DtFacturaDomicilio::DtFacturaDomicilio() {}
 
-dtFacturaDomicilio::dtFacturaDomicilio(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreRepartidor, Transporte transporte) 
-: dtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal){
+DtFacturaDomicilio::DtFacturaDomicilio(int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreRepartidor, Transporte transporte) 
+: DtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal){
     this->nombreRepartidor = nombreRepartidor;
     this->transporte = transporte;
 }
 
-string dtFacturaDomicilio::getNombreRepartidor()
+string DtFacturaDomicilio::getNombreRepartidor()
 {
     return this->nombreRepartidor;
 }
 
-Transporte dtFacturaDomicilio::getTransporte()
+Transporte DtFacturaDomicilio::getTransporte()
 {
     return this->transporte;
 }
 
-dtFacturaDomicilio::~dtFacturaDomicilio() {};
+DtFacturaDomicilio::~DtFacturaDomicilio() {};

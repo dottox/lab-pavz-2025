@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class dtConsumido
+class DtConsumido
 {
 private:
     string descripcion;
@@ -12,10 +12,10 @@ private:
     float precio;
 
 public:
-    dtConsumido();
-    dtConsumido(string, int, float);
+    DtConsumido();
+    DtConsumido(string, int, float);
     string getDescripcion();
     int getCantidad();
     float getPrecio();
-    ~dtConsumido();
+    ~DtConsumido();
 };

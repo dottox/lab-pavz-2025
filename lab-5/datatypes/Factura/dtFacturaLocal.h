@@ -1,18 +1,18 @@
 #pragma once
 
 #include <iostream>
-#include "dtFactura.h"
+#include "DtFactura.h"
 
 using namespace std;
 
-class dtFacturaLocal : public dtFactura
+class DtFacturaLocal : public DtFactura
 {
 private:
     string nombreMozo;
 
 public:
-    dtFacturaLocal();
-    dtFacturaLocal(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, string);
+    DtFacturaLocal();
+    DtFacturaLocal(int, DtFecha, DtHora, DtConsumido **, float, int, float, float, string);
     string getNombreMozo();
-    ~dtFacturaLocal();
+    ~DtFacturaLocal();
 };

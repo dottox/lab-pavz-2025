@@ -1,28 +1,28 @@
-#include "dtCliente.h"
+#include "DtCliente.h"
 
-dtCliente::dtCliente(string nombre, string telefono, dtDireccion direccion)
+DtCliente::DtCliente(string nombre, string telefono, dtDireccion direccion)
 {
     this->nombre = nombre;
     this->telefono = telefono;
     this->direccion = direccion;
 }
 
-string dtCliente::getNombre()
+string DtCliente::getNombre()
 {
     return this->nombre;
 }
 
-string dtCliente::getTelefono()
+string DtCliente::getTelefono()
 {
     return this->telefono;
 }
 
-dtDireccion dtCliente::getDireccion()
+dtDireccion DtCliente::getDireccion()
 {
     return this->direccion;
 }
 
-dtCliente::~dtCliente()
+DtCliente::~DtCliente()
 {
     // Destructor vacio
     // No es necesario liberar memoria ya que no se utilizan punteros

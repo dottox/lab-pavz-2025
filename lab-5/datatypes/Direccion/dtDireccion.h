@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class dtDireccion
+class DtDireccion
 {
 protected:
     string calle;
@@ -12,10 +12,10 @@ protected:
     string entreCalles;
 
 public:
-    dtDireccion();
-    dtDireccion(string, int, string);
+    DtDireccion();
+    DtDireccion(string, int, string);
     string getCalle();
     int getNumero();
     string getEntreCalles();
-    virtual ~dtDireccion();
+    virtual ~DtDireccion();
 };

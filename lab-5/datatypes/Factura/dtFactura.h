@@ -1,38 +1,38 @@
 #pragma once
 
 #include <iostream>
-#include "../Fecha/dtFecha.h"
-#include "../Hora/dtHora.h"
-#include "../Consumido/dtConsumido.h"
+#include "../Fecha/DtFecha.h"
+#include "../Hora/DtHora.h"
+#include "../Consumido/DtConsumido.h"
 
 
 using namespace std;
 
-class dtFactura{
+class DtFactura{
 private:
     int codigo;
     int codigoVenta;
-    dtFecha fecha;
-    dtHora hora;
-    dtConsumido **productos;
+    DtFecha fecha;
+    DtHora hora;
+    DtConsumido **productos;
     float subtotal;
     int descuento;
     float montoTotal;
     float ivaTotal;
 
 public:
-    dtFactura();
-    dtFactura(int, dtFecha, dtHora, dtConsumido **, float, int, float, float);
-    dtFactura(int, int, dtFecha, dtHora, dtConsumido **, float, int, float, float);
-    dtFactura getFactura();
+    DtFactura();
+    DtFactura(int, DtFecha, DtHora, DtConsumido **, float, int, float, float);
+    DtFactura(int, int, DtFecha, DtHora, DtConsumido **, float, int, float, float);
+    DtFactura getFactura();
     int getCodigo();
     int getCodigoVenta();
-    dtFecha getFecha();
-    dtHora getHora();
-    dtConsumido **getProductos();
+    DtFecha getFecha();
+    DtHora getHora();
+    DtConsumido **getProductos();
     float getSubtotal();
     int getDescuento();
     float getMontoTotal();
     float getIvaTotal();
-    virtual ~dtFactura();
+    virtual ~DtFactura();
 };

@@ -1,20 +1,18 @@
-#ifndef MESA_H
-#define MESA_H
+#pragma once
 #include <string>
 #include "../clases/Venta/Venta.h"
-class dtMesa{
+
+class DtMesa{
 private:
     int numero;
     Venta *ventaActual;
     bool ventaEnCurso;
 public:
-    dtMesa(Venta*, bool);
-    dtMesa(int, Venta*, bool);
+    DtMesa(Venta*, bool);
+    DtMesa(int, Venta*, bool);
     int getNumero();
     Venta *getVentaActual();
     bool getVentaEnCurso();
-    ~dtMesa();
+    ~DtMesa();
     
 };
-
-#endif

@@ -1,14 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include "dtProducto.h"
+#include "DtProducto.h"
 
 using namespace std;
 
-class dtMenu : public dtProducto
+class DtMenu : public DtProducto
 {
 public:
-    dtMenu();
-    dtMenu(string, string, float);
-    ~dtMenu();
+    DtMenu();
+    DtMenu(string, string, float);
+    ~DtMenu();
 };

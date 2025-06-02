@@ -8,6 +8,11 @@
 #include "../Mesa/Mesa.h"
 #include "../Producto/Producto.h"
 
+#include "../../datatypes/Producto/DtPlato.h"
+#include "../../datatypes/Producto/DtMenu.h"
+
+#include "../../enums/TipoProducto.h"
+
 using namespace std;
 
 class Sistema : public ISistema {
@@ -16,10 +21,15 @@ class Sistema : public ISistema {
         static Sistema * instance;
         IDictionary * empleados;
         IDictionary * ventas;
-        IDictionary * mezas;
+        IDictionary * mesas;
         IDictionary * productos;
     public:
-        ~Sistema();
+
+        void seleccionarTipoProducto(TipoProducto tipo);
+        void crearMenu(dtMenu datosMenu);
+        void crearPlato(DtPlato datosPlato);
+
         static Sistema * getInstance();
         void saludar();
+        ~Sistema();
 };

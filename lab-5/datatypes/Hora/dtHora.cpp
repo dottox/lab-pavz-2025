@@ -1,15 +1,15 @@
-#include "dtHora.h"
+#include "DtHora.h"
 #include <stdexcept>
 using namespace std;
 
-dtHora::dtHora()
+DtHora::DtHora()
 {
     this->hora = MIN_HORAS;
     this->minuto = MIN_MINUTOS;
     this->segundo = MIN_SEGUNDOS;
 }
 
-dtHora::dtHora(int hora, int minuto, int segundo)
+DtHora::DtHora(int hora, int minuto, int segundo)
 {
     if (hora < MIN_HORAS || hora > MAX_HORAS || minuto < MIN_MINUTOS || minuto > MAX_MINUTOS || segundo < MIN_SEGUNDOS || segundo > MAX_SEGUNDOS)
     {
@@ -23,30 +23,30 @@ dtHora::dtHora(int hora, int minuto, int segundo)
     this->segundo = segundo;
 };
 
-int dtHora::getHora()
+int DtHora::getHora()
 {
     return this->hora;
 };
 
-int dtHora::getMinuto()
+int DtHora::getMinuto()
 {
     return this->minuto;
 };
 
-int dtHora::getSegundo()
+int DtHora::getSegundo()
 {
     return this->segundo;
 }
 
-bool dtHora::operator==(const dtHora &other) const
+bool DtHora::operator==(const DtHora &other) const
 {
     return this->hora == other.hora && this->minuto == other.minuto && this->segundo == other.segundo;
 }
 
-ostream &operator<<(ostream &os, const dtHora &dt)
+ostream &operator<<(ostream &os, const DtHora &Dt)
 {
-    os << dt.hora << "/" << dt.minuto << "/" << dt.segundo;
+    os << Dt.hora << "/" << Dt.minuto << "/" << Dt.segundo;
     return os;
 }
 
-dtHora::~dtHora() {}
+DtHora::~DtHora() {}

@@ -1,9 +1,9 @@
-#include "dtFactura.h"
+#include "DtFactura.h"
 
 
-dtFactura::dtFactura() {}
+DtFactura::DtFactura() {}
 
-dtFactura::dtFactura(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
+DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
     this->codigo = -1; // Default value for codigo
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
@@ -15,7 +15,7 @@ dtFactura::dtFactura(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **
     this->ivaTotal = ivaTotal;
 }
 
-dtFactura::dtFactura(int codigo, int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
+DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
     this->codigo = codigo;
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
@@ -27,44 +27,44 @@ dtFactura::dtFactura(int codigo, int codigoVenta, dtFecha fecha, dtHora hora, dt
     this->ivaTotal = ivaTotal;
 }
 
-dtFactura dtFactura::getFactura(){
+DtFactura DtFactura::getFactura(){
     return *this;
 }
 
-int dtFactura::getCodigo(){
+int DtFactura::getCodigo(){
     return this->codigo;
 }
 
-int dtFactura::getCodigoVenta(){
+int DtFactura::getCodigoVenta(){
     return this->codigoVenta;
 }
 
-dtFecha dtFactura::getFecha(){
+DtFecha DtFactura::getFecha(){
     return this->fecha;
 }
 
-dtHora dtFactura::getHora(){
+DtHora DtFactura::getHora(){
     return this->hora;
 }
 
-dtConsumido **dtFactura::getProductos(){
+DtConsumido **DtFactura::getProductos(){
     return this->productos;
 }
 
-float dtFactura::getSubtotal(){
+float DtFactura::getSubtotal(){
     return this->subtotal;
 }
 
-int dtFactura::getDescuento(){
+int DtFactura::getDescuento(){
     return this->descuento;
 }
 
-float dtFactura::getMontoTotal(){
+float DtFactura::getMontoTotal(){
     return this->montoTotal;
 }
 
-float dtFactura::getIvaTotal(){
+float DtFactura::getIvaTotal(){
     return this->ivaTotal;
 }
 
-dtFactura::~dtFactura() {}
+DtFactura::~DtFactura() {}

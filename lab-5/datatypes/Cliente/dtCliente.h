@@ -1,11 +1,11 @@
 #pragma once
 
 #include <iostream>
-#include "../Direccion/dtDireccion.h"
+#include "../Direccion/DtDireccion.h"
 
 using namespace std;
 
-class dtCliente
+class DtCliente
 {
 private:
     string nombre;
@@ -13,9 +13,9 @@ private:
     dtDireccion direccion;
 
 public:
-    dtCliente(string, string, dtDireccion);
+    DtCliente(string, string, dtDireccion);
     string getNombre();
     dtDireccion getDireccion();
     string getTelefono();
-    ~dtCliente();
+    ~DtCliente();
 };

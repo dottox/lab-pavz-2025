@@ -1,21 +1,21 @@
-#include "dtAsignacion.h"
+#include "DtAsignacion.h"
 
-dtAsignacion::dtAsignacion(){}
+DtAsignacion::DtAsignacion(){}
 
-dtAsignacion::dtAsignacion(int numeroMozo, int numeroMesa)
+DtAsignacion::DtAsignacion(int numeroMozo, int numeroMesa)
 {
     this->numeroMozo = numeroMozo;
     this->numeroMesa = numeroMesa;
 }
 
-int dtAsignacion::getNumeroMozo()
+int DtAsignacion::getNumeroMozo()
 {
     return this->numeroMozo;
 }
 
-int dtAsignacion::getNumeroMesa()
+int DtAsignacion::getNumeroMesa()
 {
     return this->numeroMesa;
 }
 
-dtAsignacion::~dtAsignacion() {}
+DtAsignacion::~DtAsignacion() {}

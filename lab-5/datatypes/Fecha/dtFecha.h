@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class dtFecha
+class DtFecha
 {
 private:
     int dia;
@@ -13,12 +13,12 @@ private:
     int anio;
 
 public:
-    dtFecha();
-    dtFecha(int, int, int);
+    DtFecha();
+    DtFecha(int, int, int);
     int getDia();
     int getMes();
     int getAnio();
-    bool operator==(const dtFecha &other) const;
-    friend ostream &operator<<(ostream &, const dtFecha &);
-    ~dtFecha();
+    bool operator==(const DtFecha &other) const;
+    friend ostream &operator<<(ostream &, const DtFecha &);
+    ~DtFecha();
 };

@@ -1,7 +1,7 @@
-#include "dtMenu.h"
+#include "DtMenu.h"
 
-dtMenu::dtMenu(){}
+DtMenu::DtMenu(){}
 
-dtMenu::dtMenu(string codigo, string descripcion, float precio) : dtProducto(codigo, descripcion) {}
+DtMenu::DtMenu(string codigo, string descripcion, float precio) : DtProducto(codigo, descripcion) {}
 
-dtMenu::~dtMenu() {}
+DtMenu::~DtMenu() {}

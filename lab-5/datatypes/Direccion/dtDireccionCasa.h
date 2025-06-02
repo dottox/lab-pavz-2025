@@ -1,14 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include "dtDireccion.h"
+#include "DtDireccion.h"
 
 using namespace std;
 
-class dtDireccionCasa : public dtDireccion
+class DtDireccionCasa : public DtDireccion
 {
 private:
 public:
-    dtDireccionCasa(string, int, string);
-    virtual ~dtDireccionCasa();
+    DtDireccionCasa(string, int, string);
+    virtual ~DtDireccionCasa();
 };

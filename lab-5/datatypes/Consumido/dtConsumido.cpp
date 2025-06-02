@@ -1,27 +1,27 @@
-#include "dtConsumido.h"
+#include "DtConsumido.h"
 
-dtConsumido::dtConsumido() {}
+DtConsumido::DtConsumido() {}
 
-dtConsumido::dtConsumido(string descripcion, int cantidad, float precio)
+DtConsumido::DtConsumido(string descripcion, int cantidad, float precio)
 {
     this->descripcion = descripcion;
     this->cantidad = cantidad;
     this->precio = precio;
 }
 
-string dtConsumido::getDescripcion()
+string DtConsumido::getDescripcion()
 {
     return this->descripcion;
 }
 
-int dtConsumido::getCantidad()
+int DtConsumido::getCantidad()
 {
     return this->cantidad;
 }
 
-float dtConsumido::getPrecio()
+float DtConsumido::getPrecio()
 {
     return this->precio;
 }
 
-dtConsumido::~dtConsumido() {}
+DtConsumido::~DtConsumido() {}

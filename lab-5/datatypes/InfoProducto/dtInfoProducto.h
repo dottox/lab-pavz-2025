@@ -1,20 +1,20 @@
 #pragma once
 
 #include <iostream>
-#include "../Producto/dtProducto.h"
+#include "../Producto/DtProducto.h"
 
 using namespace std;
 
-class dtInfoProducto
+class DtInfoProducto
 {
 private:
-    dtProducto producto;
+    DtProducto producto;
     int cantidadVentas;
 
 public:
-    dtInfoProducto();
-    dtInfoProducto(dtProducto, int);
-    dtProducto getProducto();
+    DtInfoProducto();
+    DtInfoProducto(DtProducto, int);
+    DtProducto getProducto();
     int getCantidadVentas();
-    ~dtInfoProducto();
+    ~DtInfoProducto();
 };

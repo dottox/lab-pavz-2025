@@ -1,21 +1,21 @@
-#include "dtInfoProducto.h"
+#include "DtInfoProducto.h"
 
-dtInfoProducto::dtInfoProducto() {}
+DtInfoProducto::DtInfoProducto() {}
 
-dtInfoProducto::dtInfoProducto(dtProducto producto, int cantidadVentas)
+DtInfoProducto::DtInfoProducto(DtProducto producto, int cantidadVentas)
 {
     this->producto = producto;
     this->cantidadVentas = cantidadVentas;
 }
 
-dtProducto dtInfoProducto::getProducto()
+DtProducto DtInfoProducto::getProducto()
 {
     return this->producto;
 }
 
-int dtInfoProducto::getCantidadVentas()
+int DtInfoProducto::getCantidadVentas()
 {
     return this->cantidadVentas;
 }
 
-dtInfoProducto::~dtInfoProducto() {}
+DtInfoProducto::~DtInfoProducto() {}

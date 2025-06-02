@@ -3,16 +3,16 @@
 #include <iostream>
 using namespace std;
 
-class dtAsignacion
+class DtAsignacion
 {
 private:
     int numeroMozo;
     int numeroMesa;
 
 public:
-    dtAsignacion();
-    dtAsignacion(int, int);
+    DtAsignacion();
+    DtAsignacion(int, int);
     int getNumeroMozo();
     int getNumeroMesa();
-    ~dtAsignacion();
+    ~DtAsignacion();
 };

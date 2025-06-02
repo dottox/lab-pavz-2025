@@ -1,26 +1,26 @@
-#include "dtMesa.h"
+#include "DtMesa.h"
 
-dtMesa::dtMesa(Venta* ventaActual, bool ventaEnCurso) {
+DtMesa::DtMesa(Venta* ventaActual, bool ventaEnCurso) {
     this->numero = -1; // Default value 
     this->ventaActual = ventaActual;
     this->ventaEnCurso = ventaEnCurso;
 }
 
-dtMesa::dtMesa(int numero, Venta* ventaActual, bool ventaEnCurso) {
+DtMesa::DtMesa(int numero, Venta* ventaActual, bool ventaEnCurso) {
     this->numero = numero;
     this->ventaActual = ventaActual;
     this->ventaEnCurso = ventaEnCurso;
 }
 
-int dtMesa::getNumero() {
+int DtMesa::getNumero() {
     return this->numero;
 }
-Venta* dtMesa::getVentaActual() {
+Venta* DtMesa::getVentaActual() {
     return this->ventaActual;
 }
-bool dtMesa::getVentaEnCurso() {
+bool DtMesa::getVentaEnCurso() {
     return this->ventaEnCurso;
 }
-dtMesa::~dtMesa() {
+DtMesa::~DtMesa() {
 
 }

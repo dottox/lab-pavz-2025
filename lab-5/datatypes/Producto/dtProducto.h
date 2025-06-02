@@ -4,17 +4,17 @@
 
 using namespace std;
 
-class dtProducto
+class DtProducto
 {
 private:
     string codigo;
     string descripcion;
 
 public:
-    dtProducto();
-    dtProducto(string, string);
+    DtProducto();
+    DtProducto(string, string);
     string getDescripcion();
     string getCodigo();
-    dtProducto getProducto();
-    virtual ~dtProducto();
+    DtProducto getProducto();
+    virtual ~DtProducto();
 };

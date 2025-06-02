@@ -1,15 +1,15 @@
-#include "dtFecha.h"
+#include "DtFecha.h"
 #include <stdexcept>
 using namespace std;
 
-dtFecha::dtFecha()
+DtFecha::DtFecha()
 {
     this->dia = MIN_DIAS;
     this->mes = MIN_MESES;
     this->anio = MIN_ANIO;
 }
 
-dtFecha::dtFecha(int d, int m, int a)
+DtFecha::DtFecha(int d, int m, int a)
 {
     if (d < MIN_DIAS || d > MAX_DIAS || m < MIN_MESES || m > MAX_MESES || a < MIN_ANIO)
     {
@@ -20,30 +20,30 @@ dtFecha::dtFecha(int d, int m, int a)
     this->anio = a;
 };
 
-int dtFecha::getDia()
+int DtFecha::getDia()
 {
     return this->dia;
 };
 
-int dtFecha::getMes()
+int DtFecha::getMes()
 {
     return this->mes;
 };
 
-int dtFecha::getAnio()
+int DtFecha::getAnio()
 {
     return this->anio;
 }
 
-bool dtFecha::operator==(const dtFecha &other) const
+bool DtFecha::operator==(const DtFecha &other) const
 {
     return this->dia == other.dia && this->mes == other.mes && this->anio == other.anio;
 }
 
-ostream &operator<<(ostream &os, const dtFecha &dt)
+ostream &operator<<(ostream &os, const DtFecha &Dt)
 {
-    os << dt.dia << "/" << dt.mes << "/" << dt.anio;
+    os << Dt.dia << "/" << Dt.mes << "/" << Dt.anio;
     return os;
 }
 
-dtFecha::~dtFecha() {}
+DtFecha::~DtFecha() {}

@@ -1,5 +1,5 @@
-#include "dtDireccionCasa.h"
+#include "DtDireccionCasa.h"
 
-dtDireccionCasa::dtDireccionCasa(string calle, int numero, string entreCalles) : dtDireccion(calle, numero, entreCalles) {};
+DtDireccionCasa::DtDireccionCasa(string calle, int numero, string entreCalles) : dtDireccion(calle, numero, entreCalles) {};
 
-dtDireccionCasa::~dtDireccionCasa() {};
+DtDireccionCasa::~DtDireccionCasa() {};

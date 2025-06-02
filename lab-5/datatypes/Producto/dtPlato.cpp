@@ -1,15 +1,15 @@
-#include "dtPlato.h"
+#include "DtPlato.h"
 
-dtPlato::dtPlato(){}
+DtPlato::DtPlato(){}
 
-dtPlato::dtPlato(string descripcion, string codigo, float precio) : dtProducto(codigo, descripcion)
+DtPlato::DtPlato(string descripcion, string codigo, float precio) : DtProducto(codigo, descripcion)
 {
     this->precio = precio;
 }
 
-float dtPlato::getPrecio()
+float DtPlato::getPrecio()
 {
     return this->precio;
 }
 
-dtPlato::~dtPlato() {}
+DtPlato::~DtPlato() {}

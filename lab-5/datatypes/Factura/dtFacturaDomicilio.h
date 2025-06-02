@@ -1,20 +1,20 @@
 #pragma once
 
 #include <iostream>
-#include "dtFactura.h"
+#include "DtFactura.h"
 #include "../../enums/Transporte.h"
 
 using namespace std;
 
-class dtFacturaDomicilio : public dtFactura{
+class DtFacturaDomicilio : public DtFactura{
 private:
     string nombreRepartidor;
     Transporte transporte;
 
 public:
-    dtFacturaDomicilio();
-    dtFacturaDomicilio(int, dtFecha, dtHora, dtConsumido **, float, int, float, float, string, Transporte);
+    DtFacturaDomicilio();
+    DtFacturaDomicilio(int, DtFecha, DtHora, DtConsumido **, float, int, float, float, string, Transporte);
     string getNombreRepartidor();
     Transporte getTransporte();
-    ~dtFacturaDomicilio();
+    ~DtFacturaDomicilio();
 };

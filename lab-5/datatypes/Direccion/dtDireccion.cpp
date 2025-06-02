@@ -1,30 +1,30 @@
-#include "dtDireccion.h"
+#include "DtDireccion.h"
 
-dtDireccion::dtDireccion() {}
+DtDireccion::DtDireccion() {}
 
-dtDireccion::dtDireccion(string calle, int numero, string entreCalles)
+DtDireccion::DtDireccion(string calle, int numero, string entreCalles)
 {
     this->calle = calle;
     this->numero = numero;
     this->entreCalles = entreCalles;
 }
 
-string dtDireccion::getCalle()
+string DtDireccion::getCalle()
 {
     return this->calle;
 }
 
-int dtDireccion::getNumero()
+int DtDireccion::getNumero()
 {
     return this->numero;
 }
 
-string dtDireccion::getEntreCalles()
+string DtDireccion::getEntreCalles()
 {
     return this->entreCalles;
 }
 
-dtDireccion::~dtDireccion()
+DtDireccion::~DtDireccion()
 {
     // Destructor implementation (if needed)
     // Currently, no dynamic memory allocation is used, so nothing specific to clean up.
