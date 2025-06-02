@@ -1,8 +1,8 @@
 #include "Mesa.h"
-#include "../../utils/funciones.cpp" 
+#include "../../utils/utils.h" 
 
 Mesa::Mesa(Mozo* mozo){
-    this->numero = generarNumeroMesa();
+    this->numero = utils::generarNumeroMesa();
     this->mozo = mozo;
     this->ventaEnCurso = NULL;
 }

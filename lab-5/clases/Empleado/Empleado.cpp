@@ -1,8 +1,8 @@
 #include "./Empleado.h"
-#include "../../utils/funciones.cpp"
+#include "../../utils/utils.h"
 
 Empleado::Empleado(string nom){
-    this->numero = generarNumeroEmpleado();
+    this->numero = utils::generarNumeroEmpleado();
     this->nombre = nom;
 }
 

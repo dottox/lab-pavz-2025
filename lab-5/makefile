@@ -14,7 +14,7 @@ endif
 
 all: programa
 
-programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o dtCliente.o Plato.o Menu.o MenuPlato.o dtFecha.o dtConsumido.o dtHora.o dtFacturaLocal.o dtFacturaDomicilio.o dtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o dtInfoProducto.o dtMenu.o dtPlato.o dtProducto.o  dtDireccionApto.o dtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
+programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o dtCliente.o Plato.o Menu.o MenuPlato.o dtFecha.o dtConsumido.o dtHora.o dtFacturaLocal.o dtFacturaDomicilio.o dtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o dtInfoProducto.o dtMenu.o dtPlato.o dtProducto.o  dtDireccionApto.o dtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
 	g++ $^ -o programa 
 
 ICollectible.o: 
@@ -58,6 +58,9 @@ OrderedDictionaryEntry.o:
 
 main.o:
 	g++ -c main.cpp
+
+utils.o: 
+	g++ -c "utils/utils.cpp"
 
 Sistema.o: ISistema.o 
 	g++ -c "clases/Sistema/Sistema.cpp"

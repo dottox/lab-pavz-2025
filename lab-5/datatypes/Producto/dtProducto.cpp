@@ -1,10 +1,10 @@
 #include "dtProducto.h"
-#include "../../utils/funciones.cpp"
+#include "../../utils/utils.h"
 dtProducto::dtProducto() {};
 
 dtProducto::dtProducto(int id, string descripcion, string codigo)
 {
-    this->codigo = generarNumeroProducto();
+    this->codigo = utils::generarNumeroProducto();
     this->id = id;
     this->descripcion = descripcion;
 }

@@ -1,11 +1,11 @@
 #include "dtFactura.h"
-#include "../../utils/funciones.cpp"
+#include "../../utils/utils.h"
 
 
 dtFactura::dtFactura() {}
 
 dtFactura::dtFactura(int codigoVenta, dtFecha fecha, dtHora hora, dtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
-    this->codigo = generarNumeroFactura();
+    this->codigo = utils::generarNumeroFactura();
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
     this->hora = hora;
