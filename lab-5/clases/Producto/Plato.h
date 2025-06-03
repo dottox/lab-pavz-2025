@@ -10,5 +10,7 @@ class Plato : public Producto
 {
 public:
     Plato(DtPlato);
+    DtPlato* getInfo();
+    friend ostream& operator<<(ostream&, const Plato&);
     ~Plato();
 };

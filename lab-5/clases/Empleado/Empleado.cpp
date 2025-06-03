@@ -14,6 +14,11 @@ string Empleado::getNombre(){
     return this->nombre;
 }
 
+ostream & operator<<(ostream &os, const Empleado &empleado) {
+    os << "Numero: " << empleado.numero << ", Nombre: " << empleado.nombre;
+    return os;
+}
+
 Empleado::~Empleado(){
     // Destructor vacio
     // No es necesario liberar memoria ya que no se usan punteros

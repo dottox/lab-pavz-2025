@@ -4,17 +4,26 @@
 #include "../../datatypes/Producto/DtProducto.h"
 #include "../../ICollection/interfaces/ICollectible.h"
 
+#include "../../enums/TipoProducto.h"
+
 using namespace std;
 
-class Producto : ICollectible
+class Producto : public ICollectible
 {
 private:
-    string codigo;
+    char* codigo;
     string descripcion;
+    TipoProducto tipo;
+    float precio;
+
+protected:
+    Producto(DtProducto);
 
 public:
-    Producto(DtProducto);
-    string getCodigo();
+    char* getCodigo();
     string getDescripcion();
+    TipoProducto getTipo();
+    float getPrecio();
+    friend ostream& operator<<(ostream&, const Producto&);
     virtual ~Producto();
 };

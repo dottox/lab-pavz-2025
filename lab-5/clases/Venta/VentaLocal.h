@@ -3,11 +3,14 @@
 #include <iostream>
 #include "Venta.h"
 
+#include "../../ICollection/interfaces/ICollection.h"
+
 using namespace std;
 
 class VentaLocal : public Venta
 {
 public:
-    VentaLocal(int, float, int, Producto **, int);
+    VentaLocal();
+    friend ostream & operator<<(ostream&, const VentaLocal&);
     ~VentaLocal();
 };

@@ -12,5 +12,7 @@ protected:
 
 public:
     Repartidor(string, Transporte);
+    Transporte getTransporte() const;
+    friend ostream & operator<<(ostream &, const Repartidor&);
     ~Repartidor();
 };

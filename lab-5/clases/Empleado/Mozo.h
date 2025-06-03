@@ -9,11 +9,13 @@ using namespace std;
 class Mesa;
 
 class Mozo : public Empleado{
-private:
+protected:
     Mesa ** mesasAsignadas;
     int cantidadMesasAsignadas;
 
 public:
     Mozo(string);
+    int getCantidadMesasAsignadas() const;
+    friend ostream & operator<<(ostream&, const Mozo&);
     ~Mozo();
 };

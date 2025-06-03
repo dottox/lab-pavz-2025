@@ -1,9 +1,8 @@
 #include "MenuPlato.h"
 
-MenuPlato::MenuPlato(Plato *plato, Menu *menu, int cantidad)
+MenuPlato::MenuPlato(Plato *plato, int cantidad)
 {
     this->plato = plato;
-    this->menu = menu;
     this->cantidad = cantidad;
 }
 
@@ -12,10 +11,6 @@ Plato *MenuPlato::getPlato()
     return this->plato;
 }
 
-Menu *MenuPlato::getMenu()
-{
-    return this->menu;
-}
 
 int MenuPlato::getCantidad()
 {

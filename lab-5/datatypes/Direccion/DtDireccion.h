@@ -17,5 +17,6 @@ public:
     string getCalle();
     int getNumero();
     string getEntreCalles();
+    friend ostream& operator<<(ostream&, const DtDireccion&);
     virtual ~DtDireccion();
 };

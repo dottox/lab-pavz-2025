@@ -7,16 +7,9 @@ using namespace std;
 
 class DtPlato : public DtProducto
 {
-private:
-    float precio;
-    
-
 public:
     DtPlato();
-    DtPlato(string, string,float);
-    float getPrecio();
-    string getDescripcion();
-    string getCodigo();
+    DtPlato(char*, string, float);
     ~DtPlato();
     
 };

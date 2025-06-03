@@ -15,7 +15,7 @@ Mozo *Mesa::getMozo(){
     return this->mozo;
 }
 
-VentaLocal *Mesa::getVentaEnCurso(){
+VentaLocal *Mesa::getVentaEnCurso() const {
     return this->ventaEnCurso;
 }
 
@@ -27,6 +27,17 @@ void Mesa::setMozo(Mozo* mozo){
 }
 void Mesa::setVentaEnCurso(VentaLocal* venta){
     this->ventaEnCurso = venta; 
+}
+
+ostream & operator<<(ostream &os, const Mesa &mesa) {
+    os << "Mesa Numero: " << mesa.numero << endl
+       << "    " << "Mozo: " << *(mesa.mozo);
+    if (mesa.getVentaEnCurso() != NULL) {
+        os << ", Hay venta en curso";
+    } else {
+        os << ", No hay venta en curso";
+    }
+    return os;
 }
 
 Mesa::~Mesa(){

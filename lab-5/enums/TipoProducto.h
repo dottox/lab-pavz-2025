@@ -2,6 +2,7 @@
 
 enum TipoProducto
 {
-    Plato,
-    Menu
+    TipoPlato,
+    TipoMenu,
+    undefinedTipo
 };

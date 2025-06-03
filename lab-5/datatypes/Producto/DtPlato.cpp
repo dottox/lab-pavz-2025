@@ -1,15 +1,11 @@
 #include "DtPlato.h"
 
+#include "../../enums/TipoProducto.h"
+
 DtPlato::DtPlato(){}
 
-DtPlato::DtPlato(string descripcion, string codigo, float precio) : DtProducto(codigo, descripcion)
+DtPlato::DtPlato(char* codigo, string descripcion, float precio) : DtProducto(codigo, descripcion, TipoPlato, precio)
 {
-    this->precio = precio;
-}
-
-float DtPlato::getPrecio()
-{
-    return this->precio;
 }
 
 DtPlato::~DtPlato() {}

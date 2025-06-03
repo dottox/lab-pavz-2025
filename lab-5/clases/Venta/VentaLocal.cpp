@@ -1,9 +1,13 @@
 #include "VentaLocal.h"
 
-VentaLocal::VentaLocal(int codigo, float subtotal, int descuento, Producto **productos, int cantidadProductos)
-    : Venta(codigo, subtotal, descuento, productos, cantidadProductos)
+VentaLocal::VentaLocal() : Venta()
 {
     // Constructor body can be empty as the base class constructor initializes everything
+}
+
+ostream & operator<<(ostream &os, const VentaLocal &ventaLocal) {
+    os << "Venta local: " << static_cast<const Venta>(ventaLocal); // Call base class operator<<
+    return os;
 }
 
 VentaLocal::~VentaLocal()

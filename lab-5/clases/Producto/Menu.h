@@ -4,16 +4,24 @@
 #include "Producto.h"
 #include "Plato.h"
 #include "../../datatypes/Producto/DtMenu.h"
+#include "MenuPlato.h"
+
+#include "../../ICollection/interfaces/IDictionary.h"
+#include "../../ICollection/interfaces/ICollection.h"
 
 using namespace std;
 
 class Menu : public Producto
 {
 private:
-    Plato **platos;
+    IDictionary* menuPlatos; // De tipo MenuPlato
 
 public:
-    Menu(DtMenu, Plato **);
-    Plato **getPlatos();
+    Menu(DtMenu);
+    Menu(DtMenu, IDictionary*);
+    ICollection* getPlatos();
+    friend ostream& operator<<(ostream&, const Menu&);
+    void añadirPlato(Plato*, int);
+    
     ~Menu();
 };

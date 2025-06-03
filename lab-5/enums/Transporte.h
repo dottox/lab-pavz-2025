@@ -5,5 +5,6 @@ enum Transporte
     aPie,
     Moto,
     Bicicleta,
-    Auto
+    Auto,
+    undefinedTransporte
 };

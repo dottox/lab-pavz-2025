@@ -1,9 +1,19 @@
 #include "VentaDomicilio.h"
 
-VentaDomicilio::VentaDomicilio(int codigo, float subtotal, int descuento, Producto **productos, int cantidadProductos, DtCliente datosCliente)
-    : Venta(codigo, subtotal, descuento, productos, cantidadProductos), datosCliente(datosCliente)
+VentaDomicilio::VentaDomicilio(DtCliente datosCliente) : Venta()
 {
     this->datosCliente = datosCliente;
+}
+
+DtCliente VentaDomicilio::getDatosCliente()
+{
+    return this->datosCliente;
+}
+
+ostream & operator<<(ostream &os, const VentaDomicilio &ventaDomicilio) {
+    os << "Venta domicilio: " << static_cast<const Venta>(ventaDomicilio) << endl
+       << "    " << ventaDomicilio.datosCliente;
+    return os;
 }
 
 VentaDomicilio::~VentaDomicilio()

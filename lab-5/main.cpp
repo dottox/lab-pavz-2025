@@ -6,6 +6,12 @@ using namespace std;
 
 int main(){
     ISistema * s = Factory::getSistema();
+
+    s->listarEmpleados();
+    s->listarVentas();
+    s->listarMesas();
+    s->listarProductos();
+
     return 0;
 }
     

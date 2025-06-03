@@ -8,4 +8,5 @@ class utils {
     static int generarNumeroEmpleado();
     static int generarNumeroFactura();
     static int generarNumeroMesa();
+    static int generarNumeroVenta();
 };

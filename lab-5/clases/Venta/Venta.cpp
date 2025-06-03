@@ -1,13 +1,19 @@
 #include "Venta.h"
 
-Venta::Venta(int codigo, float subtotal, int descuento, Producto **productos, int cantidadProductos)
+#include "../../utils/utils.h"
+
+#include "../../ICollection/collections/OrderedDictionary.h"
+#include "../../ICollection/String.h"
+#include "../../ICollection/interfaces/IKey.h"
+
+Venta::Venta()
 {
-    this->codigo = codigo;
-    this->subtotal = subtotal;
-    this->descuento = descuento;
-    //this->productos = productos; // Hay q cambiar el puntero doble a idictionary
-    this->cantidadProductos = cantidadProductos;
-    this->factura = NULL;
+    this->codigo = utils::generarNumeroVenta();
+    this->descuento = 0;
+    this->cantidadProductos = 0;
+    this->subtotal = 0.0f;
+    this->factura = nullptr;
+    this->productos = new OrderedDictionary(); 
 }
 
 int Venta::getCodigo()
@@ -50,18 +56,34 @@ void Venta::setDescuento(int descuento)
     this->descuento = descuento;
 }
 
-void Venta::setProductos(Producto **productos, int cantidadProductos)
+void Venta::agregarProducto(Producto* producto, int cantidad)
 {
-    // this->productos = productos;
-    this->cantidadProductos = cantidadProductos;
+    if (cantidad <= 0)
+    {
+        throw std::invalid_argument("La cantidad debe ser mayor a 0.");
+    }
+
+    // Assuming productos is an OrderedDictionary
+    IKey* key = new String(producto->getCodigo());
+    this->productos->add(key, producto);
+    this->cantidadProductos += cantidad;
 }
 
 Venta::~Venta()
 {
-    // Assuming productos is dynamically allocated, we need to delete it
-    for (int i = 0; i < cantidadProductos; ++i)
-    {
-        // delete productos[i]; // Delete each Producto object
+    delete productos; // Delete the array of Producto pointers
+}
+
+ostream &operator<<(ostream &os, const Venta &venta)
+{
+    os << "Codigo: " << venta.codigo 
+       << ", Subtotal: " << venta.subtotal 
+       << ", Descuento: " << venta.descuento 
+       << ", Cantidad de Productos: " << venta.cantidadProductos;
+    if (venta.factura != nullptr) {
+        os << ", Facturada: Si";
+    } else {
+        os << ", Facturada: No";
     }
-    delete[] productos; // Delete the array of Producto pointers
+    return os;
 }

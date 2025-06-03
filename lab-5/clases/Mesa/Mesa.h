@@ -8,7 +8,7 @@ using namespace std;
 
 class Mozo;
 
-class Mesa : ICollectible {
+class Mesa : public ICollectible {
 private:
     int numero;
     Mozo* mozo;
@@ -18,9 +18,10 @@ public:
     Mesa(Mozo*);
     int getNumero();
     Mozo *getMozo();
-    VentaLocal *getVentaEnCurso();
+    VentaLocal *getVentaEnCurso() const;
     void setNumero(int);
     void setMozo(Mozo*);
     void setVentaEnCurso(VentaLocal*);
+    friend ostream & operator<<(ostream&, const Mesa&);
     ~Mesa();
 };

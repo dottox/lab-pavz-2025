@@ -8,17 +8,17 @@
 
 using namespace std;
 
-class Venta : ICollectible{
+class Venta : public ICollectible{
 private:
     int codigo;
     int descuento;
     int cantidadProductos;
     float subtotal;
-    Factura * factura;
-    IDictionary * productos;
+    Factura* factura;
+    IDictionary* productos;
 
 public:
-    Venta(int, float, int, Producto **, int);
+    Venta();
     int getCodigo();
     float getSubtotal();
     int getDescuento();
@@ -27,6 +27,7 @@ public:
     bool estaFacturada();
     void setSubtotal(float);
     void setDescuento(int);
-    void setProductos(Producto **, int);
+    void agregarProducto(Producto*, int);
+    friend ostream& operator<<(ostream& os, const Venta& venta);
     virtual ~Venta();
 };

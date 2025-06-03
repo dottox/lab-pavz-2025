@@ -2,19 +2,27 @@
 
 #include <iostream>
 
+#include "../../enums/TipoProducto.h"
+
+#include "../../ICollection/interfaces/ICollectible.h"
+
 using namespace std;
 
-class DtProducto
+class DtProducto : public ICollectible
 {
 private:
-    string codigo;
+    char* codigo;
     string descripcion;
+    TipoProducto tipo;
+    float precio;
 
 public:
     DtProducto();
-    DtProducto(string, string);
+    DtProducto(char*, string, TipoProducto, float);
+    char* getCodigo();
     string getDescripcion();
-    string getCodigo();
     DtProducto getProducto();
+    TipoProducto getTipo();
+    float getPrecio();
     virtual ~DtProducto();
 };

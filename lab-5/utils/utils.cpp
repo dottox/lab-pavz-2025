@@ -19,3 +19,9 @@ int utils::generarNumeroMesa() {
     contadorMesa++;
     return contadorMesa;
 }
+
+int utils::generarNumeroVenta() {
+    static int contadorVenta = 0; // Variable estática para mantener el estado entre llamadas
+    contadorVenta++;
+    return contadorVenta;
+}

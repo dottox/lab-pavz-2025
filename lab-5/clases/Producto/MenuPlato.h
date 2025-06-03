@@ -3,21 +3,18 @@
 #include <iostream>
 
 #include "../Producto/Plato.h"
-#include "../Producto/Menu.h"
 
 using namespace std;
 
-class MenuPlato
+class MenuPlato : public ICollectible
 {
 private:
-    Plato *plato;
-    Menu *menu;
+    Plato* plato;
     int cantidad;
 
 public:
-    MenuPlato(Plato*, Menu*, int);
+    MenuPlato(Plato*, int);
     Plato *getPlato();
-    Menu *getMenu();
     int getCantidad();
     void setCantidad(int);
     ~MenuPlato();

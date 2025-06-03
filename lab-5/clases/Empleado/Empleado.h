@@ -4,7 +4,7 @@
 #include "../../ICollection/interfaces/ICollectible.h"
 using namespace std;
 
-class Empleado : ICollectible {
+class Empleado : public ICollectible {
     protected:
         int numero;
         string nombre;
@@ -12,5 +12,6 @@ class Empleado : ICollectible {
         Empleado(string);
         int getNumero();
         string getNombre();
+        friend ostream & operator<<(ostream &, const Empleado&);
         virtual ~Empleado();
 };
