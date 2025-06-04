@@ -1,6 +1,14 @@
 #include "DtProducto.h"
 DtProducto::DtProducto() {};
 
+DtProducto::DtProducto(char* codigo, string descripcion, TipoProducto tipo)
+{
+    this->codigo = codigo;
+    this->descripcion = descripcion;
+    this->tipo = tipo;
+    this->precio = 0.0f; // Inicializa el precio a 0.0 por defecto
+}
+
 DtProducto::DtProducto(char* codigo, string descripcion, TipoProducto tipo, float precio)
 {
     this->codigo = codigo;
@@ -9,11 +17,11 @@ DtProducto::DtProducto(char* codigo, string descripcion, TipoProducto tipo, floa
     this->precio = precio;
 }
 
-char* DtProducto::getCodigo()
+char* DtProducto::getCodigo() const
 {
     return this->codigo;
 }
-string DtProducto::getDescripcion()
+string DtProducto::getDescripcion() const
 {
     return this->descripcion;
 }
@@ -28,7 +36,7 @@ TipoProducto DtProducto::getTipo()
     return this->tipo;
 }
 
-float DtProducto::getPrecio()
+float DtProducto::getPrecio() const
 {
     return this->precio;
 }

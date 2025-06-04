@@ -116,6 +116,12 @@ class Sistema : public ISistema {
          */
         void poblarSistema();
 
+        /**
+         * @brief Retorna el número de productos del sistema.
+         * @return int --> Cantidad de productos.
+         */
+        int getCantidadProductos();
+
         void listarEmpleados();
         void listarVentas();
         void listarMesas();

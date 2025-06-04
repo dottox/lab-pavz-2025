@@ -1,23 +1,21 @@
 #include "VentaDomicilio.h"
 
-VentaDomicilio::VentaDomicilio(DtCliente datosCliente) : Venta()
+VentaDomicilio::VentaDomicilio(DtCliente* datosCliente) : Venta(), datosCliente(datosCliente)
 {
-    this->datosCliente = datosCliente;
+    // Constructor body can be empty as the base class constructor initializes everything
 }
 
-DtCliente VentaDomicilio::getDatosCliente()
+DtCliente* VentaDomicilio::getDatosCliente() const
 {
     return this->datosCliente;
 }
 
 ostream & operator<<(ostream &os, const VentaDomicilio &ventaDomicilio) {
     os << "Venta domicilio: " << static_cast<const Venta>(ventaDomicilio) << endl
-       << "    " << ventaDomicilio.datosCliente;
+       << "    " << *(ventaDomicilio.datosCliente);
     return os;
 }
 
 VentaDomicilio::~VentaDomicilio()
 {
-    // No additional cleanup needed, as the base class destructor will handle the deletion of productos
-    // If there were any additional resources to clean up, they would be handled here
 }

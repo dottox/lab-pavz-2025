@@ -18,11 +18,12 @@ private:
 
 public:
     DtProducto();
+    DtProducto(char*, string, TipoProducto);
     DtProducto(char*, string, TipoProducto, float);
-    char* getCodigo();
-    string getDescripcion();
+    char* getCodigo() const;
+    string getDescripcion() const;
     DtProducto getProducto();
     TipoProducto getTipo();
-    float getPrecio();
+    float getPrecio() const;
     virtual ~DtProducto();
 };

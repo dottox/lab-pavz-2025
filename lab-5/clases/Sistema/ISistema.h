@@ -108,6 +108,12 @@ class ISistema {
          */
         virtual void poblarSistema() = 0;
 
+        /**
+         * @brief Retorna el número de productos del sistema.
+         * @return int --> Cantidad de productos.
+         */
+        virtual int getCantidadProductos() = 0; 
+
         virtual void listarEmpleados() = 0;
         virtual void listarVentas() = 0;
         virtual void listarMesas() = 0;

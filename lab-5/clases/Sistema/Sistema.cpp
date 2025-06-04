@@ -108,7 +108,7 @@ void Sistema::poblarSistema() {
     Plato* plato1 = new Plato(DtPlato("P001", "Ensalada Caesar", 150.0));
     Plato* plato2 = new Plato(DtPlato("P002", "Pizza Margherita", 200.0));
     Plato* plato3 = new Plato(DtPlato("P003", "Sopa de Tomate", 100.0));
-    Menu* menu1 = new Menu(DtMenu("M001", "Menu del Dia", 300.0));
+    Menu* menu1 = new Menu(DtMenu("M001", "Menu del Dia"));
     menu1->añadirPlato(plato1, 1);
     menu1->añadirPlato(plato2, 2);
 
@@ -130,7 +130,7 @@ void Sistema::poblarSistema() {
 
 
     // Crear cliente
-    DtCliente cliente1("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
+    DtCliente* cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
 
     // Crear ventas
     VentaLocal* venta1 = new VentaLocal();
@@ -143,6 +143,10 @@ void Sistema::poblarSistema() {
     this->ventas->add(new Integer(venta1->getCodigo()), venta1);
     this->ventas->add(new Integer(venta2->getCodigo()), venta2);
 
+}
+
+int Sistema::getCantidadProductos() {
+    return this->productos->getSize();
 }
 
 void Sistema::listarEmpleados() {
@@ -170,7 +174,7 @@ void Sistema::listarVentas() {
             cout << *ventaLocal << endl;
         } else {
             VentaDomicilio* ventaDomicilio = dynamic_cast<VentaDomicilio*>(it->getCurrent());
-            cout << *ventaDomicilio << endl;
+            //cout << *ventaDomicilio << endl;
         }
         it->next();
     }
