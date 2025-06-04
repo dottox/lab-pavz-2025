@@ -1,12 +1,13 @@
 #pragma once
 
-
 #include <iostream>
-#include "ISistema.h"
 
-#include "../Empleado/Mozo.h"
+#include "../Empleado/Empleado.h"
 #include "../Empleado/Repartidor.h"
+#include "../Empleado/Mozo.h"
+
 #include "../Mesa/Mesa.h"
+
 #include "../Producto/Producto.h"
 #include "../Producto/Menu.h"
 #include "../Producto/Plato.h"
@@ -19,11 +20,17 @@
 #include "../../datatypes/Producto/DtMenu.h"
 
 #include "../../enums/TipoProducto.h"
+#include "../../enums/ActorMenu.h"
 
 #include "../../ICollection/interfaces/IDictionary.h"
 #include "../../ICollection/interfaces/ICollection.h"
+#include "../../ICollection/collections/List.h"
+#include "../../ICollection/interfaces/IIterator.h"
+#include "../../ICollection/interfaces/IKey.h"
+#include "../../ICollection/collections/OrderedDictionary.h"
+#include "../../ICollection/String.h"
+#include "../../ICollection/Integer.h"
 
-#include <iostream>
 using namespace std;
 
 class ISistema {

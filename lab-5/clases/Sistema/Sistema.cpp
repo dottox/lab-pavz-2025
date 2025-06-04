@@ -1,13 +1,5 @@
 #include "Sistema.h"
 
-#include "../../ICollection/collections/List.h"
-#include "../../ICollection/interfaces/IIterator.h"
-#include "../../ICollection/interfaces/IKey.h"
-#include "../../ICollection/String.h"
-#include "../../ICollection/Integer.h"
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../datatypes/Cliente/DtCliente.h"
-
 Sistema * Sistema::instance = NULL;
 
 // ###### --------------- Alta producto ---------------  #######
