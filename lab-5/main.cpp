@@ -2,6 +2,8 @@
 #include "clases/Sistema/ISistema.h"
 
 #include <iostream>
+#include <cctype>
+#include <limits>
 using namespace std;
 
 

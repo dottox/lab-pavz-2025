@@ -6,7 +6,7 @@ VentaLocal::VentaLocal() : Venta()
 }
 
 ostream & operator<<(ostream &os, const VentaLocal &ventaLocal) {
-    os << "Venta local: " << static_cast<const Venta>(ventaLocal); // Call base class operator<<
+    os << "Venta local: " << static_cast<const Venta&>(ventaLocal); // Call base class operator<<
     return os;
 }
 

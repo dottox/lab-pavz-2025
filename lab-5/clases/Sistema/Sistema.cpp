@@ -174,7 +174,7 @@ void Sistema::listarVentas() {
             cout << *ventaLocal << endl;
         } else {
             VentaDomicilio* ventaDomicilio = dynamic_cast<VentaDomicilio*>(it->getCurrent());
-            //cout << *ventaDomicilio << endl;
+            cout << *ventaDomicilio << endl;
         }
         it->next();
     }

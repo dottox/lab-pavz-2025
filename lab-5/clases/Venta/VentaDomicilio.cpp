@@ -11,7 +11,7 @@ DtCliente* VentaDomicilio::getDatosCliente() const
 }
 
 ostream & operator<<(ostream &os, const VentaDomicilio &ventaDomicilio) {
-    os << "Venta domicilio: " << static_cast<const Venta>(ventaDomicilio) << endl
+    os << "Venta domicilio: " << static_cast<const Venta&>(ventaDomicilio) << endl
        << "    " << *(ventaDomicilio.datosCliente);
     return os;
 }
