@@ -8,4 +8,8 @@ DtMenu::DtMenu(char* codigo, string descripcion) : DtProducto(codigo, descripcio
 
 }
 
+DtProducto* DtMenu::clone() const{
+    return new DtMenu(*this);
+}
+
 DtMenu::~DtMenu() {}

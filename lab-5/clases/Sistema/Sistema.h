@@ -34,9 +34,8 @@ class Sistema : public ISistema {
         IDictionary* mesas;
         IDictionary* productos;
 
-        // ###### --------------- Baja producto ---------------  #######
-        TipoProducto tipoProductoSeleccionado;
-        Producto* productoCreado;
+        TipoProducto tipoProductoSeleccionado; // Tipo de producto seleccionado para crear (Plato o Menu) temporal.
+        Producto* productoCreado; // Producto temporal que se crea antes de darlo de alta en el sistema.
 
     public:
 
@@ -63,7 +62,7 @@ class Sistema : public ISistema {
          * @brief Lista todos los platos del sistema
          * @return ICollection* --> Set<DtPlato>.
          */
-        ICollection* listarPlatos();
+        ICollection* obtenerPlatos();
 
         /**
          * @brief Añade un plato a un menu.
@@ -126,7 +125,7 @@ class Sistema : public ISistema {
         void listarVentas();
         void listarMesas();
         void listarProductos();
-
+        void listarProductoTemporal();
 
         static Sistema * getInstance();
         void saludar();

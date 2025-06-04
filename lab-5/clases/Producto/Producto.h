@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cstring> // Para usar strlen y strcpy (cosas del char* -.-)
 #include "../../datatypes/Producto/DtProducto.h"
 #include "../../ICollection/interfaces/ICollectible.h"
 
@@ -17,13 +18,14 @@ private:
     float precio;
 
 protected:
-    Producto(DtProducto);
+    Producto(const DtProducto *);
 
 public:
-    char* getCodigo();
-    string getDescripcion();
-    TipoProducto getTipo();
-    float getPrecio();
+    char* getCodigo() const;
+    string getDescripcion() const;
+    TipoProducto getTipo() const;
+    float getPrecio() const;
+    void setPrecio(float);
     friend ostream& operator<<(ostream&, const Producto&);
     virtual ~Producto();
 };

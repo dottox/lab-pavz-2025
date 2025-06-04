@@ -1,47 +1,61 @@
 #include "DtProducto.h"
-DtProducto::DtProducto() {};
+#include <cstring>
 
-DtProducto::DtProducto(char* codigo, string descripcion, TipoProducto tipo)
-{
-    this->codigo = codigo;
+DtProducto::DtProducto(){}
+
+DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo){
+    this->codigo = new char[strlen(codigo) + 1];
+    strcpy(this->codigo, codigo);
     this->descripcion = descripcion;
     this->tipo = tipo;
-    this->precio = 0.0f; // Inicializa el precio a 0.0 por defecto
+    this->precio = 0.0f; // Inicializar precio a 0.0 por defecto
 }
 
-DtProducto::DtProducto(char* codigo, string descripcion, TipoProducto tipo, float precio)
-{
-    this->codigo = codigo;
+DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo, float precio){
+    this->codigo = new char[strlen(codigo) + 1];
+    strcpy(this->codigo, codigo);
     this->descripcion = descripcion;
     this->tipo = tipo;
-    this->precio = precio;
+    this->precio = precio; 
+
 }
 
-char* DtProducto::getCodigo() const
-{
+DtProducto::DtProducto(const DtProducto& other){
+    this->codigo = new char[strlen(other.codigo) + 1];
+    strcpy(this->codigo, other.codigo);
+    this->descripcion = other.descripcion;
+    this->tipo = other.tipo;
+    this->precio = other.precio;
+}
+
+DtProducto& DtProducto::operator=(const DtProducto& other) {
+    if (this != &other) {
+        delete[] this->codigo;
+        this->codigo = new char[strlen(other.codigo) + 1];
+        strcpy(this->codigo, other.codigo);
+        this->descripcion = other.descripcion;
+        this->tipo = other.tipo;
+        this->precio = other.precio;
+    }
+    return *this;
+}
+
+DtProducto::~DtProducto() {
+    delete[] this->codigo;
+}
+
+char* DtProducto::getCodigo() const {
     return this->codigo;
 }
-string DtProducto::getDescripcion() const
-{
+
+string DtProducto::getDescripcion() const {
     return this->descripcion;
 }
 
-DtProducto DtProducto::getProducto()
-{
-    return *this; // Retorna una copia del objeto actual
-}
-
-TipoProducto DtProducto::getTipo()
-{
+TipoProducto DtProducto::getTipo() const {
     return this->tipo;
 }
 
-float DtProducto::getPrecio() const
-{
+float DtProducto::getPrecio() const {
     return this->precio;
-}
-
-DtProducto::~DtProducto()
-{
-
 }

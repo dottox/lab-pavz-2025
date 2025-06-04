@@ -20,6 +20,8 @@ public:
     Menu(DtMenu);
     Menu(DtMenu, IDictionary*);
     ICollection* getPlatos();
+    void actualizarPrecio();
+    bool esVacio();
     friend ostream& operator<<(ostream&, const Menu&);
     void añadirPlato(Plato*, int);
     
