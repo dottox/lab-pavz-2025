@@ -1,26 +1,6 @@
 #pragma once
 
-#include <iostream>
 #include "ISistema.h"
-
-#include "../Empleado/Mozo.h"
-#include "../Empleado/Repartidor.h"
-#include "../Mesa/Mesa.h"
-#include "../Producto/Producto.h"
-#include "../Producto/Menu.h"
-#include "../Producto/Plato.h"
-
-#include "../Venta/Venta.h"
-#include "../Venta/VentaLocal.h"
-#include "../Venta/VentaDomicilio.h"
-
-#include "../../datatypes/Producto/DtPlato.h"
-#include "../../datatypes/Producto/DtMenu.h"
-
-#include "../../enums/TipoProducto.h"
-
-#include "../../ICollection/interfaces/IDictionary.h"
-#include "../../ICollection/interfaces/ICollection.h"
 
 using namespace std;
 

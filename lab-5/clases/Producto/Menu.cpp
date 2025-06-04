@@ -48,7 +48,6 @@ bool Menu::esVacio() {
 }
 
 void Menu::añadirPlato(Plato* plato, int cantidad){
-    cout << "Añadiendo plato: " << plato->getCodigo() << " con cantidad: " << cantidad << endl;
     IKey* key = new String(plato->getCodigo());
     if (this->menuPlatos->member(key)) { // Verificar si el plato ya existe en el menú
         delete key; // Liberar memoria del key

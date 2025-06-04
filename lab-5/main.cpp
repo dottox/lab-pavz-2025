@@ -35,13 +35,79 @@ void limpiarCin(){
     pause();
 }
 
+void mostrarMenu(ISistema* s, ActorMenu a) {
+    switch(a) {
+        case ActorMenu::noneMenu:
+                cleanScreen();
+                cout << "Bienvenido al sistema." << endl << endl; 
+                cout << "Ingrese el actor que desea probar: " << endl;
+                cout << "1. Administrador" << endl;
+                cout << "2. Mozo" << endl;
+                cout << "3. Repartidor" << endl;
+                cout << "4. Cliente" << endl;
+                cout << "5. Cargar datos de prueba" << endl;
+                cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::AdministradorMenu:
+            cleanScreen();
+            cout << "Bienvenido al menu Administrativo." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Alta de producto" << endl;
+            cout << "2. Alta de cliente (No implementado)" << endl;
+            cout << "3. Alta de empleado (No implementado)" << endl;
+            cout << "4. Asignar mesas a mozos (No implementado)" << endl;
+            cout << "5. Venta a domicilio (No implementado)" << endl;
+            cout << "6. Ventas de un mozo (No implementado)" << endl;
+            cout << "7. Información de un producto (No implementado)" << endl;
+            cout << "8. Resumen de facturación de un día (No implementado)" << endl;
+            cout << "9. Baja de producto (No implementado)" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::MozoMenu:
+            cleanScreen();
+            cout << "Bienvenido al menu Mozo." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Iniciar ventas en mesas (No implementado)" << endl;
+            cout << "2. Agregar producto a una venta (No implementado)" << endl;
+            cout << "3. Quitar producto de una venta (No implementado)" << endl;
+            cout << "4. Facturacion de una venta (No implementado)" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::RepartidorMenu:
+            cleanScreen();
+            cout << "Bienvenido Repartidor." << endl << endl;
+            cout << "Lastimosamente aun no tenemos funcionalidades." << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::ClienteMenu:
+            cleanScreen();
+            cout << "Bienvenido Cliente." << endl << endl;
+            cout << "Lastimosamente aun no tenemos funcionalidades." << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::PoblarMenu:
+            cleanScreen();
+            cout << "Bienvenido al almacen del sistema." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Poblar el sistema con datos de prueba" << endl;
+            cout << "2. Ver TODOS los datos actualmente ingresados" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        default:
+            cleanScreen();
+            cout << "Bienvenido al Sistema." << endl;
+            break;
+    }
+}
 
-void mostrarMenu(ISistema* s) {
+void mostrarPoblacion(ISistema* s) {
     cleanScreen();
-    cout << "Ingrese una opcion: " << endl;
-    cout << "0. Listar todo el sistema" << endl;
-    cout << "1. Alta producto" << endl;
-    cout << "9. Salir" << endl;
+    s->listarEmpleados();
+    s->listarMesas();
+    s->listarVentas();
+    s->listarProductos();
+    s->listarProductoTemporal();
+    pause();
 }
 
 void altaProducto(ISistema* s) {
@@ -190,53 +256,153 @@ void altaProducto(ISistema* s) {
 int main() {
     ISistema * s = Factory::getSistema();
 
-    pause();
-
     bool mantener = true;
     int opcion;
 
     while(mantener){
+        ActorMenu opcionMenu = ActorMenu::noneMenu;
 
-        mostrarMenu(s);
+        mostrarMenu(s, opcionMenu);
 
         cin >> opcion;
 
         if(cin.fail()){
-            limpiarCin();
-            continue;
+        limpiarCin();
+        continue;
         }
 
         switch(opcion){
-            case 1:
-                try{
-                    altaProducto(s);
-                }catch(const invalid_argument& e) {
-                    cleanScreen();
-                    cout << "Error: " << e.what() << endl;
-                    pause();
-                }
-                break;
-            case 9:
-                mantener = false;
-                cout << "Saliendo del sistema..." << endl;
-                break;
             case 0:
-                cleanScreen();
-                s->listarEmpleados();
-                s->listarMesas();
-                s->listarVentas();
-                s->listarProductos();
-                s->listarProductoTemporal();
-                pause();
+                mantener = false;
+                break;
+            case 1:
+                opcionMenu = AdministradorMenu;
+                break;
+            case 2:
+                opcionMenu = MozoMenu;
+                break;
+            case 3:
+                opcionMenu = RepartidorMenu;
+                break;
+            case 4:
+                opcionMenu = ClienteMenu;
+                break;
+            case 5:
+                opcionMenu = PoblarMenu;
                 break;
             default:
-                limpiarCin();
                 break;
         }
-    
+        
+        while(opcionMenu != noneMenu) {
+            mostrarMenu(s, opcionMenu);
+
+            cin >> opcion;
+
+            if(cin.fail()){
+            limpiarCin();
+            continue;
+            }
+
+            if(opcionMenu == AdministradorMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1: // Alta Producto
+                        try{
+                            altaProducto(s);
+                        }catch(const invalid_argument& e) {
+                            cleanScreen();
+                            cout << "Error: " << e.what() << endl;
+                            pause();
+                        }
+                        break;
+                    case 2: // Alta Cliente
+                        break;
+                    case 3: // Alta Empleado
+                        break;
+                    case 4: // Asignar mesas a mozos
+                        break;
+                    case 5: // Venta a domicilio
+                        break;
+                    case 6: // Ventas de un mozo
+                        break;
+                    case 7: // Información de un producto
+                        break;
+                    case 8: // Resumen de facturación de un día
+                        break;
+                    case 9: // Baja de producto
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == MozoMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1: // Iniciar ventas en mesas
+                        break;
+                    case 2: // Agregar producto a una venta
+                        break;
+                    case 3: // Quitar producto de una venta
+                        break;
+                    case 4: // Facturacion de una venta
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == RepartidorMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == ClienteMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == PoblarMenu) {
+                switch (opcion){
+                case 0:
+                    opcionMenu = noneMenu;
+                    break;
+                case 1: // Poblar el sistema con datos de prueba
+                    cleanScreen();
+                    s->poblarSistema();
+                    mostrarPoblacion(s);
+                    break;
+                case 2: // Ver TODOS los datos actualmente ingresados
+                    cleanScreen();
+                    mostrarPoblacion(s);
+                    break;
+                default:
+                    break;
+                }
+                
+            }
+
+        }
+            
     }
-    
-    
     return 0;
 }
-    
