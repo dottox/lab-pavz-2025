@@ -19,7 +19,7 @@ void Sistema::crearMenu(DtMenu dtMenu) {
     if (this->tipoProductoSeleccionado == TipoMenu) {
         this->productoCreado = new Menu(dtMenu);
     } else {
-        throw std::invalid_argument("El tipo de producto seleccionado no es un Menu.");
+        throw invalid_argument("El tipo de producto seleccionado no es un Menu.");
     }
 }
 
@@ -27,11 +27,11 @@ void Sistema::crearPlato(DtPlato dtPlato) {
     if (this->tipoProductoSeleccionado == TipoPlato) {
         this->productoCreado = new Plato(dtPlato);
     } else {
-        throw std::invalid_argument("El tipo de producto seleccionado no es un Plato.");
+        throw invalid_argument("El tipo de producto seleccionado no es un Plato.");
     }
 }
 
-ICollection* Sistema::listarPlatos() {
+ICollection* Sistema::obtenerPlatos() {
     ICollection* platos = new List();
     IIterator* it = this->productos->getIterator();
     while (it->hasCurrent()) {
@@ -48,16 +48,16 @@ ICollection* Sistema::listarPlatos() {
 
 void Sistema::añadirPlatoAMenu(char* codigo, int cantidad) {
     if (this->productoCreado == NULL || this->tipoProductoSeleccionado != TipoMenu) {
-        throw std::invalid_argument("No se ha creado un Menu o no se ha seleccionado un tipo de producto válido.");
+        throw invalid_argument("No se ha creado un Menu o no se ha seleccionado un tipo de producto válido.");
     } else if (cantidad <= 0) {
-        throw std::invalid_argument("La cantidad debe ser mayor a 0.");
+        throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
     
     IKey* key = new String(codigo);
     Plato* plato = dynamic_cast<Plato*>(this->productos->find(key));
     if (plato == nullptr) {
         delete key; // Liberar memoria del key
-        throw std::invalid_argument("El plato con el código proporcionado no existe.");
+        throw invalid_argument("El plato con el código proporcionado no existe.");
     }
 
     Menu* menu = dynamic_cast<Menu*>(this->productoCreado);
@@ -66,24 +66,36 @@ void Sistema::añadirPlatoAMenu(char* codigo, int cantidad) {
 }
 
 void Sistema::darAltaProducto() {
-    if (this->productoCreado == NULL) {
-        throw std::invalid_argument("No se ha creado un producto.");
+    if (this->productoCreado == nullptr) {
+        throw invalid_argument("No se ha creado un producto.");
     }
     
     IKey* key = new String(this->productoCreado->getCodigo());
     if (this->productos->member(key)) {
         delete key; // Liberar memoria del key
-        throw std::invalid_argument("El producto ya existe en el sistema.");
+        this->cancelarAltaProducto(); // Limpiar el producto creado
+        throw invalid_argument("El producto ya existe en el sistema.");
     }
     
+    Menu* menu = dynamic_cast<Menu*>(this->productoCreado);
+    if(menu != nullptr) {
+        if(menu->esVacio()){
+            delete key; // Liberar memoria del key
+            cout << "El menú no contiene platos." << endl;
+            this->cancelarAltaProducto(); // Limpiar el producto creado
+            throw invalid_argument("El menú no contiene platos, no se puede dar de alta.");
+        }
+    }
+
     this->productos->add(key, this->productoCreado);
-    this->productoCreado = NULL; // Limpiar la variable temporal
+    this->productoCreado = nullptr; // Limpiar la variable temporal
 }
 
 void Sistema::cancelarAltaProducto() {
-    if (this->productoCreado != NULL) {
+    if (this->productoCreado != nullptr) {
+        cout << "Cancelando la creación del producto: " << this->productoCreado->getCodigo() << endl;
         delete this->productoCreado; // Liberar memoria del producto creado
-        this->productoCreado = NULL; // Limpiar la variable temporal
+        this->productoCreado = nullptr; // Limpiar la variable temporal
     }
     this->tipoProductoSeleccionado = TipoProducto::undefinedTipo; // Limpiar el tipo de producto seleccionado
 }
@@ -105,10 +117,10 @@ void Sistema::poblarSistema() {
     this->empleados->add(new Integer(emp3->getNumero()), emp3);
 
     // Crear productos
-    Plato* plato1 = new Plato(DtPlato("P001", "Ensalada Caesar", 150.0));
-    Plato* plato2 = new Plato(DtPlato("P002", "Pizza Margherita", 200.0));
-    Plato* plato3 = new Plato(DtPlato("P003", "Sopa de Tomate", 100.0));
-    Menu* menu1 = new Menu(DtMenu("M001", "Menu del Dia"));
+    Plato* plato1 = new Plato(DtPlato((char*)"P001", "Ensalada Caesar", 150.0));
+    Plato* plato2 = new Plato(DtPlato((char*)"P002", "Pizza Margherita", 200.0));
+    Plato* plato3 = new Plato(DtPlato((char*)"P003", "Sopa de Tomate", 100.0));
+    Menu* menu1 = new Menu(DtMenu((char*)"M001", "Menu del Dia"));
     menu1->añadirPlato(plato1, 1);
     menu1->añadirPlato(plato2, 2);
 
@@ -207,6 +219,21 @@ void Sistema::listarProductos() {
         it->next();
     }
     delete it; // Liberar memoria del iterador
+}
+
+void Sistema::listarProductoTemporal() {
+    if (this->productoCreado == NULL) {
+        cout << "No hay un producto temporal creado." << endl;
+        return;
+    }
+    cout << "--- Producto Temporal ---" << endl;
+    Plato* plato = dynamic_cast<Plato*>(this->productoCreado);
+    if (plato != nullptr) {
+        cout << *plato << endl;
+    } else {
+        Menu* menu = dynamic_cast<Menu*>(this->productoCreado);
+        cout << *menu << endl;
+    }
 }
 
 Sistema::Sistema(){

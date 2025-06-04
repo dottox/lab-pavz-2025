@@ -2,13 +2,13 @@
 
 DtInfoProducto::DtInfoProducto() {}
 
-DtInfoProducto::DtInfoProducto(DtProducto producto, int cantidadVentas)
+DtInfoProducto::DtInfoProducto(DtProducto* producto, int cantidadVentas)
 {
     this->producto = producto;
     this->cantidadVentas = cantidadVentas;
 }
 
-DtProducto DtInfoProducto::getProducto()
+DtProducto* DtInfoProducto::getProducto()
 {
     return this->producto;
 }

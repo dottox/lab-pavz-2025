@@ -55,7 +55,7 @@ class ISistema {
          * @brief Lista todos los platos del sistema
          * @return ICollection* --> Set<DtPlato>.
          */
-        virtual ICollection* listarPlatos() = 0;
+        virtual ICollection* obtenerPlatos() = 0;
 
         /**
          * @brief Añade un plato a un menu.
@@ -118,4 +118,5 @@ class ISistema {
         virtual void listarVentas() = 0;
         virtual void listarMesas() = 0;
         virtual void listarProductos() = 0;
+        virtual void listarProductoTemporal() = 0;
 };

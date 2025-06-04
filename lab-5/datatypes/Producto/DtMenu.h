@@ -11,5 +11,6 @@ class DtMenu : public DtProducto
 public:
     DtMenu();
     DtMenu(char*, string);
+    DtProducto* clone() const; // Método que retorna una copia profunda del objeto
     ~DtMenu();
 };

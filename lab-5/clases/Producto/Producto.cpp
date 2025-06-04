@@ -1,37 +1,40 @@
 #include "Producto.h"
 #include "../../utils/utils.h"
 
-Producto::Producto(DtProducto dtProducto)
+Producto::Producto(const DtProducto* dtProducto)
 {
-    
-    this->codigo = dtProducto.getCodigo();
-    this->descripcion = dtProducto.getDescripcion();
-    this->tipo = dtProducto.getTipo();
-    this->precio = dtProducto.getPrecio();
+    char* codigo = dtProducto->getCodigo();
+    this->codigo = new char[strlen(codigo) + 1]; // Creamos una copia del código
+    strcpy(this->codigo, codigo); 
+    this->descripcion = dtProducto->getDescripcion();
+    this->tipo = dtProducto->getTipo();
+    this->precio = dtProducto->getPrecio();
 }
 
-char* Producto::getCodigo()
-{
+char* Producto::getCodigo() const{
     return this->codigo;
 }
 
-string Producto::getDescripcion()
-{
+string Producto::getDescripcion() const{
     return this->descripcion;
 }
 
-TipoProducto Producto::getTipo()
-{
+TipoProducto Producto::getTipo() const{
     return this->tipo;
 }
 
-float Producto::getPrecio()
-{
+float Producto::getPrecio() const{
     return this->precio;
 }
 
-ostream& operator<<(ostream& os, const Producto& producto)
-{
+void Producto::setPrecio(float precio){
+    if (precio < 0) {
+        throw invalid_argument("El precio no puede ser negativo.");
+    }
+    this->precio = precio;
+}
+
+ostream& operator<<(ostream& os, const Producto& producto){
     os << "Codigo: " << producto.codigo << ", Descripcion: " << producto.descripcion
        << ", Tipo: " << (producto.tipo == TipoPlato ? "Plato" : "Menu")
        << ", Precio: $" << producto.precio;
@@ -39,4 +42,6 @@ ostream& operator<<(ostream& os, const Producto& producto)
 }
 
 Producto::~Producto() {
+    cout << "Destruyendo Producto con código: " << this->codigo << endl;
+    delete[] this->codigo; // Liberar memoria del código
 }
