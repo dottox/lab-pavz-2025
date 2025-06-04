@@ -1,3 +1,6 @@
+#include <iostream>
+#include <cctype>
+#include <limits>
 #include "clases/Factory/Factory.h"
 #include "clases/Sistema/ISistema.h"
 
