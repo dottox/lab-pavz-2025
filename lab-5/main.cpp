@@ -252,16 +252,21 @@ void altaProducto(ISistema* s) {
     pause();
 }
 
+void agregarProductoAVenta(ISistema* s) {
+    cout << "Sin implementar por el momento." << endl;
+    pause();
+}
 
 int main() {
     ISistema * s = Factory::getSistema();
 
     bool mantener = true;
     int opcion;
+    string err = "";
 
     while(mantener){
         ActorMenu opcionMenu = ActorMenu::noneMenu;
-
+      
         mostrarMenu(s, opcionMenu);
 
         cin >> opcion;
@@ -270,7 +275,7 @@ int main() {
         limpiarCin();
         continue;
         }
-
+      
         switch(opcion){
             case 0:
                 mantener = false;
