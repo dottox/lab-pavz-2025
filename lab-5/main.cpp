@@ -41,6 +41,7 @@ void mostrarMenu(ISistema* s) {
     cout << "Ingrese una opcion: " << endl;
     cout << "0. Listar todo el sistema" << endl;
     cout << "1. Alta producto" << endl;
+    cout << "5. Agregar producto a una venta" << endl;
     cout << "9. Salir" << endl;
 }
 
@@ -186,6 +187,10 @@ void altaProducto(ISistema* s) {
     pause();
 }
 
+void agregarProductoAVenta(ISistema* s) {
+    cout << "Sin implementar por el momento." << endl;
+    pause();
+}
 
 int main() {
     ISistema * s = Factory::getSistema();
@@ -194,8 +199,14 @@ int main() {
 
     bool mantener = true;
     int opcion;
+    string err = "";
 
     while(mantener){
+
+        if (!err.empty()) {
+            cout << err << endl << endl;
+            err.clear();
+        }
 
         mostrarMenu(s);
 
@@ -206,32 +217,37 @@ int main() {
             continue;
         }
 
-        switch(opcion){
-            case 1:
-                try{
+        try {
+            switch(opcion){
+                case 1:
                     altaProducto(s);
-                }catch(const invalid_argument& e) {
+                    break;
+                case 5:
+                    agregarProductoAVenta(s);
+                    break;
+                case 9:
+                    mantener = false;
+                    cout << "Saliendo del sistema..." << endl;
+                    break;
+                case 0:
                     cleanScreen();
-                    cout << "Error: " << e.what() << endl;
+                    s->listarEmpleados();
+                    s->listarMesas();
+                    s->listarVentas();
+                    s->listarProductos();
+                    s->listarProductoTemporal();
                     pause();
-                }
-                break;
-            case 9:
-                mantener = false;
-                cout << "Saliendo del sistema..." << endl;
-                break;
-            case 0:
-                cleanScreen();
-                s->listarEmpleados();
-                s->listarMesas();
-                s->listarVentas();
-                s->listarProductos();
-                s->listarProductoTemporal();
-                pause();
-                break;
-            default:
-                limpiarCin();
-                break;
+                    break;
+                default:
+                    limpiarCin();
+                    break;
+            }
+        } catch (const exception& e) {
+            err = "Error: " + string(e.what());
+            limpiarCin();
+        } catch (...) {
+            err = "Error desconocido.";
+            limpiarCin();
         }
     
     }

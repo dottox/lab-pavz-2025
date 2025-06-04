@@ -100,6 +100,14 @@ class ISistema {
          */
         // virtual void cancelarProducto() = 0;
 
+        // ####### --------------- Agregar producto a una venta --------------- #######
+        virtual void seleccionarMozo(int) = 0;
+        virtual void elegirMesa(int) = 0;
+        // void listarProductos(); Ya hecho
+        virtual void seleccionarProducto(char*) = 0;
+        virtual void agregarProductoAVenta() = 0;
+        virtual void cancelarAgregarProductoAVenta() = 0;
+
 
         // ###### --------------- Utils ---------------  #######
         /**

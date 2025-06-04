@@ -100,8 +100,59 @@ void Sistema::cancelarAltaProducto() {
     this->tipoProductoSeleccionado = TipoProducto::undefinedTipo; // Limpiar el tipo de producto seleccionado
 }
 
+// ####### --------------- Agregar producto a una venta --------------- #######
+void Sistema::seleccionarMozo(int numeroMozo) {
+    IKey* key = new Integer(numeroMozo);
+    this->mozoSeleccionado = dynamic_cast<Mozo*>(this->empleados->find(key));
+    if (this->mozoSeleccionado == nullptr) {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El mozo seleccionado no existe.");
+    }
+    delete key; // Liberar memoria del key
+}
 
+void Sistema::elegirMesa(int numeroMesa) {
+    IKey* key = new Integer(numeroMesa);
+    this->mesaSeleccionada = dynamic_cast<Mesa*>(this->mesas->find(key));
+    if (this->mesaSeleccionada == nullptr) {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("La mesa seleccionada no existe.");
+    }
+    delete key; // Liberar memoria del key
+}
 
+void Sistema::seleccionarProducto(char* codigo) {
+    IKey* key = new String(codigo);
+    this->prodctoSeleccionado = dynamic_cast<Producto*>(this->productos->find(key));
+    if (this->prodctoSeleccionado == nullptr) {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El producto seleccionado no existe.");
+    }
+    delete key; // Liberar memoria del key
+}
+
+void Sistema::agregarProductoAVenta() {
+    if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr || 
+        this->prodctoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0) {
+        throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad válida.");
+    }
+
+    VentaLocal* ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
+
+    if (ventaEnCurso == nullptr) {
+        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+    }
+
+    ventaEnCurso->agregarProducto(this->prodctoSeleccionado, this->cantidadProductoSeleccionado);
+ }
+
+ void Sistema::cancelarAgregarProductoAVenta() {
+    // Limpiar las selecciones temporales
+    this->mozoSeleccionado = nullptr;
+    this->mesaSeleccionada = nullptr;
+    this->prodctoSeleccionado = nullptr;
+    this->cantidadProductoSeleccionado = 0;
+ }
 
 // // ####### --------------- Utils --------------- #######
 

@@ -34,8 +34,16 @@ class Sistema : public ISistema {
         IDictionary* mesas;
         IDictionary* productos;
 
+        // ###### --------------- Baja producto ---------------  #######
         TipoProducto tipoProductoSeleccionado; // Tipo de producto seleccionado para crear (Plato o Menu) temporal.
         Producto* productoCreado; // Producto temporal que se crea antes de darlo de alta en el sistema.
+
+        // ####### --------------- Agregar producto a una venta --------------- #######
+        Mozo* mozoSeleccionado;
+        Mesa* mesaSeleccionada;
+        Producto* prodctoSeleccionado;
+        int cantidadProductoSeleccionado;
+
 
     public:
 
@@ -106,6 +114,15 @@ class Sistema : public ISistema {
          * @brief Cancela la baja del producto.
          */
         //void cancelarProducto();
+
+
+        // ####### --------------- Agregar producto a una venta --------------- #######
+        void seleccionarMozo(int);
+        void elegirMesa(int);
+        // void listarProductos(); Ya hecho
+        void seleccionarProducto(char*);
+        void agregarProductoAVenta();
+        void cancelarAgregarProductoAVenta();
 
 
         // ###### --------------- Utils ---------------  #######
