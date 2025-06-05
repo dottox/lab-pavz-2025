@@ -8,36 +8,48 @@
 #include "../../ICollection/collections/OrderedDictionary.h"
 #include "../../datatypes/Cliente/DtCliente.h"
 
-Sistema * Sistema::instance = NULL;
+Sistema *Sistema::instance = NULL;
 
 // ###### --------------- Alta producto ---------------  #######
-void Sistema::seleccionarTipoProducto(TipoProducto tipoProducto) {
+void Sistema::seleccionarTipoProducto(TipoProducto tipoProducto)
+{
     this->tipoProductoSeleccionado = tipoProducto;
 }
 
-void Sistema::crearMenu(DtMenu dtMenu) {
-    if (this->tipoProductoSeleccionado == TipoMenu) {
+void Sistema::crearMenu(DtMenu dtMenu)
+{
+    if (this->tipoProductoSeleccionado == TipoMenu)
+    {
         this->productoCreado = new Menu(dtMenu);
-    } else {
+    }
+    else
+    {
         throw std::invalid_argument("El tipo de producto seleccionado no es un Menu.");
     }
 }
 
-void Sistema::crearPlato(DtPlato dtPlato) {
-    if (this->tipoProductoSeleccionado == TipoPlato) {
+void Sistema::crearPlato(DtPlato dtPlato)
+{
+    if (this->tipoProductoSeleccionado == TipoPlato)
+    {
         this->productoCreado = new Plato(dtPlato);
-    } else {
+    }
+    else
+    {
         throw std::invalid_argument("El tipo de producto seleccionado no es un Plato.");
     }
 }
 
-ICollection* Sistema::listarPlatos() {
-    ICollection* platos = new List();
-    IIterator* it = this->productos->getIterator();
-    while (it->hasCurrent()) {
-        Producto* producto = dynamic_cast<Producto*>(it->getCurrent());
-        if (producto->getTipo() == TipoPlato) {
-            DtPlato* dtPlato = dynamic_cast<Plato*>(producto)->getInfo();
+ICollection *Sistema::listarPlatos()
+{
+    ICollection *platos = new List();
+    IIterator *it = this->productos->getIterator();
+    while (it->hasCurrent())
+    {
+        Producto *producto = dynamic_cast<Producto *>(it->getCurrent());
+        if (producto->getTipo() == TipoPlato)
+        {
+            DtPlato *dtPlato = dynamic_cast<Plato *>(producto)->getInfo();
             platos->add(dtPlato);
         }
         it->next();
@@ -46,58 +58,102 @@ ICollection* Sistema::listarPlatos() {
     return platos;
 }
 
-void Sistema::añadirPlatoAMenu(char* codigo, int cantidad) {
-    if (this->productoCreado == NULL || this->tipoProductoSeleccionado != TipoMenu) {
+void Sistema::anadirPlatoAMenu(char *codigo, int cantidad)
+{
+    if (this->productoCreado == NULL || this->tipoProductoSeleccionado != TipoMenu)
+    {
         throw std::invalid_argument("No se ha creado un Menu o no se ha seleccionado un tipo de producto válido.");
-    } else if (cantidad <= 0) {
+    }
+    else if (cantidad <= 0)
+    {
         throw std::invalid_argument("La cantidad debe ser mayor a 0.");
     }
-    
-    IKey* key = new String(codigo);
-    Plato* plato = dynamic_cast<Plato*>(this->productos->find(key));
-    if (plato == nullptr) {
+
+    IKey *key = new String(codigo);
+    Plato *plato = dynamic_cast<Plato *>(this->productos->find(key));
+    if (plato == nullptr)
+    {
         delete key; // Liberar memoria del key
         throw std::invalid_argument("El plato con el código proporcionado no existe.");
     }
 
-    Menu* menu = dynamic_cast<Menu*>(this->productoCreado);
-    menu->añadirPlato(plato, cantidad);
+    Menu *menu = dynamic_cast<Menu *>(this->productoCreado);
+    menu->anadirPlato(plato, cantidad);
     delete key; // Liberar memoria del key
 }
 
-void Sistema::darAltaProducto() {
-    if (this->productoCreado == NULL) {
+void Sistema::darAltaProducto()
+{
+    if (this->productoCreado == NULL)
+    {
         throw std::invalid_argument("No se ha creado un producto.");
     }
-    
-    IKey* key = new String(this->productoCreado->getCodigo());
-    if (this->productos->member(key)) {
+
+    IKey *key = new String(this->productoCreado->getCodigo());
+    if (this->productos->member(key))
+    {
         delete key; // Liberar memoria del key
         throw std::invalid_argument("El producto ya existe en el sistema.");
     }
-    
+
     this->productos->add(key, this->productoCreado);
     this->productoCreado = NULL; // Limpiar la variable temporal
 }
 
-void Sistema::cancelarAltaProducto() {
-    if (this->productoCreado != NULL) {
+void Sistema::cancelarAltaProducto()
+{
+    if (this->productoCreado != NULL)
+    {
         delete this->productoCreado; // Liberar memoria del producto creado
         this->productoCreado = NULL; // Limpiar la variable temporal
     }
     this->tipoProductoSeleccionado = TipoProducto::undefinedTipo; // Limpiar el tipo de producto seleccionado
 }
 
+// ###### --------------- Facturar venta ---------------  #######
 
+void Sistema::elegirMesa(int codigoMesa)
+{
+    IKey *key = new Integer(codigoMesa);
+    Mesa *mesa = (Mesa *)this->mesas->find(key);
+    if (mesa == nullptr)
+    {
+        delete key;
+        throw invalid_argument("La mesa con el codigo proporcionado no existe.");
+    }
+    this->mesaSeleccionada = mesa;
+    delete key;
+    return;
+}
 
+void Sistema::agregarPorcentaje(int descuento)
+{
+    VentaLocal *venta = this->mesaSeleccionada->getVentaEnCurso();
+    if (venta == nullptr)
+    {
+        throw invalid_argument("No hay una venta en curso para la mesa seleccionada.");
+    }
+
+    venta->agregarPorcentaje(descuento);
+    this->ventaSeleccionada = venta;
+}
+
+DtFacturaLocal Sistema::mostrarFacturaGenerada()
+{
+    DtFactura factura = this->ventaSeleccionada->mostrarFacturaGenerada();
+    string nombreMozo = this->mesaSeleccionada->getMozo()->getNombre();
+    return DtFacturaLocal(factura, nombreMozo);
+    ;
+}
 
 // // ####### --------------- Utils --------------- #######
 
-void Sistema::poblarSistema() {
+void Sistema::poblarSistema()
+{
     // Crear empleados
-    Mozo* emp1 = new Mozo("Juan");
-    Mozo* emp2 = new Mozo("Maria");
-    Repartidor* emp3 = new Repartidor("Pedro", Bicicleta);
+    Mozo *emp1 = new Mozo("Juan");
+    Mozo *emp2 = new Mozo("Maria");
+    Repartidor *emp3 = new Repartidor("Pedro", Bicicleta);
 
     // Agregar empleados al sistema
     this->empleados->add(new Integer(emp1->getNumero()), emp1);
@@ -105,12 +161,12 @@ void Sistema::poblarSistema() {
     this->empleados->add(new Integer(emp3->getNumero()), emp3);
 
     // Crear productos
-    Plato* plato1 = new Plato(DtPlato("P001", "Ensalada Caesar", 150.0));
-    Plato* plato2 = new Plato(DtPlato("P002", "Pizza Margherita", 200.0));
-    Plato* plato3 = new Plato(DtPlato("P003", "Sopa de Tomate", 100.0));
-    Menu* menu1 = new Menu(DtMenu("M001", "Menu del Dia"));
-    menu1->añadirPlato(plato1, 1);
-    menu1->añadirPlato(plato2, 2);
+    Plato *plato1 = new Plato(DtPlato("P001", "Ensalada Caesar", 150.0));
+    Plato *plato2 = new Plato(DtPlato("P002", "Pizza Margherita", 200.0));
+    Plato *plato3 = new Plato(DtPlato("P003", "Sopa de Tomate", 100.0));
+    Menu *menu1 = new Menu(DtMenu("M001", "Menu del Dia"));
+    menu1->anadirPlato(plato1, 1);
+    menu1->anadirPlato(plato2, 2);
 
     // Agregar productos al sistema
     this->productos->add(new String(plato1->getCodigo()), plato1);
@@ -118,23 +174,12 @@ void Sistema::poblarSistema() {
     this->productos->add(new String(plato3->getCodigo()), plato3);
     this->productos->add(new String(menu1->getCodigo()), menu1);
 
-    // Crear mesas
-    Mesa* mesa1 = new Mesa(emp1);
-    Mesa* mesa2 = new Mesa(emp2);
-    Mesa* mesa3 = new Mesa(emp2);
-
-    // Agregar mesas al sistema
-    this->mesas->add(new Integer(mesa1->getNumero()), mesa1);
-    this->mesas->add(new Integer(mesa2->getNumero()), mesa2);
-    this->mesas->add(new Integer(mesa3->getNumero()), mesa3);
-
-
     // Crear cliente
-    DtCliente* cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
+    DtCliente *cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
 
     // Crear ventas
-    VentaLocal* venta1 = new VentaLocal();
-    VentaDomicilio* venta2 = new VentaDomicilio(cliente1);
+    VentaLocal *venta1 = new VentaLocal();
+    VentaDomicilio *venta2 = new VentaDomicilio(cliente1);
     venta1->agregarProducto(plato1, 2);
     venta1->agregarProducto(plato2, 1);
     venta2->agregarProducto(plato3, 1);
@@ -143,21 +188,37 @@ void Sistema::poblarSistema() {
     this->ventas->add(new Integer(venta1->getCodigo()), venta1);
     this->ventas->add(new Integer(venta2->getCodigo()), venta2);
 
+    // Crear mesas
+    Mesa *mesa1 = new Mesa(emp1);
+    Mesa *mesa2 = new Mesa(emp2);
+    Mesa *mesa3 = new Mesa(emp2);
+    mesa1->setVentaEnCurso(venta1);
+
+    // Agregar mesas al sistema
+    this->mesas->add(new Integer(mesa1->getNumero()), mesa1);
+    this->mesas->add(new Integer(mesa2->getNumero()), mesa2);
+    this->mesas->add(new Integer(mesa3->getNumero()), mesa3);
 }
 
-int Sistema::getCantidadProductos() {
+int Sistema::getCantidadProductos()
+{
     return this->productos->getSize();
 }
 
-void Sistema::listarEmpleados() {
+void Sistema::listarEmpleados()
+{
     cout << "--- Empleados del Sistema ---" << endl;
-    IIterator* it = this->empleados->getIterator();
-    while (it->hasCurrent()) {
-        Mozo* mozo = dynamic_cast<Mozo*>(it->getCurrent());
-        if (mozo == nullptr) {
-            Repartidor* repartidor = dynamic_cast<Repartidor*>(it->getCurrent());
+    IIterator *it = this->empleados->getIterator();
+    while (it->hasCurrent())
+    {
+        Mozo *mozo = dynamic_cast<Mozo *>(it->getCurrent());
+        if (mozo == nullptr)
+        {
+            Repartidor *repartidor = dynamic_cast<Repartidor *>(it->getCurrent());
             cout << *repartidor << endl;
-        } else {
+        }
+        else
+        {
             cout << *mozo << endl;
         }
         it->next();
@@ -165,15 +226,21 @@ void Sistema::listarEmpleados() {
     delete it; // Liberar memoria del iterador
 }
 
-void Sistema::listarVentas() {
-    cout << endl << "--- Ventas del Sistema ---" << endl;
-    IIterator* it = this->ventas->getIterator();
-    while (it->hasCurrent()) {
-        VentaLocal* ventaLocal = dynamic_cast<VentaLocal*>(it->getCurrent());
-        if (ventaLocal != nullptr) {
+void Sistema::listarVentas()
+{
+    cout << endl
+         << "--- Ventas del Sistema ---" << endl;
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        VentaLocal *ventaLocal = dynamic_cast<VentaLocal *>(it->getCurrent());
+        if (ventaLocal != nullptr)
+        {
             cout << *ventaLocal << endl;
-        } else {
-            VentaDomicilio* ventaDomicilio = dynamic_cast<VentaDomicilio*>(it->getCurrent());
+        }
+        else
+        {
+            VentaDomicilio *ventaDomicilio = dynamic_cast<VentaDomicilio *>(it->getCurrent());
             cout << *ventaDomicilio << endl;
         }
         it->next();
@@ -181,26 +248,54 @@ void Sistema::listarVentas() {
     delete it; // Liberar memoria del iterador
 }
 
-void Sistema::listarMesas() {
-    cout << endl << "--- Mesas del Sistema ---" << endl;
-    IIterator* it = this->mesas->getIterator();
-    while (it->hasCurrent()) {
-        Mesa* mesa = dynamic_cast<Mesa*>(it->getCurrent());
+void Sistema::listarMesas()
+{
+    cout << endl
+         << "--- Mesas del Sistema ---" << endl;
+    IIterator *it = this->mesas->getIterator();
+    while (it->hasCurrent())
+    {
+        Mesa *mesa = dynamic_cast<Mesa *>(it->getCurrent());
         cout << *mesa << endl;
         it->next();
     }
     delete it; // Liberar memoria del iterador
 }
 
-void Sistema::listarProductos() {
-    cout << endl << "--- Productos del Sistema ---" << endl;
-    IIterator* it = this->productos->getIterator();
-    while (it->hasCurrent()) {
-        Plato* plato = dynamic_cast<Plato*>(it->getCurrent());
-        if (plato != nullptr) {
+void Sistema::listarMesasConVentasEnCurso()
+{
+    cout << endl
+         << "--- Mesas del Sistema ---" << endl;
+    IIterator *it = this->mesas->getIterator();
+    while (it->hasCurrent())
+    {
+        Mesa *mesa = dynamic_cast<Mesa *>(it->getCurrent());
+        if (mesa->getVentaEnCurso() != nullptr)
+        {
+            cout << *mesa << endl;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    cout << endl
+         << "-------------------------" << endl;
+}
+
+void Sistema::listarProductos()
+{
+    cout << endl
+         << "--- Productos del Sistema ---" << endl;
+    IIterator *it = this->productos->getIterator();
+    while (it->hasCurrent())
+    {
+        Plato *plato = dynamic_cast<Plato *>(it->getCurrent());
+        if (plato != nullptr)
+        {
             cout << *plato << endl;
-        } else {
-            Menu* menu = dynamic_cast<Menu*>(it->getCurrent());
+        }
+        else
+        {
+            Menu *menu = dynamic_cast<Menu *>(it->getCurrent());
             cout << *menu << endl;
         }
 
@@ -209,7 +304,32 @@ void Sistema::listarProductos() {
     delete it; // Liberar memoria del iterador
 }
 
-Sistema::Sistema(){
+void Sistema::imprimirFactura(DtFacturaLocal factura)
+{
+    cout << "Factura Generada:" << endl;
+    cout << "Codigo de Venta: " << factura.getCodigoVenta() << endl;
+    cout << "Fecha: " << factura.getFecha() << endl;
+    cout << "Hora: " << factura.getHora() << endl;
+    cout << "Nombre del Mozo: " << factura.getNombreMozo() << endl;
+    cout << "Subtotal: " << factura.getSubtotal() << endl;
+    cout << "Descuento: " << factura.getDescuento() << "%" << endl;
+    cout << "Monto Total: " << factura.getMontoTotal() << endl;
+    cout << "IVA Total: " << factura.getIvaTotal() << endl;
+
+    // Imprimir productos consumidos
+    IDictionary *productos = factura.getProductos();
+    IIterator *it = productos->getIterator();
+    while (it->hasCurrent())
+    {
+        DtConsumido *consumido = dynamic_cast<DtConsumido *>(it->getCurrent());
+        cout << *consumido << endl;
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+}
+
+Sistema::Sistema()
+{
     this->empleados = new OrderedDictionary();
     this->mesas = new OrderedDictionary();
     this->productos = new OrderedDictionary();
@@ -223,25 +343,28 @@ Sistema::Sistema(){
     this->poblarSistema();
 }
 
-Sistema * Sistema::getInstance() {
+Sistema *Sistema::getInstance()
+{
     if (instance == NULL)
         instance = new Sistema();
     return instance;
 }
 
-void Sistema::saludar() {
+void Sistema::saludar()
+{
     cout << "Hola, bienvenido al sistema!" << endl;
 }
 
-
-Sistema::~Sistema() {
+Sistema::~Sistema()
+{
     delete empleados;
     delete ventas;
     delete mesas;
     delete productos;
 
     // Limpiar variables de alta de producto
-    if (productoCreado != NULL) {
+    if (productoCreado != NULL)
+    {
         delete productoCreado;
         productoCreado = NULL;
     }

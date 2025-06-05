@@ -24,111 +24,140 @@
 
 using namespace std;
 
-class Sistema : public ISistema {
-    private:
-        Sistema();
-        static Sistema* instance;
+class Sistema : public ISistema
+{
+private:
+    Sistema();
+    static Sistema *instance;
 
-        IDictionary* empleados;
-        IDictionary* ventas;
-        IDictionary* mesas;
-        IDictionary* productos;
+    IDictionary *empleados;
+    IDictionary *ventas;
+    IDictionary *mesas;
+    IDictionary *productos;
 
-        // ###### --------------- Baja producto ---------------  #######
-        TipoProducto tipoProductoSeleccionado;
-        Producto* productoCreado;
+    // ###### --------------- Baja producto ---------------  #######
+    TipoProducto tipoProductoSeleccionado;
+    Producto *productoCreado;
 
-    public:
+    // ###### --------------- Facturar venta ---------------  #######
+    Mesa *mesaSeleccionada;
+    Venta *ventaSeleccionada;
 
-        // ###### --------------- Baja producto ---------------  #######
-        /**
-         * @brief El sistema guarda temporalmente el tipo de producto a crear.
-         * @param tipoProducto --> TipoProducto (Plato o Menu).
-         */
-        void seleccionarTipoProducto(TipoProducto);
+public:
+    // ###### --------------- Baja producto ---------------  #######
+    /**
+     * @brief El sistema guarda temporalmente el tipo de producto a crear.
+     * @param tipoProducto --> TipoProducto (Plato o Menu).
+     */
+    void seleccionarTipoProducto(TipoProducto);
 
-        /**
-         * @brief Crea un menu y lo guarda temporalmente en una variable del sistema.
-         * @param DtMenu --> Datos del menu a crear.
-         */
-        void crearMenu(DtMenu);
+    /**
+     * @brief Crea un menu y lo guarda temporalmente en una variable del sistema.
+     * @param DtMenu --> Datos del menu a crear.
+     */
+    void crearMenu(DtMenu);
 
-        /**
-         * @brief Crea un plato y lo guarda temporalmente en una variable del sistema.
-         * @param DtPlato --> Datos del plato a crear.
-         */
-        void crearPlato(DtPlato);
+    /**
+     * @brief Crea un plato y lo guarda temporalmente en una variable del sistema.
+     * @param DtPlato --> Datos del plato a crear.
+     */
+    void crearPlato(DtPlato);
 
-        /**
-         * @brief Lista todos los platos del sistema
-         * @return ICollection* --> Set<DtPlato>.
-         */
-        ICollection* listarPlatos();
+    /**
+     * @brief Lista todos los platos del sistema
+     * @return ICollection* --> Set<DtPlato>.
+     */
+    ICollection *listarPlatos();
 
-        /**
-         * @brief Añade un plato a un menu.
-         * @param codigo --> Codigo del plato a añadir.
-         * @param cantidad --> Cantidad de platos a añadir al menu.
-         * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
-         */
-        void añadirPlatoAMenu(char*, int);
+    /**
+     * @brief Añade un plato a un menu.
+     * @param codigo --> Codigo del plato a añadir.
+     * @param cantidad --> Cantidad de platos a añadir al menu.
+     * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
+     */
+    void anadirPlatoAMenu(char *, int);
 
-        /**
-         * @brief Crea el producto y lo guarda en el sistema.
-         */
-        void darAltaProducto();
+    /**
+     * @brief Crea el producto y lo guarda en el sistema.
+     */
+    void darAltaProducto();
 
-        /**
-         * @brief Cancela la creación del producto.
-         */
-        void cancelarAltaProducto();
+    /**
+     * @brief Cancela la creación del producto.
+     */
+    void cancelarAltaProducto();
 
+    // ####### --------------- Baja producto --------------- #######
 
-        // ####### --------------- Baja producto --------------- #######
-        /**
-         * @brief Retorna todos los productos del sistema.
-         * @return ICollection* --> Set<DtProducto>.
-         */
-        //ICollection* mostrarProductos();
+    // ###### --------------- Facturar venta ---------------  #######
 
-        /**
-         * @brief El sistema guarda temporalmente el producto seleccionado.
-         * @param codigo --> El código del producto a seleccionar
-         */
-        //void seleccionarProducto(int);
+    /**
+     * @brief El sistema guarda temporalmente la mesa elegida.
+     * @param int --> Codigo de mesa.
+     */
 
-        /**
-         * @brief Elimina el producto seleccionado del sistema.
-         * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
-         */
-        //void quitarProducto();
+    void elegirMesa(int);
 
-        /**
-         * @brief Cancela la baja del producto.
-         */
-        //void cancelarProducto();
+    /**
+     * @brief El sistema agrega el descuento a la venta.
+     * @param int --> Porcentaje de descuento a aplicar.
+     */
 
+    void agregarPorcentaje(int);
 
-        // ###### --------------- Utils ---------------  #######
-        /**
-         * @brief Pobla todo el sistema
-         * @return Sistema* --> El objeto único de la clase Sistema.
-         */
-        void poblarSistema();
+    /**
+     * @brief El sistema muestra la factura generada.
+     * @return DtFacturaLocal --> Datos de la factura generada.
+     */
 
-        /**
-         * @brief Retorna el número de productos del sistema.
-         * @return int --> Cantidad de productos.
-         */
-        int getCantidadProductos();
+    DtFacturaLocal mostrarFacturaGenerada();
 
-        void listarEmpleados();
-        void listarVentas();
-        void listarMesas();
-        void listarProductos();
+    // ###### --------------- Facturar venta ---------------  #######
 
+    /**
+     * @brief Retorna todos los productos del sistema.
+     * @return ICollection* --> Set<DtProducto>.
+     */
+    // ICollection* mostrarProductos();
 
-        static Sistema * getInstance();
-        void saludar();
-        ~Sistema();
+    /**
+     * @brief El sistema guarda temporalmente el producto seleccionado.
+     * @param codigo --> El código del producto a seleccionar
+     */
+    // void seleccionarProducto(int);
+
+    /**
+     * @brief Elimina el producto seleccionado del sistema.
+     * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
+     */
+    // void quitarProducto();
+
+    /**
+     * @brief Cancela la baja del producto.
+     */
+    // void cancelarProducto();
+
+    // ###### --------------- Utils ---------------  #######
+    /**
+     * @brief Pobla todo el sistema
+     * @return Sistema* --> El objeto único de la clase Sistema.
+     */
+    void poblarSistema();
+
+    /**
+     * @brief Retorna el número de productos del sistema.
+     * @return int --> Cantidad de productos.
+     */
+    int getCantidadProductos();
+
+    void listarEmpleados();
+    void listarVentas();
+    void listarMesasConVentasEnCurso();
+    void listarMesas();
+    void listarProductos();
+    void imprimirFactura(DtFacturaLocal);
+
+    static Sistema *getInstance();
+    void saludar();
+    ~Sistema();
 };

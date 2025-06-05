@@ -2,8 +2,17 @@
 
 DtFacturaLocal::DtFacturaLocal() {}
 
-DtFacturaLocal::DtFacturaLocal(int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreMozo)
-    : DtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal){
+DtFacturaLocal::DtFacturaLocal(DtFactura factura, string nombreMozo)
+    : DtFactura(factura.getCodigo(),
+                factura.getCodigoVenta(),
+                factura.getFecha(),
+                factura.getHora(),
+                factura.getProductos(),
+                factura.getSubtotal(),
+                factura.getDescuento(),
+                factura.getMontoTotal(),
+                factura.getIvaTotal())
+{
     this->nombreMozo = nombreMozo;
 }
 

@@ -14,14 +14,14 @@ using namespace std;
 class Menu : public Producto
 {
 private:
-    IDictionary* menuPlatos; // De tipo MenuPlato
+    IDictionary *menuPlatos; // De tipo MenuPlato
 
 public:
     Menu(DtMenu);
-    Menu(DtMenu, IDictionary*);
-    ICollection* getPlatos();
-    friend ostream& operator<<(ostream&, const Menu&);
-    void añadirPlato(Plato*, int);
-    
+    Menu(DtMenu, IDictionary *);
+    ICollection *getPlatos();
+    friend ostream &operator<<(ostream &, const Menu &);
+    void anadirPlato(Plato *, int);
+
     ~Menu();
 };

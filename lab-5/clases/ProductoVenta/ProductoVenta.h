@@ -4,21 +4,24 @@
 
 #include "../Producto/Producto.h"
 #include "../Venta/Venta.h"
+#include "../../ICollection/interfaces/ICollectible.h"
 
 using namespace std;
 
-class ProductoVenta
+class ProductoVenta : public ICollectible
 {
 private:
-    Venta *venta;
-    Producto *producto;
+    string descripcion;
     int cantidad;
+    float precio;
+    Producto *producto;
 
 public:
-    ProductoVenta(Venta *, Producto *, int);
-    Venta *getVenta();
+    ProductoVenta(string, int, float, Producto *);
     Producto *getProducto();
     int getCantidad();
+    float getPrecio();
+    string getDescripcion();
     void setCantidad(int);
     ~ProductoVenta();
 };

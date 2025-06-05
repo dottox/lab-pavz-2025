@@ -6,14 +6,15 @@
 
 using namespace std;
 
-class DtFacturaDomicilio : public DtFactura{
+class DtFacturaDomicilio : public DtFactura
+{
 private:
     string nombreRepartidor;
     Transporte transporte;
 
 public:
     DtFacturaDomicilio();
-    DtFacturaDomicilio(int, DtFecha, DtHora, DtConsumido **, float, int, float, float, string, Transporte);
+    DtFacturaDomicilio(int, DtFecha, DtHora, IDictionary *, float, int, float, float, string, Transporte);
     string getNombreRepartidor();
     Transporte getTransporte();
     ~DtFacturaDomicilio();

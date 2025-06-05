@@ -15,9 +15,6 @@ DtHora::DtHora(int hora, int minuto, int segundo)
     {
         throw invalid_argument(ERROR_FECHA_INVALIDA);
     }
-    {
-        throw invalid_argument(ERROR_FECHA_INVALIDA);
-    }
     this->hora = hora;
     this->minuto = minuto;
     this->segundo = segundo;
