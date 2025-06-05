@@ -142,8 +142,11 @@ DtFacturaLocal Sistema::mostrarFacturaGenerada()
 {
     DtFactura factura = this->ventaSeleccionada->mostrarFacturaGenerada();
     string nombreMozo = this->mesaSeleccionada->getMozo()->getNombre();
+    delete this->mesaSeleccionada;
+    this->mesaSeleccionada = NULL;
+    delete this->ventaSeleccionada;
+    this->ventaSeleccionada = NULL;
     return DtFacturaLocal(factura, nombreMozo);
-    ;
 }
 
 // // ####### --------------- Utils --------------- #######
