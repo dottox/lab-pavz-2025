@@ -24,4 +24,12 @@ float DtConsumido::getPrecio()
     return this->precio;
 }
 
+ostream &operator<<(ostream &os, const DtConsumido &dtConsumido)
+{
+    os << "Descripcion: " << dtConsumido.descripcion
+       << ", Cantidad: " << dtConsumido.cantidad
+       << ", Precio: " << dtConsumido.precio;
+    return os;
+}
+
 DtConsumido::~DtConsumido() {}

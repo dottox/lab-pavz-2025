@@ -1,69 +1,80 @@
 #include "DtFactura.h"
 
-
 DtFactura::DtFactura() {}
 
-DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
+DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal)
+{
     this->codigo = -1; // Default value for codigo
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
     this->hora = hora;
-    this->productos = productos;
+    this->productosConsumidos = productos;
     this->subtotal = subtotal;
     this->descuento = descuento;
     this->montoTotal = montoTotal;
     this->ivaTotal = ivaTotal;
 }
 
-DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, DtConsumido **productos, float subtotal, int descuento, float montoTotal, float ivaTotal){
+DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal)
+{
     this->codigo = codigo;
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
     this->hora = hora;
-    this->productos = productos;
+    this->productosConsumidos = productos;
     this->subtotal = subtotal;
     this->descuento = descuento;
     this->montoTotal = montoTotal;
     this->ivaTotal = ivaTotal;
 }
 
-DtFactura DtFactura::getFactura(){
+DtFactura DtFactura::getFactura()
+{
     return *this;
 }
 
-int DtFactura::getCodigo(){
+int DtFactura::getCodigo()
+{
     return this->codigo;
 }
 
-int DtFactura::getCodigoVenta(){
+int DtFactura::getCodigoVenta()
+{
     return this->codigoVenta;
 }
 
-DtFecha DtFactura::getFecha(){
+DtFecha DtFactura::getFecha()
+{
     return this->fecha;
 }
 
-DtHora DtFactura::getHora(){
+DtHora DtFactura::getHora()
+{
     return this->hora;
 }
 
-DtConsumido **DtFactura::getProductos(){
-    return this->productos;
+IDictionary *DtFactura::getProductos()
+{
+    return this->productosConsumidos;
 }
 
-float DtFactura::getSubtotal(){
+float DtFactura::getSubtotal()
+{
     return this->subtotal;
 }
 
-int DtFactura::getDescuento(){
+int DtFactura::getDescuento()
+{
     return this->descuento;
 }
 
-float DtFactura::getMontoTotal(){
+float DtFactura::getMontoTotal()
+{
     return this->montoTotal;
 }
 
-float DtFactura::getIvaTotal(){
+float DtFactura::getIvaTotal()
+{
     return this->ivaTotal;
 }
 

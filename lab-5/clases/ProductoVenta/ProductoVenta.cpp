@@ -1,15 +1,11 @@
 #include "ProductoVenta.h"
 
-ProductoVenta::ProductoVenta(Venta *venta, Producto *producto, int cantidad)
+ProductoVenta::ProductoVenta(string descripcion, int cantidad, float precio, Producto *producto)
 {
-    this->venta = venta;
-    this->producto = producto;
+    this->descripcion = descripcion;
     this->cantidad = cantidad;
-}
-
-Venta *ProductoVenta::getVenta()
-{
-    return this->venta;
+    this->precio = precio;
+    this->producto = producto;
 }
 
 Producto *ProductoVenta::getProducto()
@@ -20,6 +16,16 @@ Producto *ProductoVenta::getProducto()
 int ProductoVenta::getCantidad()
 {
     return this->cantidad;
+}
+
+float ProductoVenta::getPrecio()
+{
+    return this->producto->getPrecio();
+}
+
+string ProductoVenta::getDescripcion()
+{
+    return this->producto->getDescripcion();
 }
 
 void ProductoVenta::setCantidad(int cantidad)

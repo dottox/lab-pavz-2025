@@ -13,7 +13,7 @@ Venta::Venta()
     this->cantidadProductos = 0;
     this->subtotal = 0.0f;
     this->factura = nullptr;
-    this->productos = new OrderedDictionary(); 
+    this->productosConsumidos = new OrderedDictionary();
 }
 
 int Venta::getCodigo()
@@ -51,38 +51,85 @@ void Venta::setSubtotal(float subtotal)
     this->subtotal = subtotal;
 }
 
-void Venta::setDescuento(int descuento)
+void Venta::agregarPorcentaje(int descuento)
 {
     this->descuento = descuento;
 }
 
-void Venta::agregarProducto(Producto* producto, int cantidad)
+void Venta::agregarProducto(Producto *producto, int cantidad)
 {
+    cout << "3";
     if (cantidad <= 0)
     {
-        throw std::invalid_argument("La cantidad debe ser mayor a 0.");
+        throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
 
+    ProductoVenta *productoVenta = new ProductoVenta(
+        producto->getDescripcion(),
+        cantidad,
+        producto->getPrecio(),
+        producto);
+
+    cout << "Producto agregado: " << productoVenta->getDescripcion()
+         << ", Cantidad: " << productoVenta->getCantidad()
+         << ", Precio: " << productoVenta->getPrecio() << endl;
+
     // Assuming productos is an OrderedDictionary
-    IKey* key = new String(producto->getCodigo());
-    this->productos->add(key, producto);
+    IKey *key = new String(producto->getDescripcion().c_str());
+    this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
+}
+
+DtFactura Venta::mostrarFacturaGenerada()
+{
+    IIterator *it = this->productosConsumidos->getIterator();
+    IDictionary *productosConsumidos = new OrderedDictionary();
+
+    while (it->hasCurrent())
+    {
+        ProductoVenta *productoConsumido = (ProductoVenta *)it->getCurrent();
+        this->subtotal += productoConsumido->getPrecio() * productoConsumido->getCantidad();
+        DtConsumido *consumido = new DtConsumido(
+            productoConsumido->getDescripcion(),
+            productoConsumido->getCantidad(),
+            productoConsumido->getPrecio());
+        IKey *key = new String(productoConsumido->getDescripcion().c_str());
+        productosConsumidos->add(key, consumido);
+        it->next();
+    }
+
+    delete it;
+
+    Factura *facturaGenerada = new Factura(DtFactura(
+        this->codigo,
+        utils::obtenerFechaActual(),
+        utils::obtenerHoraActual(),
+        productosConsumidos,
+        this->subtotal,
+        this->descuento,
+        this->subtotal * (1 - descuento / 100.0f) * (1 + IVA / 100.0f),
+        IVA));
+
+    return facturaGenerada->getDatos();
 }
 
 Venta::~Venta()
 {
-    delete productos; // Delete the array of Producto pointers
+    delete productosConsumidos; // Delete the array of Producto pointers
 }
 
 ostream &operator<<(ostream &os, const Venta &venta)
 {
-    os << "Codigo: " << venta.codigo 
-       << ", Subtotal: " << venta.subtotal 
-       << ", Descuento: " << venta.descuento 
+    os << "Codigo: " << venta.codigo
+       << ", Subtotal: " << venta.subtotal
+       << ", Descuento: " << venta.descuento
        << ", Cantidad de Productos: " << venta.cantidadProductos;
-    if (venta.factura != nullptr) {
+    if (venta.factura != nullptr)
+    {
         os << ", Facturada: Si";
-    } else {
+    }
+    else
+    {
         os << ", Facturada: No";
     }
     return os;

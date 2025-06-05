@@ -12,6 +12,7 @@
 #define MAX_MINUTOS 59
 #define MIN_SEGUNDOS 0
 #define MAX_SEGUNDOS 59
+#define IVA 22 // 22% de IVA
 
 // Fin constantes de fecha
 

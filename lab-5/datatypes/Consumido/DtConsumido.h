@@ -1,10 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include "../../ICollection/interfaces/ICollectible.h"
 
 using namespace std;
 
-class DtConsumido
+class DtConsumido : public ICollectible
 {
 private:
     string descripcion;
@@ -17,5 +18,6 @@ public:
     string getDescripcion();
     int getCantidad();
     float getPrecio();
+    friend ostream &operator<<(ostream &, const DtConsumido &);
     ~DtConsumido();
 };

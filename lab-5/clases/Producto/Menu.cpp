@@ -8,6 +8,12 @@ Menu::Menu(DtMenu menu) : Producto(menu.clone()){
     this->menuPlatos = new OrderedDictionary(); // Inicializar el diccionario de platos
 }
 
+
+Menu::Menu(DtMenu menu, IDictionary *menuPlatos) : Producto(menu.getProducto())
+{
+    this->menuPlatos = menuPlatos;
+}
+
 Menu::Menu(DtMenu menu, IDictionary* menuPlatos) : Producto(menu.clone()){
     this->menuPlatos = menuPlatos;
 }
@@ -23,9 +29,10 @@ ICollection* Menu::getPlatos(){
         }
         it->next();
     }
-    delete it; // Liberar memoria del iterador
+    delete it;     // Liberar memoria del iterador
     return platos; // Retornar el conjunto de platos
 }
+
 
 void Menu::actualizarPrecio() {
     float precioTotal = 0.0f;
@@ -47,7 +54,7 @@ bool Menu::esVacio() {
     return this->menuPlatos->isEmpty();
 }
 
-void Menu::añadirPlato(Plato* plato, int cantidad){
+void Menu::anadirPlato(Plato* plato, int cantidad){
     IKey* key = new String(plato->getCodigo());
     if (this->menuPlatos->member(key)) { // Verificar si el plato ya existe en el menú
         delete key; // Liberar memoria del key
@@ -59,8 +66,19 @@ void Menu::añadirPlato(Plato* plato, int cantidad){
     }
 }
 
-ostream& operator<<(ostream& os, const Menu& menu)
+ostream &operator<<(ostream &os, const Menu &menu)
 {
+
+    os << static_cast<const Producto &>(menu) << endl;
+    os << "Platos en el menú:" << endl;
+    IIterator *it = menu.menuPlatos->getIterator();
+    while (it->hasCurrent())
+    {
+        MenuPlato *menuPlato = dynamic_cast<MenuPlato *>(it->getCurrent());
+        if (menuPlato)
+        {
+            os << "  - " << *(menuPlato->getPlato()) << " (Cantidad: " << menuPlato->getCantidad() << ")" << endl;
+
     os << static_cast<const Producto&>(menu) << endl;
     if(menu.menuPlatos == nullptr || menu.menuPlatos->isEmpty()) {
         os << "El menú no contiene platos." << endl;
