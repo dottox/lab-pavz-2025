@@ -72,8 +72,7 @@ OrderedDictionaryEntry *OrderedDictionaryEntry::getGreatestElement()
     return res;
 }
 
-void OrderedDictionaryEntry::deleteInDepth()
-{
+void OrderedDictionaryEntry::deleteInDepth(){
     if(lesser != NULL){
         lesser->deleteInDepth();
         delete lesser;
@@ -85,5 +84,6 @@ void OrderedDictionaryEntry::deleteInDepth()
 
 OrderedDictionaryEntry::~OrderedDictionaryEntry() {
     delete key;
+    delete val;
 }
 

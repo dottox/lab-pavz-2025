@@ -23,5 +23,11 @@ public:
     friend ostream &operator<<(ostream &, const Menu &);
     void anadirPlato(Plato *, int);
 
+    Menu(DtMenu, IDictionary*);
+    ICollection* getPlatos();
+    void actualizarPrecio();
+    bool esVacio();
+    friend ostream& operator<<(ostream&, const Menu&);
+    void añadirPlato(Plato*, int);
     ~Menu();
 };

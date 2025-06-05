@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cctype>
 #include <limits>
+#include <cstring>  // Para strcpy
 #include "clases/Factory/Factory.h"
 #include "clases/Sistema/ISistema.h"
 
@@ -22,9 +23,9 @@ void pause()
 {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    std::string dummy;
-    std::cout << "Presiona cualquier tecla para continuar.";
-    std::getline(std::cin, dummy);
+    string dummy;
+    cout << "Presiona cualquier tecla para continuar.";
+    getline(cin, dummy);
 }
 
 void limpiarCin()
@@ -45,12 +46,91 @@ void mostrarMenu(ISistema *s)
     cout << "1. Alta producto" << endl;
     cout << "2. Facturar venta" << endl;
     cout << "9. Salir" << endl;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Has ingresado una opcion invalida." << endl << endl;
+    pause();
+}
+
+void mostrarMenu(ISistema* s, ActorMenu a) {
+    switch(a) {
+        case ActorMenu::noneMenu:
+                cleanScreen();
+                cout << "Bienvenido al sistema." << endl << endl; 
+                cout << "Ingrese el actor que desea probar: " << endl;
+                cout << "1. Administrador" << endl;
+                cout << "2. Mozo" << endl;
+                cout << "3. Repartidor" << endl;
+                cout << "4. Cliente" << endl;
+                cout << "5. Cargar datos de prueba" << endl;
+                cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::AdministradorMenu:
+            cleanScreen();
+            cout << "Bienvenido al menu Administrativo." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Alta de producto" << endl;
+            cout << "2. Alta de cliente (No implementado)" << endl;
+            cout << "3. Alta de empleado (No implementado)" << endl;
+            cout << "4. Asignar mesas a mozos (No implementado)" << endl;
+            cout << "5. Venta a domicilio (No implementado)" << endl;
+            cout << "6. Ventas de un mozo (No implementado)" << endl;
+            cout << "7. Información de un producto (No implementado)" << endl;
+            cout << "8. Resumen de facturación de un día (No implementado)" << endl;
+            cout << "9. Baja de producto (No implementado)" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::MozoMenu:
+            cleanScreen();
+            cout << "Bienvenido al menu Mozo." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Iniciar ventas en mesas (No implementado)" << endl;
+            cout << "2. Agregar producto a una venta (No implementado)" << endl;
+            cout << "3. Quitar producto de una venta (No implementado)" << endl;
+            cout << "4. Facturacion de una venta (No implementado)" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::RepartidorMenu:
+            cleanScreen();
+            cout << "Bienvenido Repartidor." << endl << endl;
+            cout << "Lastimosamente aun no tenemos funcionalidades." << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::ClienteMenu:
+            cleanScreen();
+            cout << "Bienvenido Cliente." << endl << endl;
+            cout << "Lastimosamente aun no tenemos funcionalidades." << endl;
+            cout << "0. Salir" << endl;
+            break;
+        case ActorMenu::PoblarMenu:
+            cleanScreen();
+            cout << "Bienvenido al almacen del sistema." << endl << endl;
+            cout << "Seleccione una opcion:" << endl;
+            cout << "1. Poblar el sistema con datos de prueba" << endl;
+            cout << "2. Ver TODOS los datos actualmente ingresados" << endl;
+            cout << "0. Salir" << endl;
+            break;
+        default:
+            cleanScreen();
+            cout << "Bienvenido al Sistema." << endl;
+            break;
+    }
+}
+
+void mostrarPoblacion(ISistema* s) {
+    cleanScreen();
+    s->listarEmpleados();
+    s->listarMesas();
+    s->listarVentas();
+    s->listarProductos();
+    s->listarProductoTemporal();
+    pause();
 }
 
 void altaProducto(ISistema *s)
 {
     cleanScreen();
-
+    
     bool existenProductos = s->getCantidadProductos() > 0;
 
     cout << "Selecciona el tipo de producto a crear:" << endl;
@@ -64,8 +144,13 @@ void altaProducto(ISistema *s)
     int opcion;
     cin >> opcion;
 
+
     if (cin.fail() || (opcion != 1 && (opcion != 2 || !existenProductos)))
     {
+
+    cin.ignore();
+
+    if (cin.fail() || (opcion != 1 && (opcion != 2 || !existenProductos))) {
         limpiarCin();
         return;
     }
@@ -73,27 +158,30 @@ void altaProducto(ISistema *s)
     if (opcion == 1)
     {
         s->seleccionarTipoProducto(TipoProducto::TipoPlato);
-        DtPlato prod;
     }
     else if (opcion == 2)
     {
         s->seleccionarTipoProducto(TipoProducto::TipoMenu);
-        DtMenu prod;
     }
 
-    string codigo;
+    string code;
     string descripcion;
     float precio;
 
     cleanScreen();
-    cout << "Ingrese el codigo del producto: ";
-    getline(cin, codigo);
+    cout << "Ingrese el código del producto (menu/plato): ";
+    getline(cin, code);
+
     cleanScreen();
-    cout << "Ingrese la descripcion del producto: ";
+    cout << "Ingrese la descripcion del producto (menu/plato): ";
     getline(cin, descripcion);
 
     if (opcion == 1)
     {
+    char* codigo = new char[code.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+    strcpy(codigo, code.c_str());
+
+    if (opcion == 1) {
         cleanScreen();
         cout << "Ingrese el precio del producto: ";
         cin >> precio;
@@ -106,9 +194,28 @@ void altaProducto(ISistema *s)
     {
         DtMenu dtMenu((char *)codigo.c_str(), descripcion);
         s->crearMenu(dtMenu);
-
         char *codigoPlato;
+      
+        if(cin.fail() || precio <= 0) {
+            delete[] codigo; // Liberar memoria del código
+            throw invalid_argument("El precio debe ser un número positivo.");
+        }
+        DtPlato dtPlato(codigo, descripcion, precio);
+        s->crearPlato(dtPlato);
+    }
+    
+    if (opcion == 2) {
+        DtMenu dtMenu(codigo, descripcion);
+        s->crearMenu(dtMenu);
+        
+        string code2; // Antes de agregar el plato al menu, creamos una copia del código en forma de char*
         int cantidad;
+        bool salir = false;
+        
+        ICollection* platos = s->obtenerPlatos();
+        
+        while(salir != true){
+            cleanScreen();
 
         ICollection *platos = s->listarPlatos();
         IIterator *it = platos->getIterator();
@@ -122,21 +229,35 @@ void altaProducto(ISistema *s)
                 DtPlato *plato = dynamic_cast<DtPlato *>(it->getCurrent());
                 if (plato)
                 {
+            IIterator* it = platos->getIterator();
+
+            cout << "Platos disponibles para añadir al menu:" << endl;
+
+            while (it->hasCurrent()) {
+                DtPlato* plato = dynamic_cast<DtPlato*>(it->getCurrent());
+                if (plato) {
                     cout << *plato << endl;
                 }
                 it->next();
             }
-            cout << "Seleccione el plato a añadir al menu (ingrese el codigo).";
-            cout << "-1 para terminar de añadir platos: " << endl;
-            cin >> codigoPlato;
+            delete it; // Liberar memoria del iterador
+
+            cout << "Seleccione el plato a añadir al menu (ingrese el codigo)." << endl;
+            cout << "Ingrese 'exit' para terminar de añadir platos: " << endl;
+            cin >> code2;
             cin.ignore();
 
             if (codigoPlato == "-1")
                 break;
+            if (code2 == "exit"){
+                salir = true;
+                continue;
+            }
 
-            cout << "Ingrese la cantidad de platos a añadir: ";
+            cout << "Ingrese una cantidad de platos '"<< code2 <<"' a añadir: ";
             cin >> cantidad;
             cin.ignore();
+
             if (cin.fail() || cantidad <= 0)
             {
                 limpiarCin();
@@ -149,11 +270,35 @@ void altaProducto(ISistema *s)
         } while (codigoPlato != "-1");
 
         delete it;     // Liberar memoria del iterador
+
+
+            if (cin.fail() || cantidad <= 0) {
+                cout << "La cantidad debe ser un número positivo." << endl;
+                pause();
+                continue;
+            }
+
+            char* codigoPlato = new char[code2.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+            strcpy(codigoPlato, code2.c_str());
+
+            try{
+                s->añadirPlatoAMenu(codigoPlato, cantidad);
+                cout << "Plato '"<< code2 <<"' añadido al menu temporal." << endl;
+            }catch(const invalid_argument& e) {
+                cout << "Error: " << e.what() << endl;
+            }
+            delete[] codigoPlato;
+            pause();
+        }
+        
         delete platos; // Liberar memoria de la colección de platos
     }
 
     cleanScreen();
-    cout << "¿Confirmar alta del producto?: " << endl;
+
+    s->listarProductoTemporal();
+
+    cout << endl << "¿Confirmar alta del producto?: " << endl;
     cout << "1. Si" << endl;
     cout << "2. No" << endl;
     cin >> opcion;
@@ -172,6 +317,8 @@ void altaProducto(ISistema *s)
         s->cancelarAltaProducto();
         cout << "Creación de producto cancelada." << endl;
     }
+    delete[] codigo;
+    pause();
 }
 
 void facturarVenta(ISistema *s)
@@ -185,6 +332,11 @@ void facturarVenta(ISistema *s)
     cin >> codigoMesa;
 
     cleanScreen();
+
+void agregarProductoAVenta(ISistema* s) {
+    cout << "Sin implementar por el momento." << endl;
+    pause();
+}
 
     s->elegirMesa(codigoMesa);
 
@@ -211,6 +363,7 @@ int main()
 
     bool mantener = true;
     int opcion;
+    string err = "";
 
     while (mantener)
     {
@@ -251,5 +404,152 @@ int main()
         }
     }
 
+    return 0;
+}
+    while(mantener){
+        ActorMenu opcionMenu = ActorMenu::noneMenu;
+      
+        mostrarMenu(s, opcionMenu);
+
+        cin >> opcion;
+
+        if(cin.fail()){
+        limpiarCin();
+        continue;
+        }
+      
+        switch(opcion){
+            case 0:
+                mantener = false;
+                break;
+            case 1:
+                opcionMenu = AdministradorMenu;
+                break;
+            case 2:
+                opcionMenu = MozoMenu;
+                break;
+            case 3:
+                opcionMenu = RepartidorMenu;
+                break;
+            case 4:
+                opcionMenu = ClienteMenu;
+                break;
+            case 5:
+                opcionMenu = PoblarMenu;
+                break;
+            default:
+                break;
+        }
+        
+        while(opcionMenu != noneMenu) {
+            mostrarMenu(s, opcionMenu);
+
+            cin >> opcion;
+
+            if(cin.fail()){
+            limpiarCin();
+            continue;
+            }
+
+            if(opcionMenu == AdministradorMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1: // Alta Producto
+                        try{
+                            altaProducto(s);
+                        }catch(const invalid_argument& e) {
+                            cleanScreen();
+                            cout << "Error: " << e.what() << endl;
+                            pause();
+                        }
+                        break;
+                    case 2: // Alta Cliente
+                        break;
+                    case 3: // Alta Empleado
+                        break;
+                    case 4: // Asignar mesas a mozos
+                        break;
+                    case 5: // Venta a domicilio
+                        break;
+                    case 6: // Ventas de un mozo
+                        break;
+                    case 7: // Información de un producto
+                        break;
+                    case 8: // Resumen de facturación de un día
+                        break;
+                    case 9: // Baja de producto
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == MozoMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1: // Iniciar ventas en mesas
+                        break;
+                    case 2: // Agregar producto a una venta
+                        break;
+                    case 3: // Quitar producto de una venta
+                        break;
+                    case 4: // Facturacion de una venta
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == RepartidorMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == ClienteMenu){
+                switch(opcion){
+                    case 0:
+                        opcionMenu = noneMenu;
+                        break;
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if(opcionMenu == PoblarMenu) {
+                switch (opcion){
+                case 0:
+                    opcionMenu = noneMenu;
+                    break;
+                case 1: // Poblar el sistema con datos de prueba
+                    cleanScreen();
+                    s->poblarSistema();
+                    mostrarPoblacion(s);
+                    break;
+                case 2: // Ver TODOS los datos actualmente ingresados
+                    cleanScreen();
+                    mostrarPoblacion(s);
+                    break;
+                default:
+                    break;
+                }
+                
+            }
+
+        }
+            
+    }
     return 0;
 }

@@ -4,13 +4,17 @@
 
 DtPlato::DtPlato(){}
 
-DtPlato::DtPlato(char* codigo, string descripcion, float precio) : DtProducto(codigo, descripcion, TipoPlato, precio)
-{
+DtPlato::DtPlato(char* codigo, string descripcion, float precio) : DtProducto(codigo, descripcion, TipoPlato, precio){
+}
+
+DtProducto* DtPlato::clone() const {
+    return new DtPlato(*this);
 }
 
 ostream& operator<<(ostream& os, const DtPlato& dtPlato)
 {
-    os << "Codigo: " << dtPlato.getCodigo() << ", Descripcion: " << dtPlato.getDescripcion()
+    os << "Codigo: " << dtPlato.getCodigo() 
+       << ", Descripcion: " << dtPlato.getDescripcion()
        << ", Precio: $" << dtPlato.getPrecio();
     return os;
 }
