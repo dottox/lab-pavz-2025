@@ -4,8 +4,7 @@
 
 using namespace std;
 
-class Sistema : public ISistema
-{
+class Sistema : public ISistema{
 private:
     Sistema();
     static Sistema *instance;
@@ -15,16 +14,21 @@ private:
     IDictionary *mesas;
     IDictionary *productos;
 
-    // ###### --------------- Baja producto ---------------  #######
+    // ###### --------------- Alta producto ---------------  #######
     TipoProducto tipoProductoSeleccionado;
     Producto *productoCreado;
 
+    // ####### --------------- Agregar producto a una venta --------------- #######
+    Mozo* mozoSeleccionado;
+    Producto* prodctoSeleccionado;
+    int cantidadProductoSeleccionado;
+
     // ###### --------------- Facturar venta ---------------  #######
-    Mesa *mesaSeleccionada;
-    Venta *ventaSeleccionada;
+    Mesa *mesaSeleccionada; 
+    Venta *ventaSeleccionada; 
 
 public:
-    // ###### --------------- Baja producto ---------------  #######
+    // ###### --------------- Alta producto ---------------  #######
     /**
      * @brief El sistema guarda temporalmente el tipo de producto a crear.
      * @param tipoProducto --> TipoProducto (Plato o Menu).
@@ -53,7 +57,7 @@ public:
      * @brief Lista todos los platos del sistema
      * @return ICollection* --> Set<DtPlato>.
      */
-    ICollection *listarPlatos();
+    ICollection *obtenerPlatos();
 
     /**
      * @brief Añade un plato a un menu.
@@ -73,7 +77,7 @@ public:
      */
     void cancelarAltaProducto();
 
-    // ####### --------------- Baja producto --------------- #######
+    // ####### --------------- Alta producto --------------- #######
 
     // ###### --------------- Facturar venta ---------------  #######
 
@@ -123,6 +127,14 @@ public:
      */
     // void cancelarProducto();
 
+    // ####### --------------- Agregar producto a una venta --------------- #######
+    void seleccionarMozo(int);
+    // void elegirMesa(int); Ya hecho
+    // void listarProductos(); Ya hecho
+    void seleccionarProducto(char*);
+    void agregarProductoAVenta();
+    void cancelarAgregarProductoAVenta();
+
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
@@ -142,8 +154,9 @@ public:
     void listarMesas();
     void listarProductos();
     void imprimirFactura(DtFacturaLocal);
+    void listarProductoTemporal();
+
 
     static Sistema *getInstance();
-    void saludar();
     ~Sistema();
 };
