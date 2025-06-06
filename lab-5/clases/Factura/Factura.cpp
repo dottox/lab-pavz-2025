@@ -49,18 +49,14 @@ float Factura::getIvaTotal()
     return this->ivaTotal;
 }
 
-DtFactura Factura::getDatos()
+int Factura::getCodigoVenta()
 {
-    return DtFactura(
-        this->codigo,
-        this->codigoVenta,
-        this->fecha,
-        this->hora,
-        this->productosConsumidos,
-        this->subtotal,
-        this->descuento,
-        this->montoTotal,
-        this->ivaTotal);
+    return this->codigoVenta;
+}
+
+IDictionary *Factura::getProductos()
+{
+    return this->productosConsumidos;
 }
 
 Factura::~Factura() {}
