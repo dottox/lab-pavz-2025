@@ -4,7 +4,8 @@
 
 using namespace std;
 
-class Sistema : public ISistema{
+class Sistema : public ISistema
+{
 private:
     Sistema();
     static Sistema *instance;
@@ -19,13 +20,13 @@ private:
     Producto *productoCreado;
 
     // ####### --------------- Agregar producto a una venta --------------- #######
-    Mozo* mozoSeleccionado;
-    Producto* prodctoSeleccionado;
+    Mozo *mozoSeleccionado;
+    Producto *prodctoSeleccionado;
     int cantidadProductoSeleccionado;
 
     // ###### --------------- Facturar venta ---------------  #######
-    Mesa *mesaSeleccionada; 
-    Venta *ventaSeleccionada; 
+    Mesa *mesaSeleccionada;
+    Venta *ventaSeleccionada;
 
 public:
     // ###### --------------- Alta producto ---------------  #######
@@ -100,7 +101,7 @@ public:
      * @return DtFacturaLocal --> Datos de la factura generada.
      */
 
-    DtFacturaLocal mostrarFacturaGenerada();
+    DtFacturaLocal generarFactura();
 
     // ###### --------------- Facturar venta ---------------  #######
 
@@ -131,7 +132,7 @@ public:
     void seleccionarMozo(int);
     // void elegirMesa(int); Ya hecho
     // void listarProductos(); Ya hecho
-    void seleccionarProducto(char*);
+    void seleccionarProducto(char *);
     void agregarProductoAVenta();
     void cancelarAgregarProductoAVenta();
 
@@ -148,14 +149,21 @@ public:
      */
     int getCantidadProductos();
 
+    /**
+     * @brief Retorna las facturaciones del sistema en una fecha dada.
+     * @param DtFecha --> Fecha a consultar.
+     */
+    DtInforme consultarFacturacion(DtFecha);
+
     void listarEmpleados();
     void listarVentas();
     void listarMesasConVentasEnCurso();
     void listarMesas();
     void listarProductos();
-    void imprimirFactura(DtFacturaLocal);
+    void imprimirFacturaLocal(DtFacturaLocal);
+    void imprimirFacturaDomicilio(DtFacturaDomicilio);
+    void imprimirInforme(DtInforme);
     void listarProductoTemporal();
-
 
     static Sistema *getInstance();
     ~Sistema();

@@ -3,9 +3,14 @@
 #include <iostream>
 #include "../Producto/Producto.h"
 #include "../Factura/Factura.h"
+#include "../Factura/FacturaLocal.h"
+#include "../Factura/FacturaDomicilio.h"
 #include "../ProductoVenta/ProductoVenta.h"
+
 #include "../../datatypes/Factura/DtFactura.h"
 #include "../../datatypes/Factura/DtFacturaLocal.h"
+#include "../../datatypes/Factura/DtFacturaDomicilio.h"
+
 #include "../../ICollection/interfaces/ICollectible.h"
 #include "../../ICollection/interfaces/IDictionary.h"
 
@@ -32,7 +37,10 @@ public:
     void setSubtotal(float);
     void agregarPorcentaje(int);
     void agregarProducto(Producto *, int);
-    DtFactura mostrarFacturaGenerada();
+    DtFacturaLocal generarFactura(string);
+    DtFacturaLocal mostrarFacturaLocal();
+    DtFacturaDomicilio mostrarFacturaDomicilio();
+    Factura *getFactura();
     friend ostream &operator<<(ostream &os, const Venta &venta);
     virtual ~Venta();
 };

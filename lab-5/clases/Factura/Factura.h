@@ -5,6 +5,8 @@
 #include "../../datatypes/Hora/DtHora.h"
 #include "../../datatypes/Consumido/DtConsumido.h"
 #include "../../datatypes/Factura/DtFactura.h"
+#include "../../datatypes/Factura/DtFacturaLocal.h"
+#include "../../datatypes/Factura/DtFacturaDomicilio.h"
 #include "../../ICollection/interfaces/IDictionary.h"
 
 using namespace std;
@@ -25,12 +27,13 @@ private:
 public:
     Factura(DtFactura);
     int getCodigo();
+    int getCodigoVenta();
     int getDescuento();
     float getSubtotal();
     float getMontoTotal();
     float getIvaTotal();
+    IDictionary *getProductos();
     DtFecha getFecha();
     DtHora getHora();
-    DtFactura getDatos();
     virtual ~Factura();
 };
