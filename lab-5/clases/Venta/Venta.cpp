@@ -80,7 +80,7 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
     this->cantidadProductos += cantidad;
 }
 
-DtFactura Venta::mostrarFacturaGenerada()
+DtFacturaLocal Venta::generarFactura(string nombreMozo)
 {
     IIterator *it = this->productosConsumidos->getIterator();
     IDictionary *productosConsumidos = new OrderedDictionary();
@@ -100,17 +100,40 @@ DtFactura Venta::mostrarFacturaGenerada()
 
     delete it;
 
-    Factura *facturaGenerada = new Factura(DtFactura(
-        this->codigo,
-        utils::obtenerFechaActual(),
-        utils::obtenerHoraActual(),
-        productosConsumidos,
-        this->subtotal,
-        this->descuento,
-        this->subtotal * (1 - descuento / 100.0f) * (1 + IVA / 100.0f),
-        IVA));
+    DtFacturaLocal facturaLocal = DtFacturaLocal(
+        DtFactura(
+            this->codigo,
+            this->codigo,
+            utils::obtenerFechaActual(),
+            utils::obtenerHoraActual(),
+            productosConsumidos,
+            this->subtotal,
+            this->descuento,
+            this->subtotal * (1 - descuento / 100.0f) * (1 + IVA / 100.0f),
+            IVA),
+        nombreMozo);
 
-    return facturaGenerada->getDatos();
+    FacturaLocal *factura = new FacturaLocal(facturaLocal);
+    this->factura = factura;
+
+    return facturaLocal;
+}
+
+DtFacturaLocal Venta::mostrarFacturaLocal()
+{
+    FacturaLocal *facturaLocal = (FacturaLocal *)(this->factura);
+    return facturaLocal->getDatos();
+}
+
+DtFacturaDomicilio Venta::mostrarFacturaDomicilio()
+{
+    FacturaDomicilio *facturaDomicilio = (FacturaDomicilio *)(this->factura);
+    return facturaDomicilio->getDatos();
+}
+
+Factura *Venta::getFactura()
+{
+    return this->factura;
 }
 
 Venta::~Venta()

@@ -17,5 +17,6 @@ public:
     FacturaDomicilio(DtFacturaDomicilio);
     string getNombreRepartidor();
     Transporte getTransporte();
+    DtFacturaDomicilio getDatos();
     ~FacturaDomicilio();
 };
