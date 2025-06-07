@@ -75,7 +75,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "Bienvenido al menu Mozo." << endl
              << endl;
         cout << "Seleccione una opcion:" << endl;
-        cout << "1. Iniciar ventas en mesas (No implementado)" << endl;
+        cout << "1. Iniciar ventas en mesas (En Proceso)" << endl;
         cout << "2. Agregar producto a una venta (En proceso)" << endl;
         cout << "3. Quitar producto de una venta (No implementado)" << endl;
         cout << "4. Facturacion de una venta" << endl;
@@ -119,6 +119,7 @@ void mostrarPoblacion(ISistema *s)
     s->listarVentas();
     s->listarProductos();
     s->listarProductoTemporal();
+    s->mostrarMesasElegidas(true);
     pause();
 }
 
@@ -180,7 +181,7 @@ void altaProducto(ISistema *s)
         if (cin.fail() || precio <= 0)
         {
             delete[] codigo; // Liberar memoria del código
-            throw invalid_argument("El precio debe ser un número positivo.");
+            throw invalid_argument("El precio debe ser un numero positivo.");
         }
         DtPlato dtPlato(codigo, descripcion, precio);
         s->crearPlato(dtPlato);
@@ -233,7 +234,7 @@ void altaProducto(ISistema *s)
 
             if (cin.fail() || cantidad <= 0)
             {
-                cout << "La cantidad debe ser un número positivo." << endl;
+                cout << "La cantidad debe ser un numero positivo." << endl;
                 pause();
                 continue;
             }
@@ -343,6 +344,112 @@ void agregarProductoAVenta(ISistema *s)
     pause();
 }
 
+void iniciarVenta(ISistema *s)
+{
+    cleanScreen();
+    string idEmpleado;
+    int mesaElegida;
+    cout << "Ingrese el ID del empleado que inicia la venta: ";
+    cin >> idEmpleado;
+
+    
+    if (idEmpleado.empty())
+    {
+        throw invalid_argument("El ID del empleado no puede estar vacío.");
+    }
+    bool flag = true;
+    while (flag)
+    {
+
+        try
+        {
+            s->mostrarMesasElegidas(false);
+            s->iniciarVenta(idEmpleado);
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            flag = false; 
+            pause();
+            return;
+        }
+
+
+        cout << "Ingrese el numero de la mesa para iniciar la venta: . (0 para cancelar): ";
+        cin >> mesaElegida;
+        if(mesaElegida == 0)
+        {
+            if(s->getMesasElegidas()->isEmpty())
+            {
+                cout << "Debes elegir una mesa." << endl;
+                pause();
+                continue;
+            }
+            flag = false; // Salir del bucle si no se elige una mesa
+            continue;
+        }
+
+        if (cin.fail() || mesaElegida <= 0)
+        {
+    
+            cout << "numero de mesa inválido. Debe ser un numero positivo." << endl;
+            pause();
+        }
+        try
+        {
+            //Preguntar si la mesa tiene venta en curso o es del mozo
+            // Mozo * mozo = s->seleccionarMozo();
+            s->elegirMesa(mesaElegida);
+            s->addMesaElegida(); // Agregar la mesa elegida al sistema
+
+            
+            
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+        }
+    }
+
+    s->mostrarMesasElegidas(true);
+
+    bool confirmar;
+    cout << "¿Desea confirmar la venta? (1. Si, 0. No): ";
+    cin >> confirmar;
+    if (cin.fail() || (confirmar != 1 && confirmar != 0))
+    {
+        limpiarCin();
+        return;
+    }
+    if (confirmar)
+    {
+        s->darAltaVenta();
+        cout << "Venta iniciada exitosamente." << endl;
+        pause();
+    }
+    else
+    {
+        // s->cancelarVenta();
+        cout << "Venta cancelada." << endl;
+        pause();
+    }
+
+    pause();
+    // else
+    // {
+    //     cout << "Ventas iniciadas exitosamente." << endl;
+    //     IIterator *it = ventas->getIterator();
+    //     while (it->hasCurrent())
+    //     {
+    //         Venta *venta = (Venta *)it->getCurrent();
+    //         cout << "Venta iniciada: " << venta->getCodigo() << endl;
+    //         it->next();
+    //     }
+    //     delete it; // Liberar memoria del iterador
+    // }
+}
+
 int main()
 {
     ISistema *s = Factory::getSistema();
@@ -443,6 +550,7 @@ int main()
                         opcionMenu = noneMenu;
                         break;
                     case 1: // Iniciar ventas en mesas
+                        iniciarVenta(s);
                         break;
                     case 2: // Agregar producto a una venta
                         break;

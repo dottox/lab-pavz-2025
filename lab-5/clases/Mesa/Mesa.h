@@ -3,7 +3,7 @@
 #include "../Venta/VentaLocal.h" 
 #include "../Empleado/Mozo.h"
 #include "../../ICollection/interfaces/ICollectible.h"
-
+#include "../../datatypes/Mesa/DtMesa.h"
 using namespace std;
 
 class Mozo;
@@ -15,6 +15,7 @@ private:
     VentaLocal *ventaEnCurso; 
 
 public:
+    Mesa();
     Mesa(Mozo*);
     int getNumero();
     Mozo *getMozo();
@@ -22,6 +23,8 @@ public:
     void setNumero(int);
     void setMozo(Mozo*);
     void setVentaEnCurso(VentaLocal*);
+    Mesa * getMesa();
+    DtMesa getDtMesa() const;
     friend ostream & operator<<(ostream&, const Mesa&);
     ~Mesa();
 };
