@@ -61,7 +61,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Alta de producto" << endl;
         cout << "2. Alta de cliente (No implementado)" << endl;
-        cout << "3. Alta de empleado (No implementado)" << endl;
+        cout << "3. Alta de empleado" << endl;
         cout << "4. Asignar mesas a mozos (No implementado)" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
         cout << "6. Ventas de un mozo (No implementado)" << endl;
@@ -343,6 +343,107 @@ void agregarProductoAVenta(ISistema *s)
     pause();
 }
 
+void agregarEmpleado(ISistema *s)
+{
+    cleanScreen();
+    string nombre, cargo, transporte;
+    int opcion, opcion2;
+    bool bandera = true;
+    while (bandera)
+    {
+        cleanScreen();
+        string nombre, cargo;
+        int opcion, opcion2;
+
+        cout << "Que desea hacer?" << endl;
+        cout << "1. Agregar Mozo" << endl;
+        cout << "2. Agregar Repartidor" << endl;
+        cout << "0. Volver al menu anterior" << endl;
+        cin >> opcion;
+
+        switch (opcion)
+        {
+        case 0:
+            bandera = false;
+            break;
+        case 1:
+            cargo = "Mozo";
+            break;
+        case 2:
+            cargo = "Repartidor";
+            cout << "Seleccione el transporte del repartidor. ";
+            s->listarTransportes();
+            cout << "Ingrese el numero del transporte: ";
+            cin >> opcion2;
+            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            {
+                limpiarCin();
+                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cin >> opcion2;
+            }
+            s->seleccionarTransporte(opcion2 == 1   ? aPie
+                                     : opcion2 == 2 ? Moto
+                                     : opcion2 == 3 ? Bicicleta
+                                                    : Auto);
+            break;
+        default:
+            cout << "Opcion invalida. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        if (bandera == false)
+            break;
+
+        cout << "Ingrese el nombre del empleado: ";
+        cin.ignore();
+        getline(cin, nombre);
+
+        bool nombreValido = true;
+        for (char c : nombre)
+        {
+            if (!isalpha(c) && c != ' ')
+            {
+                nombreValido = false;
+                break;
+            }
+        }
+
+        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Nombre invalido. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cin >> opcion;
+
+        if (cin.fail() || (opcion != 1 && opcion != 2))
+        {
+            limpiarCin();
+            cout << "Opcion invalida." << endl;
+            pause();
+            continue;
+        }
+
+        if (opcion == 2)
+        {
+            cout << "Operacion cancelada." << endl;
+            s->cancelarAltaEmpleado();
+            pause();
+            continue;
+        }
+
+        s->agregarEmpleado(nombre, cargo);
+        int id = s->darDeAltaEmpleado();
+        cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
+        pause();
+    }
+}
+
 int main()
 {
     ISistema *s = Factory::getSistema();
@@ -415,7 +516,8 @@ int main()
                         break;
                     case 2: // Alta Cliente
                         break;
-                    case 3: // Alta Empleado
+                    case 3:
+                        agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos
                         break;
