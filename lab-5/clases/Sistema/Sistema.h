@@ -28,6 +28,9 @@ private:
     Mesa *mesaSeleccionada;
     Venta *ventaSeleccionada;
 
+    // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
+    ICollection *mesasElegidas;
+
 public:
     // ###### --------------- Alta producto ---------------  #######
     /**
@@ -130,6 +133,20 @@ public:
     void agregarProductoAVenta();
     void cancelarAgregarProductoAVenta();
 
+    // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
+    /**
+     * @brief El empleado inicia la venta.
+     * @param identificador --> ID del empleado.
+     */
+
+    void iniciarVenta(string);
+    void darAltaVenta();
+    void cancelarAltaVenta();
+    void addMesaElegida();
+    ICollection *getMesasElegidas();
+    void mostrarMesasElegidas(bool);
+
+    // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema

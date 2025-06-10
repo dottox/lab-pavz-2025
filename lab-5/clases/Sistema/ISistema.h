@@ -39,6 +39,8 @@ class ISistema
 public:
     ~ISistema();
 
+
+
     // ###### --------------- Alta producto ---------------  #######
     /**
      * @brief El sistema guarda temporalmente el tipo de producto a crear.
@@ -142,6 +144,15 @@ public:
     virtual void agregarProductoAVenta() = 0;
     virtual void cancelarAgregarProductoAVenta() = 0;
 
+    // ####### --------------- INICIO CASO DE USO INICIAR VENTA  --------------- #######
+    /**
+     * @brief El empleado inicia la venta.
+     * @param identificador --> ID del empleado.
+     */
+    virtual void iniciarVenta(std::string) = 0;
+    virtual void darAltaVenta() = 0;
+    virtual void cancelarAltaVenta() = 0;
+    // ###### --------------- FIN CASO DE USO INICIO VENTA  --------------- #######
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
@@ -161,6 +172,9 @@ public:
      */
     virtual DtInforme consultarFacturacion(DtFecha) = 0;
 
+    virtual void addMesaElegida() = 0;
+    virtual ICollection *getMesasElegidas() = 0;
+    virtual void mostrarMesasElegidas(bool) = 0;
     virtual void listarEmpleados() = 0;
     virtual void listarVentas() = 0;
     virtual void listarMesas() = 0;

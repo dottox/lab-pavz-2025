@@ -1,10 +1,16 @@
 #include "Mesa.h"
 #include "../../utils/utils.h" 
 
+Mesa::Mesa(){
+    this->numero = utils::generarNumeroMesa();
+    this->mozo = nullptr;
+    this->ventaEnCurso = nullptr;
+}
+
 Mesa::Mesa(Mozo* mozo){
     this->numero = utils::generarNumeroMesa();
     this->mozo = mozo;
-    this->ventaEnCurso = NULL;
+    this->ventaEnCurso = nullptr;
 }
 
 int Mesa::getNumero(){
@@ -32,12 +38,15 @@ void Mesa::setVentaEnCurso(VentaLocal* venta){
 ostream & operator<<(ostream &os, const Mesa &mesa) {
     os << "Mesa Numero: " << mesa.numero << endl
        << "    " << "Mozo: " << *(mesa.mozo);
-    if (mesa.getVentaEnCurso() != NULL) {
+    if (mesa.getVentaEnCurso() != nullptr) {
         os << ", Hay venta en curso";
     } else {
         os << ", No hay venta en curso";
     }
     return os;
+}
+Mesa * Mesa::getMesa() {
+    return this; // Retorna la propia instancia de Mesa
 }
 
 Mesa::~Mesa(){
