@@ -12,9 +12,9 @@ TEST_CASE("Test DtDireccion - Constructor and Getters")
     CHECK(direccion->getNumero() == 221);
     CHECK(direccion->getEntreCalles() == "Entre Pepe y Pepo");
     if(cout << *direccion << endl){
-        CHECK(true); // Si la impresión no lanza una excepción, el test pasa
+        CHECK(true); // Si la impresion no lanza una excepcion, el test pasa
     } else {
-        CHECK(false); // Si la impresión falla, el test falla
+        CHECK(false); // Si la impresion falla, el test falla
     }
     delete direccion; // Liberar memoria
 }

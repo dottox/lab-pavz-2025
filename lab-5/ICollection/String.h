@@ -4,7 +4,7 @@
 #include "interfaces/OrderedKey.h"
 
 /**
- *  Implementación simple del datatype String que hereda tanto de ICollectible
+ *  Implementacion simple del datatype String que hereda tanto de ICollectible
  *  como de HashedKey
  */
 

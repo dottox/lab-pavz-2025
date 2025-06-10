@@ -65,7 +65,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "4. Asignar mesas a mozos (No implementado)" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
         cout << "6. Ventas de un mozo (No implementado)" << endl;
-        cout << "7. Información de un producto (No implementado)" << endl;
+        cout << "7. Informacion de un producto (EN PROCESO)" << endl;
         cout << "8. Resumen de facturacion de un dia" << endl;
         cout << "9. Baja de producto (No implementado)" << endl;
         cout << "0. Salir" << endl;
@@ -162,14 +162,14 @@ void altaProducto(ISistema *s)
     float precio;
 
     cleanScreen();
-    cout << "Ingrese el código del producto (menu/plato): ";
+    cout << "Ingrese el codigo del producto (menu/plato): ";
     getline(cin, code);
 
     cleanScreen();
     cout << "Ingrese la descripcion del producto (menu/plato): ";
     getline(cin, descripcion);
 
-    char *codigo = new char[code.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+    char *codigo = new char[code.size() + 1]; // Reservar memoria para el codigo, al finalizar el caso de uso se eliminara.
     strcpy(codigo, code.c_str());
 
     if (opcion == 1)
@@ -180,7 +180,7 @@ void altaProducto(ISistema *s)
         cin.ignore();
         if (cin.fail() || precio <= 0)
         {
-            delete[] codigo; // Liberar memoria del código
+            delete[] codigo; // Liberar memoria del codigo
             throw invalid_argument("El precio debe ser un numero positivo.");
         }
         DtPlato dtPlato(codigo, descripcion, precio);
@@ -192,7 +192,7 @@ void altaProducto(ISistema *s)
         DtMenu dtMenu(codigo, descripcion);
         s->crearMenu(dtMenu);
 
-        string code2; // Antes de agregar el plato al menu, creamos una copia del código en forma de char*
+        string code2; // Antes de agregar el plato al menu, creamos una copia del codigo en forma de char*
         int cantidad;
         bool salir = false;
 
@@ -239,7 +239,7 @@ void altaProducto(ISistema *s)
                 continue;
             }
 
-            char *codigoPlato = new char[code2.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+            char *codigoPlato = new char[code2.size() + 1]; // Reservar memoria para el codigo, al finalizar el caso de uso se eliminara.
             strcpy(codigoPlato, code2.c_str());
 
             try
@@ -255,7 +255,7 @@ void altaProducto(ISistema *s)
             pause();
         }
 
-        delete platos; // Liberar memoria de la colección de platos
+        delete platos; // Liberar memoria de la coleccion de platos
     }
 
     cleanScreen();
@@ -280,7 +280,7 @@ void altaProducto(ISistema *s)
     else
     {
         s->cancelarAltaProducto();
-        cout << "Creación de producto cancelada." << endl;
+        cout << "Creacion de producto cancelada." << endl;
     }
     delete[] codigo;
     pause();
@@ -355,7 +355,7 @@ void iniciarVenta(ISistema *s)
     
     if (idEmpleado.empty())
     {
-        throw invalid_argument("El ID del empleado no puede estar vacío.");
+        throw invalid_argument("El ID del empleado no puede estar vacio.");
     }
     bool flag = true;
     while (flag)
@@ -392,7 +392,7 @@ void iniciarVenta(ISistema *s)
         if (cin.fail() || mesaElegida <= 0)
         {
     
-            cout << "numero de mesa inválido. Debe ser un numero positivo." << endl;
+            cout << "numero de mesa invalido. Debe ser un numero positivo." << endl;
             pause();
         }
         try
@@ -448,6 +448,62 @@ void iniciarVenta(ISistema *s)
     //     }
     //     delete it; // Liberar memoria del iterador
     // }
+}
+void informacionProducto(ISistema *s)
+{
+    string codigo;
+    while (true)
+    {
+        cleanScreen();
+        s->listarProductos();
+
+        cout << "Ingrese el codigo del producto a consultar (o '0' para salir): " << endl;
+        cin >> codigo;
+        cin.ignore();
+        // Si el codigo es "0", salimos del bucle
+         if (cin.fail())
+        {
+            limpiarCin();
+            continue;
+        }
+
+        if (codigo == "0")
+            break;
+
+        if (codigo.empty())
+        {
+            cout << "El codigo del producto no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        try
+        {
+            cout << "Informacion del producto: " << endl;
+            DtInfoProducto *producto = s->obtenerProducto(codigo);
+            if (producto)
+            {
+                cout << "-----------------------------------------------------------------------:" << endl;
+                cout << "Codigo: " << producto->getProducto()->getCodigo() << endl;
+                cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
+                cout << "Tipo: " << (producto->getProducto()->getTipo() == TipoPlato ? "Plato" : "Menu") << endl;
+                cout << "Precio: $" << producto->getProducto()->getPrecio() << endl;
+                cout << "Cantidad de ventas: " << producto->getCantidadVentas() << endl;
+                cout << "-----------------------------------------------------------------------:" << endl;
+                delete producto; // Liberar memoria del DtInfoProducto
+            }
+            else
+            {
+                cout << "Producto no encontrado." << endl;
+            }
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+        }
+
+        pause();
+    }
 }
 
 int main()
@@ -530,9 +586,10 @@ int main()
                         break;
                     case 6: // Ventas de un mozo
                         break;
-                    case 7: // Información de un producto
+                    case 7: // Informacion de un producto
+                        informacionProducto(s);
                         break;
-                    case 8: // Resumen de facturación de un día
+                    case 8: // Resumen de facturacion de un dia
                         facturacionDia(s);
                         break;
                     case 9: // Baja de producto

@@ -157,3 +157,11 @@ ostream &operator<<(ostream &os, const Venta &venta)
     }
     return os;
 }
+
+bool Venta::contieneProducto(Producto *producto)
+{
+    IKey *key = new String(producto->getCodigo());
+    bool contiene = this->productosConsumidos->member(key);
+    delete key; // Liberar memoria del key
+    return contiene;
+}

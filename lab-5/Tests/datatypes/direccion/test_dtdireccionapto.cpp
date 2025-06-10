@@ -13,9 +13,9 @@ TEST_CASE("Test DtDireccionApto - Constructor and Getters")
     CHECK(direccionApto->getNombre() == "Se Largo a Lloverga");
     CHECK(direccionApto->getNumeroApto() == 101);
     if(cout << *direccionApto << endl){
-        CHECK(true); // Si la impresión no lanza una excepción, el test pasa
+        CHECK(true); // Si la impresion no lanza una excepcion, el test pasa
     } else {
-        CHECK(false); // Si la impresión falla, el test falla
+        CHECK(false); // Si la impresion falla, el test falla
     }
     delete direccionApto; // Liberar memoria
 }

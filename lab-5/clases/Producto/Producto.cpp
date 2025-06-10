@@ -4,7 +4,7 @@
 Producto::Producto(const DtProducto* dtProducto)
 {
     char* codigo = dtProducto->getCodigo();
-    this->codigo = new char[strlen(codigo) + 1]; // Creamos una copia del código
+    this->codigo = new char[strlen(codigo) + 1]; // Creamos una copia del codigo
     strcpy(this->codigo, codigo); 
     this->descripcion = dtProducto->getDescripcion();
     this->tipo = dtProducto->getTipo();
@@ -42,6 +42,6 @@ ostream& operator<<(ostream& os, const Producto& producto){
 }
 
 Producto::~Producto() {
-    cout << "Destruyendo Producto con código: " << this->codigo << endl;
-    delete[] this->codigo; // Liberar memoria del código
+    cout << "Destruyendo Producto con codigo: " << this->codigo << endl;
+    delete[] this->codigo; // Liberar memoria del codigo
 }

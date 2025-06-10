@@ -40,6 +40,7 @@ public:
     DtFacturaLocal generarFactura(string);
     DtFacturaLocal mostrarFacturaLocal();
     DtFacturaDomicilio mostrarFacturaDomicilio();
+    bool contieneProducto(Producto *producto);
     Factura *getFactura();
     friend ostream &operator<<(ostream &os, const Venta &venta);
     virtual ~Venta();
