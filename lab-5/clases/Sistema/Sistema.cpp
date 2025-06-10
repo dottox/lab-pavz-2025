@@ -538,11 +538,11 @@ void Sistema::listarProductoTemporal()
 
 void Sistema::iniciarVenta(string codigo)
 {
-    // Busco el mozo por su código
-    int numeroEmpleado = stoi(codigo);
-    // Lo casteo de empleado a mozo
+    if(this->mozoSeleccionado == nullptr)
+    {
+        throw invalid_argument("Debe seleccionar un mozo antes de iniciar una venta.");
+    }
 
-    this->seleccionarMozo(numeroEmpleado);
     ICollection *mesasAsignadas = this->mozoSeleccionado->getMesasAsignadasSinVentaEnCurso();
     if (mesasAsignadas == 0)
     {
@@ -563,8 +563,13 @@ void Sistema::iniciarVenta(string codigo)
 
 void Sistema::addMesaElegida()
 {
-    if (this->mesaSeleccionada->getMozo() != this->mozoSeleccionado || this->mesaSeleccionada->getVentaEnCurso() != nullptr)
+    if (
+        this->mesaSeleccionada == nullptr || 
+        this->mesaSeleccionada->getMozo() != this->mozoSeleccionado || 
+        this->mesaSeleccionada->getVentaEnCurso() != nullptr
+    )
     {
+        this->mesaSeleccionada = nullptr;
         throw invalid_argument("La mesa seleccionada no pertenece al mozo seleccionado o tiene una venta en curso.");
     }
     this->mesasElegidas->add(this->mesaSeleccionada);
@@ -635,7 +640,9 @@ void Sistema::darAltaVenta()
         it->next();
     }
     delete it;                     // Liberar memoria del iterador
-    this->mesasElegidas = nullptr; // Limpiar las mesas elegidas
+    this->mesasElegidas->clearCollection(); // Limpiar las mesas elegidas
+    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
+    this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
 
     cout << "Todas las mesas elegidas han sido procesadas y se ha iniciado una venta en curso para cada una." << endl;
 }
@@ -643,7 +650,7 @@ void Sistema::darAltaVenta()
 void Sistema::cancelarAltaVenta()
 {
     cout << "Cancelando la alta de venta." << endl;
-    this->mesasElegidas = nullptr;    // Limpiar la variable temporal
+    this->mesasElegidas->clearCollection();    // Limpiar la coleccion temporal
     this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
     this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
     cout << "No hay mesas elegidas para cancelar." << endl;
