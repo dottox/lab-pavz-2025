@@ -32,6 +32,11 @@ private:
     ICollection *mesasElegidas;
     
 
+    // ####### --------------- Alta empleaado --------------- #######
+    Transporte transporteSeleccionado;
+    string nombreEmpleado;
+    string tipoEmpleado;
+
 public:
     // ###### --------------- Alta producto ---------------  #######
     /**
@@ -134,6 +139,32 @@ public:
     void agregarProductoAVenta();
     void cancelarAgregarProductoAVenta();
 
+    // ###### --------------- Alta Empleado ---------------  #######
+
+    /**
+     * @brief Agrega un empleado al sistema.
+     * @param string --> Nombre del empleado.
+     * @param string --> Tipo de empleado (Mozo o Repartidor).
+     */
+    void agregarEmpleado(string, string);
+
+    /**
+     * @brief Selecciona el transporte del repartidor.
+     * @param Transporte --> Tipo de transporte (aPie, Moto, Bicicleta, Auto).
+     */
+    void seleccionarTransporte(Transporte);
+
+    /**
+     * @brief Crea un empleado y lo guarda en el sistema.
+     * @return int --> Número del empleado creado.
+     */
+    int darDeAltaEmpleado();
+
+    /**
+     * @brief Cancela la creación del empleado.
+     */
+    void cancelarAltaEmpleado();
+
     // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
     /**
      * @brief El empleado inicia la venta.
@@ -176,6 +207,7 @@ public:
     void imprimirFacturaDomicilio(DtFacturaDomicilio);
     void imprimirInforme(DtInforme);
     void listarProductoTemporal();
+    void listarTransportes();
 
     static Sistema *getInstance();
     ~Sistema();
