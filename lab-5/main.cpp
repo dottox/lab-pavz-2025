@@ -22,7 +22,7 @@ void cleanScreen()
 void pause()
 {
     cin.clear();
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cin.ignore();
     string dummy;
     cout << "Presiona cualquier tecla para continuar.";
     getline(cin, dummy);
@@ -33,8 +33,7 @@ void limpiarCin()
     cleanScreen();
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    cout << "Has ingresado una opcion invalida." << endl
-         << endl;
+    cout << "Has ingresado una opcion invalida." << endl << endl;
     pause();
 }
 
@@ -551,7 +550,7 @@ int main()
 {
     ISistema *s = Factory::getSistema();
 
-    pause();
+    // pause(); // Uncomment this line if you want to pause the program at the start
 
     bool mantener = true;
     int opcion;
