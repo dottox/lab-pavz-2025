@@ -158,7 +158,7 @@ IIterator *OrderedDictionary::getInverseIterator()
 ICollectible *OrderedDictionary::getMax()
 {
     if(size == 0)
-        throw std::out_of_range("El diccionario está vacío");
+        throw std::out_of_range("El diccionario esta vacío");
                 
     return root->getGreatestElement()->getVal();
 }
@@ -166,7 +166,7 @@ ICollectible *OrderedDictionary::getMax()
 ICollectible *OrderedDictionary::getMin()
 {
     if(size == 0)
-        throw std::out_of_range("El diccionario está vacío");
+        throw std::out_of_range("El diccionario esta vacío");
                 
     return root->getLeastElement()->getVal();
 }

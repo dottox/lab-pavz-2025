@@ -1,9 +1,5 @@
 #include "Menu.h"
 
-#include "../../ICollection/String.h"
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../ICollection/collections/List.h"
-
 Menu::Menu(DtMenu menu) : Producto(menu.clone()){
     this->menuPlatos = new OrderedDictionary(); // Inicializar el diccionario de platos
 }

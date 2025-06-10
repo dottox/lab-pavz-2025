@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../clases/Venta/Venta.h"
+#include "../../clases/Venta/Venta.h"
 
 class DtMesa{
 private:
