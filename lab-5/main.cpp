@@ -356,11 +356,12 @@ void agregarEmpleado(ISistema *s)
         string nombre, cargo;
         int opcion, opcion2;
 
-        cout << "Que desea hacer?" << endl;
+        cout << "Ingrese una opcion:" << endl;
         cout << "1. Agregar Mozo" << endl;
         cout << "2. Agregar Repartidor" << endl;
         cout << "0. Volver al menu anterior" << endl;
         cin >> opcion;
+        cin.ignore();
 
         switch (opcion)
         {
@@ -376,6 +377,7 @@ void agregarEmpleado(ISistema *s)
             s->listarTransportes();
             cout << "Ingrese el numero del transporte: ";
             cin >> opcion2;
+            cin.ignore();
             while (cin.fail() || opcion2 < 1 || opcion2 > 4)
             {
                 limpiarCin();
@@ -397,8 +399,8 @@ void agregarEmpleado(ISistema *s)
             break;
 
         cout << "Ingrese el nombre del empleado: ";
+        cin >> nombre;
         cin.ignore();
-        getline(cin, nombre);
 
         bool nombreValido = true;
         for (char c : nombre)
@@ -548,6 +550,8 @@ void iniciarVenta(ISistema *s)
 int main()
 {
     ISistema *s = Factory::getSistema();
+
+    pause();
 
     bool mantener = true;
     int opcion;

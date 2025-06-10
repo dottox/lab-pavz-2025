@@ -532,16 +532,16 @@ int Sistema::darDeAltaEmpleado()
     {
         Mozo *mozo = new Mozo(this->nombreEmpleado);
         this->empleados->add(new Integer(mozo->getNumero()), mozo);
+        this->cancelarAltaEmpleado(); // Limpiar los datos del empleado temporal
         return mozo->getNumero();
     }
     else
     {
         Repartidor *repartidor = new Repartidor(this->nombreEmpleado, this->transporteSeleccionado);
         this->empleados->add(new Integer(repartidor->getNumero()), repartidor);
+        this->cancelarAltaEmpleado(); // Limpiar los datos del empleado temporal
+        return repartidor->getNumero();
     }
-    this->nombreEmpleado = "";
-    this->tipoEmpleado = "";
-    this->transporteSeleccionado = Transporte::undefinedTransporte;
 }
 
 void Sistema::cancelarAltaEmpleado()
