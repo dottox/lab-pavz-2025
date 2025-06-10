@@ -30,6 +30,7 @@ private:
 
     // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
     ICollection *mesasElegidas;
+    
 
     // ####### --------------- Alta empleaado --------------- #######
     Transporte transporteSeleccionado;
@@ -175,7 +176,7 @@ public:
     void cancelarAltaVenta();
     void addMesaElegida();
     ICollection *getMesasElegidas();
-    void mostrarMesasElegidas(bool);
+    void mostrarMesasElegidas(bool); //True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
 
     // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
     // ###### --------------- Utils ---------------  #######
