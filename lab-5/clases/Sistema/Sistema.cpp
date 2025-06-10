@@ -426,7 +426,6 @@ void Sistema::listarVentas()
     delete it; // Liberar memoria del iterador
 }
 
-
 void Sistema::listarMesas()
 {
     cout << endl
@@ -516,6 +515,42 @@ void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
     cout << "-------------------------" << endl;
 }
 
+void Sistema::seleccionarTransporte(Transporte transporte)
+{
+    this->transporteSeleccionado = transporte;
+}
+
+void Sistema::agregarEmpleado(string nombre, string tipoEmpleado)
+{
+    this->nombreEmpleado = nombre;
+    this->tipoEmpleado = tipoEmpleado;
+}
+
+int Sistema::darDeAltaEmpleado()
+{
+    if (this->tipoEmpleado == "Mozo")
+    {
+        Mozo *mozo = new Mozo(this->nombreEmpleado);
+        this->empleados->add(new Integer(mozo->getNumero()), mozo);
+        return mozo->getNumero();
+    }
+    else
+    {
+        Repartidor *repartidor = new Repartidor(this->nombreEmpleado, this->transporteSeleccionado);
+        this->empleados->add(new Integer(repartidor->getNumero()), repartidor);
+    }
+    this->nombreEmpleado = "";
+    this->tipoEmpleado = "";
+    this->transporteSeleccionado = Transporte::undefinedTransporte;
+}
+
+void Sistema::cancelarAltaEmpleado()
+{
+    this->nombreEmpleado = "";
+    this->tipoEmpleado = "";
+    this->transporteSeleccionado = Transporte::undefinedTransporte;
+}
+
 void Sistema::listarProductoTemporal()
 {
     if (this->productoCreado == nullptr)
@@ -533,6 +568,16 @@ void Sistema::listarProductoTemporal()
     {
         Menu *menu = dynamic_cast<Menu *>(this->productoCreado);
         cout << *menu << endl;
+    }
+}
+
+void Sistema::listarTransportes()
+{
+    string transportes[] = {"A pie", "Moto", "Bicicleta", "Auto"};
+    cout << "Transportes disponibles:" << endl;
+    for (int i = 0; i < 4; i++)
+    {
+        cout << i + 1 << ". " << transportes[i] << endl;
     }
 }
 
@@ -578,7 +623,7 @@ ICollection *Sistema::getMesasElegidas()
 void Sistema::mostrarMesasElegidas(bool verDatos = false)
 {
     cout << "Mesas elegidas:" << endl;
-    if(this->mesasElegidas == nullptr || this->mesasElegidas->isEmpty())
+    if (this->mesasElegidas == nullptr || this->mesasElegidas->isEmpty())
     {
         cout << "No hay mesas elegidas." << endl;
         return;
