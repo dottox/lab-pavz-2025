@@ -30,7 +30,6 @@ private:
 
     // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
     ICollection *mesasElegidas;
-    
 
     // ####### --------------- Alta empleaado --------------- #######
     Transporte transporteSeleccionado;
@@ -176,7 +175,7 @@ public:
     void cancelarAltaVenta();
     void addMesaElegida();
     ICollection *getMesasElegidas();
-    void mostrarMesasElegidas(bool); //True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
+    void mostrarMesasElegidas(bool); // True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
 
     // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
     // ###### --------------- Utils ---------------  #######
@@ -200,17 +199,29 @@ public:
 
     DtInfoProducto *obtenerProducto(string codigo);
 
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
+    /**
+     * @brief Muestra las ventas de un mozo en un rango de fechas.
+     * @param DtFecha --> Fecha de inicio.
+     * @param DtFecha --> Fecha de fin.
+     */
+    void mostrarVentasMozo(DtFecha, DtFecha);
+
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
     void listarEmpleados();
     void listarVentas();
     void listarMesasConVentasEnCurso();
     void listarMesas();
+    void listarMozos();
     void listarProductos();
     void imprimirFacturaLocal(DtFacturaLocal);
     void imprimirFacturaDomicilio(DtFacturaDomicilio);
     void imprimirInforme(DtInforme);
     void listarProductoTemporal();
     void listarTransportes();
-
+    bool validarFecha(string);
     static Sistema *getInstance();
     ~Sistema();
 };

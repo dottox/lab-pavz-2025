@@ -205,10 +205,22 @@ public:
      */
     virtual DtInforme consultarFacturacion(DtFecha) = 0;
 
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
+    /**
+     * @brief Muestra las ventas de un mozo en un rango de fechas.
+     * @param DtFecha --> Fecha de inicio.
+     * @param DtFecha --> Fecha de fin.
+     */
+    virtual void mostrarVentasMozo(DtFecha, DtFecha) = 0;
+
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
     virtual void addMesaElegida() = 0;
     virtual ICollection *getMesasElegidas() = 0;
     virtual void mostrarMesasElegidas(bool) = 0;
     virtual void listarEmpleados() = 0;
+    virtual void listarMozos() = 0;
     virtual void listarVentas() = 0;
     virtual void listarMesas() = 0;
     virtual void listarProductos() = 0;
@@ -218,4 +230,5 @@ public:
     virtual void imprimirFacturaLocal(DtFacturaLocal) = 0;
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
+    virtual bool validarFecha(string) = 0;
 };

@@ -64,8 +64,8 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "3. Alta de empleado" << endl;
         cout << "4. Asignar mesas a mozos (No implementado)" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
-        cout << "6. Ventas de un mozo (No implementado)" << endl;
-        cout << "7. Informacion de un producto (EN PROCESO)" << endl;
+        cout << "6. Ventas de un mozo" << endl;
+        cout << "7. Informacion de un producto" << endl;
         cout << "8. Resumen de facturacion de un dia" << endl;
         cout << "9. Baja de producto (No implementado)" << endl;
         cout << "0. Salir" << endl;
@@ -513,7 +513,7 @@ void iniciarVenta(ISistema *s)
 
         if (cin.fail() || mesaElegida <= 0)
         {
-            cout << "Numero de mesa inválido. Debe ser un numero positivo." << endl;
+            cout << "Numero de mesa invalido. Debe ser un numero positivo." << endl;
             cin.clear();
             pause();
         }
@@ -563,7 +563,7 @@ void informacionProducto(ISistema *s)
         cin >> codigo;
         cin.ignore();
         // Si el codigo es "0", salimos del bucle
-         if (cin.fail())
+        if (cin.fail())
         {
             limpiarCin();
             continue;
@@ -605,6 +605,64 @@ void informacionProducto(ISistema *s)
         }
         pause();
     }
+}
+
+void ventasMozo(ISistema *s)
+{
+    cleanScreen();
+
+    try
+    {
+        s->listarMozos();
+        string idMozo, fechaInicio, fechaFin;
+        cout << "Ingrese el ID del mozo: ";
+        cin >> idMozo;
+        cin.ignore();
+
+        s->seleccionarMozo(stoi(idMozo));
+
+        cout << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
+        cin >> fechaInicio;
+        cin.ignore();
+
+        while (s->validarFecha(fechaInicio) == false)
+        {
+            cout << "Fecha invalida. Formato esperado: DD/MM/AAAA. Intente nuevamente." << endl;
+            cout << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
+            cin >> fechaInicio;
+            cin.ignore();
+        }
+
+        DtFecha dtFechaInicio = DtFecha(stoi(fechaInicio.substr(0, 2)), stoi(fechaInicio.substr(3, 2)), stoi(fechaInicio.substr(6, 4)));
+
+        cout << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
+        cin >> fechaFin;
+        cin.ignore();
+
+        while (s->validarFecha(fechaFin) == false)
+        {
+            cout << "Fecha invalida. Formato esperado: DD/MM/AAAA. Intente nuevamente." << endl;
+            cout << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
+            cin >> fechaFin;
+            cin.ignore();
+        }
+
+        DtFecha dtFechaFin = DtFecha(stoi(fechaFin.substr(0, 2)), stoi(fechaFin.substr(3, 2)), stoi(fechaFin.substr(6, 4)));
+
+        if (dtFechaInicio > dtFechaFin)
+        {
+            cout << "La fecha de inicio no puede ser posterior a la fecha de fin." << endl;
+            pause();
+            return;
+        }
+
+        s->mostrarVentasMozo(dtFechaInicio, dtFechaFin);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
 }
 
 int main()
@@ -688,7 +746,8 @@ int main()
                         break;
                     case 5: // Venta a domicilio
                         break;
-                    case 6: // Ventas de un mozo
+                    case 6:
+                        ventasMozo(s);
                         break;
                     case 7: // Informacion de un producto
                         informacionProducto(s);
