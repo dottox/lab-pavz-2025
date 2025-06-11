@@ -58,7 +58,6 @@ void Venta::agregarPorcentaje(int descuento)
 
 void Venta::agregarProducto(Producto *producto, int cantidad)
 {
-    cout << "3";
     if (cantidad <= 0)
     {
         throw invalid_argument("La cantidad debe ser mayor a 0.");

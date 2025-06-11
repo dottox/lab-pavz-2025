@@ -40,6 +40,45 @@ bool DtFecha::operator==(const DtFecha &other) const
     return this->dia == other.dia && this->mes == other.mes && this->anio == other.anio;
 }
 
+bool DtFecha::operator>(const DtFecha &other) const
+{
+    if (this->anio > other.anio)
+        return true;
+    if (this->anio < other.anio)
+        return false;
+    if (this->mes > other.mes)
+        return true;
+    if (this->mes < other.mes)
+        return false;
+    return this->dia > other.dia;
+}
+
+bool DtFecha::operator>=(const DtFecha &other) const
+{
+    if (this->anio > other.anio)
+        return true;
+    if (this->anio < other.anio)
+        return false;
+    if (this->mes > other.mes)
+        return true;
+    if (this->mes < other.mes)
+        return false;
+    return this->dia >= other.dia;
+}
+
+bool DtFecha::operator<=(const DtFecha &other) const
+{
+    if (this->anio < other.anio)
+        return true;
+    if (this->anio > other.anio)
+        return false;
+    if (this->mes < other.mes)
+        return true;
+    if (this->mes > other.mes)
+        return false;
+    return this->dia <= other.dia;
+}
+
 ostream &operator<<(ostream &os, const DtFecha &Dt)
 {
     os << Dt.dia << "/" << Dt.mes << "/" << Dt.anio;
