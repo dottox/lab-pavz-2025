@@ -33,7 +33,8 @@ void limpiarCin()
     cleanScreen();
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    cout << "Has ingresado una opcion invalida." << endl << endl;
+    cout << "Has ingresado una opcion invalida." << endl
+         << endl;
     pause();
 }
 
@@ -295,17 +296,21 @@ void facturarVenta(ISistema *s)
     cout << "Ingrese el codigo de la mesa: " << endl;
     cin >> codigoMesa;
 
-    cleanScreen();
-
     s->elegirMesa(codigoMesa);
 
     cout << "Ingrese el descuento a aplicar (0-100): ";
-    cin >> descuento;
-
-    while (cin.fail() || descuento < 0 || descuento > 100)
+    while (true)
     {
-        cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
         cin >> descuento;
+
+        if (cin.fail() || descuento < 0 || descuento > 100)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
+        }
+        else
+            break;
     }
 
     s->agregarPorcentaje(descuento);
@@ -496,12 +501,12 @@ void iniciarVenta(ISistema *s)
         if (mesaElegida == 0)
         {
             if (s->getMesasElegidas()->isEmpty())
-            if (s->getMesasElegidas()->isEmpty())
-            {
-                cout << "Debes elegir una mesa." << endl;
-                pause();
-                continue;
-            }
+                if (s->getMesasElegidas()->isEmpty())
+                {
+                    cout << "Debes elegir una mesa." << endl;
+                    pause();
+                    continue;
+                }
             flag = false; // Salir del bucle si no se elige una mesa
             continue;
         }
