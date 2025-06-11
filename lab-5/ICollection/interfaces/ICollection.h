@@ -18,6 +18,10 @@ public:
      */
     virtual void remove(ICollectible *) = 0;
     
+    /**
+     * Setea a null el elemento de la colección. Si no existe no hace nada
+     */
+    virtual void setNull(ICollectible *) = 0;
     
     /*
      * Devuelve true si hay un elemento en la coleccion cuya direccion de memoria
@@ -39,6 +43,12 @@ public:
      * Devuelve una instancia de IIterator creada con el operador new
      */
     virtual IIterator *getIterator() = 0;
+
+    /**
+     * Limpia la colección, seteando a null todos los elementos de la lista.
+     * No destruye los elementos, solo los elimina de la lista.
+     */
+    virtual void clearCollection() = 0;
     
     virtual ~ICollection();
 };

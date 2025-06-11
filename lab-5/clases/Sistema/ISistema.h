@@ -40,8 +40,6 @@ class ISistema
 public:
     ~ISistema();
 
-
-
     // ###### --------------- Alta producto ---------------  #######
     /**
      * @brief El sistema guarda temporalmente el tipo de producto a crear.
@@ -145,6 +143,32 @@ public:
     virtual void agregarProductoAVenta() = 0;
     virtual void cancelarAgregarProductoAVenta() = 0;
 
+    // ###### --------------- Alta Empleado ---------------  #######
+
+    /**
+     * @brief Agrega un empleado al sistema.
+     * @param string --> Nombre del empleado.
+     * @param string --> Tipo de empleado (Mozo o Repartidor).
+     */
+    virtual void agregarEmpleado(string, string) = 0;
+
+    /**
+     * @brief Selecciona el transporte del repartidor.
+     * @param Transporte --> Tipo de transporte (aPie, Moto, Bicicleta, Auto).
+     */
+    virtual void seleccionarTransporte(Transporte) = 0;
+
+    /**
+     * @brief Crea un empleado y lo guarda en el sistema.
+     * @return int --> Número del empleado creado.
+     */
+    virtual int darDeAltaEmpleado() = 0;
+
+    /**
+     * @brief Cancela la creación del empleado.
+     */
+    virtual void cancelarAltaEmpleado() = 0;
+
     // ####### --------------- INICIO CASO DE USO INICIAR VENTA  --------------- #######
     /**
      * @brief El empleado inicia la venta.
@@ -190,6 +214,7 @@ public:
     virtual void listarProductos() = 0;
     virtual void listarProductoTemporal() = 0;
     virtual void listarMesasConVentasEnCurso() = 0;
+    virtual void listarTransportes() = 0;
     virtual void imprimirFacturaLocal(DtFacturaLocal) = 0;
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;

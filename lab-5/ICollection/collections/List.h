@@ -25,6 +25,12 @@ public:
      * Si no existe no hace nada
      */
     void remove(ICollectible *);
+
+    /**
+     * Setea a null el element void setNull(ICollectible *);o de la colección.
+     * Si no existe no hace nada
+     */
+    void setNull(ICollectible *);
     
     
     /*
@@ -48,6 +54,12 @@ public:
      * El orden de la iteracion respeta el orden de insercion de los elementos
      */
     IIterator *getIterator();
+
+    /**
+     * Limpia la colección, seteando a null todos los elementos de la lista.
+     * No destruye los elementos, solo los elimina de la lista.
+     */
+    void clearCollection();
 
     /**
      * Destruye la lista (pero no sus elementos)
