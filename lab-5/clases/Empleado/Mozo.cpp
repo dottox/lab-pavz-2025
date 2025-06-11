@@ -39,7 +39,7 @@ void Mozo::setMesaAsignada(Mesa *mesa) {
     //     this->mesasAsignadas->add(mesa);
     //     this->setCantidadMesasAsignadas(this->getCantidadMesasAsignadas() + 1);
     // } else {
-    //     throw invalid_argument("La mesa ya está asignada a este mozo.");
+    //     throw invalid_argument("La mesa ya esta asignada a este mozo.");
     // }
     return;
 }

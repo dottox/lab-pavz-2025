@@ -30,7 +30,7 @@ public:
     /**
      * Busca un elemento en el diccionario
      * @param k la clave a buscar
-     * @return el ICollectible que se agregó con add o NULL si no hay tal objeto
+     * @return el ICollectible que se agrego con add o NULL si no hay tal objeto
      */
     virtual ICollectible *find(IKey *k) const = 0;
     

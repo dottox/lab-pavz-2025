@@ -13,16 +13,16 @@ TEST_CASE("Test DtHora - Constructor and Getters")
 
     if (cout << *hora << endl)
     {
-        CHECK(true); // Si la impresión no lanza una excepción, el test pasa
+        CHECK(true); // Si la impresion no lanza una excepcion, el test pasa
     }
     else
     {
-        CHECK(false); // Si la impresión falla, el test falla
+        CHECK(false); // Si la impresion falla, el test falla
     }
 
     DtHora *hora2 = new DtHora(14, 30, 45);
-    CHECK(*hora == *hora2); // Verifica que la comparación funcione correctamente
+    CHECK(*hora == *hora2); // Verifica que la comparacion funcione correctamente
 
     DtHora *hora3 = new DtHora(15, 30, 45);
-    CHECK_FALSE(*hora == *hora3); // Verifica que la comparación funcione correctamente
+    CHECK_FALSE(*hora == *hora3); // Verifica que la comparacion funcione correctamente
 }

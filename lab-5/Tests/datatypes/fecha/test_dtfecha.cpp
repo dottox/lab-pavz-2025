@@ -13,14 +13,14 @@ TEST_CASE("Test DtFecha - Constructor and Getters")
 
     if (cout << *fecha << endl)
     {
-        CHECK(true); // Si la impresión no lanza una excepción, el test pasa
+        CHECK(true); // Si la impresion no lanza una excepcion, el test pasa
     }
     else
     {
-        CHECK(false); // Si la impresión falla, el test falla
+        CHECK(false); // Si la impresion falla, el test falla
     }
     DtFecha *fecha2 = new DtFecha(5, 10, 2025);
-    CHECK(*fecha == *fecha2); // Verifica que la comparación funcione correctamente
+    CHECK(*fecha == *fecha2); // Verifica que la comparacion funcione correctamente
     DtFecha *fecha3 = new DtFecha(5, 10, 2024);
-    CHECK_FALSE(*fecha == *fecha3); // Verifica que la comparación funcione correctamente
+    CHECK_FALSE(*fecha == *fecha3); // Verifica que la comparacion funcione correctamente
 }

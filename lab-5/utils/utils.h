@@ -9,7 +9,7 @@
 class utils
 {
 private:
-    utils() = default; // Constructor privado para evitar instanciación
+    utils() = default; // Constructor privado para evitar instanciacion
 
 public:
     static int generarNumeroEmpleado();

@@ -67,7 +67,7 @@ public:
      * @brief Añade un plato a un menu.
      * @param codigo --> Codigo del plato a añadir.
      * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
+     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
      */
     void anadirPlatoAMenu(char *, int);
 
@@ -77,7 +77,7 @@ public:
     void darAltaProducto();
 
     /**
-     * @brief Cancela la creación del producto.
+     * @brief Cancela la creacion del producto.
      */
     void cancelarAltaProducto();
 
@@ -116,13 +116,13 @@ public:
 
     /**
      * @brief El sistema guarda temporalmente el producto seleccionado.
-     * @param codigo --> El código del producto a seleccionar
+     * @param codigo --> El codigo del producto a seleccionar
      */
     // void seleccionarProducto(int);
 
     /**
      * @brief Elimina el producto seleccionado del sistema.
-     * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
+     * @note Solo borrara al producto si todas las ventas que lo contienen estan facturadas.
      */
     // void quitarProducto();
 
@@ -182,12 +182,12 @@ public:
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
-     * @return Sistema* --> El objeto único de la clase Sistema.
+     * @return Sistema* --> El objeto unico de la clase Sistema.
      */
     void poblarSistema();
 
     /**
-     * @brief Retorna el número de productos del sistema.
+     * @brief Retorna el numero de productos del sistema.
      * @return int --> Cantidad de productos.
      */
     int getCantidadProductos();
@@ -197,6 +197,8 @@ public:
      * @param DtFecha --> Fecha a consultar.
      */
     DtInforme consultarFacturacion(DtFecha);
+
+    DtInfoProducto *obtenerProducto(string codigo);
 
     void listarEmpleados();
     void listarVentas();

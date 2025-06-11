@@ -45,13 +45,13 @@ bool Menu::esVacio() {
 
 void Menu::anadirPlato(Plato* plato, int cantidad){
     IKey* key = new String(plato->getCodigo());
-    if (this->menuPlatos->member(key)) { // Verificar si el plato ya existe en el menú
+    if (this->menuPlatos->member(key)) { // Verificar si el plato ya existe en el menu
         delete key; // Liberar memoria del key
-        throw invalid_argument("El plato ya existe en el menú, no se ha modificado nada.");
+        throw invalid_argument("El plato ya existe en el menu, no se ha modificado nada.");
     } else {
         MenuPlato* menuPlato = new MenuPlato(plato, cantidad);
         this->menuPlatos->add(key, menuPlato);
-        this->actualizarPrecio(); // Actualizar el precio del menú (con un 10% de descuento)
+        this->actualizarPrecio(); // Actualizar el precio del menu (con un 10% de descuento)
     }
 }
 
@@ -59,11 +59,11 @@ ostream& operator<<(ostream& os, const Menu& menu)
 {
     os << static_cast<const Producto&>(menu) << endl;
     if(menu.menuPlatos == nullptr || menu.menuPlatos->isEmpty()) {
-        os << "El menú no contiene platos." << endl;
+        os << "El menu no contiene platos." << endl;
         return os;
     }
-    os << "Cantidad de platos (distintos) en el menú: " << menu.menuPlatos->getSize() << endl;
-    os << "Platos en el menú:" << endl;
+    os << "Cantidad de platos (distintos) en el menu: " << menu.menuPlatos->getSize() << endl;
+    os << "Platos en el menu:" << endl;
     IIterator* it = menu.menuPlatos->getIterator();
     while (it->hasCurrent()) {
         MenuPlato* menuPlato = dynamic_cast<MenuPlato*>(it->getCurrent());

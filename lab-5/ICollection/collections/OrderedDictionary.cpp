@@ -20,7 +20,7 @@ void OrderedDictionary::add(IKey *k, ICollectible *val)
     {
         
         comparision = key->compare(current->getKey());
-        if(comparision == EQUAL){  // la clave ya está, se reemplaza
+        if(comparision == EQUAL){  // la clave ya esta, se reemplaza
             current->setVal(val);
             delete k; // la clave no se va a usar, se borra
             return;
@@ -64,7 +64,7 @@ void OrderedDictionary::remove(IKey *k)
     while(current != NULL)
     {
         comparision = key->compare(current->getKey());
-        if(comparision == EQUAL)  // la clave ya está, se puede borrar
+        if(comparision == EQUAL)  // la clave ya esta, se puede borrar
             break;
         
         parent = current;
@@ -75,7 +75,7 @@ void OrderedDictionary::remove(IKey *k)
             current = current->getGreater();
     }
 
-    if(current == NULL) // no se encontró la clave, no se borra
+    if(current == NULL) // no se encontro la clave, no se borra
         return;
     
     --size;
@@ -84,7 +84,7 @@ void OrderedDictionary::remove(IKey *k)
     OrderedDictionaryEntry *G = current->getGreater();
     OrderedDictionaryEntry *L = current->getLesser();
     
-    if(parent == NULL){ // se borra la raíz
+    if(parent == NULL){ // se borra la raiz
         if(G == NULL) // no hay sub arbol derecho
             root = L;
         else {
@@ -158,7 +158,7 @@ IIterator *OrderedDictionary::getInverseIterator()
 ICollectible *OrderedDictionary::getMax()
 {
     if(size == 0)
-        throw std::out_of_range("El diccionario esta vacío");
+        throw std::out_of_range("El diccionario esta vacio");
                 
     return root->getGreatestElement()->getVal();
 }
@@ -166,7 +166,7 @@ ICollectible *OrderedDictionary::getMax()
 ICollectible *OrderedDictionary::getMin()
 {
     if(size == 0)
-        throw std::out_of_range("El diccionario esta vacío");
+        throw std::out_of_range("El diccionario esta vacio");
                 
     return root->getLeastElement()->getVal();
 }
@@ -181,7 +181,7 @@ OrderedDictionary::~OrderedDictionary() {
 void OrderedDictionary::makeListOrder(OrderedDictionaryEntry *entry,
         ListNode *&head, ListNode *&last){
     if(entry == NULL)
-        return; // árbol vacío, no hay nada que hacer
+        return; // arbol vacio, no hay nada que hacer
     
     makeListOrder(entry->getLesser(), head, last);
     
@@ -202,7 +202,7 @@ void OrderedDictionary::makeListReverseOrder(OrderedDictionaryEntry *entry,
         ListNode *&head)
 {
     if(entry == NULL)
-        return; // árbol vacío, no hay nada que hacer
+        return; // arbol vacio, no hay nada que hacer
     
     makeListReverseOrder(entry->getLesser(), head);
     

@@ -19,6 +19,7 @@
 #include "../../datatypes/Producto/DtPlato.h"
 #include "../../datatypes/Producto/DtMenu.h"
 #include "../../datatypes/Informe/DtInforme.h"
+#include "../../datatypes/InfoProducto/DtInfoProducto.h"
 
 #include "../../enums/TipoProducto.h"
 #include "../../enums/ActorMenu.h"
@@ -68,7 +69,7 @@ public:
      * @brief Añade un plato a un menu.
      * @param codigo --> Codigo del plato a añadir.
      * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
+     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
      */
     virtual void anadirPlatoAMenu(char *, int) = 0;
 
@@ -78,7 +79,7 @@ public:
     virtual void darAltaProducto() = 0;
 
     /**
-     * @brief Cancela la creación del producto.
+     * @brief Cancela la creacion del producto.
      */
     virtual void cancelarAltaProducto() = 0;
 
@@ -93,13 +94,13 @@ public:
 
     /**
      * @brief El sistema guarda temporalmente el producto seleccionado.
-     * @param codigo --> El código del producto a seleccionar
+     * @param codigo --> El codigo del producto a seleccionar
      */
     // virtual void seleccionarProducto(int) = 0;
 
     /**
      * @brief Elimina el producto seleccionado del sistema.
-     * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
+     * @note Solo borrara al producto si todas las ventas que lo contienen estan facturadas.
      */
     // virtual void quitarProducto() = 0;
 
@@ -177,15 +178,23 @@ public:
     virtual void darAltaVenta() = 0;
     virtual void cancelarAltaVenta() = 0;
     // ###### --------------- FIN CASO DE USO INICIO VENTA  --------------- #######
+    // ####### --------------- INICIO CASO DE USO BUSCAR INFO PRODUCTO --------------- #######
+    /**
+     * @brief Retorna un producto del sistema.
+     * @param codigo --> Codigo del producto a buscar.
+     * @return DtInfoProducto* --> Datos del producto buscado.
+     */
+    virtual DtInfoProducto *obtenerProducto(string) = 0;
+    // ####### --------------- FIN CASO DE USO BUSCAR INFO PRODUCTO --------------- #######
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
-     * @return Sistema* --> El objeto único de la clase Sistema.
+     * @return Sistema* --> El objeto unico de la clase Sistema.
      */
     virtual void poblarSistema() = 0;
 
     /**
-     * @brief Retorna el número de productos del sistema.
+     * @brief Retorna el numero de productos del sistema.
      * @return int --> Cantidad de productos.
      */
     virtual int getCantidadProductos() = 0;

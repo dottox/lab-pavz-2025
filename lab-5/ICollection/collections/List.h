@@ -4,7 +4,7 @@
 #include "ListNode.h"
 
 /**
- *  Una lista común
+ *  Una lista comun
  */
 class List: public ICollection {
 private:
@@ -14,14 +14,14 @@ public:
     List();
     
     /**
-     * Agrega un elemento a la colección al final de la lista.
-     * Si ya existía no hace nada
+     * Agrega un elemento a la coleccion al final de la lista.
+     * Si ya existia no hace nada
      */
     void add(ICollectible *);
     
     
     /**
-     * Borra el elementvoid remove(ICollectible *);o de la colección.
+     * Borra el elementvoid remove(ICollectible *);o de la coleccion.
      * Si no existe no hace nada
      */
     void remove(ICollectible *);
@@ -34,7 +34,7 @@ public:
     
     
     /*
-     * Devuelve true si hay un elemento en la colección cuya dirección de memoria
+     * Devuelve true si hay un elemento en la coleccion cuya direccion de memoria
      * coincide con el argumente
      */ 
     bool member(ICollectible *) const;
@@ -45,13 +45,13 @@ public:
     bool isEmpty() const;
     
     /**
-     * Devuelve el tamaño de la colección
+     * Devuelve el tamaño de la coleccion
      */
     int getSize() const;
     
     /*
      * Devuelve una instancia de IIterator creada con el operador new,
-     * El órden de la iteración respeta el orden de inserción de los elementos
+     * El orden de la iteracion respeta el orden de insercion de los elementos
      */
     IIterator *getIterator();
 

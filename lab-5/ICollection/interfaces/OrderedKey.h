@@ -3,11 +3,11 @@
 
 #include "IKey.h"
 
-// Resultado de la comparación entre objetos de la clase OrderedKey
+// Resultado de la comparacion entre objetos de la clase OrderedKey
 enum ComparisonRes { LESSER, EQUAL, GREATER };
 
 /**
- * Subclase abstracta de IKey para claves con ordenación total
+ * Subclase abstracta de IKey para claves con ordenacion total
  */
 class OrderedKey: public IKey {
 public:

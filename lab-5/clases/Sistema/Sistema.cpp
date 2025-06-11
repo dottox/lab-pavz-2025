@@ -97,7 +97,7 @@ void Sistema::anadirPlatoAMenu(char *codigo, int cantidad)
     if (plato == nullptr)
     {
         delete key; // Liberar memoria del key
-        throw invalid_argument("El plato con el código proporcionado no existe.");
+        throw invalid_argument("El plato con el codigo proporcionado no existe.");
     }
 
     Menu *menu = dynamic_cast<Menu *>(this->productoCreado);
@@ -126,9 +126,9 @@ void Sistema::darAltaProducto()
         if (menu->esVacio())
         {
             delete key; // Liberar memoria del key
-            cout << "El menú no contiene platos." << endl;
+            cout << "El menu no contiene platos." << endl;
             this->cancelarAltaProducto(); // Limpiar el producto creado
-            throw invalid_argument("El menú no contiene platos, no se puede dar de alta.");
+            throw invalid_argument("El menu no contiene platos, no se puede dar de alta.");
         }
     }
 
@@ -140,7 +140,7 @@ void Sistema::cancelarAltaProducto()
 {
     if (this->productoCreado != nullptr)
     {
-        cout << "Cancelando la creación del producto: " << this->productoCreado->getCodigo() << endl;
+        cout << "Cancelando la creacion del producto: " << this->productoCreado->getCodigo() << endl;
         delete this->productoCreado;    // Liberar memoria del producto creado
         this->productoCreado = nullptr; // Limpiar la variable temporal
     }
@@ -700,6 +700,34 @@ void Sistema::cancelarAltaVenta()
     this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
     cout << "No hay mesas elegidas para cancelar." << endl;
 }
+
+DtInfoProducto *Sistema::obtenerProducto(string codigo)
+{
+    IKey *key = new String(codigo.c_str());
+    Producto *producto = (Producto *)this->productos->find(key);
+    delete key; // Liberar memoria del key
+
+    if (producto == nullptr)
+    {
+        throw invalid_argument("El producto con el codigo proporcionado no existe.");
+    }
+
+    int cantidadVentas = 0;
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        Venta *venta = (Venta *)it->getCurrent();
+        if (venta->contieneProducto(producto))
+        {
+            cantidadVentas++;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
+    return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
+}
+
 Sistema::~Sistema()
 {
     delete empleados;
@@ -715,5 +743,5 @@ Sistema::~Sistema()
     }
     tipoProductoSeleccionado = TipoProducto::undefinedTipo;
 
-    instance = NULL; // Limpiar la instancia única
+    instance = NULL; // Limpiar la instancia unica
 }
