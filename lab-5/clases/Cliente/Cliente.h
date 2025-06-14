@@ -13,16 +13,18 @@ class Cliente : public ICollectible
 {
 private:
     string nombre;
-    string telefono;
+    int telefono;
     DtDireccion direccion;
 
 public:
     Cliente(DtCliente);
     string getNombre();
-    string getTelefono();
+    int getTelefono();
+    DtCliente* getDatos();
     DtDireccion getDireccion();
     void setNombre(string);
-    void setTelefono(string);
+    void setTelefono(int);
     void setDireccion(DtDireccion);
+    friend ostream & operator<<(ostream&, const Cliente&);
     ~Cliente();
 };

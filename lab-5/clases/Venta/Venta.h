@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include "../Producto/Producto.h"
+#include "../Producto/Plato.h"
+#include "../Producto/Menu.h"
 #include "../Factura/Factura.h"
 #include "../Factura/FacturaLocal.h"
 #include "../Factura/FacturaDomicilio.h"
@@ -13,6 +15,12 @@
 
 #include "../../ICollection/interfaces/ICollectible.h"
 #include "../../ICollection/interfaces/IDictionary.h"
+#include "../../ICollection/collections/OrderedDictionary.h"
+#include "../../ICollection/collections/List.h"
+#include "../../ICollection/interfaces/IIterator.h"
+#include "../../ICollection/String.h"
+#include "../../ICollection/Integer.h"
+#include "../../ICollection/interfaces/IKey.h"
 
 using namespace std;
 
@@ -31,7 +39,7 @@ public:
     int getCodigo();
     float getSubtotal();
     int getDescuento();
-    // Producto **getProductos();
+    ICollection * getProductos(); // retornar una coleccion con los productosConsumidos
     int getCantidadProductos();
     bool estaFacturada();
     void setSubtotal(float);

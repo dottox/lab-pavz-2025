@@ -18,4 +18,5 @@ ostream & operator<<(ostream &os, const VentaDomicilio &ventaDomicilio) {
 
 VentaDomicilio::~VentaDomicilio()
 {
+    delete this->datosCliente; 
 }

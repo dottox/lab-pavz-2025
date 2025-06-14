@@ -23,6 +23,9 @@
 #include "../../datatypes/Informe/DtInforme.h"
 #include "../../datatypes/InfoProducto/DtInfoProducto.h"
 #include "../../datatypes/Fecha/DtFecha.h"
+#include "../../datatypes/Direccion/DtDireccion.h"
+#include "../../datatypes/Direccion/DtDireccionCasa.h"
+#include "../../datatypes/Direccion/DtDireccionApto.h"
 
 
 #include "../../enums/TipoProducto.h"
@@ -235,8 +238,7 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
-    virtual void agregarCliente(string, int, string, string, string) = 0; 
-    virtual void agregarCliente(string, int, string, string, string, string, string) = 0; 
+    virtual void agregarCliente(string, int, DtDireccion) = 0; 
     virtual void mostrarClienteTemporal() = 0; 
     virtual void darAltaCliente() = 0;
     virtual void cancelarAltaCliente() = 0;

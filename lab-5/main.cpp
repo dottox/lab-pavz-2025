@@ -60,7 +60,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
              << endl;
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Alta de producto" << endl;
-        cout << "2. Alta de cliente (No implementado)" << endl;
+        cout << "2. Alta de cliente" << endl;
         cout << "3. Alta de empleado" << endl;
         cout << "4. Asignar mesas a mozos (No implementado)" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
@@ -708,7 +708,7 @@ void altaCliente(ISistema *s)
         if (cin.fail() || telefono <= 0 || to_string(telefono).length() != 9)
         {
             cout << "El telefono debe ser un numero y debe contener 9 digitos." << endl;
-            limpiarCin();
+            pause();
             continue;
         }
         mantener = false; // Salir del bucle si el nombre y telefono son validos
@@ -842,13 +842,23 @@ void altaCliente(ISistema *s)
         mantener = false; // Salir del bucle si la direccion es valida
     }
 
-    if (esCasa == 1)
+    DtDireccion direccion; // Declarar antes del if
+
+    if(esCasa == 1)
     {
-        s->agregarCliente(nombre, telefono, calle, numero, entre_calles); // Crear el cliente con direccion casa.
+        direccion = DtDireccionCasa(calle, numero, entre_calles);
+    }else{
+        direccion = DtDireccionApto(calle, numero, entre_calles, nombre_edificio, numero_apto);
     }
-    else
+    
+    try{
+        s->agregarCliente(nombre, telefono, direccion); 
+    }catch(const invalid_argument &e)
     {
-        s->agregarCliente(nombre, telefono, calle, numero, entre_calles, nombre_edificio, numero_apto); // Crear el cliente con direccion departamento.
+        cout << "Error: " << e.what() << endl << "Cancelando alta de cliente." << endl;
+        s->cancelarAltaCliente();
+        pause();
+        return;
     }
 
     int confirmar; //  Confirmacion de alta del cliente

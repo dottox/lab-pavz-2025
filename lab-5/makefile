@@ -14,9 +14,8 @@ endif
 
 all: programa
 
-programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o DtCliente.o Plato.o Menu.o MenuPlato.o DtFecha.o DtConsumido.o DtHora.o DtFacturaLocal.o DtFacturaDomicilio.o DtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o DtInforme.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o DtInfoProducto.o DtMenu.o DtPlato.o DtProducto.o  DtDireccionApto.o DtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
+programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o DtCliente.o Plato.o Menu.o MenuPlato.o DtFecha.o DtConsumido.o DtHora.o DtFacturaLocal.o DtFacturaDomicilio.o DtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o DtInforme.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o DtInfoProducto.o DtMenu.o DtPlato.o DtProducto.o  DtDireccionApto.o DtDireccionCasa.o DtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
 	g++ $^ -o programa 
-
 
 ICollectible.o: 
 	g++ -c "ICollection/interfaces/ICollectible.cpp"
@@ -129,8 +128,11 @@ DtProducto.o:
 DtConsumido.o:
 	g++ -c "datatypes/Consumido/DtConsumido.cpp"
 
-DtDireccionApto.o:
+DtDireccionApto.o: DtDireccion.o
 	g++ -c  "datatypes/Direccion/DtDireccionApto.cpp"
+
+DtDireccionCasa.o: DtDireccion.o
+	g++ -c  "datatypes/Direccion/DtDireccionCasa.cpp"
 
 DtDireccion.o:
 	g++ -c  "datatypes/Direccion/DtDireccion.cpp"

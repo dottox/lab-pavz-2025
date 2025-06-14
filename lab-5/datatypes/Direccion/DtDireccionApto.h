@@ -15,5 +15,6 @@ public:
     DtDireccionApto(string, string, string, string, string);
     string getNombre();
     string getNumeroApto();
+    friend ostream& operator<<(ostream&, const DtDireccionApto&);
     virtual ~DtDireccionApto();
 };

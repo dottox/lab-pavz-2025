@@ -16,6 +16,14 @@ string DtDireccionApto::getNumeroApto()
     return numeroApto;
 }
 
+ostream& operator<<(ostream& os, const DtDireccionApto& dtDireccionApto)
+{
+    os << static_cast<const DtDireccion&>(dtDireccionApto) << endl 
+       << "Edificio: " << dtDireccionApto.nombre << endl 
+       << "Numero Apto: " << dtDireccionApto.numeroApto << endl;
+    return os;
+}
+
 DtDireccionApto::~DtDireccionApto()
 {
     // Destructor implementation (if needed)
