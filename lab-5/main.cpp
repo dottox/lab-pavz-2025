@@ -680,7 +680,7 @@ void altaCliente(ISistema *s)
         cout << "Ingrese los datos del cliente:" << endl;
         cout << "Nombre: ";
         cin >> nombre;
-        cin.ignore();
+        getline(cin >> ws, nombre);
 
         if (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
         {
@@ -724,7 +724,7 @@ void altaCliente(ISistema *s)
         cout << "Ingrese la direccion del cliente:" << endl;
         cout << "Calle: ";
         cin >> calle;
-        cin.ignore();
+        getline(cin >> ws, calle);
 
         if (cin.fail() || calle.empty() || calle.find_first_not_of(' ') == string::npos)
         {
@@ -746,8 +746,7 @@ void altaCliente(ISistema *s)
         }
 
         cout << "Numero: ";
-        cin >> numero;
-        cin.ignore();
+        getline(cin >> ws, numero);
 
         if (cin.fail() || numero.empty() || numero.find_first_not_of(' ') == string::npos)
         {
@@ -757,8 +756,7 @@ void altaCliente(ISistema *s)
         }
 
         cout << "Entre calles (opcional, ingrese '0' para omitir): ";
-        cin >> entre_calles;
-        cin.ignore();
+        getline(cin >> ws, entre_calles);
 
         if (entre_calles == "0")
         {
@@ -800,13 +798,12 @@ void altaCliente(ISistema *s)
         if (esCasa == 2)
         {
             cout << "Nombre del edificio: ";
-            cin >> nombre_edificio;
-            cin.ignore();
+            getline(cin >> ws, nombre_edificio);
 
             if (nombre_edificio.empty() || nombre_edificio.find_first_not_of(' ') == string::npos)
             {
                 cout << "El nombre del edificio no puede estar vacio." << endl;
-                limpiarCin();
+                pause();
                 continue;
             }
 
@@ -814,7 +811,7 @@ void altaCliente(ISistema *s)
             {
                 stoi(nombre_edificio);
                 cout << "El nombre del edificio no puede ser un numero." << endl;
-                limpiarCin();
+                pause();
                 continue;
             }
             catch (const invalid_argument &e)
@@ -823,8 +820,7 @@ void altaCliente(ISistema *s)
             }
 
             cout << "Numero de apartamento: ";
-            cin >> numero_apto;
-            cin.ignore();
+            getline(cin >> ws, numero_apto);
 
             if (cin.fail() || numero_apto.empty() || numero_apto.find_first_not_of(' ') == string::npos)
             {
