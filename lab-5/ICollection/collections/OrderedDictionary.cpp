@@ -108,6 +108,65 @@ void OrderedDictionary::remove(IKey *k)
     delete current;
 }
 
+void OrderedDictionary::setNull(IKey *k)
+{
+    OrderedKey *key = dynamic_cast<OrderedKey *>(k);
+    if(key == NULL)
+        throw std::invalid_argument("Se esperaba un OrderedKey");
+    
+    OrderedDictionaryEntry *parent = NULL;
+    OrderedDictionaryEntry *current = root;
+    ComparisonRes parentComparison;
+    ComparisonRes comparision;
+    
+    // busca el elemento a borrar y lo pone en current
+    while(current != NULL)
+    {
+        comparision = key->compare(current->getKey());
+        if(comparision == EQUAL)  // la clave ya esta, se puede borrar
+            break;
+        
+        parent = current;
+        parentComparison = comparision;
+        if(parentComparison == LESSER)
+            current = current->getLesser();
+        else
+            current = current->getGreater();
+    }
+
+    if(current == NULL) // no se encontro la clave, no se borra
+        return;
+    
+    --size;
+    
+    // acomoda el parent si es necesario
+    OrderedDictionaryEntry *G = current->getGreater();
+    OrderedDictionaryEntry *L = current->getLesser();
+    
+    if(parent == NULL){ // se borra la raiz
+        if(G == NULL) // no hay sub arbol derecho
+            root = L;
+        else {
+            root = G;
+            G->getLeastElement()->setLesser(L);
+        }
+    } else if(parentComparison == GREATER){
+        if(G != NULL){
+            parent->setGreater(G);
+            G->getLeastElement()->setLesser(L);
+        } else 
+            parent->setGreater(L);
+    } else {
+        if(G != NULL){
+            parent->setLesser(G);
+            G->getLeastElement()->setLesser(L);
+        } else 
+            parent->setLesser(L);
+    }
+
+    current->setVal(NULL);
+}
+
 ICollectible *OrderedDictionary::find(IKey *k) const
 {
     OrderedKey *key = dynamic_cast<OrderedKey *>(k);

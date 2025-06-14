@@ -26,6 +26,12 @@ public:
      * @param k la clave a buscar
      */
     virtual void remove(IKey *k) = 0;
+
+    /**
+     * Saca el miembro del diccionario sin borrarlo
+     * @param k la clave a buscar
+     */
+    virtual void setNull(IKey *k) = 0;
     
     /**
      * Busca un elemento en el diccionario
