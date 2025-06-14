@@ -7,7 +7,7 @@ List::List():
 
 void List::add(ICollectible* c)
 {
-    if(head == NULL){ // list vacía; tamaño = 1
+    if(head == NULL){ // list vacia; tamaño = 1
         head = new ListNode(c);
         size = 1;
         return;
@@ -37,13 +37,34 @@ void List::remove(ICollectible *c)
 
     if(current == NULL){ // final de la lista, no estaba
         return;
-    } else if(current->getElem() == c){ // ya está, se borra
+    } else if(current->getElem() == c){ // ya esta, se borra
         --size;
         if(previous == NULL) // se borra el primer elemento
             head = current->getNext();
         else
             previous->setNext(current->getNext());
         delete current;
+    }
+}
+
+void List::setNull(ICollectible *c)
+{
+    ListNode *current = head;
+    ListNode *previous = NULL;
+    while(current != NULL && current->getElem() != c){
+        previous = current;
+        current = current->getNext();
+    }
+
+    if(current == NULL){ // final de la lista, no estaba
+        return;
+    } else if(current->getElem() == c){ // ya está, se borra
+        --size;
+        if(previous == NULL) // se borra el primer elemento
+            head = current->getNext();
+        else
+            previous->setNext(current->getNext());
+        current == nullptr;
     }
 }
 
@@ -68,6 +89,19 @@ bool List::isEmpty() const
 IIterator *List::getIterator()
 {
     return new ListIterator(head);
+}
+
+void List::clearCollection()
+{
+    ListNode *current = head;
+    ListNode *next;
+    while (current != NULL) {
+        next = current->getNext();
+        current->setElem(NULL); // Set the element to NULL
+        current = next;
+    }
+    this->head = NULL; // Clear the head pointer
+    this->size = 0; // Reset size to 0
 }
 
 List::~List() {

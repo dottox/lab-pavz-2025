@@ -10,19 +10,19 @@
 class IIterator{
 public:
     /**
-     *  Devuelve el actual elemento de la colección en la iteración.
-     *  Tira una excepción out_of_range si no hay tal elemento
+     *  Devuelve el actual elemento de la coleccion en la iteracion.
+     *  Tira una excepcion out_of_range si no hay tal elemento
      */
     virtual ICollectible *getCurrent() = 0;
 
     /*
-     *  Devuelve true si hay un elemento en la colección. 
+     *  Devuelve true si hay un elemento en la coleccion. 
      */
     virtual bool hasCurrent() = 0;
     
     /*
-     *  Hace un paso en la iteración. Si hasCurrent() es false
-     *  tira excepción out_of_range
+     *  Hace un paso en la iteracion. Si hasCurrent() es false
+     *  tira excepcion out_of_range
      */
     virtual void next() = 0;
         

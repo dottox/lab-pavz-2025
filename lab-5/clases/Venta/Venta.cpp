@@ -58,7 +58,6 @@ void Venta::agregarPorcentaje(int descuento)
 
 void Venta::agregarProducto(Producto *producto, int cantidad)
 {
-    cout << "3";
     if (cantidad <= 0)
     {
         throw invalid_argument("La cantidad debe ser mayor a 0.");
@@ -78,6 +77,48 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
     IKey *key = new String(producto->getDescripcion().c_str());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
+}
+
+void Venta::quitarProducto(Producto *producto, int cantidad)
+{
+    if (cantidad <= 0)
+    {
+        throw invalid_argument("La cantidad debe ser mayor a 0.");
+    }
+
+    IKey *key = new String(producto->getDescripcion().c_str());
+    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    if (productoVenta == nullptr)
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El producto no esta en la venta.");
+    }
+    else
+    {
+        if (productoVenta->getCantidad() < cantidad)
+        {
+            delete key; // Liberar memoria del key
+            throw invalid_argument("La cantidad a quitar es mayor a la cantidad en la venta.");
+        }
+        else
+        {
+            productoVenta->setCantidad(productoVenta->getCantidad() - cantidad);
+            this->cantidadProductos -= cantidad;
+            if (productoVenta->getCantidad() == 0)
+            {
+                producto = nullptr; // quita el producto si la cantidad llega a 0
+                cout << "Producto eliminado: " << productoVenta->getDescripcion() << endl;
+            }
+            else
+            {
+                cout << "Producto actualizado: " << productoVenta->getDescripcion()
+                     << ", Nueva cantidad: " << productoVenta->getCantidad() << endl;
+            }
+            delete key; // Liberar memoria del key
+
+        }
+    }
+
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)
@@ -156,4 +197,12 @@ ostream &operator<<(ostream &os, const Venta &venta)
         os << ", Facturada: No";
     }
     return os;
+}
+
+bool Venta::contieneProducto(Producto *producto)
+{
+    IKey *key = new String(producto->getCodigo());
+    bool contiene = this->productosConsumidos->member(key);
+    delete key; // Liberar memoria del key
+    return contiene;
 }

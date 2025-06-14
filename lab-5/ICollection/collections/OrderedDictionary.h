@@ -6,7 +6,7 @@
 #include "../interfaces/IDictionary.h"
 
 /**
- * Implementa un diccionario ordenado, para implementar la ordenación es
+ * Implementa un diccionario ordenado, para implementar la ordenacion es
  * necesario que las claves sean instancias de OrderedKey
  * 
  */
@@ -38,7 +38,7 @@ public:
     /**
      * Busca un elemento en el diccionario
      * @param k la clave a buscar. Debe ser una instancia de OrderedKey
-     * @return el ICollectible que se agregó con add o NULL si no hay tal objeto
+     * @return el ICollectible que se agrego con add o NULL si no hay tal objeto
      */
     ICollectible *find(IKey *k) const;
     
@@ -67,15 +67,15 @@ public:
     IIterator *getInverseIterator();
     
     /**
-     * Obtiene el valor que corresponde a la clave más grande del diccionario.
-     * Tira una excepción de tipo std::out_of_range si el diccionario está vacío
+     * Obtiene el valor que corresponde a la clave mas grande del diccionario.
+     * Tira una excepcion de tipo std::out_of_range si el diccionario esta vacio
      * @return 
      */
     ICollectible *getMax();
     
     /**
-     * Obtiene el valor que corresponde a la clave más pequeña del diccionario.
-     * Tira una excepción de tipo std::out_of_range si el diccionario está vacío
+     * Obtiene el valor que corresponde a la clave mas pequeña del diccionario.
+     * Tira una excepcion de tipo std::out_of_range si el diccionario esta vacio
      * @return 
      */
     ICollectible *getMin();

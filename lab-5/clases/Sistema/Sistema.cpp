@@ -97,7 +97,7 @@ void Sistema::anadirPlatoAMenu(char *codigo, int cantidad)
     if (plato == nullptr)
     {
         delete key; // Liberar memoria del key
-        throw invalid_argument("El plato con el código proporcionado no existe.");
+        throw invalid_argument("El plato con el codigo proporcionado no existe.");
     }
 
     Menu *menu = dynamic_cast<Menu *>(this->productoCreado);
@@ -126,9 +126,9 @@ void Sistema::darAltaProducto()
         if (menu->esVacio())
         {
             delete key; // Liberar memoria del key
-            cout << "El menú no contiene platos." << endl;
+            cout << "El menu no contiene platos." << endl;
             this->cancelarAltaProducto(); // Limpiar el producto creado
-            throw invalid_argument("El menú no contiene platos, no se puede dar de alta.");
+            throw invalid_argument("El menu no contiene platos, no se puede dar de alta.");
         }
     }
 
@@ -140,7 +140,7 @@ void Sistema::cancelarAltaProducto()
 {
     if (this->productoCreado != nullptr)
     {
-        cout << "Cancelando la creación del producto: " << this->productoCreado->getCodigo() << endl;
+        cout << "Cancelando la creacion del producto: " << this->productoCreado->getCodigo() << endl;
         delete this->productoCreado;    // Liberar memoria del producto creado
         this->productoCreado = nullptr; // Limpiar la variable temporal
     }
@@ -237,6 +237,16 @@ void Sistema::cancelarAgregarProductoAVenta()
     this->cantidadProductoSeleccionado = 0;
 }
 
+// ####### --------------- Quitar producto de una venta --------------- #######
+void Sistema::quitarProductoVenta()
+{
+    if (this->mesaSeleccionadaVenta == nullptr || this->productoSeleccionado == nullptr ||
+        this->cantidadProductoSeleccionadoVenta <= 0)
+    {
+        throw invalid_argument("Debe seleccionar una mesa, un producto y una cantidad valida.");
+    }
+}
+
 // ####### --------------- Facturacion de un dia --------------- #######
 DtInforme Sistema::consultarFacturacion(DtFecha fecha)
 {
@@ -296,12 +306,41 @@ void Sistema::imprimirInforme(DtInforme informe)
     delete it; // Liberar memoria del iterador
 }
 
+void Sistema::mostrarVentasMozo(DtFecha fechaInicio, DtFecha fechaFin)
+{
+    bool ventasEncontradas = false;
+
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        VentaLocal *venta = dynamic_cast<VentaLocal *>(it->getCurrent());
+        if (venta != nullptr)
+        {
+            if (venta->estaFacturada())
+            {
+                FacturaLocal *factura = dynamic_cast<FacturaLocal *>(venta->getFactura());
+                if (factura->getFecha() >= fechaInicio && factura->getFecha() <= fechaFin && factura->getNombreMozo() == this->mozoSeleccionado->getNombre())
+                {
+                    ventasEncontradas = true;
+                    this->imprimirFacturaLocal(venta->mostrarFacturaLocal());
+                }
+            }
+        }
+        it->next();
+    }
+
+    if (!ventasEncontradas)
+    {
+        cout << "No se encontraron ventas facturadas para el mozo en el rango de fechas proporcionado." << endl;
+    }
+}
+
 // // ####### --------------- Utils --------------- #######
 
 void Sistema::poblarSistema()
 {
     // Crear empleados
-    cout << "CRear empledaos: ";
+    cout << "Crear empledaos: ";
     Mozo *emp1 = new Mozo("Juan");
     Mozo *emp2 = new Mozo("Maria");
     Repartidor *emp3 = new Repartidor("Pedro", Bicicleta);
@@ -334,7 +373,7 @@ void Sistema::poblarSistema()
     DtCliente *cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
 
     // Crear ventas
-    cout << "Crear VCentas: ";
+    cout << "Crear Ventas: ";
     VentaLocal *venta1 = new VentaLocal();
     VentaDomicilio *venta2 = new VentaDomicilio(cliente1);
     VentaLocal *venta3 = new VentaLocal();
@@ -353,7 +392,7 @@ void Sistema::poblarSistema()
     Mesa *mesa6 = new Mesa();
 
     emp1->setMesaAsignada(mesa1);
-    emp2->setMesaAsignada(mesa2);
+    emp1->setMesaAsignada(mesa2);
     emp1->setMesaAsignada(mesa3);
     emp2->setMesaAsignada(mesa4);
     emp1->setMesaAsignada(mesa5);
@@ -426,7 +465,6 @@ void Sistema::listarVentas()
     delete it; // Liberar memoria del iterador
 }
 
-
 void Sistema::listarMesas()
 {
     cout << endl
@@ -495,8 +533,7 @@ void Sistema::imprimirFacturaLocal(DtFacturaLocal factura)
     cout << "Descuento: " << factura.getDescuento() << "%" << endl;
     cout << "Monto Total: " << factura.getMontoTotal() << endl;
     cout << "IVA Total: " << factura.getIvaTotal() << endl;
-    cout << "Nombre Mozo: " << factura.getNombreMozo() << endl;
-    cout << "-------------------------" << endl;
+    cout << "Nombre Mozo: " << factura.getNombreMozo();
 }
 
 void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
@@ -514,6 +551,42 @@ void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
     cout << "Nombre Repartidor: " << factura.getNombreRepartidor() << endl;
     cout << "Transporte: " << factura.getTransporte() << endl;
     cout << "-------------------------" << endl;
+}
+
+void Sistema::seleccionarTransporte(Transporte transporte)
+{
+    this->transporteSeleccionado = transporte;
+}
+
+void Sistema::agregarEmpleado(string nombre, string tipoEmpleado)
+{
+    this->nombreEmpleado = nombre;
+    this->tipoEmpleado = tipoEmpleado;
+}
+
+int Sistema::darDeAltaEmpleado()
+{
+    if (this->tipoEmpleado == "Mozo")
+    {
+        Mozo *mozo = new Mozo(this->nombreEmpleado);
+        this->empleados->add(new Integer(mozo->getNumero()), mozo);
+        this->cancelarAltaEmpleado(); // Limpiar los datos del empleado temporal
+        return mozo->getNumero();
+    }
+    else
+    {
+        Repartidor *repartidor = new Repartidor(this->nombreEmpleado, this->transporteSeleccionado);
+        this->empleados->add(new Integer(repartidor->getNumero()), repartidor);
+        this->cancelarAltaEmpleado(); // Limpiar los datos del empleado temporal
+        return repartidor->getNumero();
+    }
+}
+
+void Sistema::cancelarAltaEmpleado()
+{
+    this->nombreEmpleado = "";
+    this->tipoEmpleado = "";
+    this->transporteSeleccionado = Transporte::undefinedTransporte;
 }
 
 void Sistema::listarProductoTemporal()
@@ -536,13 +609,49 @@ void Sistema::listarProductoTemporal()
     }
 }
 
+void Sistema::listarTransportes()
+{
+    string transportes[] = {"A pie", "Moto", "Bicicleta", "Auto"};
+    cout << "Transportes disponibles:" << endl;
+    for (int i = 0; i < 4; i++)
+    {
+        cout << i + 1 << ". " << transportes[i] << endl;
+    }
+}
+
+void Sistema::listarMozos()
+{
+    cout << "--- Mozos del Sistema ---" << endl;
+    IIterator *it = this->empleados->getIterator();
+    while (it->hasCurrent())
+    {
+        Mozo *mozo = dynamic_cast<Mozo *>(it->getCurrent());
+        if (mozo != nullptr)
+        {
+            cout << *mozo << endl;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+}
+
+bool Sistema::validarFecha(string fecha)
+{
+    if (fecha.length() != 10 || fecha[2] != '/' || fecha[5] != '/')
+    {
+        return false; // Formato incorrecto
+    }
+
+    return true; // Formato correcto
+}
+
 void Sistema::iniciarVenta(string codigo)
 {
-    // Busco el mozo por su código
-    int numeroEmpleado = stoi(codigo);
-    // Lo casteo de empleado a mozo
+    if (this->mozoSeleccionado == nullptr)
+    {
+        throw invalid_argument("Debe seleccionar un mozo antes de iniciar una venta.");
+    }
 
-    this->seleccionarMozo(numeroEmpleado);
     ICollection *mesasAsignadas = this->mozoSeleccionado->getMesasAsignadasSinVentaEnCurso();
     if (mesasAsignadas == 0)
     {
@@ -563,8 +672,12 @@ void Sistema::iniciarVenta(string codigo)
 
 void Sistema::addMesaElegida()
 {
-    if (this->mesaSeleccionada->getMozo() != this->mozoSeleccionado || this->mesaSeleccionada->getVentaEnCurso() != nullptr)
+    if (
+        this->mesaSeleccionada == nullptr ||
+        this->mesaSeleccionada->getMozo() != this->mozoSeleccionado ||
+        this->mesaSeleccionada->getVentaEnCurso() != nullptr)
     {
+        this->mesaSeleccionada = nullptr;
         throw invalid_argument("La mesa seleccionada no pertenece al mozo seleccionado o tiene una venta en curso.");
     }
     this->mesasElegidas->add(this->mesaSeleccionada);
@@ -578,7 +691,7 @@ ICollection *Sistema::getMesasElegidas()
 void Sistema::mostrarMesasElegidas(bool verDatos = false)
 {
     cout << "Mesas elegidas:" << endl;
-    if(this->mesasElegidas == nullptr || this->mesasElegidas->isEmpty())
+    if (this->mesasElegidas == nullptr || this->mesasElegidas->isEmpty())
     {
         cout << "No hay mesas elegidas." << endl;
         return;
@@ -634,8 +747,10 @@ void Sistema::darAltaVenta()
         cout << "Venta iniciada para la mesa " << mesa->getNumero() << endl;
         it->next();
     }
-    delete it;                     // Liberar memoria del iterador
-    this->mesasElegidas = nullptr; // Limpiar las mesas elegidas
+    delete it;                              // Liberar memoria del iterador
+    this->mesasElegidas->clearCollection(); // Limpiar las mesas elegidas
+    this->mesaSeleccionada = nullptr;       // Limpiar la mesa seleccionada
+    this->mozoSeleccionado = nullptr;       // Limpiar el mozo seleccionado
 
     cout << "Todas las mesas elegidas han sido procesadas y se ha iniciado una venta en curso para cada una." << endl;
 }
@@ -643,11 +758,39 @@ void Sistema::darAltaVenta()
 void Sistema::cancelarAltaVenta()
 {
     cout << "Cancelando la alta de venta." << endl;
-    this->mesasElegidas = nullptr;    // Limpiar la variable temporal
-    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
-    this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
+    this->mesasElegidas->clearCollection(); // Limpiar la coleccion temporal
+    this->mesaSeleccionada = nullptr;       // Limpiar la mesa seleccionada
+    this->mozoSeleccionado = nullptr;       // Limpiar el mozo seleccionado
     cout << "No hay mesas elegidas para cancelar." << endl;
 }
+
+DtInfoProducto *Sistema::obtenerProducto(string codigo)
+{
+    IKey *key = new String(codigo.c_str());
+    Producto *producto = (Producto *)this->productos->find(key);
+    delete key; // Liberar memoria del key
+
+    if (producto == nullptr)
+    {
+        throw invalid_argument("El producto con el codigo proporcionado no existe.");
+    }
+
+    int cantidadVentas = 0;
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        Venta *venta = (Venta *)it->getCurrent();
+        if (venta->contieneProducto(producto))
+        {
+            cantidadVentas++;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
+    return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
+}
+
 Sistema::~Sistema()
 {
     delete empleados;
@@ -663,5 +806,5 @@ Sistema::~Sistema()
     }
     tipoProductoSeleccionado = TipoProducto::undefinedTipo;
 
-    instance = NULL; // Limpiar la instancia única
+    instance = NULL; // Limpiar la instancia unica
 }

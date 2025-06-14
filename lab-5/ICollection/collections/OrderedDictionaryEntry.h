@@ -6,7 +6,7 @@
 #include <cstddef>
 
 /**
- * Entrada de OrderedDictionary, es un nodo de un arbol binario de búsqueda
+ * Entrada de OrderedDictionary, es un nodo de un arbol binario de busqueda
  * que se busca por la clave. Almacena un ICollectible
  * @param key la clave almacenada. No cambia
  * @param val el valor almacenado
@@ -22,7 +22,7 @@ public:
             OrderedDictionaryEntry *g = NULL
             );
     
-    // métodos de acceso para miembros
+    // metodos de acceso para miembros
     OrderedKey *getKey();
     ICollectible *getVal();
     void setVal(ICollectible *i);
@@ -33,13 +33,13 @@ public:
     
     
     /**
-     * Da el elemento menor dentro del árbol
+     * Da el elemento menor dentro del arbol
      * @return 
      */
     OrderedDictionaryEntry *getLeastElement();
     
     /**
-     * Da el elemento mayor dentro del árbol
+     * Da el elemento mayor dentro del arbol
      * @return 
      */
     OrderedDictionaryEntry *getGreatestElement();
