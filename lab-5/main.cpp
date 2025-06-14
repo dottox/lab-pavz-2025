@@ -62,7 +62,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "1. Alta de producto" << endl;
         cout << "2. Alta de cliente (No implementado)" << endl;
         cout << "3. Alta de empleado" << endl;
-        cout << "4. Asignar mesas a mozos (No implementado)" << endl;
+        cout << "4. Asignar mesas a mozos" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
         cout << "6. Ventas de un mozo" << endl;
         cout << "7. Informacion de un producto" << endl;
@@ -665,6 +665,41 @@ void ventasMozo(ISistema *s)
     pause();
 }
 
+void asignarMesasMozos(ISistema *s)
+{
+    cleanScreen();
+
+    int cantMozos, cantMesas;
+    cout << "Ingrese la cantidad de mozos a asignar: ";
+    cin >> cantMozos;
+    cin.ignore();
+
+    while (cin.fail() || cantMozos <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMozos;
+        cin.ignore();
+    }
+
+    cout << "Ingrese la cantidad de mesas a asignar: ";
+    cin >> cantMesas;
+    cin.ignore();
+
+    while (cin.fail() || cantMesas <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMesas;
+        cin.ignore();
+    }
+
+    s->asignarMesasMozos(cantMozos, cantMesas);
+    pause();
+}
+
 int main()
 {
     ISistema *s = Factory::getSistema();
@@ -743,6 +778,7 @@ int main()
                         agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos
+                        asignarMesasMozos(s);
                         break;
                     case 5: // Venta a domicilio
                         break;

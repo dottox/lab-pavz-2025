@@ -3,48 +3,50 @@
 #include "OrderedDictionary.h"
 #include "ListIterator.h"
 
-OrderedDictionary::OrderedDictionary(): size(0), root(NULL) {
+OrderedDictionary::OrderedDictionary() : size(0), root(NULL)
+{
 }
 
 void OrderedDictionary::add(IKey *k, ICollectible *val)
 {
     OrderedKey *key = dynamic_cast<OrderedKey *>(k);
-    if(key == NULL)
+    if (key == NULL)
         throw std::invalid_argument("Se esperaba un OrderedKey");
-    
+
     OrderedDictionaryEntry *parent = NULL;
     ComparisonRes parentComparison;
     ComparisonRes comparision;
-    
-    for(OrderedDictionaryEntry *current = root; current != NULL;)
+
+    for (OrderedDictionaryEntry *current = root; current != NULL;)
     {
-        
+
         comparision = key->compare(current->getKey());
-        if(comparision == EQUAL){  // la clave ya esta, se reemplaza
+        if (comparision == EQUAL)
+        { // la clave ya esta, se reemplaza
             current->setVal(val);
             delete k; // la clave no se va a usar, se borra
             return;
         }
-        
+
         parent = current;
         parentComparison = comparision;
-        if(parentComparison == LESSER)
+        if (parentComparison == LESSER)
             current = current->getLesser();
         else
             current = current->getGreater();
     }
-    
+
     ++size;
     OrderedDictionaryEntry *newEntry = new OrderedDictionaryEntry(key, val);
-    if(parent == NULL)
+    if (parent == NULL)
         root = newEntry;
-    else if(parentComparison == GREATER)
+    else if (parentComparison == GREATER)
         parent->setGreater(newEntry);
     else
         parent->setLesser(newEntry);
 }
 
-bool OrderedDictionary::member(IKey *k)  const
+bool OrderedDictionary::member(IKey *k) const
 {
     return find(k) != NULL;
 }
@@ -52,56 +54,66 @@ bool OrderedDictionary::member(IKey *k)  const
 void OrderedDictionary::remove(IKey *k)
 {
     OrderedKey *key = dynamic_cast<OrderedKey *>(k);
-    if(key == NULL)
+    if (key == NULL)
         throw std::invalid_argument("Se esperaba un OrderedKey");
-    
+
     OrderedDictionaryEntry *parent = NULL;
     OrderedDictionaryEntry *current = root;
     ComparisonRes parentComparison;
     ComparisonRes comparision;
-    
+
     // busca el elemento a borrar y lo pone en current
-    while(current != NULL)
+    while (current != NULL)
     {
         comparision = key->compare(current->getKey());
-        if(comparision == EQUAL)  // la clave ya esta, se puede borrar
+        if (comparision == EQUAL) // la clave ya esta, se puede borrar
             break;
-        
+
         parent = current;
         parentComparison = comparision;
-        if(parentComparison == LESSER)
+        if (parentComparison == LESSER)
             current = current->getLesser();
         else
             current = current->getGreater();
     }
 
-    if(current == NULL) // no se encontro la clave, no se borra
+    if (current == NULL) // no se encontro la clave, no se borra
         return;
-    
+
     --size;
-    
+
     // acomoda el parent si es necesario
     OrderedDictionaryEntry *G = current->getGreater();
     OrderedDictionaryEntry *L = current->getLesser();
-    
-    if(parent == NULL){ // se borra la raiz
-        if(G == NULL) // no hay sub arbol derecho
+
+    if (parent == NULL)
+    {                  // se borra la raiz
+        if (G == NULL) // no hay sub arbol derecho
             root = L;
-        else {
+        else
+        {
             root = G;
             G->getLeastElement()->setLesser(L);
         }
-    } else if(parentComparison == GREATER){
-        if(G != NULL){
+    }
+    else if (parentComparison == GREATER)
+    {
+        if (G != NULL)
+        {
             parent->setGreater(G);
             G->getLeastElement()->setLesser(L);
-        } else 
+        }
+        else
             parent->setGreater(L);
-    } else {
-        if(G != NULL){
+    }
+    else
+    {
+        if (G != NULL)
+        {
             parent->setLesser(G);
             G->getLeastElement()->setLesser(L);
-        } else 
+        }
+        else
             parent->setLesser(L);
     }
 
@@ -111,20 +123,20 @@ void OrderedDictionary::remove(IKey *k)
 ICollectible *OrderedDictionary::find(IKey *k) const
 {
     OrderedKey *key = dynamic_cast<OrderedKey *>(k);
-    if(key == NULL)
+    if (key == NULL)
         throw std::invalid_argument("Se esperaba un OrderedKey");
-    
-    for(OrderedDictionaryEntry *current = root; current != NULL;)
+
+    for (OrderedDictionaryEntry *current = root; current != NULL;)
     {
         ComparisonRes comp = key->compare(current->getKey());
-        if(comp == EQUAL)
-           return current->getVal();
-        else if(comp == LESSER)
+        if (comp == EQUAL)
+            return current->getVal();
+        else if (comp == LESSER)
             current = current->getLesser();
         else
             current = current->getGreater();
     }
-    
+
     return NULL;
 }
 
@@ -138,8 +150,6 @@ int OrderedDictionary::getSize() const
     return size;
 }
 
-
-
 IIterator *OrderedDictionary::getIterator()
 {
     ListNode *head = NULL;
@@ -152,68 +162,77 @@ IIterator *OrderedDictionary::getInverseIterator()
 {
     ListNode *head = NULL;
     makeListReverseOrder(root, head);
-    return new ListIterator(head, true);    
+    return new ListIterator(head, true);
 }
 
 ICollectible *OrderedDictionary::getMax()
 {
-    if(size == 0)
+    if (size == 0)
         throw std::out_of_range("El diccionario esta vacio");
-                
+
     return root->getGreatestElement()->getVal();
 }
 
 ICollectible *OrderedDictionary::getMin()
 {
-    if(size == 0)
+    if (size == 0)
         throw std::out_of_range("El diccionario esta vacio");
-                
+
     return root->getLeastElement()->getVal();
 }
 
-OrderedDictionary::~OrderedDictionary() {
-    if(root != NULL){
+OrderedDictionary::~OrderedDictionary()
+{
+    if (root != NULL)
+    {
         root->deleteInDepth();
         delete root;
     }
 }
 
 void OrderedDictionary::makeListOrder(OrderedDictionaryEntry *entry,
-        ListNode *&head, ListNode *&last){
-    if(entry == NULL)
+                                      ListNode *&head, ListNode *&last)
+{
+    if (entry == NULL)
         return; // arbol vacio, no hay nada que hacer
-    
+
     makeListOrder(entry->getLesser(), head, last);
-    
+
     // pone el elemento actual al final y crea la lista si estaba en NULL
-    if(head == NULL){
+    if (head == NULL)
+    {
         head = new ListNode(entry->getVal());
         last = head;
-    } else {
+    }
+    else
+    {
         ListNode *entryNode = new ListNode(entry->getVal());
         last->setNext(entryNode);
         last = entryNode;
     }
-    
+
     makeListOrder(entry->getGreater(), head, last);
 }
 
 void OrderedDictionary::makeListReverseOrder(OrderedDictionaryEntry *entry,
-        ListNode *&head)
+                                             ListNode *&head)
 {
-    if(entry == NULL)
+    if (entry == NULL)
         return; // arbol vacio, no hay nada que hacer
-    
+
     makeListReverseOrder(entry->getLesser(), head);
-    
+
     // pone el elemento actual al final y crea la lista si estaba en NULL
-    if(head == NULL){
+    if (head == NULL)
+    {
         head = new ListNode(entry->getVal());
-    } else {
+    }
+    else
+    {
         ListNode *entryNode = new ListNode(entry->getVal());
         entryNode->setNext(head);
         head = entryNode;
     }
-    
+
     makeListReverseOrder(entry->getGreater(), head);
 }
