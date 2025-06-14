@@ -13,6 +13,7 @@ Sistema *Sistema::instance = NULL;
 Sistema::Sistema()
 {
     this->empleados = new OrderedDictionary();
+    this->clientes = new OrderedDictionary();
     this->mesas = new OrderedDictionary();
     this->productos = new OrderedDictionary();
     this->ventas = new OrderedDictionary();
@@ -359,8 +360,21 @@ void Sistema::poblarSistema()
     this->productos->add(new String(menu1->getCodigo()), menu1);
 
     // Crear cliente
-    cout << "Crear cliente: ";
-    DtCliente *cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
+    cout << "Creando clientes con casa" << endl;
+    DtCliente *cliente1 = new DtCliente("Carlos", 123456789, DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2"));
+    DtCliente *cliente2 = new DtCliente("Ana", 987654321, DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4"));
+    DtCliente *cliente3 = new DtCliente("Luis", 555123456, DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera"));
+    DtCliente *cliente4 = new DtCliente("Sofia", 222333444, DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6"));
+    DtCliente *cliente5 = new DtCliente("Miguel", 888777666, DtDireccionCasa("Av. Italia", "2020", "Esq. Propios"));
+    DtCliente *cliente6 = new DtCliente("Lucia", 444555666, DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8"));
+
+    cout << "Creando clientes con dpto" << endl;
+    DtCliente *cliente1 = new DtCliente("Carlos", 123456789, DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2"));
+    DtCliente *cliente2 = new DtCliente("Ana", 987654321, DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4"));
+    DtCliente *cliente3 = new DtCliente("Luis", 555123456, DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera"));
+    DtCliente *cliente4 = new DtCliente("Sofia", 222333444, DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6"));
+    DtCliente *cliente5 = new DtCliente("Miguel", 888777666, DtDireccionCasa("Av. Italia", "2020", "Esq. Propios"));
+    DtCliente *cliente6 = new DtCliente("Lucia", 444555666, DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8"));
 
     // Crear ventas
     cout << "Crear Ventas: ";
@@ -779,6 +793,24 @@ DtInfoProducto *Sistema::obtenerProducto(string codigo)
     delete it; // Liberar memoria del iterador
     cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
     return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
+}
+
+void Sistema::agregarCliente(string nombre, int telefono, string calle, string numero, string entre_calles)
+{
+    DtDireccionCasa direccion = DtDireccionCasa(calle, numero, entre_calles);
+    DtCliente clienteDatos = DtCliente(nombre, telefono, direccion);
+
+    // Verificar si el cliente ya existe
+    IKey *key = new Integer(clienteDatos.getTelefono());
+    if (this->empleados->member(key))
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El cliente ya existe en el sistema.");
+    }
+
+    Cliente * cliente = new Cliente(clienteDatos); 
+    
+    this->clientes->add(key, cliente);
 }
 
 Sistema::~Sistema()

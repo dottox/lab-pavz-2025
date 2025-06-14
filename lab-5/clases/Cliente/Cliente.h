@@ -1,11 +1,15 @@
 #pragma once
 #include <iostream>
-#include "../../datatypes/Direccion/DtDireccion.h"
+
+#include "../../ICollection/interfaces/ICollectible.h"
 #include "../../datatypes/Cliente/DtCliente.h"
+#include "../../datatypes/Direccion/DtDireccion.h"
+#include "../../datatypes/Direccion/DtDireccionCasa.h"
+#include "../../datatypes/Direccion/DtDireccionApto.h"
 
 using namespace std;
 
-class Cliente
+class Cliente : public ICollectible
 {
 private:
     string nombre;

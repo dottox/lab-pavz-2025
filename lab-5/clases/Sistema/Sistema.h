@@ -11,6 +11,7 @@ private:
     static Sistema *instance;
 
     IDictionary *empleados;
+    IDictionary *clientes;
     IDictionary *ventas;
     IDictionary *mesas;
     IDictionary *productos;
@@ -222,6 +223,12 @@ public:
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
+    void agregarCliente(string, int, string, string, string); // Agrega un cliente al sistema con Casa
+    void agregarCliente(string, int, string, string, string, string, string); // Agrega un cliente al sistema con Dpto 
+    virtual void mostrarClienteTemporal() = 0; 
+    virtual void darAltaCliente() = 0;
+    virtual void cancelarAltaCliente() = 0;
+    
     static Sistema *getInstance();
     ~Sistema();
 };

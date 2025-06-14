@@ -15,11 +15,15 @@
 #include "../Venta/VentaLocal.h"
 #include "../Venta/VentaDomicilio.h"
 
+#include "../Cliente/Cliente.h"
+
 #include "../../datatypes/Factura/DtFacturaLocal.h"
 #include "../../datatypes/Producto/DtPlato.h"
 #include "../../datatypes/Producto/DtMenu.h"
 #include "../../datatypes/Informe/DtInforme.h"
 #include "../../datatypes/InfoProducto/DtInfoProducto.h"
+#include "../../datatypes/Fecha/DtFecha.h"
+
 
 #include "../../enums/TipoProducto.h"
 #include "../../enums/ActorMenu.h"
@@ -231,4 +235,9 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
+    virtual void agregarCliente(string, int, string, string, string) = 0; 
+    virtual void agregarCliente(string, int, string, string, string, string, string) = 0; 
+    virtual void mostrarClienteTemporal() = 0; 
+    virtual void darAltaCliente() = 0;
+    virtual void cancelarAltaCliente() = 0;
 };

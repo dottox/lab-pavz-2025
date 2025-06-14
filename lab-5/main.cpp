@@ -459,6 +459,8 @@ void iniciarVenta(ISistema *s)
     bool flag = true;
     int mesaElegida, confirmar;
 
+    s->listarMozos();
+
     cout << "Ingrese el ID del empleado que inicia la venta: ";
     cin >> idEmpleado;
     cin.ignore();
@@ -610,7 +612,6 @@ void informacionProducto(ISistema *s)
 void ventasMozo(ISistema *s)
 {
     cleanScreen();
-
     try
     {
         s->listarMozos();
@@ -657,6 +658,234 @@ void ventasMozo(ISistema *s)
         }
 
         s->mostrarVentasMozo(dtFechaInicio, dtFechaFin);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
+}
+
+void altaCliente(ISistema *s)
+{
+    cleanScreen();
+
+    string nombre;
+    int telefono;
+    bool mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese los datos del cliente:" << endl;
+        cout << "Nombre: ";
+        cin >> nombre;
+        cin.ignore();
+
+        if (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El nombre no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        try
+        {
+            stoi(nombre);
+            cout << "El nombre no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es un nombre valido
+        }
+
+        cout << "Telefono: ";
+        cin >> telefono;
+        cin.ignore();
+
+        if (cin.fail() || telefono <= 0 || to_string(telefono).length() != 9)
+        {
+            cout << "El telefono debe ser un numero y debe contener 9 digitos." << endl;
+            limpiarCin();
+            continue;
+        }
+        mantener = false; // Salir del bucle si el nombre y telefono son validos
+    }
+
+    string calle, numero, entre_calles, nombre_edificio, numero_apto; // Direccion del cliente (para armar el DtDireccion)
+    int esCasa = 1;                                                   // Por defecto, asumimos que es una casa (1. Si, 2. No)
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese la direccion del cliente:" << endl;
+        cout << "Calle: ";
+        cin >> calle;
+        cin.ignore();
+
+        if (cin.fail() || calle.empty() || calle.find_first_not_of(' ') == string::npos)
+        {
+            cout << "La calle no puede estar vacia." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(calle);
+            cout << "La calle no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una calle valida
+        }
+
+        cout << "Numero: ";
+        cin >> numero;
+        cin.ignore();
+
+        if (cin.fail() || numero.empty() || numero.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El numero no puede estar vacio." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        cout << "Entre calles (opcional, ingrese '0' para omitir): ";
+        cin >> entre_calles;
+        cin.ignore();
+
+        if (entre_calles == "0")
+        {
+            entre_calles = ""; // Si el usuario ingresa '0', se omite este campo
+        }
+        else if (entre_calles.empty() || entre_calles.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Las entre calles no pueden estar vacias." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(entre_calles);
+            if (entre_calles != "0")
+            {
+                cout << "Las entre calles no pueden ser un numero." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una entre calle valida
+        }
+
+        cout << "Es una casa? (1. Si, 2. No): ";
+        cin >> esCasa;
+        cin.ignore();
+
+        if (cin.fail() || (esCasa != 1 && esCasa != 2))
+        {
+            cout << "Opcion invalida. Debe ser 1 o 2." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        if (esCasa == 2)
+        {
+            cout << "Nombre del edificio: ";
+            cin >> nombre_edificio;
+            cin.ignore();
+
+            if (nombre_edificio.empty() || nombre_edificio.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El nombre del edificio no puede estar vacio." << endl;
+                limpiarCin();
+                continue;
+            }
+
+            try
+            {
+                stoi(nombre_edificio);
+                cout << "El nombre del edificio no puede ser un numero." << endl;
+                limpiarCin();
+                continue;
+            }
+            catch (const invalid_argument &e)
+            {
+                // Si no se puede convertir a entero, es un nombre de edificio valido
+            }
+
+            cout << "Numero de apartamento: ";
+            cin >> numero_apto;
+            cin.ignore();
+
+            if (cin.fail() || numero_apto.empty() || numero_apto.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El numero de apartamento no puede estar vacio." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        else
+        {
+            nombre_edificio = "";
+            numero_apto = "";
+        }
+
+        mantener = false; // Salir del bucle si la direccion es valida
+    }
+
+    if (esCasa == 1)
+    {
+        s->agregarCliente(nombre, telefono, calle, numero, entre_calles); // Crear el cliente con direccion casa.
+    }
+    else
+    {
+        s->agregarCliente(nombre, telefono, calle, numero, entre_calles, nombre_edificio, numero_apto); // Crear el cliente con direccion departamento.
+    }
+
+    int confirmar; //  Confirmacion de alta del cliente
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        s->mostrarClienteTemporal();
+
+        cout << "Dar de alta? (1. Si, 2. No): ";
+        cin >> confirmar;
+        cin.ignore();
+
+        if (cin.fail() || (confirmar != 1 && confirmar != 2))
+        {
+            limpiarCin();
+            continue;
+        }
+
+        mantener = false;
+    }
+
+    cleanScreen();
+
+    if (confirmar == 2)
+    {
+        s->cancelarAltaCliente();
+        cout << "Alta de cliente cancelada." << endl;
+        pause();
+        return;
+    }
+
+    try
+    {
+        s->darAltaCliente();
+        cout << "Cliente creado exitosamente." << endl;
     }
     catch (const invalid_argument &e)
     {
@@ -738,6 +967,7 @@ int main()
                         altaProducto(s);
                         break;
                     case 2: // Alta Cliente
+                        altaCliente(s);
                         break;
                     case 3:
                         agregarEmpleado(s);

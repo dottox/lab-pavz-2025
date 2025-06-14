@@ -9,6 +9,6 @@ class DtDireccionCasa : public DtDireccion
 {
 private:
 public:
-    DtDireccionCasa(string, int, string);
+    DtDireccionCasa(string, string, string);
     virtual ~DtDireccionCasa();
 };

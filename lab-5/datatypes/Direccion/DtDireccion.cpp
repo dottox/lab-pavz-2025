@@ -2,7 +2,7 @@
 
 DtDireccion::DtDireccion() {}
 
-DtDireccion::DtDireccion(string calle, int numero, string entreCalles)
+DtDireccion::DtDireccion(string calle, string numero, string entreCalles)
 {
     this->calle = calle;
     this->numero = numero;
@@ -14,7 +14,7 @@ string DtDireccion::getCalle()
     return this->calle;
 }
 
-int DtDireccion::getNumero()
+string DtDireccion::getNumero()
 {
     return this->numero;
 }
