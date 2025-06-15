@@ -784,6 +784,22 @@ DtInfoProducto *Sistema::obtenerProducto(string codigo)
 
 // ####### --------------- ASIGNAR MESAS MOZO --------------- #######
 
+bool Sistema::hayVentasEnCurso(){
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        Venta *venta = (Venta *)it->getCurrent();
+        if (!venta->estaFacturada())
+        {
+            delete it; // Liberar memoria del iterador
+            return true; // Hay al menos una venta en curso
+        }
+        it->next();
+    }
+    delete it; 
+    return false; // No hay ventas en curso
+}
+
 void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 {
     if (cantMozos > cantMesas)
@@ -796,20 +812,10 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
     }
 
-    IIterator *it = this->ventas->getIterator();
-
-    // Verificar que no haya ventas en curso
-    while (it->hasCurrent())
+    if (hayVentasEnCurso())
     {
-        Venta *venta = (Venta *)it->getCurrent();
-        if (!venta->estaFacturada())
-        {
-            throw invalid_argument("No se pueden asignar mesas a mozos mientras haya ventas en curso.");
-        }
-        it->next();
+        throw invalid_argument("No se pueden asignar mesas a mozos mientras haya ventas en curso.");
     }
-
-    delete it; // Liberar memoria del iterador
 
     IIterator *itMesas = this->mesas->getIterator();
     IDictionary *mesasDisponibles = new OrderedDictionary();
@@ -853,12 +859,14 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 
     if (contadorMozos < cantMozos)
     {
+        mesasDisponibles->clearDictionary();
         delete mesasDisponibles; // Liberar memoria del diccionario de mesas
         throw invalid_argument("No hay suficientes mozos para asignar a las mesas.");
     }
 
     if (contadorMesas < cantMesas)
     {
+        mesasDisponibles->clearDictionary();
         delete mesasDisponibles; // Liberar memoria del diccionario de mesas
         throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
     }
@@ -883,7 +891,6 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
                     mozo->setMesaAsignada(mesa);
                     DtAsignacion *dtAsignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
                     asignaciones->add(dtAsignacion);
-                    mesa->setMozo(mozo);
                     mozo->incrementarCantidadMesasAsignadas();
                     restoMesas--;
                 }
@@ -895,6 +902,10 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         }
         itMesasDisponibles->next();
     }
+    delete itMozos2;           
+    delete itMesasDisponibles; 
+    mesasDisponibles->clearDictionary();
+    delete mesasDisponibles;   
 
     IIterator *itAsignaciones = asignaciones->getIterator();
     while (itAsignaciones->hasCurrent())
@@ -906,11 +917,10 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         }
         itAsignaciones->next();
     }
+    delete itAsignaciones;     
 
-    delete itAsignaciones;     // Liberar memoria del iterador de asignaciones
-    delete itMozos2;           // Liberar memoria del iterador de mozos
-    delete itMesasDisponibles; // Liberar memoria del iterador de mesas disponibles
-    delete mesasDisponibles;   // Liberar memoria del diccionario de mesas
+    asignaciones->clearCollection(); // Primo vaciamos la coleccion y luego la limpiamos para no eliminar mozos ni mesas
+    delete asignaciones;    
 }
 
 Sistema::~Sistema()

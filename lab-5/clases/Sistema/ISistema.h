@@ -224,6 +224,7 @@ public:
      * @param int --> Numero del mozo.
      * @param int --> Numero de mesas a asignar.
      */
+    virtual bool hayVentasEnCurso() = 0;
     virtual void asignarMesasMozos(int, int) = 0;
 
     /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######

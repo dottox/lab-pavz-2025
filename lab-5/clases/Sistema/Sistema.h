@@ -186,6 +186,7 @@ public:
      * @param int --> Numero del mozo.
      * @param int --> Numero de mesas a asignar.
      */
+    bool hayVentasEnCurso();
     void asignarMesasMozos(int, int);
 
     /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######

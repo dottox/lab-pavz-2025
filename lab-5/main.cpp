@@ -697,6 +697,7 @@ void asignarMesasMozos(ISistema *s)
     }
 
     s->asignarMesasMozos(cantMozos, cantMesas);
+
     pause();
 }
 

@@ -37,6 +37,18 @@ public:
     void remove(IKey *k);
 
     /**
+     * Saca el miembro del diccionario, sin deletear el objeto
+     * @param k la clave a buscar. Debe ser una instancia de OrderedKey
+     */
+    void setNull(IKey *k);
+
+    /**
+     * Vacía el diccionario, no se borra ningun objeto
+     * @param k la clave a buscar
+     */
+    void clearDictionary();
+
+    /**
      * Busca un elemento en el diccionario
      * @param k la clave a buscar. Debe ser una instancia de OrderedKey
      * @return el ICollectible que se agrego con add o NULL si no hay tal objeto
