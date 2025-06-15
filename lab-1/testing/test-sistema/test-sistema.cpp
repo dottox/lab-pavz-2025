@@ -3,26 +3,26 @@
 
 using namespace std;
 
-// DOCUMENTACIÓN DEL TESTEO
+// DOCUMENTACIoN DEL TESTEO
 // SE TESTEAN LOS SIGUIENTES REQUERIMIENTOS:
 // 1. Agregar socio
 //   - Agregar socio con CI de otro socio
-//   - Agregar socio sobre el máximo de socios
+//   - Agregar socio sobre el maximo de socios
 // 2. Agregar clase
 //   - Agregar clase que ya existe
-//   - Agregar clase superando el máximo de clases
-// 3. Agregar inscripción
-//   - Agregar inscripción con un socio inválido
-//   - Agregar inscripción con una clase inválida
-//   # TODO: Agregar inscripcion sin más cupos en la clase
-//   - Agregar inscripción que ya existe
-// 4. Obtener información de socios por clase
-//   - Obtener información de más socios de los que tiene la clase
-//   - Obtener información de cantidad negativa de socios
-//   - Obtener información de 0 socios
+//   - Agregar clase superando el maximo de clases
+// 3. Agregar inscripcion
+//   - Agregar inscripcion con un socio invalido
+//   - Agregar inscripcion con una clase invalida
+//   # TODO: Agregar inscripcion sin mas cupos en la clase
+//   - Agregar inscripcion que ya existe
+// 4. Obtener informacion de socios por clase
+//   - Obtener informacion de mas socios de los que tiene la clase
+//   - Obtener informacion de cantidad negativa de socios
+//   - Obtener informacion de 0 socios
 // 5. Obtener clase
-//   - Obtener clase con ID válido
-//   - Obtener clase con ID inválido
+//   - Obtener clase con ID valido
+//   - Obtener clase con ID invalido
 
 
 
@@ -48,10 +48,10 @@ int main() {
     sistema->agregarSocio("12345670", "Juancho");
 
 
-    // TC-002: Test de agregar socio sobre el máximo de socios
+    // TC-002: Test de agregar socio sobre el maximo de socios
     try {
       sistema->agregarSocio("12312312", "Gonzalo");
-      throw runtime_error("Error: Se permitio agregar un socio superando el limite máximo");
+      throw runtime_error("Error: Se permitio agregar un socio superando el limite maximo");
     } catch(const invalid_argument& e) {
         cout << "TC-002 paso correctamente." << endl;
     } catch (const runtime_error& e) {
@@ -84,7 +84,7 @@ int main() {
 
     sistema->agregarClase(clase3);
 
-    // TC-004: Test de agregar una clase superando el máximo de clases
+    // TC-004: Test de agregar una clase superando el maximo de clases
     try{
         DtSpinning clase4 = DtSpinning(4, "Spinning", Manana, 10);
         sistema->agregarClase(clase4);
@@ -110,7 +110,7 @@ int main() {
     sistema->agregarInscripcion("12345679", 1, date2);
     sistema->agregarInscripcion("12345670", 1, date3);
 
-    // TC-005: Agregar una inscripción con un socio inválido
+    // TC-005: Agregar una inscripcion con un socio invalido
     try{
         sistema->agregarInscripcion("00001111", 1, date4);
         throw runtime_error("Error: Se permitio agregar una inscripcion con un socio invalido");
@@ -120,7 +120,7 @@ int main() {
         terminate();
     }
 
-    // TC-006: Agregar una inscripción con una clase inválida
+    // TC-006: Agregar una inscripcion con una clase invalida
     try{
         sistema->agregarInscripcion("12345678", 1337, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion con una clase invalida");
@@ -132,7 +132,7 @@ int main() {
 
     // TC-007: TODO: Añadir testeo de cupos en una clase
 
-    // TC-008: Agregar una inscripción que ya existe
+    // TC-008: Agregar una inscripcion que ya existe
     try{
         sistema->agregarInscripcion("12345678", 1, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion que ya existe");
@@ -150,33 +150,33 @@ int main() {
     delete[] oISPC_test;
     
     
-    // TC-009: Obtener información de más socios de los que tiene la clase
+    // TC-009: Obtener informacion de mas socios de los que tiene la clase
     try{
         int cantOverMax = 999;
         DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantOverMax);
-        throw runtime_error("Error: Se permitio saber la información de más socios de los que tiene la clase");
+        throw runtime_error("Error: Se permitio saber la informacion de mas socios de los que tiene la clase");
     } catch(const invalid_argument& e){
         cout << "TC-009 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
 
-    // TC-010: Obtener información socios negativos
+    // TC-010: Obtener informacion socios negativos
     try{
         int cantBelowZero = -999;
         DtSocio** tc_zero_ten = sistema->obtenerInfoSociosPorClase(1, cantBelowZero);
-        throw runtime_error("Error: Se permitio saber la información de cantidad negativa de socios");
+        throw runtime_error("Error: Se permitio saber la informacion de cantidad negativa de socios");
     } catch(const invalid_argument& e){
         cout << "TC-010 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
 
-    // TC-011: Obtener información de 0 socios
+    // TC-011: Obtener informacion de 0 socios
     try{
         int cantZero = 0;
         DtSocio** tc_zero_eleven = sistema->obtenerInfoSociosPorClase(1, cantZero);
-        throw runtime_error("Error: Se permitio saber la información de 0 socios");
+        throw runtime_error("Error: Se permitio saber la informacion de 0 socios");
     } catch(const invalid_argument& e){
         cout << "TC-011 paso correctamente." << endl;
     } catch (const runtime_error& e){
@@ -184,21 +184,21 @@ int main() {
     }
         // --------------------- OBTENER CLASE -----------------------------
     
-    // TC-012: Obtener clase con ID válido
+    // TC-012: Obtener clase con ID valido
     DtClase tc_zero_twelve = sistema->obtenerClase(1);
     cout << "TC-012 paso correctamente." << endl;
     
-    // TC-013: Obtener clase con ID inválido
+    // TC-013: Obtener clase con ID invalido
     try{
         DtClase tc_zero_thirteen = sistema->obtenerClase(1337);
-        throw runtime_error("Error: Se obtuvo la clase con id Inválido");
+        throw runtime_error("Error: Se obtuvo la clase con id Invalido");
     } catch(const invalid_argument& e){
         cout << "TC-013 paso correctamente." << endl;
     } catch (const runtime_error& e){
         terminate();
     }
     // --------------------- BORRAR INSCRIPCION -----------------------------
-    // TC-014: Borrar inscripción con ID inválido
+    // TC-014: Borrar inscripcion con ID invalido
     try{
         sistema->borrarInscripcion("00001111", 1);
         throw runtime_error("Error: Se permitio borrar una inscripcion con un socio invalido");
@@ -208,7 +208,7 @@ int main() {
         terminate();
     }
 
-    // TC-015: Borrar inscripción con clase inválida
+    // TC-015: Borrar inscripcion con clase invalida
 
     try{
         sistema->borrarInscripcion("12345678", 1337);
@@ -219,7 +219,7 @@ int main() {
         terminate();
     }
 
-    // TC-016: Borrar inscripción que no existe
+    // TC-016: Borrar inscripcion que no existe
 
     try{
         
@@ -231,7 +231,7 @@ int main() {
         terminate();
     }
 
-    // TC-017: Borrar inscripción que existe
+    // TC-017: Borrar inscripcion que existe
 
     
     sistema->borrarInscripcion("12345678", 1);

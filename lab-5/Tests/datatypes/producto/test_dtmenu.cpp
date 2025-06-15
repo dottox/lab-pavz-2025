@@ -8,7 +8,7 @@ using namespace std;
 TEST_CASE("Test DtMenu - Constructor and Getters")
 {
 
-    DtMenu *menu = new DtMenu((char *)"M001", "Menu Ejecutivo", 25.00f);
+    DtMenu *menu = new DtMenu((char *)"M001", "Menu Ejecutivo");
     CHECK(string(menu->getCodigo()) == "M001");
     CHECK(menu->getDescripcion() == "Menu Ejecutivo");
     CHECK(menu->getTipo() == TipoProducto::TipoMenu);

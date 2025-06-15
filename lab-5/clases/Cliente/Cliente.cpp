@@ -32,6 +32,11 @@ void Cliente::setDireccion(DtDireccion direccion)
     this->direccion = direccion;
 }
 
+void Cliente::setNombre(string nombre)
+{
+    this->nombre = nombre;
+}
+
 Cliente::~Cliente()
 {
     // Destructor implementation (if needed)
