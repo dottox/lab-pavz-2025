@@ -2,10 +2,6 @@
 
 #include "../../utils/utils.h"
 
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../ICollection/String.h"
-#include "../../ICollection/interfaces/IKey.h"
-
 Venta::Venta()
 {
     this->codigo = utils::generarNumeroVenta();
@@ -31,10 +27,31 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-// Producto **Venta::getProductos()
-// {
-//     // return this->productos;
-// }
+ICollection * Venta::getProductos()
+{
+    ICollection *productos = new List();
+    IIterator * it = this->productosConsumidos->getIterator();
+
+    while(it->hasCurrent()){
+        ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+        Producto* p = productoVenta->getProducto(); 
+        Plato* plato = dynamic_cast<Plato *>(p);
+        if(plato  != nullptr) {
+            DtPlato* dtPlato = new DtPlato(p->getCodigo(), p->getDescripcion(), p->getPrecio());
+            productos->add(dtPlato);
+        } else {
+            Menu* menu = dynamic_cast<Menu *>(p);
+            if(menu != nullptr) {
+                DtMenu* dtMenu = new DtMenu(p->getCodigo(), p->getDescripcion(), p->getPrecio());
+                productos->add(dtMenu);
+            }
+        }
+        it->next();
+    }
+    
+    delete it; 
+    return productos; 
+}
 
 int Venta::getCantidadProductos()
 {
@@ -63,18 +80,16 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
 
-    ProductoVenta *productoVenta = new ProductoVenta(
-        producto->getDescripcion(),
-        cantidad,
-        producto->getPrecio(),
-        producto);
+    int nuevoPrecio = producto->getPrecio() * cantidad;
+
+    ProductoVenta *productoVenta = new ProductoVenta(producto->getCodigo(), cantidad, nuevoPrecio, producto);
 
     cout << "Producto agregado: " << productoVenta->getDescripcion()
          << ", Cantidad: " << productoVenta->getCantidad()
-         << ", Precio: " << productoVenta->getPrecio() << endl;
+         << ", Precio: " << nuevoPrecio << endl;
 
     // Assuming productos is an OrderedDictionary
-    IKey *key = new String(producto->getDescripcion().c_str());
+    IKey *key = new String(producto->getCodigo());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
 }

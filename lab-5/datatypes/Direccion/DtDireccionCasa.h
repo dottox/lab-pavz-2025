@@ -9,6 +9,7 @@ class DtDireccionCasa : public DtDireccion
 {
 private:
 public:
-    DtDireccionCasa(string, int, string);
+    DtDireccionCasa(string, string, string);
+    friend ostream& operator<<(ostream&, const DtDireccionCasa&);
     virtual ~DtDireccionCasa();
 };
