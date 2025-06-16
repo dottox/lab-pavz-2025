@@ -326,6 +326,7 @@ void facturacionDia(ISistema *s)
     string fecha;
     cout << "Ingrese la fecha para la facturacion del dia (DD/MM/AAAA): ";
     cin >> fecha;
+    cin.ignore();
 
     while (fecha.size() != 10 || fecha[2] != '/' || fecha[5] != '/')
     {
@@ -344,8 +345,14 @@ void facturacionDia(ISistema *s)
 
 void agregarProductoAVenta(ISistema *s)
 {
-    cout << "Sin implementar por el momento." << endl;
-    pause();
+    cleanScreen();
+    int numeroMesa;
+
+    cout << "Ingrese el numero de la mesa a la que desea agregar un producto: ";
+    cin >> numeroMesa;
+    cin.ignore();
+
+    
 }
 
 void agregarEmpleado(ISistema *s)
@@ -1052,6 +1059,7 @@ int main()
                         iniciarVenta(s);
                         break;
                     case 2: // Agregar producto a una venta
+                        agregarProductoAVenta(s);
                         break;
                     case 3: // Quitar producto de una venta
                         break;
