@@ -36,10 +36,11 @@ private:
 
 public:
     Venta();
+    Venta(int, float, IDictionary *);
     int getCodigo();
     float getSubtotal();
     int getDescuento();
-    ICollection * getProductos(); // retornar una coleccion con los productosConsumidos
+    ICollection *getProductos(); // retornar una coleccion con los productosConsumidos
     int getCantidadProductos();
     bool estaFacturada();
     void setSubtotal(float);
@@ -47,6 +48,7 @@ public:
     void agregarProducto(Producto *, int);
     DtFacturaLocal generarFactura(string);
     DtFacturaLocal mostrarFacturaLocal();
+    DtFacturaDomicilio generarFacturaDomicilio(string, Transporte);
     DtFacturaDomicilio mostrarFacturaDomicilio();
     bool contieneProducto(Producto *producto);
     Factura *getFactura();

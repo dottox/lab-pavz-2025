@@ -1,16 +1,34 @@
 #include "ProductoVenta.h"
 
-ProductoVenta::ProductoVenta(string descripcion, int cantidad, float precio, Producto *producto)
+ProductoVenta::ProductoVenta(char *codigoProducto, TipoProducto tipoProducto, string descripcion, float precio, int cantidad)
 {
+    this->codigoProducto = codigoProducto;
+    this->tipo = tipoProducto;
     this->descripcion = descripcion;
-    this->cantidad = cantidad;
     this->precio = precio;
-    this->producto = producto;
+    this->cantidad = cantidad;
 }
 
-Producto *ProductoVenta::getProducto()
+DtProducto *ProductoVenta::getProducto()
 {
-    return this->producto;
+    if (this->tipo == TipoProducto::TipoPlato)
+    {
+        return new DtPlato(this->codigoProducto, this->descripcion, this->precio);
+    }
+    else
+    {
+        return new DtMenu(this->codigoProducto, this->descripcion, this->precio);
+    }
+}
+
+char *ProductoVenta::getCodigoProducto()
+{
+    return this->codigoProducto;
+}
+
+TipoProducto ProductoVenta::getTipo()
+{
+    return this->tipo;
 }
 
 int ProductoVenta::getCantidad()
@@ -20,12 +38,12 @@ int ProductoVenta::getCantidad()
 
 float ProductoVenta::getPrecio()
 {
-    return this->producto->getPrecio();
+    return this->precio;
 }
 
 string ProductoVenta::getDescripcion()
 {
-    return this->producto->getDescripcion();
+    return this->descripcion;
 }
 
 void ProductoVenta::setCantidad(int cantidad)

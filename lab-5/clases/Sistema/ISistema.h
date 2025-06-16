@@ -235,11 +235,30 @@ public:
 
     /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######
 
+    // ####### --------------- INICIO CASO DE USO VENTA DOMICILIO --------------- #######
+
+    virtual bool existeCliente(int) = 0;
+
+    virtual void seleccionarCliente(int) = 0;
+
+    virtual void ventaDomicilio() = 0;
+
+    virtual void seleccionarProductoDomicilio(string, int) = 0;
+
+    virtual void seleccionarRepartidor(int) = 0;
+
+    virtual DtFacturaDomicilio generarFacturaDomicilio() = 0;
+
+    virtual void cancelarVentaDomicilio() = 0;
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
+
     virtual void addMesaElegida() = 0;
     virtual ICollection *getMesasElegidas() = 0;
     virtual void mostrarMesasElegidas(bool) = 0;
     virtual void listarEmpleados() = 0;
     virtual void listarMozos() = 0;
+    virtual void listarRepartidores() = 0;
     virtual void listarVentas() = 0;
     virtual void listarMesas() = 0;
     virtual void listarProductos() = 0;
@@ -250,8 +269,8 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
-    virtual void agregarCliente(string, int, DtDireccion) = 0; 
-    virtual void mostrarClienteTemporal() = 0; 
+    virtual void agregarCliente(string, int, DtDireccion) = 0;
+    virtual void mostrarClienteTemporal() = 0;
     virtual void darAltaCliente() = 0;
     virtual void cancelarAltaCliente() = 0;
 };

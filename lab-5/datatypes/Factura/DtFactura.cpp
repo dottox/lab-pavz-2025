@@ -2,9 +2,9 @@
 
 DtFactura::DtFactura() {}
 
+// Para crear una factura
 DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal)
 {
-    this->codigo = -1; // Default value for codigo
     this->codigoVenta = codigoVenta;
     this->fecha = fecha;
     this->hora = hora;
@@ -15,6 +15,7 @@ DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *p
     this->ivaTotal = ivaTotal;
 }
 
+// Para mostrar una factura existente
 DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal)
 {
     this->codigo = codigo;

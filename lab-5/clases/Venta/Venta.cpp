@@ -12,6 +12,21 @@ Venta::Venta()
     this->productosConsumidos = new OrderedDictionary();
 }
 
+Venta::Venta(int cantidadProductos, float subtotal, IDictionary *productosConsumidos)
+{
+    this->codigo = utils::generarNumeroVenta();
+    this->subtotal = subtotal;
+    this->descuento = 0;
+    this->cantidadProductos = cantidadProductos;
+    this->factura = nullptr;
+    this->productosConsumidos = productosConsumidos;
+
+    if (this->productosConsumidos == nullptr)
+    {
+        this->productosConsumidos = new OrderedDictionary();
+    }
+}
+
 int Venta::getCodigo()
 {
     return this->codigo;
@@ -27,30 +42,21 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-ICollection * Venta::getProductos()
+ICollection *Venta::getProductos()
 {
     ICollection *productos = new List();
-    IIterator * it = this->productosConsumidos->getIterator();
+    IIterator *it = this->productosConsumidos->getIterator();
 
-    while(it->hasCurrent()){
+    while (it->hasCurrent())
+    {
         ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
-        Producto* p = productoVenta->getProducto(); 
-        Plato* plato = dynamic_cast<Plato *>(p);
-        if(plato  != nullptr) {
-            DtPlato* dtPlato = new DtPlato(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-            productos->add(dtPlato);
-        } else {
-            Menu* menu = dynamic_cast<Menu *>(p);
-            if(menu != nullptr) {
-                DtMenu* dtMenu = new DtMenu(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-                productos->add(dtMenu);
-            }
-        }
+        DtProducto *producto = productoVenta->getProducto();
+        productos->add(producto);
         it->next();
     }
-    
-    delete it; 
-    return productos; 
+
+    delete it;
+    return productos;
 }
 
 int Venta::getCantidadProductos()
@@ -80,13 +86,16 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
 
-    int nuevoPrecio = producto->getPrecio() * cantidad;
-
-    ProductoVenta *productoVenta = new ProductoVenta(producto->getCodigo(), cantidad, nuevoPrecio, producto);
+    ProductoVenta *productoVenta = new ProductoVenta(
+        producto->getCodigo(),
+        producto->getTipo(),
+        producto->getDescripcion(),
+        producto->getPrecio(),
+        cantidad);
 
     cout << "Producto agregado: " << productoVenta->getDescripcion()
          << ", Cantidad: " << productoVenta->getCantidad()
-         << ", Precio: " << nuevoPrecio << endl;
+         << ", Precio: " << productoVenta->getPrecio() << endl;
 
     // Assuming productos is an OrderedDictionary
     IKey *key = new String(producto->getCodigo());
@@ -117,7 +126,6 @@ DtFacturaLocal Venta::generarFactura(string nombreMozo)
     DtFacturaLocal facturaLocal = DtFacturaLocal(
         DtFactura(
             this->codigo,
-            this->codigo,
             utils::obtenerFechaActual(),
             utils::obtenerHoraActual(),
             productosConsumidos,
@@ -130,7 +138,46 @@ DtFacturaLocal Venta::generarFactura(string nombreMozo)
     FacturaLocal *factura = new FacturaLocal(facturaLocal);
     this->factura = factura;
 
-    return facturaLocal;
+    return factura->getDatos();
+}
+
+DtFacturaDomicilio Venta::generarFacturaDomicilio(string nombreRepartidor, Transporte transporte)
+{
+    IIterator *it = this->productosConsumidos->getIterator();
+    IDictionary *productosConsumidos = new OrderedDictionary();
+
+    while (it->hasCurrent())
+    {
+        ProductoVenta *productoConsumido = (ProductoVenta *)it->getCurrent();
+        this->subtotal += productoConsumido->getPrecio() * productoConsumido->getCantidad();
+        DtConsumido *consumido = new DtConsumido(
+            productoConsumido->getDescripcion(),
+            productoConsumido->getCantidad(),
+            productoConsumido->getPrecio());
+        IKey *key = new String(productoConsumido->getDescripcion().c_str());
+        productosConsumidos->add(key, consumido);
+        it->next();
+    }
+
+    delete it;
+
+    DtFacturaDomicilio facturaDomicilio = DtFacturaDomicilio(
+        DtFactura(
+            this->codigo,
+            utils::obtenerFechaActual(),
+            utils::obtenerHoraActual(),
+            productosConsumidos,
+            this->subtotal,
+            this->descuento,
+            this->subtotal * (1 - descuento / 100.0f) * (1 + IVA / 100.0f),
+            IVA),
+        nombreRepartidor,
+        transporte);
+
+    FacturaDomicilio *factura = new FacturaDomicilio(facturaDomicilio);
+    this->factura = factura;
+
+    return factura->getDatos();
 }
 
 DtFacturaLocal Venta::mostrarFacturaLocal()

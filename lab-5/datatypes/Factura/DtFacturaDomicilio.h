@@ -14,7 +14,7 @@ private:
 
 public:
     DtFacturaDomicilio();
-    DtFacturaDomicilio(int, DtFecha, DtHora, IDictionary *, float, int, float, float, string, Transporte);
+    DtFacturaDomicilio(DtFactura, string, Transporte);
     string getNombreRepartidor();
     Transporte getTransporte();
     ~DtFacturaDomicilio();
