@@ -23,6 +23,7 @@ void pause()
 {
     cin.clear();
     cin.ignore();
+    cin.ignore();
     string dummy;
     cout << "Presiona cualquier tecla para continuar.";
     getline(cin, dummy);
@@ -77,7 +78,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Iniciar ventas en mesas" << endl;
         cout << "2. Agregar producto a una venta (En proceso)" << endl;
-        cout << "3. Quitar producto de una venta (No implementado)" << endl;
+        cout << "3. Quitar producto de una venta" << endl;
         cout << "4. Facturacion de una venta" << endl;
         cout << "0. Salir" << endl;
         break;
@@ -270,6 +271,7 @@ void altaProducto(ISistema *s)
     if (cin.fail() || (opcion != 1 && opcion != 2))
     {
         limpiarCin();
+        delete[] codigo;
         return;
     }
     if (opcion == 1)
@@ -344,8 +346,300 @@ void facturacionDia(ISistema *s)
 
 void agregarProductoAVenta(ISistema *s)
 {
-    cout << "Sin implementar por el momento." << endl;
-    pause();
+    cleanScreen();
+    int codigoMesa, cantidad;
+    string codigoProducto;
+    bool mantener = true;
+
+    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+    cout << "(Ingrese '0' para salir)" << endl;
+    cin >> codigoMesa;
+    cin.ignore();
+
+    if(cin.fail() || codigoMesa < 0)
+    {
+        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
+    }
+
+    if (codigoMesa == 0)
+    {
+        cout << "Cancelando Operacion." << endl;
+        return;
+    }
+
+    try{
+        s->elegirMesa(codigoMesa);
+        s->verificarMesaSeleccionadaConVentaEnCurso();
+        s->listarProductosVentaSeleccionada();
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Cancelando operacion" << endl;
+        s->cancelarQuitarProductoVenta();
+        pause();
+        return;
+    }
+    
+    while(mantener){
+        cleanScreen();
+
+        cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
+        cout << "(Ingrese '0' para salir)" << endl;
+        cin >> codigoProducto;
+        cin.ignore();
+    
+        if(cin.fail() || codigoProducto.empty())
+        {
+            cout << "El codigo del producto no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        if(codigoProducto == "0")
+        {
+            cout << "Cancelando operacion." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+            return;
+        }
+    
+        try{
+            s->seleccionarProductoDeVenta(codigoProducto);
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    
+        cout << "Ingrese cuantas unidades desea quitar del producto: ";
+        cin >> cantidad;
+        
+        if(cin.fail() || cantidad <= 0)
+        {
+            cout << "La cantidad debe ser un numero positivo." << endl;
+            cout << "Cancelando operacion" << endl;
+            continue;
+        }
+    
+        try{
+            s->quitarProductoVenta(cantidad);    
+            cout << "Producto quitado de la venta exitosamente." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    }
+}
+
+void agregarEmpleado(ISistema *s)
+{
+    cleanScreen();
+    string nombre, cargo, transporte;
+    int opcion, opcion2;
+    bool bandera = true;
+    while (bandera)
+    {
+        cleanScreen();
+        string nombre, cargo;
+        int opcion, opcion2;
+
+        cout << "Ingrese una opcion:" << endl;
+        cout << "1. Agregar Mozo" << endl;
+        cout << "2. Agregar Repartidor" << endl;
+        cout << "0. Volver al menu anterior" << endl;
+        cin >> opcion;
+        cin.ignore();
+
+        switch (opcion)
+        {
+        case 0:
+            bandera = false;
+            break;
+        case 1:
+            cargo = "Mozo";
+            break;
+        case 2:
+            cargo = "Repartidor";
+            cout << "Seleccione el transporte del repartidor. ";
+            s->listarTransportes();
+            cout << "Ingrese el numero del transporte: ";
+            cin >> opcion2;
+            cin.ignore();
+            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            {
+                limpiarCin();
+                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cin >> opcion2;
+            }
+            s->seleccionarTransporte(opcion2 == 1   ? aPie
+                                     : opcion2 == 2 ? Moto
+                                     : opcion2 == 3 ? Bicicleta
+                                                    : Auto);
+            break;
+        default:
+            cout << "Opcion invalida. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        if (bandera == false)
+            break;
+
+        cout << "Ingrese el nombre del empleado: ";
+        cin >> nombre;
+        cin.ignore();
+
+        bool nombreValido = true;
+        for (char c : nombre)
+        {
+            if (!isalpha(c) && c != ' ')
+            {
+                nombreValido = false;
+                break;
+            }
+        }
+
+        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Nombre invalido. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cin >> opcion;
+
+        if (cin.fail() || (opcion != 1 && opcion != 2))
+        {
+            limpiarCin();
+            cout << "Opcion invalida." << endl;
+            pause();
+            continue;
+        }
+
+        if (opcion == 2)
+        {
+            cout << "Operacion cancelada." << endl;
+            s->cancelarAltaEmpleado();
+            pause();
+            continue;
+        }
+
+        s->agregarEmpleado(nombre, cargo);
+        int id = s->darDeAltaEmpleado();
+        cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
+        pause();
+    }
+}
+
+void agregarEmpleado(ISistema *s)
+{
+    cleanScreen();
+    string nombre, cargo, transporte;
+    int opcion, opcion2;
+    bool bandera = true;
+    while (bandera)
+    {
+        cleanScreen();
+        string nombre, cargo;
+        int opcion, opcion2;
+
+        cout << "Ingrese una opcion:" << endl;
+        cout << "1. Agregar Mozo" << endl;
+        cout << "2. Agregar Repartidor" << endl;
+        cout << "0. Volver al menu anterior" << endl;
+        cin >> opcion;
+        cin.ignore();
+
+        switch (opcion)
+        {
+        case 0:
+            bandera = false;
+            break;
+        case 1:
+            cargo = "Mozo";
+            break;
+        case 2:
+            cargo = "Repartidor";
+            cout << "Seleccione el transporte del repartidor. ";
+            s->listarTransportes();
+            cout << "Ingrese el numero del transporte: ";
+            cin >> opcion2;
+            cin.ignore();
+            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            {
+                limpiarCin();
+                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cin >> opcion2;
+            }
+            s->seleccionarTransporte(opcion2 == 1   ? aPie
+                                     : opcion2 == 2 ? Moto
+                                     : opcion2 == 3 ? Bicicleta
+                                                    : Auto);
+            break;
+        default:
+            cout << "Opcion invalida. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        if (bandera == false)
+            break;
+
+        cout << "Ingrese el nombre del empleado: ";
+        cin >> nombre;
+        cin.ignore();
+
+        bool nombreValido = true;
+        for (char c : nombre)
+        {
+            if (!isalpha(c) && c != ' ')
+            {
+                nombreValido = false;
+                break;
+            }
+        }
+
+        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Nombre invalido. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cin >> opcion;
+
+        if (cin.fail() || (opcion != 1 && opcion != 2))
+        {
+            limpiarCin();
+            cout << "Opcion invalida." << endl;
+            pause();
+            continue;
+        }
+
+        if (opcion == 2)
+        {
+            cout << "Operacion cancelada." << endl;
+            s->cancelarAltaEmpleado();
+            pause();
+            continue;
+        }
+
+        s->agregarEmpleado(nombre, cargo);
+        int id = s->darDeAltaEmpleado();
+        cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
+        pause();
+    }
 }
 
 void agregarEmpleado(ISistema *s)
@@ -464,13 +758,13 @@ void iniciarVenta(ISistema *s)
     cout << "Ingrese el ID del empleado que inicia la venta: ";
     cin >> idEmpleado;
     cin.ignore();
-
-    try
+    
+    if (idEmpleado.empty())
     {
-        stoi(idEmpleado);
-        s->seleccionarMozo(stoi(idEmpleado));
+        throw invalid_argument("El ID del empleado no puede estar vacío.");
     }
-    catch (invalid_argument &e)
+    bool flag = true;
+    while (flag)
     {
         cout << "Error: has ingresado un número no válido." << endl;
         s->cancelarAltaVenta(); // No debería ser necesario, pero por si acaso
@@ -942,6 +1236,98 @@ void altaCliente(ISistema *s)
     pause();
 }
 
+void quitarProductoVenta(ISistema *s)
+{
+    cleanScreen();
+    int codigoMesa, cantidad;
+    string codigoProducto;
+    bool mantener = true;
+
+    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+    cout << "(Ingrese '0' para salir)" << endl;
+    cin >> codigoMesa;
+    cin.ignore();
+
+    if(cin.fail() || codigoMesa < 0)
+    {
+        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
+    }
+
+    if (codigoMesa == 0)
+    {
+        cout << "Cancelando Operacion." << endl;
+        return;
+    }
+
+    try{
+        s->elegirMesa(codigoMesa);
+        s->verificarMesaSeleccionadaConVentaEnCurso();
+        s->listarProductosVentaSeleccionada();
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Cancelando operacion" << endl;
+        s->cancelarQuitarProductoVenta();
+        pause();
+        return;
+    }
+    
+    while(mantener){
+        cleanScreen();
+
+        cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
+        cout << "(Ingrese '0' para salir)" << endl;
+        cin >> codigoProducto;
+        cin.ignore();
+    
+        if(cin.fail() || codigoProducto.empty())
+        {
+            cout << "El codigo del producto no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        if(codigoProducto == "0")
+        {
+            cout << "Cancelando operacion." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+            return;
+        }
+    
+        try{
+            s->seleccionarProductoDeVenta(codigoProducto);
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    
+        cout << "Ingrese cuantas unidades desea quitar del producto: ";
+        cin >> cantidad;
+        
+        if(cin.fail() || cantidad <= 0)
+        {
+            cout << "La cantidad debe ser un numero positivo." << endl;
+            cout << "Cancelando operacion" << endl;
+            continue;
+        }
+    
+        try{
+            s->quitarProductoVenta(cantidad);    
+            cout << "Producto quitado de la venta exitosamente." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    }
+}
+
 int main()
 {
     ISistema *s = Factory::getSistema();
@@ -1054,6 +1440,7 @@ int main()
                     case 2: // Agregar producto a una venta
                         break;
                     case 3: // Quitar producto de una venta
+                        quitarProductoVenta(s);
                         break;
                     case 4: // Facturacion de una venta
                         facturarVenta(s);

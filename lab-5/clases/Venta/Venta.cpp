@@ -1,7 +1,5 @@
 #include "Venta.h"
 
-#include "../../utils/utils.h"
-
 Venta::Venta()
 {
     this->codigo = utils::generarNumeroVenta();
@@ -27,30 +25,22 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-ICollection * Venta::getProductos()
+IDictionary *Venta::getProductos()
 {
-    ICollection *productos = new List();
-    IIterator * it = this->productosConsumidos->getIterator();
+    IDictionary *productos = new OrderedDictionary();
+    IIterator *it = this->productosConsumidos->getIterator();
 
-    while(it->hasCurrent()){
+    while (it->hasCurrent())
+    {
         ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
-        Producto* p = productoVenta->getProducto(); 
-        Plato* plato = dynamic_cast<Plato *>(p);
-        if(plato  != nullptr) {
-            DtPlato* dtPlato = new DtPlato(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-            productos->add(dtPlato);
-        } else {
-            Menu* menu = dynamic_cast<Menu *>(p);
-            if(menu != nullptr) {
-                DtMenu* dtMenu = new DtMenu(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-                productos->add(dtMenu);
-            }
-        }
+        DtProducto *producto = productoVenta->getProducto();
+        IKey *key = new String(producto->getCodigo());
+        productos->add(key, producto);
         it->next();
     }
-    
-    delete it; 
-    return productos; 
+
+    delete it;
+    return productos;
 }
 
 int Venta::getCantidadProductos()
@@ -80,9 +70,12 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
 
-    int nuevoPrecio = producto->getPrecio() * cantidad;
-
-    ProductoVenta *productoVenta = new ProductoVenta(producto->getCodigo(), cantidad, nuevoPrecio, producto);
+    ProductoVenta *productoVenta = new ProductoVenta(
+        producto->getCodigo(),
+        producto->getTipo(),
+        producto->getDescripcion(),
+        producto->getPrecio(),
+        cantidad);
 
     cout << "Producto agregado: " << productoVenta->getDescripcion()
          << ", Cantidad: " << productoVenta->getCantidad()
@@ -92,6 +85,32 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
     IKey *key = new String(producto->getCodigo());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
+}
+
+void Venta::quitarProducto(Producto *producto, int cantidad)
+{
+    IKey *key = new String(producto->getCodigo());
+    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    if (productoVenta == nullptr)
+    {
+        delete key;
+        throw invalid_argument("El producto no esta en la venta.");
+    }
+
+    if (productoVenta->getCantidad() < cantidad)
+    {
+        delete key;
+        throw invalid_argument("La cantidad a quitar es mayor a la cantidad en la venta.");
+    }
+
+    productoVenta->setCantidad(productoVenta->getCantidad() - cantidad);
+    if (productoVenta->getCantidad() == 0)
+    {
+        this->productosConsumidos->remove(key); // quita el producto sin borrarlo la cantidad llega a 0
+        this->cantidadProductos -= 1;
+    }
+
+    delete key; // Liberar memoria del key
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)
@@ -159,8 +178,8 @@ ostream &operator<<(ostream &os, const Venta &venta)
 {
     os << "Codigo: " << venta.codigo
        << ", Subtotal: " << venta.subtotal
-       << ", Descuento: " << venta.descuento
-       << ", Cantidad de Productos: " << venta.cantidadProductos;
+       << ", Descuento: " << venta.descuento;
+
     if (venta.factura != nullptr)
     {
         os << ", Facturada: Si";
@@ -168,6 +187,24 @@ ostream &operator<<(ostream &os, const Venta &venta)
     else
     {
         os << ", Facturada: No";
+    }
+
+    if (venta.productosConsumidos->isEmpty())
+    {
+        os << ", No tiene productos consumidos";
+    }
+    else
+    {
+        os << ", Cantidad de Productos: " << venta.cantidadProductos << endl
+           << "Productos Consumidos: " << endl;
+        IIterator *it = venta.productosConsumidos->getIterator();
+        while (it->hasCurrent())
+        {
+            ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+            cout << *productoVenta << endl;
+            it->next();
+        }
+
     }
     return os;
 }

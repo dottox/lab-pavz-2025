@@ -195,8 +195,8 @@ void Sistema::seleccionarMozo(int numeroMozo)
 void Sistema::seleccionarProducto(char *codigo)
 {
     IKey *key = new String(codigo);
-    this->prodctoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
-    if (this->prodctoSeleccionado == nullptr)
+    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+    if (this->productoSeleccionado == nullptr)
     {
         delete key; // Liberar memoria del key
         throw invalid_argument("El producto seleccionado no existe.");
@@ -206,30 +206,126 @@ void Sistema::seleccionarProducto(char *codigo)
 
 void Sistema::agregarProductoAVenta()
 {
-    if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
-        this->prodctoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
-    {
-        throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
-    }
+//     if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
+//         this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
+//     {
+//         throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
+//     }
 
-    VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
+//     VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
 
-    if (ventaEnCurso == nullptr)
-    {
-        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
-    }
+//     if (ventaEnCurso == nullptr)
+//     {
+//         throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+//     }
 
-    ventaEnCurso->agregarProducto(this->prodctoSeleccionado, this->cantidadProductoSeleccionado);
+//     ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
 }
 
 void Sistema::cancelarAgregarProductoAVenta()
 {
     // Limpiar las selecciones temporales
-    this->mozoSeleccionado = nullptr;
     this->mesaSeleccionada = nullptr;
-    this->prodctoSeleccionado = nullptr;
-    this->cantidadProductoSeleccionado = 0;
+    this->ventaSeleccionada = nullptr;
+    this->productoSeleccionado = nullptr;
 }
+
+// ####### --------------- Quitar producto de una venta --------------- #######
+void Sistema::verificarMesaSeleccionadaConVentaEnCurso()
+{
+    if (this->mesaSeleccionada->getVentaEnCurso() == nullptr)
+    {
+        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+    }
+
+    this->ventaSeleccionada = this->mesaSeleccionada->getVentaEnCurso();
+    cout << "Venta seleccionada: " << this->ventaSeleccionada->getCodigo() << endl;
+}
+
+void Sistema::listarProductosVentaSeleccionada()
+{
+    VentaLocal *venta = (VentaLocal *)this->ventaSeleccionada; 
+
+    if (venta->getCantidadProductos() == 0)
+    {
+        throw invalid_argument("La venta no tiene productos.");
+    }
+
+    cout << "Productos de la venta: " << endl;
+    IDictionary *consumidosVenta = venta->getProductos();
+    IIterator *it = consumidosVenta->getIterator();
+    while (it->hasCurrent())
+    {
+        DtPlato * plato = (DtPlato *)it->getCurrent();
+        if(plato != nullptr)
+        {
+            cout << *plato << endl;
+        }else{
+            DtMenu* menu = (DtMenu *)it->getCurrent();
+            cout << *menu << endl;
+        }
+        it->next();
+    }
+    delete it; 
+    consumidosVenta->clearDictionary(); 
+    delete consumidosVenta;
+}
+
+void Sistema::seleccionarProductoDeVenta(string codigoProducto)
+{
+    char* codigo = new char[codigoProducto.size() + 1]; 
+    strcpy(codigo, codigoProducto.c_str());
+
+    IKey *key = new String(codigo);
+
+    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+
+    if(this->productoSeleccionado == nullptr)
+    {
+        delete key;
+        delete[] codigo; // Liberar memoria del codigo
+        throw invalid_argument("El producto seleccionado no existe.");
+    }
+
+    IDictionary* productosVenta = this->ventaSeleccionada->getProductos();
+
+
+    if (!productosVenta->member(key))
+    {
+        delete key;
+        delete[] codigo; 
+        productosVenta->clearDictionary(); // Limpiar la coleccion de productos
+        delete productosVenta; // Liberar memoria de la coleccion
+        throw invalid_argument("El producto seleccionado no pertenece a la venta.");
+    }
+
+    delete key;
+    productosVenta->clearDictionary(); // Setear a null el producto seleccionado en la coleccion
+    delete productosVenta; // Liberar memoria de la coleccion
+    delete[] codigo; 
+}
+
+void Sistema::quitarProductoVenta(int cantidad)
+{
+    if (this->productoSeleccionado == nullptr || cantidad <= 0)
+    {
+        throw invalid_argument("Producto no seleccionado o cantidad invalida.");
+    }
+
+    if(this->ventaSeleccionada == nullptr)
+    {
+        throw invalid_argument("No hay una venta seleccionada.");
+    }
+
+    this->ventaSeleccionada->quitarProducto(this->productoSeleccionado, cantidad);
+}
+
+void Sistema::cancelarQuitarProductoVenta(){
+    this->productoSeleccionado = nullptr; // Limpiar la variable temporal
+    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
+    this->ventaSeleccionada = nullptr; // Limpiar la venta seleccionada
+};
+
 
 // ####### --------------- Facturacion de un dia --------------- #######
 DtInforme Sistema::consultarFacturacion(DtFecha fecha)
@@ -268,6 +364,8 @@ DtInforme Sistema::consultarFacturacion(DtFecha fecha)
     return DtInforme(totalIngresos, ventasFacturadas);
 };
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  a9df266d-0516-4d10-9217-e269e4c02af0  *******/
 void Sistema::imprimirInforme(DtInforme informe)
 {
     cout << "Total Ingresos: " << informe.getTotalIngresos() << endl;

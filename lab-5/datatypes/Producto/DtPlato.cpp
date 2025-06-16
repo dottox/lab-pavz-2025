@@ -13,7 +13,7 @@ DtProducto* DtPlato::clone() const {
 
 ostream& operator<<(ostream& os, const DtPlato& dtPlato)
 {
-    os << "Codigo: " << dtPlato.getCodigo() 
+    os << "Plato | Codigo: " << dtPlato.getCodigo() 
        << ", Descripcion: " << dtPlato.getDescripcion()
        << ", Precio: $" << dtPlato.getPrecio();
     return os;
