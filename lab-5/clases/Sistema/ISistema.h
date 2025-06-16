@@ -143,10 +143,14 @@ public:
     virtual void agregarProductoAVenta() = 0;
     virtual void cancelarAgregarProductoAVenta() = 0;
 
-    // ####### --------------- Quitar producto de una venta --------------- #######
-    virtual void quitarProductoVenta() = 0;
-    virtual void cancelarQuitarProductoDeVenta() = 0;
+    // ####### --------------- Quitar productos de venta --------------- #######
 
+    virtual void quitarProductoVenta(int,int) = 0;
+    virtual void cancelarQuitarProductoAVenta() = 0;
+    virtual void verificarMesaConVentaEnCurso(int) = 0;
+    virtual ICollection *obtenerProductosDeUnaVenta() = 0;
+    virtual void listarProductosDeUnaVenta(int) = 0;
+    virtual void  seleccionarProductoDeVenta(int)= 0;
     // ###### --------------- Alta Empleado ---------------  #######
 
     /**

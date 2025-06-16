@@ -665,6 +665,75 @@ void ventasMozo(ISistema *s)
     pause();
 }
 
+// void quitarProductoVenta(ISistema *s)
+// {
+    // cleanScreen();
+    // int codigo;
+    // int cantidad;
+    // cout << "Ingrese el numero de la mesa que desea eliminar: " << endl;
+    // cout << "0. Volver al menu anterior" << endl;
+    // cin >> codigo;
+    // s->elegirMesa(codigo);
+    // s->verificarMesaConVentaEnCurso(codigo);
+   
+    // cout << "seleccione el codigo del producto que desea quitar: ";
+    // cin >> codigo;
+    // s->listarProductosDeUnaVenta(codigo);
+
+    // s->seleccionarProductoDeVenta(char(codigo));
+
+    // cout << "ingrese cuantas unidades desea quitar del producto: ";
+    // cin >> cantidad;
+    
+    // s->quitarProductoVenta(codigo, cantidad);    
+   
+
+    // bool salir = false;
+
+        // ICollection * productos = s->obtenerProductosDeUnaVenta();
+
+        // while (salir != true)
+        // {
+        //     cleanScreen();
+
+        //     IIterator *it = platos->getIterator();
+
+            // cout << "Productos con ventas disponibles:" << endl;
+
+            // while (it->hasCurrent())
+            // {
+            //     DtPlato *plato = dynamic_cast<DtPlato *>(it->getCurrent());
+            //     if (plato)
+            //     {
+            //         cout << *plato << endl;
+            //     }
+            //     it->next();
+            // }
+            // delete it; // Liberar memoria del iterador
+
+            // cout << "Seleccione el plato a añadir al menu (ingrese el codigo)." << endl;
+            // cout << "Ingrese 'exit' para terminar de añadir platos: " << endl;
+            // cin >> code2;
+            // cin.ignore();
+
+            // if (code2 == "exit")
+            // {
+            //     salir = true;
+            //     continue;
+            // }
+
+            // cout << "Ingrese una cantidad de platos '" << code2 << "' a añadir: ";
+            // cin >> cantidad;
+            // cin.ignore();
+
+            // if (cin.fail() || cantidad <= 0)
+            // {
+            //     cout << "La cantidad debe ser un numero positivo." << endl;
+            //     pause();
+            //     continue;
+            // }
+// }
+
 int main()
 {
     ISistema *s = Factory::getSistema();

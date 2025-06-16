@@ -1,10 +1,5 @@
 #include "Venta.h"
 
-#include "../../utils/utils.h"
-
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../ICollection/String.h"
-#include "../../ICollection/interfaces/IKey.h"
 
 Venta::Venta()
 {
@@ -31,10 +26,31 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-// Producto **Venta::getProductos()
-// {
-//     // return this->productos;
-// }
+ICollection * Venta::getProductos()
+{
+    ICollection *productos = new List();
+    IIterator * it = this->productosConsumidos->getIterator();
+
+    while(it->hasCurrent()){
+        ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+        Producto* p = productoVenta->getProducto(); 
+        Plato* plato = dynamic_cast<Plato *>(p);
+        if(plato  != nullptr) {
+            DtPlato* dtPlato = new DtPlato(p->getCodigo(), p->getDescripcion(), p->getPrecio());
+            productos->add(dtPlato);
+        } else {
+            Menu* menu = dynamic_cast<Menu *>(p);
+            if(menu != nullptr) {
+                DtMenu* dtMenu = new DtMenu(p->getCodigo(), p->getDescripcion(), p->getPrecio());
+                productos->add(dtMenu);
+            }
+        }
+        it->next();
+    }
+    
+    delete it; 
+    return productos; 
+}
 
 int Venta::getCantidadProductos()
 {
@@ -106,19 +122,16 @@ void Venta::quitarProducto(Producto *producto, int cantidad)
             this->cantidadProductos -= cantidad;
             if (productoVenta->getCantidad() == 0)
             {
-                producto = nullptr; // quita el producto si la cantidad llega a 0
+                this->productosConsumidos->setNull(key); // quita el producto sin borrarlo la cantidad llega a 0
                 cout << "Producto eliminado: " << productoVenta->getDescripcion() << endl;
             }
-            else
-            {
-                cout << "Producto actualizado: " << productoVenta->getDescripcion()
-                     << ", Nueva cantidad: " << productoVenta->getCantidad() << endl;
-            }
-            delete key; // Liberar memoria del key
 
+            cout << "Producto actualizado: " << productoVenta->getDescripcion()
+                 << ", Nueva cantidad: " << productoVenta->getCantidad() << endl;
+
+            delete key; // Liberar memoria del key
         }
     }
-
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)

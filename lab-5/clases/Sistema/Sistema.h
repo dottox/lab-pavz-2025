@@ -25,9 +25,7 @@ private:
     int cantidadProductoSeleccionado;
 
     // ####### --------------- Quitar producto de una venta --------------- #######
-    Mesa *mesaSeleccionadaVenta;
-    Producto *productoSeleccionado;
-    int cantidadProductoSeleccionadoVenta;
+    ICollection *obtenerProductosDeUnaVenta();
 
     // ###### --------------- Facturar venta ---------------  #######
     Mesa *mesaSeleccionada;
@@ -144,8 +142,11 @@ public:
     void cancelarAgregarProductoAVenta();
 
     // ####### --------------- Quitar producto de una venta --------------- #######
-    void quitarProductoVenta();
+    void quitarProductoVenta(int, int);
     void cancelarQuitarProductoVenta();
+    void verificarMesaConVentaEnCurso(int);
+    void listarProductosDeUnaVenta(int);
+    void seleccionarProductoDeVenta(int);
 
     // ###### --------------- Alta Empleado ---------------  #######
 

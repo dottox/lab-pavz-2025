@@ -238,14 +238,107 @@ void Sistema::cancelarAgregarProductoAVenta()
 }
 
 // ####### --------------- Quitar producto de una venta --------------- #######
-void Sistema::quitarProductoVenta()
+void Sistema::verificarMesaConVentaEnCurso(int numeroMesa)
 {
-    if (this->mesaSeleccionadaVenta == nullptr || this->productoSeleccionado == nullptr ||
-        this->cantidadProductoSeleccionadoVenta <= 0)
+    IKey *key = new Integer(numeroMesa);
+    Mesa *mesa = (Mesa *)this->mesas->find(key);
+    if (mesa == nullptr)
     {
-        throw invalid_argument("Debe seleccionar una mesa, un producto y una cantidad valida.");
+        delete key;
+        throw invalid_argument("La mesa con el codigo proporcionado no existe.");
+    }
+    this->mesaSeleccionada = mesa;
+    delete key;
+    return;
+
+    if (this->mesaSeleccionada->getVentaEnCurso() == nullptr)
+    {
+        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+    }
+    if (this->mesaSeleccionada->getVentaEnCurso()->estaFacturada())
+    {
+        throw invalid_argument("La venta en curso ya esta facturada, no se pueden quitar productos.");
     }
 }
+
+void Sistema::listarProductosDeUnaVenta(int mesaEscogida)
+{
+    VentaLocal *venta = this->mesaSeleccionada->getVentaEnCurso();      
+    if (venta == nullptr)
+    {
+        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+    }
+    if (venta->getCantidadProductos() == 0)
+    {
+        cout << "No hay productos en la venta." << endl;
+        return;
+    }
+    cout << "Productos de la venta: " << endl;
+    IIterator *it = venta->getProductos()->getIterator();
+    while (it->hasCurrent())
+    {
+        VentaLocal *ventaLocal = (VentaLocal *)it->getCurrent();
+        Producto *producto = (Producto *)it->getCurrent();
+        cout << producto->getCodigo();
+        cout << "Cantidad: " << ventaLocal->getCantidadProductos() << endl;
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+}
+
+void Sistema::seleccionarProductoDeVenta(int codigoProducto)
+{
+    IKey *key = new Integer(codigoProducto);
+    this->prodctoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+    if (this->prodctoSeleccionado == nullptr)
+    {
+        throw invalid_argument("El producto seleccionado no existe.");
+        delete key;
+    }
+    delete key;
+}
+
+ICollection * Sistema::obtenerProductosDeUnaVenta()
+{
+    ICollection *productos = new List();
+    IIterator *it = this->productos->getIterator();
+    while (it->hasCurrent())
+    {
+        Producto *producto = dynamic_cast<Producto *>(it->getCurrent());
+        if (producto->getTipo() == TipoPlato)
+        {
+            DtProducto *dtproducto = dynamic_cast<Plato *>(producto)->getInfo();
+            productos->add(dtproducto);
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    return productos;
+}
+void Sistema::quitarProductoVenta(int codigoVenta, int cantidad)
+{
+    if (this->prodctoSeleccionado == nullptr || cantidad <= 0)
+    {
+        throw invalid_argument("Debe seleccionar un producto 0 una cantidad valida.");
+    }
+
+    IKey *key = new Integer(codigoVenta);
+    VentaLocal *Producto = dynamic_cast<VentaLocal *>(this->productos->find(key));
+    if (Producto == nullptr)
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("La venta con el codigo proporcionado no existe.");
+    }
+    delete key; // Liberar memoria del key
+
+    if (!Producto->estaFacturada())
+    {
+        throw invalid_argument("La venta no esta facturada, no se puede quitar productos.");
+    }
+
+    Producto->quitarProducto(this->prodctoSeleccionado, cantidad);
+}
+
 
 // ####### --------------- Facturacion de un dia --------------- #######
 DtInforme Sistema::consultarFacturacion(DtFecha fecha)
@@ -284,6 +377,8 @@ DtInforme Sistema::consultarFacturacion(DtFecha fecha)
     return DtInforme(totalIngresos, ventasFacturadas);
 };
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  a9df266d-0516-4d10-9217-e269e4c02af0  *******/
 void Sistema::imprimirInforme(DtInforme informe)
 {
     cout << "Total Ingresos: " << informe.getTotalIngresos() << endl;
