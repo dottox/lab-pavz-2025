@@ -25,6 +25,7 @@ void cleanScreen()
 void pause()
 {
     cin.clear();
+    cin.ignore();
     string dummy;
     cout << "Presiona cualquier tecla para continuar.";
     getline(cin, dummy);
