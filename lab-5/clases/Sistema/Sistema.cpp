@@ -432,7 +432,7 @@ void Sistema::poblarSistema()
     this->mesas->add(new Integer(mesa19->getNumero()), mesa19);
     this->mesas->add(new Integer(mesa20->getNumero()), mesa20);
 
-    asignarMesasMozos(2, 6); // Tenemos 2 mozos y 6 mesas creados.
+    asignarMesasMozos(2, 9); // Tenemos 2 mozos y 6 mesas creados.
 
     cout << "Crear ventas en curso: ";
     mesa1->setVentaEnCurso(venta1);
@@ -863,15 +863,13 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
     cout << "[DEBUG] Preparando iterador de mesas" << endl;
     IIterator *itMesas = this->mesas->getIterator();
     IDictionary *mesasDisponibles = new OrderedDictionary();
-    int contadorMesas = 0;
-
+    
     // Verificar que haya suficientes mesas
-    while (itMesas->hasCurrent())
+    while (itMesas->hasCurrent() && mesasDisponibles->getSize() < cantMesas)
     {
         Mesa *mesa = dynamic_cast<Mesa *>(itMesas->getCurrent());
         if (mesa != nullptr)
         {
-            contadorMesas++;
             if (mesa->getMozo() == nullptr) // Solo agregar mesas sin mozo asignado
             {
                 mesasDisponibles->add(new Integer(mesa->getNumero()), mesa);
@@ -879,7 +877,9 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         }
         itMesas->next();
     }
-    cout << "[DEBUG] Mesas totales: " << contadorMesas << ", mesas disponibles: " << mesasDisponibles->getSize() << endl;
+
+    int contadorMesas = mesasDisponibles->getSize();
+    cout << "[DEBUG] Mesas totales: " << contadorMesas << endl;
 
     delete itMesas; // Liberar memoria del iterador
 
@@ -889,7 +889,7 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
     int contadorMozosConMenosMesas = 0;
 
     // Verificar que haya suficientes mozos
-    while (itMozos->hasCurrent())
+    while (itMozos->hasCurrent() && mozosDisponibles->getSize() < cantMozos)
     {
         Mozo *mozo = dynamic_cast<Mozo *>(itMozos->getCurrent());
         if (mozo != nullptr)
@@ -929,7 +929,8 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 
     int mesasXMozo = cantMesas / cantMozos;
     int restoMesas = cantMesas % cantMozos;
-    cout << "[DEBUG] mesasXMozo: " << mesasXMozo << ", restoMesas: " << restoMesas << endl;
+    int mesasSinResto = mesasXMozo * cantMozos;
+    cout << "[DEBUG] mesasXMozo: " << mesasXMozo << ", restoMesas: " << restoMesas << ", deboAsignar: " << endl;
 
     ICollection *asignaciones = new List();
     IIterator *itMesasDisponibles = mesasDisponibles->getIterator();
@@ -945,12 +946,18 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         {
             cout << "[DEBUG] Reiniciando iterador de mozos" << endl;
             delete itMozosDisponibles; // Liberar memoria del iterador de mozos
-            itMozosDisponibles = this->empleados->getIterator(); // Reiniciar el iterador de mozos
+            itMozosDisponibles = mozosDisponibles->getIterator(); // Reiniciar el iterador de mozos
+            if(mesasSinResto == 0)
+            {
+                cout << "[DEBUG] No hay mas mesas por asignar" << endl;
+                break;
+            }
         }
         Mozo* mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent()); 
 
         if(mozo->getCantidadMesasAsignadas() < mesasXMozo){
             mozo->setMesaAsignada(mesa);
+            mesasSinResto--;
         }else{
             cout << "[DEBUG] Mozo " << mozo->getNombre() << " ya tiene asignadas " << mozo->getCantidadMesasAsignadas() << " mesas, no se le puede asignar la mesa " << mesa->getNumero() << endl;
             itMozosDisponibles->next(); 
@@ -963,6 +970,23 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
             continue; 
         }
     }
+
+    if(itMesasDisponibles->hasCurrent())
+    {
+        cout << "[DEBUG] Hay mesas sin asignar, asignando resto de mesas" << endl;
+        while (itMesasDisponibles->hasCurrent())
+        {
+            Mozo *mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent());
+            Mesa *mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
+            
+            mozo->setMesaAsignada(mesa);
+            cout << "[DEBUG] Asignando mozo " << mozo->getNombre() << " a la mesa " << mozo->getNumero() << endl;
+                
+            itMozosDisponibles->next();
+            itMesasDisponibles->next();
+        }
+    }
+
     cout << "[DEBUG] Asignación terminada" << endl;
 
     delete itMozosDisponibles;
