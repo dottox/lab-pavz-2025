@@ -42,7 +42,7 @@ bool DtHora::operator==(const DtHora &other) const
 
 ostream &operator<<(ostream &os, const DtHora &Dt)
 {
-    os << Dt.hora << "/" << Dt.minuto << "/" << Dt.segundo;
+    os << Dt.hora << "-" << Dt.minuto << "-" << Dt.segundo;
     return os;
 }
 

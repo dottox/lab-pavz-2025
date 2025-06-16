@@ -18,17 +18,18 @@ Transporte FacturaDomicilio::getTransporte()
 
 DtFacturaDomicilio FacturaDomicilio::getDatos()
 {
-    return DtFacturaDomicilio(
+    DtFactura factura = DtFactura(
         this->getCodigo(),
+        this->getCodigoVenta(),
         this->getFecha(),
         this->getHora(),
         this->getProductos(),
         this->getSubtotal(),
         this->getDescuento(),
         this->getMontoTotal(),
-        this->getIvaTotal(),
-        this->nombreRepartidor,
-        this->transporte);
+        this->getIvaTotal());
+
+    return DtFacturaDomicilio(factura, this->nombreRepartidor, this->transporte);
 }
 
 FacturaDomicilio::~FacturaDomicilio() {};

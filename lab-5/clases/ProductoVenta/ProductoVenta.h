@@ -11,16 +11,16 @@ using namespace std;
 class ProductoVenta : public ICollectible
 {
 private:
-    char* codigoProducto;
+    char *codigoProducto;
     TipoProducto tipo;
     string descripcion;
     float precio;
     int cantidad;
 
 public:
-    ProductoVenta(char*, TipoProducto, string, float, int);
-    DtProducto * getProducto();
-    char* getCodigoProducto();
+    ProductoVenta(char *, TipoProducto, string, float, int);
+    DtProducto *getProducto();
+    char *getCodigoProducto();
     TipoProducto getTipo();
     string getDescripcion();
     float getPrecio();

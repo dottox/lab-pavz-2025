@@ -1,6 +1,6 @@
 #include "ProductoVenta.h"
 
-ProductoVenta::ProductoVenta(char* codigoProducto, TipoProducto tipoProducto, string descripcion, float precio, int cantidad)
+ProductoVenta::ProductoVenta(char *codigoProducto, TipoProducto tipoProducto, string descripcion, float precio, int cantidad)
 {
     this->codigoProducto = codigoProducto;
     this->tipo = tipoProducto;
@@ -9,19 +9,21 @@ ProductoVenta::ProductoVenta(char* codigoProducto, TipoProducto tipoProducto, st
     this->cantidad = cantidad;
 }
 
-DtProducto * ProductoVenta::getProducto()
+DtProducto *ProductoVenta::getProducto()
 {
     DtProducto *producto = nullptr;
-    if(this->tipo == TipoProducto::TipoPlato)
+    if (this->tipo == TipoProducto::TipoPlato)
     {
         producto = new DtPlato(this->codigoProducto, this->descripcion, this->precio);
-    }else{
-        producto = new DtMenu(this->codigoProducto, this->descripcion, this->precio);   
+    }
+    else
+    {
+        producto = new DtMenu(this->codigoProducto, this->descripcion, this->precio);
     }
     return producto;
 }
 
-char* ProductoVenta::getCodigoProducto()
+char *ProductoVenta::getCodigoProducto()
 {
     return this->codigoProducto;
 }
@@ -61,8 +63,7 @@ ostream &operator<<(ostream &os, const ProductoVenta &producto)
     return os;
 }
 
-
 ProductoVenta::~ProductoVenta()
 {
-    this->codigoProducto = nullptr; 
+    this->codigoProducto = nullptr;
 }

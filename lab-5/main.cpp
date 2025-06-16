@@ -64,7 +64,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "2. Alta de cliente" << endl;
         cout << "3. Alta de empleado" << endl;
         cout << "4. Asignar mesas a mozos" << endl;
-        cout << "5. Venta a domicilio (No implementado)" << endl;
+        cout << "5. Venta a domicilio" << endl;
         cout << "6. Ventas de un mozo" << endl;
         cout << "7. Informacion de un producto" << endl;
         cout << "8. Resumen de facturacion de un dia" << endl;
@@ -356,7 +356,7 @@ void agregarProductoAVenta(ISistema *s)
     cin >> codigoMesa;
     cin.ignore();
 
-    if(cin.fail() || codigoMesa < 0)
+    if (cin.fail() || codigoMesa < 0)
     {
         throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
     }
@@ -367,11 +367,13 @@ void agregarProductoAVenta(ISistema *s)
         return;
     }
 
-    try{
+    try
+    {
         s->elegirMesa(codigoMesa);
         s->verificarMesaSeleccionadaConVentaEnCurso();
         s->listarProductosVentaSeleccionada();
-    }catch(const invalid_argument &e)
+    }
+    catch (const invalid_argument &e)
     {
         cout << "Error: " << e.what() << endl;
         cout << "Cancelando operacion" << endl;
@@ -379,55 +381,60 @@ void agregarProductoAVenta(ISistema *s)
         pause();
         return;
     }
-    
-    while(mantener){
+
+    while (mantener)
+    {
         cleanScreen();
 
         cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
         cin >> codigoProducto;
         cin.ignore();
-    
-        if(cin.fail() || codigoProducto.empty())
+
+        if (cin.fail() || codigoProducto.empty())
         {
             cout << "El codigo del producto no puede estar vacio." << endl;
             pause();
             continue;
         }
 
-        if(codigoProducto == "0")
+        if (codigoProducto == "0")
         {
             cout << "Cancelando operacion." << endl;
             s->cancelarQuitarProductoVenta();
             pause();
             return;
         }
-    
-        try{
+
+        try
+        {
             s->seleccionarProductoDeVenta(codigoProducto);
-        }catch(const invalid_argument &e)
+        }
+        catch (const invalid_argument &e)
         {
             cout << "Error: " << e.what() << endl;
             pause();
             continue;
         }
-    
+
         cout << "Ingrese cuantas unidades desea quitar del producto: ";
         cin >> cantidad;
-        
-        if(cin.fail() || cantidad <= 0)
+
+        if (cin.fail() || cantidad <= 0)
         {
             cout << "La cantidad debe ser un numero positivo." << endl;
             cout << "Cancelando operacion" << endl;
             continue;
         }
-    
-        try{
-            s->quitarProductoVenta(cantidad);    
+
+        try
+        {
+            s->quitarProductoVenta(cantidad);
             cout << "Producto quitado de la venta exitosamente." << endl;
             s->cancelarQuitarProductoVenta();
             pause();
-        }catch(const invalid_argument &e)
+        }
+        catch (const invalid_argument &e)
         {
             cout << "Error: " << e.what() << endl;
             pause();
@@ -552,12 +559,12 @@ void iniciarVenta(ISistema *s)
     cout << "Ingrese el ID del empleado que inicia la venta: ";
     cin >> idEmpleado;
     cin.ignore();
-    
+
     if (idEmpleado.empty())
     {
         throw invalid_argument("El ID del empleado no puede estar vacío.");
     }
-    
+
     while (flag)
     {
         cout << "Error: has ingresado un número no válido." << endl;
@@ -785,10 +792,12 @@ void asignarMesasMozos(ISistema *s)
         cin.ignore();
     }
 
-    try{
+    try
+    {
         s->asignarMesasMozos(cantMozos, cantMesas);
         pause();
-    }catch (const invalid_argument &e)
+    }
+    catch (const invalid_argument &e)
     {
         cout << "Error: " << e.what() << endl;
         pause();
@@ -970,18 +979,23 @@ void altaCliente(ISistema *s)
 
     DtDireccion direccion; // Declarar antes del if
 
-    if(esCasa == 1)
+    if (esCasa == 1)
     {
         direccion = DtDireccionCasa(calle, numero, entre_calles);
-    }else{
+    }
+    else
+    {
         direccion = DtDireccionApto(calle, numero, entre_calles, nombre_edificio, numero_apto);
     }
-    
-    try{
-        s->agregarCliente(nombre, telefono, direccion); 
-    }catch(const invalid_argument &e)
+
+    try
     {
-        cout << "Error: " << e.what() << endl << "Cancelando alta de cliente." << endl;
+        s->agregarCliente(nombre, telefono, direccion);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl
+             << "Cancelando alta de cliente." << endl;
         s->cancelarAltaCliente();
         pause();
         return;
@@ -1030,6 +1044,119 @@ void altaCliente(ISistema *s)
     pause();
 }
 
+void ventaADomicilio(ISistema *s)
+{
+    cleanScreen();
+    int telefono;
+    cout << "Ingrese el telefono del cliente: ";
+    cin >> telefono;
+    cin.ignore();
+
+    while (cin.fail() || telefono <= 0 || to_string(telefono).length() != 9)
+    {
+        cout << "El telefono debe ser un numero y debe contener 9 digitos." << endl;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Ingrese el telefono del cliente: ";
+        cin >> telefono;
+        cin.ignore();
+    }
+
+    try
+    {
+        if (!s->existeCliente(telefono))
+        {
+            cout << "El cliente no esta registrado. Desea registrarlo?" << endl;
+            cout << "1. Si" << endl;
+            cout << "0. No" << endl;
+            int opcion;
+            cin >> opcion;
+            cin.ignore();
+
+            if (opcion == 1)
+            {
+                altaCliente(s);
+            }
+            else
+            {
+                cout << "Venta a domicilio cancelada." << endl;
+                pause();
+                return;
+            }
+        }
+        else
+        {
+            cleanScreen();
+            s->seleccionarCliente(telefono);
+            while (true)
+            {
+                cleanScreen();
+                s->listarProductos();
+                cout << "Ingrese el codigo del producto a agregar a la venta (o '0' para finalizar): ";
+                string codigoProducto;
+                cin >> codigoProducto;
+                cin.ignore();
+
+                if (codigoProducto == "0")
+                {
+                    break; // Salir del bucle si el usuario ingresa '0'
+                }
+
+                cout << "Ingrese la cantidad de productos a agregar: ";
+                int cantidad;
+                cin >> cantidad;
+                cin.ignore();
+
+                while (cin.fail() || cantidad <= 0)
+                {
+                    cout << "Ingrese la cantidad de productos a agregar (debe ser un numero positivo): ";
+                    cin.clear();
+                    cin >> cantidad;
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
+
+                s->seleccionarProductoDomicilio(codigoProducto, cantidad);
+            }
+        }
+        cleanScreen();
+        s->listarRepartidores();
+
+        int idRepartidor;
+        cout << endl
+             << "Ingrese el ID del repartidor: ";
+        cin >> idRepartidor;
+        cin.ignore();
+
+        s->seleccionarRepartidor(idRepartidor);
+
+        int confirmar;
+        cout << "Desea confirmar la venta a domicilio? (1. Si, 0. No): ";
+        cin >> confirmar;
+        cin.ignore();
+
+        cleanScreen();
+        if (confirmar == 1 && !cin.fail())
+        {
+            cout << "Venta a domicilio iniciada exitosamente." << endl;
+            s->imprimirFacturaDomicilio(s->generarFacturaDomicilio());
+            pause();
+        }
+        else
+        {
+            s->cancelarVentaDomicilio();
+            cout << "Venta a domicilio cancelada." << endl;
+            pause();
+        }
+    }
+
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        pause();
+        return;
+    }
+}
+
 void quitarProductoVenta(ISistema *s)
 {
     cleanScreen();
@@ -1042,7 +1169,7 @@ void quitarProductoVenta(ISistema *s)
     cin >> codigoMesa;
     cin.ignore();
 
-    if(cin.fail() || codigoMesa < 0)
+    if (cin.fail() || codigoMesa < 0)
     {
         throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
     }
@@ -1053,11 +1180,13 @@ void quitarProductoVenta(ISistema *s)
         return;
     }
 
-    try{
+    try
+    {
         s->elegirMesa(codigoMesa);
         s->verificarMesaSeleccionadaConVentaEnCurso();
         s->listarProductosVentaSeleccionada();
-    }catch(const invalid_argument &e)
+    }
+    catch (const invalid_argument &e)
     {
         cout << "Error: " << e.what() << endl;
         cout << "Cancelando operacion" << endl;
@@ -1065,55 +1194,60 @@ void quitarProductoVenta(ISistema *s)
         pause();
         return;
     }
-    
-    while(mantener){
+
+    while (mantener)
+    {
         cleanScreen();
 
         cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
         cin >> codigoProducto;
         cin.ignore();
-    
-        if(cin.fail() || codigoProducto.empty())
+
+        if (cin.fail() || codigoProducto.empty())
         {
             cout << "El codigo del producto no puede estar vacio." << endl;
             pause();
             continue;
         }
 
-        if(codigoProducto == "0")
+        if (codigoProducto == "0")
         {
             cout << "Cancelando operacion." << endl;
             s->cancelarQuitarProductoVenta();
             pause();
             return;
         }
-    
-        try{
+
+        try
+        {
             s->seleccionarProductoDeVenta(codigoProducto);
-        }catch(const invalid_argument &e)
+        }
+        catch (const invalid_argument &e)
         {
             cout << "Error: " << e.what() << endl;
             pause();
             continue;
         }
-    
+
         cout << "Ingrese cuantas unidades desea quitar del producto: ";
         cin >> cantidad;
-        
-        if(cin.fail() || cantidad <= 0)
+
+        if (cin.fail() || cantidad <= 0)
         {
             cout << "La cantidad debe ser un numero positivo." << endl;
             cout << "Cancelando operacion" << endl;
             continue;
         }
-    
-        try{
-            s->quitarProductoVenta(cantidad);    
+
+        try
+        {
+            s->quitarProductoVenta(cantidad);
             cout << "Producto quitado de la venta exitosamente." << endl;
             s->cancelarQuitarProductoVenta();
             pause();
-        }catch(const invalid_argument &e)
+        }
+        catch (const invalid_argument &e)
         {
             cout << "Error: " << e.what() << endl;
             pause();
@@ -1126,7 +1260,7 @@ int main()
 {
     ISistema *s = Factory::getSistema();
 
-    pause(); // Uncomment this line if you want to pause the program at the start
+    // pause(); // Uncomment this line if you want to pause the program at the start
 
     bool mantener = true;
     int opcion;
@@ -1204,6 +1338,7 @@ int main()
                         asignarMesasMozos(s);
                         break;
                     case 5: // Venta a domicilio
+                        ventaADomicilio(s);
                         break;
                     case 6:
                         ventasMozo(s);

@@ -11,11 +11,11 @@ using namespace std;
 class VentaDomicilio : public Venta
 {
 private:
-    DtCliente* datosCliente;
+    DtCliente *datosCliente;
 
 public:
-    VentaDomicilio(DtCliente*);
-    DtCliente* getDatosCliente() const;
-    friend ostream& operator<<(ostream&, const VentaDomicilio&);
+    VentaDomicilio(DtCliente *, int, float, IDictionary *);
+    DtCliente *getDatosCliente() const;
+    friend ostream &operator<<(ostream &, const VentaDomicilio &);
     ~VentaDomicilio();
 };
