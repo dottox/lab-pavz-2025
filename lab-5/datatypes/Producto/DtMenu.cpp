@@ -8,6 +8,10 @@ DtMenu::DtMenu(char* codigo, string descripcion) : DtProducto(codigo, descripcio
 
 }
 
+DtMenu::DtMenu(char* codigo, string descripcion, float precio) : DtProducto(codigo, descripcion, TipoMenu, precio) {
+
+}
+
 DtProducto* DtMenu::clone() const{
     return new DtMenu(*this);
 }

@@ -9,11 +9,12 @@ class DtDireccionApto : public DtDireccion
 {
 private:
     string nombre;
-    int numeroApto;
+    string numeroApto;
 
 public:
-    DtDireccionApto(string, int, string, string, int);
+    DtDireccionApto(string, string, string, string, string);
     string getNombre();
-    int getNumeroApto();
+    string getNumeroApto();
+    friend ostream& operator<<(ostream&, const DtDireccionApto&);
     virtual ~DtDireccionApto();
 };

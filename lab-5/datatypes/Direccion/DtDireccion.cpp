@@ -2,7 +2,7 @@
 
 DtDireccion::DtDireccion() {}
 
-DtDireccion::DtDireccion(string calle, int numero, string entreCalles)
+DtDireccion::DtDireccion(string calle, string numero, string entreCalles)
 {
     this->calle = calle;
     this->numero = numero;
@@ -14,7 +14,7 @@ string DtDireccion::getCalle()
     return this->calle;
 }
 
-int DtDireccion::getNumero()
+string DtDireccion::getNumero()
 {
     return this->numero;
 }
@@ -26,8 +26,9 @@ string DtDireccion::getEntreCalles()
 
 ostream& operator<<(ostream& os, const DtDireccion& dtDireccion)
 {
-    os << "Calle: " << dtDireccion.calle << ", Numero: " << dtDireccion.numero
-       << ", Entre Calles: " << dtDireccion.entreCalles;
+    os << "Calle: " << dtDireccion.calle << endl 
+       << "Numero: " << dtDireccion.numero << endl
+       << "Entre Calles: " << dtDireccion.entreCalles << endl;
     return os;
 }
 

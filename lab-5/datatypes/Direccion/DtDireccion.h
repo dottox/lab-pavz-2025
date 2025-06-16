@@ -8,14 +8,14 @@ class DtDireccion
 {
 protected:
     string calle;
-    int numero;
+    string numero;
     string entreCalles;
 
 public:
     DtDireccion();
-    DtDireccion(string, int, string);
+    DtDireccion(string, string, string);
     string getCalle();
-    int getNumero();
+    string getNumero();
     string getEntreCalles();
     friend ostream& operator<<(ostream&, const DtDireccion&);
     virtual ~DtDireccion();
