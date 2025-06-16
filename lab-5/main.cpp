@@ -560,12 +560,12 @@ void iniciarVenta(ISistema *s)
     cin >> idEmpleado;
     cin.ignore();
 
-    if (idEmpleado.empty())
+    try
     {
-        throw invalid_argument("El ID del empleado no puede estar vacío.");
+        stoi(idEmpleado);
+        s->seleccionarMozo(stoi(idEmpleado));
     }
-
-    while (flag)
+    catch (invalid_argument &e)
     {
         cout << "Error: has ingresado un número no válido." << endl;
         s->cancelarAltaVenta(); // No debería ser necesario, pero por si acaso
