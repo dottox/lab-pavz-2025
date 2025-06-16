@@ -280,4 +280,5 @@ public:
     virtual void mostrarClienteTemporal() = 0;
     virtual void darAltaCliente() = 0;
     virtual void cancelarAltaCliente() = 0;
+    virtual void quitarProducto() = 0;
 };

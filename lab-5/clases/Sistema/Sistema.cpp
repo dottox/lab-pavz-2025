@@ -1306,6 +1306,12 @@ DtFacturaDomicilio Sistema::generarFacturaDomicilio()
 
 /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
 
+void Sistema::quitarProducto(){
+    if(this->productoSeleccionado ){
+
+    }
+}
+
 Sistema::~Sistema()
 {
     delete empleados;
