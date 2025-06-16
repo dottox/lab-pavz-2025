@@ -1159,41 +1159,49 @@ void ventaADomicilio(ISistema *s)
 
 void quitarProductoVenta(ISistema *s)
 {
-    cleanScreen();
     int codigoMesa, cantidad;
     string codigoProducto;
     bool mantener = true;
+    
+    while(mantener){
+        cleanScreen();
 
-    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
-    cout << "(Ingrese '0' para salir)" << endl;
-    cin >> codigoMesa;
-    cin.ignore();
-
-    if (cin.fail() || codigoMesa < 0)
-    {
-        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
-    }
-
-    if (codigoMesa == 0)
-    {
-        cout << "Cancelando Operacion." << endl;
-        return;
-    }
-
-    try
-    {
-        s->elegirMesa(codigoMesa);
-        s->verificarMesaSeleccionadaConVentaEnCurso();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-        cout << "Cancelando operacion" << endl;
-        s->cancelarQuitarProductoVenta();
-        pause();
-        return;
+        cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+        cout << "(Ingrese '0' para salir)" << endl;
+        cin >> codigoMesa;
+        cin.ignore();
+    
+        if (cin.fail() || codigoMesa < 0)
+        {
+            cout << "El codigo de la mesa debe ser un numero positivo." << endl;
+            pause();
+            continue;
+        }
+    
+        if (codigoMesa == 0)
+        {
+            cout << "Cancelando Operacion." << endl;
+            return;
+        }
+    
+        try
+        {
+            s->elegirMesa(codigoMesa);
+            s->verificarMesaSeleccionadaConVentaEnCurso();
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            cout << "Cancelando operacion" << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+            return;
+        }
+        mantener = false; 
     }
     
+    mantener = true;
+
     while (mantener)
     {
         cleanScreen();
