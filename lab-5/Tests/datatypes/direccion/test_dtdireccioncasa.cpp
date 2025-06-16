@@ -6,10 +6,10 @@ using namespace std;
 TEST_CASE("Test DtDireccionCasa - Constructor and Getters") 
 {
     
-    DtDireccionCasa * direccionCasa = new DtDireccionCasa("Calle Falsa", 123, "Entre A y B");
+    DtDireccionCasa * direccionCasa = new DtDireccionCasa("Calle Falsa", "123", "Entre A y B");
 
     CHECK(direccionCasa->getCalle() == "Calle Falsa");
-    CHECK(direccionCasa->getNumero() == 123);
+    CHECK(direccionCasa->getNumero() == "123");
     CHECK(direccionCasa->getEntreCalles() == "Entre A y B");
     
     // Verificar que la impresion funcione correctamente
