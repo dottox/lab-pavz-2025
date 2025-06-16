@@ -28,6 +28,7 @@ public:
     bool esVacio();
     friend ostream &operator<<(ostream &, const Menu &);
     void anadirPlato(Plato *, int);
+    void quitarPlato(Plato *);
 
 
 

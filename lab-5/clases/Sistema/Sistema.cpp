@@ -327,7 +327,7 @@ void Sistema::quitarProductoVenta(int cantidad)
         throw invalid_argument("No hay una venta seleccionada.");
     }
 
-    this->ventaSeleccionada->quitarProducto(this->productoSeleccionado, cantidad);
+    this->ventaSeleccionada->quitarProductoVenta(this->productoSeleccionado, cantidad);
 }
 
 void Sistema::cancelarQuitarProductoVenta(){
@@ -1306,10 +1306,107 @@ DtFacturaDomicilio Sistema::generarFacturaDomicilio()
 
 /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
 
-void Sistema::quitarProducto(){
-    if(this->productoSeleccionado ){
+// ####### --------------- BAJA PRODUCTO --------------- #######
 
+void Sistema::mostrarProductoSeleccionado(){
+    if (this->productoSeleccionado == nullptr){
+        throw invalid_argument("No hay producto seleccionado.");
     }
+    
+    cout << "--- Producto Seleccionado ---" << endl;
+    Plato *plato = dynamic_cast<Plato *>(this->productoSeleccionado);
+    if (plato != nullptr){
+        cout << *plato << endl;
+    } else {
+        Menu *menu = dynamic_cast<Menu *>(this->productoSeleccionado);
+        if (menu != nullptr){
+            cout << *menu << endl;
+        } else {
+            throw invalid_argument("El producto seleccionado no es un plato ni un menu.");
+        }
+    }
+}
+
+void Sistema::cancelarBajaProducto(){
+    this->productoSeleccionado = nullptr; 
+    this->ventaSeleccionada = nullptr;
+}
+
+void Sistema::quitarProductoDelSistema(char* codigo){
+
+    Producto* productoEliminar = (Producto*)this->productos->find(new String(codigo));
+    if(productoEliminar == nullptr){
+        throw invalid_argument("El producto no existe.");
+    }
+
+    try{
+        seleccionarProducto(codigo);
+    }catch(const invalid_argument& e){
+        throw invalid_argument("El producto no existe.");
+    }
+
+    IIterator* it = this->ventas->getIterator();
+    IDictionary* ventasSinFacturaConProducto = new OrderedDictionary();
+
+    while(it->hasCurrent()){
+        Venta* venta = (Venta*)it->getCurrent();
+        IDictionary* productos = venta->getProductos();
+
+        if(productos->member(new String(this->productoSeleccionado->getCodigo())) && !venta->estaFacturada()){
+            ventasSinFacturaConProducto->add(new Integer(venta->getCodigo()), venta);
+        }        
+
+        it->next();
+    }
+    delete it;
+    
+    if(!ventasSinFacturaConProducto->isEmpty()){
+        throw invalid_argument("Hay ventas en curso con el producto seleccionado.");
+    }
+
+    ventasSinFacturaConProducto->clearDictionary();
+    delete ventasSinFacturaConProducto;
+
+    IIterator * borrarVenta = this->ventas->getIterator();
+
+    while(borrarVenta->hasCurrent()){
+        Venta* venta = (Venta*)borrarVenta->getCurrent();
+        IDictionary* productos = venta->getProductos();
+        IKey* key = new String(this->productoSeleccionado->getCodigo());
+
+        if(productos->member(key) && venta->estaFacturada()){
+            venta->quitarProductoVenta(this->productoSeleccionado->getCodigo());
+        }
+
+        borrarVenta->next();
+    }
+    delete borrarVenta;
+
+    Plato* plato = dynamic_cast<Plato*>(this->productoSeleccionado);
+    if (plato != nullptr)
+    {
+        IIterator* borrarPlato = this->productos->getIterator();
+        while(borrarPlato->hasCurrent())
+        {
+            Menu* menu = dynamic_cast<Menu*>(borrarPlato->getCurrent());
+            if(menu != nullptr)
+            {
+                menu->quitarPlato(plato);
+                if(menu->getPlatos()->isEmpty())
+                {
+                    quitarProductoDelSistema(menu->getCodigo());
+                }
+            }
+            borrarPlato->next();
+        }
+        delete borrarPlato;
+
+        this->productos->remove(new String(plato->getCodigo()));
+    }else{
+        Menu* menu = dynamic_cast<Menu*>(this->productoSeleccionado);
+        this->productos->remove(new String(menu->getCodigo()));
+    }
+
 }
 
 Sistema::~Sistema()

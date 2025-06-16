@@ -55,6 +55,18 @@ void Menu::anadirPlato(Plato* plato, int cantidad){
     }
 }
 
+void Menu::quitarPlato(Plato* plato) {
+    IKey* key = new String(plato->getCodigo());
+
+    if (!this->menuPlatos->member(key)) { 
+        delete key;
+        throw invalid_argument("El plato no existe en el menu, no se ha modificado nada.");
+    } else {
+        this->menuPlatos->setNull(key); 
+        this->actualizarPrecio(); 
+    }
+}
+
 ostream& operator<<(ostream& os, const Menu& menu)
 {
     os << static_cast<const Producto&>(menu) << endl;
@@ -77,5 +89,6 @@ ostream& operator<<(ostream& os, const Menu& menu)
 }
 
 Menu::~Menu(){
+    cout  << "Destruyendo Menu: " << this->getCodigo() << endl;
     delete this->menuPlatos; // Liberar memoria del diccionario de platos
 }

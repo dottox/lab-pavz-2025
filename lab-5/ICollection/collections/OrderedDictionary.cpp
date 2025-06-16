@@ -264,7 +264,6 @@ void OrderedDictionary::clearDictionary()
     if (root != NULL)
     {
         root->setNullInDepth();
-        root->setVal(NULL);
     }
 }
 

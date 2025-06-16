@@ -1269,7 +1269,7 @@ void bajaProducto(ISistema *s)
     cleanScreen();
     s->listarProductos();
 
-    int codigoProducto;
+    int codigoProducto, opcion;
     cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
     cin >> codigoProducto;
     cin.ignore();
@@ -1290,14 +1290,31 @@ void bajaProducto(ISistema *s)
     try
     {
         s->seleccionarProducto((char *)codigoProducto);
-        s->quitarProducto();
-        cout << "Producto eliminado exitosamente." << endl;
     }
     catch (const invalid_argument &e)
     {
         cout << "Error: " << e.what() << endl;
     }
     pause();
+
+    s->mostrarProductoSeleccionado();
+
+    cout << "¿Desea eliminar el producto seleccionado? (1. Si, 2. No): ";
+    cin >> opcion;
+    cin.ignore();
+
+    if(cin.fail() || opcion == 2)
+    {
+        cout << "Opcion invalida. Operacion cancelada." << endl;
+        s->cancelarBajaProducto();
+        pause();
+        return;
+    }else{
+        s->quitarProductoDelSistema((char *)codigoProducto);
+        cout << "Producto eliminado exitosamente." << endl;
+        s->cancelarBajaProducto();
+        pause();
+    }
 }
 
 int main()
