@@ -181,6 +181,19 @@ public:
     void mostrarMesasElegidas(bool); // True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
 
     // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
+
+    // ####### --------------- INICIO CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
+    /**
+     * @brief El sistema asigna mesas a un mozo.
+     * @param int --> Numero del mozo.
+     * @param int --> Numero de mesas a asignar.
+     */
+    bool hayVentasEnCurso();
+    void asignarMesasMozos(int, int);
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema

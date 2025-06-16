@@ -136,7 +136,6 @@ $(OBJDIR)/%.o: datatypes/Hora/%.cpp | $(OBJDIR)
 
 $(OBJDIR)/%.o: datatypes/Cliente/%.cpp | $(OBJDIR)
 	$(CXX) -c $< -o $@
-
 	
 $(OBJDIR)/%.o: datatypes/Mesa/%.cpp | $(OBJDIR)
 	$(CXX) -c $< -o $@

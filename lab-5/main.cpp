@@ -62,7 +62,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "1. Alta de producto" << endl;
         cout << "2. Alta de cliente" << endl;
         cout << "3. Alta de empleado" << endl;
-        cout << "4. Asignar mesas a mozos (No implementado)" << endl;
+        cout << "4. Asignar mesas a mozos" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
         cout << "6. Ventas de un mozo" << endl;
         cout << "7. Informacion de un producto" << endl;
@@ -666,6 +666,48 @@ void ventasMozo(ISistema *s)
     pause();
 }
 
+void asignarMesasMozos(ISistema *s)
+{
+    cleanScreen();
+
+    int cantMozos, cantMesas;
+    cout << "Ingrese la cantidad de mozos a asignar: ";
+    cin >> cantMozos;
+    cin.ignore();
+
+    while (cin.fail() || cantMozos <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMozos;
+        cin.ignore();
+    }
+
+    cout << "Ingrese la cantidad de mesas a asignar: ";
+    cin >> cantMesas;
+    cin.ignore();
+
+    while (cin.fail() || cantMesas <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMesas;
+        cin.ignore();
+    }
+
+    try{
+        s->asignarMesasMozos(cantMozos, cantMesas);
+        pause();
+    }catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        pause();
+        return;
+    }
+}
+
 void altaCliente(ISistema *s)
 {
     cleanScreen();
@@ -904,7 +946,7 @@ int main()
 {
     ISistema *s = Factory::getSistema();
 
-    // pause(); // Uncomment this line if you want to pause the program at the start
+    pause(); // Uncomment this line if you want to pause the program at the start
 
     bool mantener = true;
     int opcion;
@@ -979,6 +1021,7 @@ int main()
                         agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos
+                        asignarMesasMozos(s);
                         break;
                     case 5: // Venta a domicilio
                         break;

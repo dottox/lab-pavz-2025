@@ -48,6 +48,11 @@ public:
      * Borra el elemento y los que tiene enlazados
      */
     void deleteInDepth();
+
+    /**
+     * Borra el elemento y los que tiene enlazados
+     */
+    void setNullInDepth();
     
     /**
      * Borra el objeto 

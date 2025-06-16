@@ -22,11 +22,11 @@
 #include "../../datatypes/Producto/DtMenu.h"
 #include "../../datatypes/Informe/DtInforme.h"
 #include "../../datatypes/InfoProducto/DtInfoProducto.h"
+#include "../../datatypes/Asignacion/DtAsignacion.h"
 #include "../../datatypes/Fecha/DtFecha.h"
 #include "../../datatypes/Direccion/DtDireccion.h"
 #include "../../datatypes/Direccion/DtDireccionCasa.h"
 #include "../../datatypes/Direccion/DtDireccionApto.h"
-
 
 #include "../../enums/TipoProducto.h"
 #include "../../enums/ActorMenu.h"
@@ -222,6 +222,18 @@ public:
     virtual void mostrarVentasMozo(DtFecha, DtFecha) = 0;
 
     // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
+    // ####### --------------- INICIO CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
+    /**
+     * @brief El sistema asigna mesas a un mozo.
+     * @param int --> Numero del mozo.
+     * @param int --> Numero de mesas a asignar.
+     */
+    virtual bool hayVentasEnCurso() = 0;
+    virtual void asignarMesasMozos(int, int) = 0;
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######
 
     virtual void addMesaElegida() = 0;
     virtual ICollection *getMesasElegidas() = 0;
