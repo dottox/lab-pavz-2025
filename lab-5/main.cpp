@@ -1318,19 +1318,20 @@ void bajaProducto(ISistema *s)
     cleanScreen();
     s->listarProductos();
 
-    int codigoProducto, opcion;
+    string codigoProducto;
+    int opcion;
     cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
     cin >> codigoProducto;
     cin.ignore();
 
-    if (cin.fail() || codigoProducto < 0)
+    if (cin.fail())
     {
-        cout << "El codigo del producto debe ser un numero positivo." << endl;
+        cout << "Ha ocurrido un error" << endl;
         pause();
         return;
     }
 
-    if (codigoProducto == 0)
+    if (codigoProducto == "0")
     {
         cout << "Cancelando operacion." << endl;
         return;
@@ -1338,7 +1339,7 @@ void bajaProducto(ISistema *s)
 
     try
     {
-        s->seleccionarProducto((char *)codigoProducto);
+        s->seleccionarProducto(codigoProducto);
     }
     catch (const invalid_argument &e)
     {
@@ -1359,7 +1360,7 @@ void bajaProducto(ISistema *s)
         pause();
         return;
     }else{
-        s->quitarProductoDelSistema((char *)codigoProducto);
+        s->quitarProductoDelSistema(codigoProducto);
         cout << "Producto eliminado exitosamente." << endl;
         s->cancelarBajaProducto();
         pause();
@@ -1368,9 +1369,11 @@ void bajaProducto(ISistema *s)
 
 int main()
 {
+    pause(); // Uncomment this line if you want to pause the program at the start
+
     ISistema *s = Factory::getSistema();
 
-    // pause(); // Uncomment this line if you want to pause the program at the start
+    pause(); // Uncomment this line if you want to pause the program after getting the system
 
     bool mantener = true;
     int opcion;
