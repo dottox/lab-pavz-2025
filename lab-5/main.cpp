@@ -965,7 +965,7 @@ void altaCliente(ISistema *s)
         {
             cout << "Ingrese el nombre del cliente:" << endl;
             getline(cin, nombre);
-        } while (!soloLetras(nombre) || cin.fail() || nombre[0] == ' ');
+        } while (!soloLetras(nombre) || cin.fail() || nombre[0] == ' ' || nombre.empty());
 
         cleanScreen();
 
