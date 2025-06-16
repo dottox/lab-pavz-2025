@@ -201,8 +201,8 @@ void Sistema::seleccionarMozo(int numeroMozo)
 void Sistema::seleccionarProducto(char *codigo)
 {
     IKey *key = new String(codigo);
-    this->prodctoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
-    if (this->prodctoSeleccionado == nullptr)
+    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+    if (this->productoSeleccionado == nullptr)
     {
         delete key; // Liberar memoria del key
         throw invalid_argument("El producto seleccionado no existe.");
@@ -213,7 +213,7 @@ void Sistema::seleccionarProducto(char *codigo)
 void Sistema::agregarProductoAVenta()
 {
     if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
-        this->prodctoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
+        this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
     {
         throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
     }
@@ -225,7 +225,7 @@ void Sistema::agregarProductoAVenta()
         throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
     }
 
-    ventaEnCurso->agregarProducto(this->prodctoSeleccionado, this->cantidadProductoSeleccionado);
+    ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
 }
 
 void Sistema::cancelarAgregarProductoAVenta()
@@ -233,69 +233,68 @@ void Sistema::cancelarAgregarProductoAVenta()
     // Limpiar las selecciones temporales
     this->mozoSeleccionado = nullptr;
     this->mesaSeleccionada = nullptr;
-    this->prodctoSeleccionado = nullptr;
+    this->productoSeleccionado = nullptr;
     this->cantidadProductoSeleccionado = 0;
 }
 
 // ####### --------------- Quitar producto de una venta --------------- #######
-void Sistema::verificarMesaConVentaEnCurso(int numeroMesa)
+void Sistema::verificarMesaSeleccionadaConVentaEnCurso()
 {
-    IKey *key = new Integer(numeroMesa);
-    Mesa *mesa = (Mesa *)this->mesas->find(key);
-    if (mesa == nullptr)
-    {
-        delete key;
-        throw invalid_argument("La mesa con el codigo proporcionado no existe.");
-    }
-    this->mesaSeleccionada = mesa;
-    delete key;
-    return;
-
     if (this->mesaSeleccionada->getVentaEnCurso() == nullptr)
     {
         throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
     }
-    if (this->mesaSeleccionada->getVentaEnCurso()->estaFacturada())
-    {
-        throw invalid_argument("La venta en curso ya esta facturada, no se pueden quitar productos.");
-    }
+
+    this->ventaSeleccionada = this->mesaSeleccionada->getVentaEnCurso();
 }
 
-void Sistema::listarProductosDeUnaVenta(int mesaEscogida)
+void Sistema::listarProductosVentaSeleccionada()
 {
-    VentaLocal *venta = this->mesaSeleccionada->getVentaEnCurso();      
-    if (venta == nullptr)
-    {
-        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
-    }
+    VentaLocal *venta = (VentaLocal *)this->ventaSeleccionada; 
+
     if (venta->getCantidadProductos() == 0)
     {
-        cout << "No hay productos en la venta." << endl;
-        return;
+        throw invalid_argument("La venta no tiene productos.");
     }
+
     cout << "Productos de la venta: " << endl;
-    IIterator *it = venta->getProductos()->getIterator();
+    ICollection *consumidosVenta = venta->getProductos();
+    IIterator *it = consumidosVenta->getIterator();
     while (it->hasCurrent())
     {
-        VentaLocal *ventaLocal = (VentaLocal *)it->getCurrent();
-        Producto *producto = (Producto *)it->getCurrent();
-        cout << producto->getCodigo();
-        cout << "Cantidad: " << ventaLocal->getCantidadProductos() << endl;
+        DtPlato * plato = (DtPlato *)it->getCurrent();
+        if(plato != nullptr)
+        {
+            cout << *plato << endl;
+        }else{
+            DtMenu* menu = (DtMenu *)it->getCurrent();
+            cout << *menu << endl;
+        }
         it->next();
     }
-    delete it; // Liberar memoria del iterador
+    delete it; 
+    consumidosVenta->clearCollection(); 
+    delete consumidosVenta;
 }
 
-void Sistema::seleccionarProductoDeVenta(int codigoProducto)
+void Sistema::seleccionarProductoDeVenta(string codigoProducto)
 {
-    IKey *key = new Integer(codigoProducto);
-    this->prodctoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
-    if (this->prodctoSeleccionado == nullptr)
+    char* codigo = new char[codigoProducto.size() + 1]; 
+    strcpy(codigo, codigoProducto.c_str());
+
+    IKey *key = new String(codigo);
+    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+    ICollection* productosVenta = this->ventaSeleccionada->getProductos();
+
+    if (this->productoSeleccionado == nullptr || !productosVenta->member(this->productoSeleccionado))
     {
-        throw invalid_argument("El producto seleccionado no existe.");
         delete key;
+        delete[] codigo; 
+        throw invalid_argument("El producto seleccionado no existe o no pertenece a la venta.");
     }
+
     delete key;
+    delete[] codigo; 
 }
 
 ICollection * Sistema::obtenerProductosDeUnaVenta()
@@ -315,29 +314,26 @@ ICollection * Sistema::obtenerProductosDeUnaVenta()
     delete it; // Liberar memoria del iterador
     return productos;
 }
-void Sistema::quitarProductoVenta(int codigoVenta, int cantidad)
+void Sistema::quitarProductoVenta(int cantidad)
 {
-    if (this->prodctoSeleccionado == nullptr || cantidad <= 0)
+    if (this->productoSeleccionado == nullptr || cantidad <= 0)
     {
-        throw invalid_argument("Debe seleccionar un producto 0 una cantidad valida.");
+        throw invalid_argument("Producto no seleccionado o cantidad invalida.");
     }
 
-    IKey *key = new Integer(codigoVenta);
-    VentaLocal *Producto = dynamic_cast<VentaLocal *>(this->productos->find(key));
-    if (Producto == nullptr)
+    if(this->ventaSeleccionada == nullptr)
     {
-        delete key; // Liberar memoria del key
-        throw invalid_argument("La venta con el codigo proporcionado no existe.");
-    }
-    delete key; // Liberar memoria del key
-
-    if (!Producto->estaFacturada())
-    {
-        throw invalid_argument("La venta no esta facturada, no se puede quitar productos.");
+        throw invalid_argument("No hay una venta seleccionada.");
     }
 
-    Producto->quitarProducto(this->prodctoSeleccionado, cantidad);
+    this->ventaSeleccionada->quitarProducto(this->productoSeleccionado, cantidad);
 }
+
+void Sistema::cancelarQuitarProductoVenta(){
+    this->productoSeleccionado = nullptr; // Limpiar la variable temporal
+    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
+    this->ventaSeleccionada = nullptr; // Limpiar la venta seleccionada
+};
 
 
 // ####### --------------- Facturacion de un dia --------------- #######

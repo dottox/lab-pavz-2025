@@ -145,12 +145,11 @@ public:
 
     // ####### --------------- Quitar productos de venta --------------- #######
 
-    virtual void quitarProductoVenta(int,int) = 0;
-    virtual void cancelarQuitarProductoAVenta() = 0;
-    virtual void verificarMesaConVentaEnCurso(int) = 0;
-    virtual ICollection *obtenerProductosDeUnaVenta() = 0;
-    virtual void listarProductosDeUnaVenta(int) = 0;
-    virtual void  seleccionarProductoDeVenta(int)= 0;
+    virtual void quitarProductoVenta(int) = 0;
+    virtual void cancelarQuitarProductoVenta() = 0;
+    virtual void verificarMesaSeleccionadaConVentaEnCurso() = 0;
+    virtual void listarProductosVentaSeleccionada() = 0;
+    virtual void seleccionarProductoDeVenta(string)= 0;
     // ###### --------------- Alta Empleado ---------------  #######
 
     /**

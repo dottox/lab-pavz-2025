@@ -270,6 +270,7 @@ void altaProducto(ISistema *s)
     if (cin.fail() || (opcion != 1 && opcion != 2))
     {
         limpiarCin();
+        delete[] codigo;
         return;
     }
     if (opcion == 1)
@@ -665,75 +666,97 @@ void ventasMozo(ISistema *s)
     pause();
 }
 
-// void quitarProductoVenta(ISistema *s)
-// {
-    // cleanScreen();
-    // int codigo;
-    // int cantidad;
-    // cout << "Ingrese el numero de la mesa que desea eliminar: " << endl;
-    // cout << "0. Volver al menu anterior" << endl;
-    // cin >> codigo;
-    // s->elegirMesa(codigo);
-    // s->verificarMesaConVentaEnCurso(codigo);
-   
-    // cout << "seleccione el codigo del producto que desea quitar: ";
-    // cin >> codigo;
-    // s->listarProductosDeUnaVenta(codigo);
+void quitarProductoVenta(ISistema *s)
+{
+    cleanScreen();
+    int codigoMesa, cantidad;
+    string codigoProducto;
+    bool mantener = true;
 
-    // s->seleccionarProductoDeVenta(char(codigo));
+    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+    cout << "(Ingrese '0' para salir)" << endl;
+    cin >> codigoMesa;
+    cin.ignore();
 
-    // cout << "ingrese cuantas unidades desea quitar del producto: ";
-    // cin >> cantidad;
+    if(cin.fail() || codigoMesa < 0)
+    {
+        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
+    }
+
+    if (codigoMesa == 0)
+    {
+        cout << "Cancelando Operacion." << endl;
+        return;
+    }
+
+    try{
+        s->elegirMesa(codigoMesa);
+        s->verificarMesaSeleccionadaConVentaEnCurso();
+        s->listarProductosVentaSeleccionada();
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Cancelando operacion" << endl;
+        s->cancelarQuitarProductoVenta();
+        pause();
+        return;
+    }
     
-    // s->quitarProductoVenta(codigo, cantidad);    
+    while(mantener){
+
+        cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
+        cout << "(Ingrese '0' para salir)" << endl;
+        cin >> codigoProducto;
+        cin.ignore();
+    
+        if(cin.fail() || codigoProducto.empty())
+        {
+            cout << "El codigo del producto no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        if(codigoProducto == "0")
+        {
+            cout << "Cancelando operacion." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+            return;
+        }
+    
+        try{
+            s->seleccionarProductoDeVenta(codigoProducto);
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    
+        cout << "Ingrese cuantas unidades desea quitar del producto: ";
+        cin >> cantidad;
+        
+        if(cin.fail() || cantidad <= 0)
+        {
+            cout << "La cantidad debe ser un numero positivo." << endl;
+            cout << "Cancelando operacion" << endl;
+            continue;
+        }
+    
+        try{
+            s->quitarProductoVenta(cantidad);    
+            cout << "Producto quitado de la venta exitosamente." << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+        }catch(const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+    }
    
-
-    // bool salir = false;
-
-        // ICollection * productos = s->obtenerProductosDeUnaVenta();
-
-        // while (salir != true)
-        // {
-        //     cleanScreen();
-
-        //     IIterator *it = platos->getIterator();
-
-            // cout << "Productos con ventas disponibles:" << endl;
-
-            // while (it->hasCurrent())
-            // {
-            //     DtPlato *plato = dynamic_cast<DtPlato *>(it->getCurrent());
-            //     if (plato)
-            //     {
-            //         cout << *plato << endl;
-            //     }
-            //     it->next();
-            // }
-            // delete it; // Liberar memoria del iterador
-
-            // cout << "Seleccione el plato a añadir al menu (ingrese el codigo)." << endl;
-            // cout << "Ingrese 'exit' para terminar de añadir platos: " << endl;
-            // cin >> code2;
-            // cin.ignore();
-
-            // if (code2 == "exit")
-            // {
-            //     salir = true;
-            //     continue;
-            // }
-
-            // cout << "Ingrese una cantidad de platos '" << code2 << "' a añadir: ";
-            // cin >> cantidad;
-            // cin.ignore();
-
-            // if (cin.fail() || cantidad <= 0)
-            // {
-            //     cout << "La cantidad debe ser un numero positivo." << endl;
-            //     pause();
-            //     continue;
-            // }
-// }
-
+}
 int main()
 {
     ISistema *s = Factory::getSistema();

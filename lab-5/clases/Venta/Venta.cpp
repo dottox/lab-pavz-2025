@@ -33,18 +33,8 @@ ICollection * Venta::getProductos()
 
     while(it->hasCurrent()){
         ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
-        Producto* p = productoVenta->getProducto(); 
-        Plato* plato = dynamic_cast<Plato *>(p);
-        if(plato  != nullptr) {
-            DtPlato* dtPlato = new DtPlato(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-            productos->add(dtPlato);
-        } else {
-            Menu* menu = dynamic_cast<Menu *>(p);
-            if(menu != nullptr) {
-                DtMenu* dtMenu = new DtMenu(p->getCodigo(), p->getDescripcion(), p->getPrecio());
-                productos->add(dtMenu);
-            }
-        }
+        DtProducto* producto = productoVenta->getProducto(); 
+        productos->add(producto);
         it->next();
     }
     
@@ -80,58 +70,47 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
     }
 
     ProductoVenta *productoVenta = new ProductoVenta(
+        producto->getCodigo(),
+        producto->getTipo(),
         producto->getDescripcion(),
-        cantidad,
         producto->getPrecio(),
-        producto);
+        cantidad);
 
     cout << "Producto agregado: " << productoVenta->getDescripcion()
          << ", Cantidad: " << productoVenta->getCantidad()
          << ", Precio: " << productoVenta->getPrecio() << endl;
 
     // Assuming productos is an OrderedDictionary
-    IKey *key = new String(producto->getDescripcion().c_str());
+    IKey *key = new String(producto->getCodigo());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
 }
 
 void Venta::quitarProducto(Producto *producto, int cantidad)
 {
-    if (cantidad <= 0)
-    {
-        throw invalid_argument("La cantidad debe ser mayor a 0.");
-    }
-
-    IKey *key = new String(producto->getDescripcion().c_str());
-    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    IKey* key = new String(producto->getCodigo());
+    ProductoVenta* productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
     if (productoVenta == nullptr)
     {
-        delete key; // Liberar memoria del key
+        delete key;
         throw invalid_argument("El producto no esta en la venta.");
     }
-    else
+
+    if (productoVenta->getCantidad() < cantidad)
     {
-        if (productoVenta->getCantidad() < cantidad)
-        {
-            delete key; // Liberar memoria del key
-            throw invalid_argument("La cantidad a quitar es mayor a la cantidad en la venta.");
-        }
-        else
-        {
-            productoVenta->setCantidad(productoVenta->getCantidad() - cantidad);
-            this->cantidadProductos -= cantidad;
-            if (productoVenta->getCantidad() == 0)
-            {
-                this->productosConsumidos->setNull(key); // quita el producto sin borrarlo la cantidad llega a 0
-                cout << "Producto eliminado: " << productoVenta->getDescripcion() << endl;
-            }
-
-            cout << "Producto actualizado: " << productoVenta->getDescripcion()
-                 << ", Nueva cantidad: " << productoVenta->getCantidad() << endl;
-
-            delete key; // Liberar memoria del key
-        }
+        delete key;
+        throw invalid_argument("La cantidad a quitar es mayor a la cantidad en la venta.");
     }
+
+    productoVenta->setCantidad(productoVenta->getCantidad() - cantidad);
+    if (productoVenta->getCantidad() == 0)
+    {
+        this->productosConsumidos->remove(key); // quita el producto sin borrarlo la cantidad llega a 0
+        this->cantidadProductos -= 1;
+    }
+
+    delete key; // Liberar memoria del key
+    
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)

@@ -11,6 +11,14 @@ DtMenu::DtMenu(char* codigo, string descripcion, float precio) : DtProducto(codi
 
 }
 
+ostream& operator<<(ostream& os, const DtMenu& menu)
+{
+    os << "Menu | Codigo: " << menu.getCodigo() 
+       << ", Descripcion: " << menu.getDescripcion()
+       << ", Precio: $" << menu.getPrecio();
+    return os;
+}
+
 DtProducto* DtMenu::clone() const{
     return new DtMenu(*this);
 }

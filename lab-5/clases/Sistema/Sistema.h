@@ -21,11 +21,7 @@ private:
 
     // ####### --------------- Agregar producto a una venta --------------- #######
     Mozo *mozoSeleccionado;
-    Producto *prodctoSeleccionado;
-    int cantidadProductoSeleccionado;
-
-    // ####### --------------- Quitar producto de una venta --------------- #######
-    ICollection *obtenerProductosDeUnaVenta();
+    Producto *productoSeleccionado;
 
     // ###### --------------- Facturar venta ---------------  #######
     Mesa *mesaSeleccionada;
@@ -142,11 +138,11 @@ public:
     void cancelarAgregarProductoAVenta();
 
     // ####### --------------- Quitar producto de una venta --------------- #######
-    void quitarProductoVenta(int, int);
+    void quitarProductoVenta(int);
     void cancelarQuitarProductoVenta();
-    void verificarMesaConVentaEnCurso(int);
-    void listarProductosDeUnaVenta(int);
-    void seleccionarProductoDeVenta(int);
+    void verificarMesaSeleccionadaConVentaEnCurso();
+    void listarProductosVentaSeleccionada();
+    void seleccionarProductoDeVenta(string);
 
     // ###### --------------- Alta Empleado ---------------  #######
 
