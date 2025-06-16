@@ -112,7 +112,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
         cout << "6. Ventas de un mozo" << endl;
         cout << "7. Informacion de un producto" << endl;
         cout << "8. Resumen de facturacion de un dia" << endl;
-        cout << "9. Baja de producto (No implementado)" << endl;
+        cout << "9. Baja de producto" << endl;
         cout << "0. Salir" << endl;
         break;
     case ActorMenu::MozoMenu:
@@ -121,7 +121,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
              << endl;
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Iniciar ventas en mesas" << endl;
-        cout << "2. Agregar producto a una venta (En proceso)" << endl;
+        cout << "2. Agregar producto a una venta" << endl;
         cout << "3. Quitar producto de una venta" << endl;
         cout << "4. Facturacion de una venta" << endl;
         cout << "0. Salir" << endl;
@@ -1460,6 +1460,7 @@ int main()
                         facturacionDia(s);
                         break;
                     case 9: // Baja de producto
+                        bajaProducto(s);
                         break;
                     default:
                         break;
