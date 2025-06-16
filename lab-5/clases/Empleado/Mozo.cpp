@@ -37,6 +37,7 @@ void Mozo::setMesaAsignada(Mesa *mesa)
     }
     else
     {
+        cout << "La mesa " << mesa->getNumero() << " ya esta asignada al mozo " << this->getNombre() << endl;
         delete key; // Liberar memoria del key
         throw invalid_argument("La mesa ya esta asignada a este mozo.");
     }
@@ -51,7 +52,14 @@ IDictionary *Mozo::getMesasAsignadas()
 ostream &operator<<(ostream &os, const Mozo &mozo)
 {
     os << "Mozo: " << static_cast<const Empleado &>(mozo); // Call base class operator<<
-    os << ", Cantidad de Mesas Asignadas: " << mozo.getCantidadMesasAsignadas();
+    if(mozo.getCantidadMesasAsignadas() > 0)
+    {
+        os << ", Mesas Asignadas: " << mozo.getCantidadMesasAsignadas();
+    }
+    else
+    {
+        os << ", No tiene mesas asignadas.";
+    }
     return os;
 }
 
@@ -78,16 +86,16 @@ void Mozo::borrarMesaAsignada(Mesa *mesa)
 {
     IKey *key = new Integer(mesa->getNumero());
 
-    if (!this->mesasAsignadas->member(key))
+    if (!this->mesasAsignadas->member(key) && mesa->getMozo() != this)
     {
         delete key; // Liberar memoria del key
         throw invalid_argument("La mesa no esta asignada a este mozo.");
     }
 
     this->decrementarCantidadMesasAsignadas(); // Decrementar la cantidad de mesas asignadas
-    Mesa *mesaAsignada = (Mesa *)(this->mesasAsignadas->find(key));
-    mesaAsignada->setMozo(nullptr);
-    mesaAsignada = nullptr; // Limpiar la referencia a la mesa asignada
+    this->mesasAsignadas->setNull(key); // Eliminar la mesa del diccionario
+    mesa->setMozo(nullptr);
+    mesa = nullptr; // Limpiar la referencia a la mesa asignada
     delete key;             // Liberar memoria del key
 }
 

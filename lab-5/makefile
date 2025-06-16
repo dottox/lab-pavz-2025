@@ -178,7 +178,5 @@ clean:
 
 run: all
 	$(OBJDIR)/programa
-
-
 	make clean
 
