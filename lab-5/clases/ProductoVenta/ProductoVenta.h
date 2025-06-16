@@ -26,5 +26,6 @@ public:
     float getPrecio();
     int getCantidad();
     void setCantidad(int);
+    friend ostream &operator<<(ostream &os, const ProductoVenta &producto);
     ~ProductoVenta();
 };

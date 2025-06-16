@@ -1,7 +1,5 @@
 #include "Venta.h"
 
-#include "../../utils/utils.h"
-
 Venta::Venta()
 {
     this->codigo = utils::generarNumeroVenta();
@@ -42,16 +40,17 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-ICollection *Venta::getProductos()
+IDictionary *Venta::getProductos()
 {
-    ICollection *productos = new List();
+    IDictionary *productos = new OrderedDictionary();
     IIterator *it = this->productosConsumidos->getIterator();
 
     while (it->hasCurrent())
     {
         ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
         DtProducto *producto = productoVenta->getProducto();
-        productos->add(producto);
+        IKey *key = new String(producto->getCodigo());
+        productos->add(key, producto);
         it->next();
     }
 
@@ -93,14 +92,36 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         producto->getPrecio(),
         cantidad);
 
-    cout << "Producto agregado: " << productoVenta->getDescripcion()
-         << ", Cantidad: " << productoVenta->getCantidad()
-         << ", Precio: " << productoVenta->getPrecio() << endl;
-
     // Assuming productos is an OrderedDictionary
     IKey *key = new String(producto->getCodigo());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
+}
+
+void Venta::quitarProducto(Producto *producto, int cantidad)
+{
+    IKey *key = new String(producto->getCodigo());
+    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    if (productoVenta == nullptr)
+    {
+        delete key;
+        throw invalid_argument("El producto no esta en la venta.");
+    }
+
+    if (productoVenta->getCantidad() < cantidad)
+    {
+        delete key;
+        throw invalid_argument("La cantidad a quitar es mayor a la cantidad en la venta.");
+    }
+
+    productoVenta->setCantidad(productoVenta->getCantidad() - cantidad);
+    if (productoVenta->getCantidad() == 0)
+    {
+        this->productosConsumidos->remove(key); // quita el producto sin borrarlo la cantidad llega a 0
+        this->cantidadProductos -= 1;
+    }
+
+    delete key; // Liberar memoria del key
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)
@@ -206,8 +227,8 @@ ostream &operator<<(ostream &os, const Venta &venta)
 {
     os << "Codigo: " << venta.codigo
        << ", Subtotal: " << venta.subtotal
-       << ", Descuento: " << venta.descuento
-       << ", Cantidad de Productos: " << venta.cantidadProductos;
+       << ", Descuento: " << venta.descuento;
+
     if (venta.factura != nullptr)
     {
         os << ", Facturada: Si";
@@ -215,6 +236,23 @@ ostream &operator<<(ostream &os, const Venta &venta)
     else
     {
         os << ", Facturada: No";
+    }
+
+    if (venta.productosConsumidos->isEmpty())
+    {
+        os << ", No tiene productos consumidos";
+    }
+    else
+    {
+        os << ", Cantidad de Productos: " << venta.cantidadProductos << endl
+           << "Productos Consumidos: " << endl;
+        IIterator *it = venta.productosConsumidos->getIterator();
+        while (it->hasCurrent())
+        {
+            ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+            cout << *productoVenta << endl;
+            it->next();
+        }
     }
     return os;
 }

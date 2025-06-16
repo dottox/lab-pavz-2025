@@ -4,6 +4,8 @@
 #include "../Producto/Producto.h"
 #include "../Producto/Plato.h"
 #include "../Producto/Menu.h"
+#include "../Producto/Plato.h"
+#include "../Producto/Menu.h"
 #include "../Factura/Factura.h"
 #include "../Factura/FacturaLocal.h"
 #include "../Factura/FacturaDomicilio.h"
@@ -21,6 +23,7 @@
 #include "../../ICollection/String.h"
 #include "../../ICollection/Integer.h"
 #include "../../ICollection/interfaces/IKey.h"
+#include "../../utils/utils.h"
 
 using namespace std;
 
@@ -40,12 +43,13 @@ public:
     int getCodigo();
     float getSubtotal();
     int getDescuento();
-    ICollection *getProductos(); // retornar una coleccion con los productosConsumidos
+    IDictionary *getProductos(); // retornar una coleccion con los productosConsumidos
     int getCantidadProductos();
     bool estaFacturada();
     void setSubtotal(float);
     void agregarPorcentaje(int);
     void agregarProducto(Producto *, int);
+    void quitarProducto(Producto *, int);
     DtFacturaLocal generarFactura(string);
     DtFacturaLocal mostrarFacturaLocal();
     DtFacturaDomicilio generarFacturaDomicilio(string, Transporte);

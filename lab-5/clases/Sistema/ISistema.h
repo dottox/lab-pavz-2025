@@ -150,6 +150,13 @@ public:
     virtual void agregarProductoAVenta() = 0;
     virtual void cancelarAgregarProductoAVenta() = 0;
 
+    // ####### --------------- Quitar productos de venta --------------- #######
+
+    virtual void quitarProductoVenta(int) = 0;
+    virtual void cancelarQuitarProductoVenta() = 0;
+    virtual void verificarMesaSeleccionadaConVentaEnCurso() = 0;
+    virtual void listarProductosVentaSeleccionada() = 0;
+    virtual void seleccionarProductoDeVenta(string)= 0;
     // ###### --------------- Alta Empleado ---------------  #######
 
     /**
