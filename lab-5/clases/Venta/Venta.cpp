@@ -1,6 +1,5 @@
 #include "Venta.h"
 
-
 Venta::Venta()
 {
     this->codigo = utils::generarNumeroVenta();
@@ -26,20 +25,22 @@ int Venta::getDescuento()
     return this->descuento;
 }
 
-ICollection * Venta::getProductos()
+IDictionary *Venta::getProductos()
 {
-    ICollection *productos = new List();
-    IIterator * it = this->productosConsumidos->getIterator();
+    IDictionary *productos = new OrderedDictionary();
+    IIterator *it = this->productosConsumidos->getIterator();
 
-    while(it->hasCurrent()){
+    while (it->hasCurrent())
+    {
         ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
-        DtProducto* producto = productoVenta->getProducto(); 
-        productos->add(producto);
+        DtProducto *producto = productoVenta->getProducto();
+        IKey *key = new String(producto->getCodigo());
+        productos->add(key, producto);
         it->next();
     }
-    
-    delete it; 
-    return productos; 
+
+    delete it;
+    return productos;
 }
 
 int Venta::getCantidadProductos()
@@ -88,8 +89,8 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
 
 void Venta::quitarProducto(Producto *producto, int cantidad)
 {
-    IKey* key = new String(producto->getCodigo());
-    ProductoVenta* productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    IKey *key = new String(producto->getCodigo());
+    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
     if (productoVenta == nullptr)
     {
         delete key;
@@ -110,7 +111,6 @@ void Venta::quitarProducto(Producto *producto, int cantidad)
     }
 
     delete key; // Liberar memoria del key
-    
 }
 
 DtFacturaLocal Venta::generarFactura(string nombreMozo)
@@ -178,8 +178,8 @@ ostream &operator<<(ostream &os, const Venta &venta)
 {
     os << "Codigo: " << venta.codigo
        << ", Subtotal: " << venta.subtotal
-       << ", Descuento: " << venta.descuento
-       << ", Cantidad de Productos: " << venta.cantidadProductos;
+       << ", Descuento: " << venta.descuento;
+
     if (venta.factura != nullptr)
     {
         os << ", Facturada: Si";
@@ -187,6 +187,24 @@ ostream &operator<<(ostream &os, const Venta &venta)
     else
     {
         os << ", Facturada: No";
+    }
+
+    if (venta.productosConsumidos->isEmpty())
+    {
+        os << ", No tiene productos consumidos";
+    }
+    else
+    {
+        os << ", Cantidad de Productos: " << venta.cantidadProductos << endl
+           << "Productos Consumidos: " << endl;
+        IIterator *it = venta.productosConsumidos->getIterator();
+        while (it->hasCurrent())
+        {
+            ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+            cout << *productoVenta << endl;
+            it->next();
+        }
+
     }
     return os;
 }

@@ -11,12 +11,14 @@ ProductoVenta::ProductoVenta(char* codigoProducto, TipoProducto tipoProducto, st
 
 DtProducto * ProductoVenta::getProducto()
 {
+    DtProducto *producto = nullptr;
     if(this->tipo == TipoProducto::TipoPlato)
     {
-        return new DtPlato(this->codigoProducto, this->descripcion, this->precio);
+        producto = new DtPlato(this->codigoProducto, this->descripcion, this->precio);
     }else{
-        return new DtMenu(this->codigoProducto, this->descripcion, this->precio);   
+        producto = new DtMenu(this->codigoProducto, this->descripcion, this->precio);   
     }
+    return producto;
 }
 
 char* ProductoVenta::getCodigoProducto()
@@ -48,6 +50,17 @@ void ProductoVenta::setCantidad(int cantidad)
 {
     this->cantidad = cantidad;
 }
+
+ostream &operator<<(ostream &os, const ProductoVenta &producto)
+{
+    os << "(x" << producto.cantidad << ") "
+       << "Codigo Producto: " << producto.codigoProducto
+       << ", Tipo: " << (producto.tipo == TipoProducto::TipoPlato ? "Plato" : "Menu")
+       << ", Descripcion: " << producto.descripcion
+       << ", Precio: $" << producto.precio;
+    return os;
+}
+
 
 ProductoVenta::~ProductoVenta()
 {

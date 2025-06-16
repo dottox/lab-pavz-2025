@@ -40,7 +40,7 @@ public:
     int getCodigo();
     float getSubtotal();
     int getDescuento();
-    ICollection * getProductos(); // retornar una coleccion con los productosConsumidos
+    IDictionary* getProductos(); // retornar una coleccion con los productosConsumidos
     int getCantidadProductos();
     bool estaFacturada();
     void setSubtotal(float);

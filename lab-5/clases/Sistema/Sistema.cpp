@@ -212,29 +212,28 @@ void Sistema::seleccionarProducto(char *codigo)
 
 void Sistema::agregarProductoAVenta()
 {
-    if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
-        this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
-    {
-        throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
-    }
+//     if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
+//         this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
+//     {
+//         throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
+//     }
 
-    VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
+//     VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
 
-    if (ventaEnCurso == nullptr)
-    {
-        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
-    }
+//     if (ventaEnCurso == nullptr)
+//     {
+//         throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+//     }
 
-    ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
+//     ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
 }
 
 void Sistema::cancelarAgregarProductoAVenta()
 {
     // Limpiar las selecciones temporales
-    this->mozoSeleccionado = nullptr;
     this->mesaSeleccionada = nullptr;
+    this->ventaSeleccionada = nullptr;
     this->productoSeleccionado = nullptr;
-    this->cantidadProductoSeleccionado = 0;
 }
 
 // ####### --------------- Quitar producto de una venta --------------- #######
@@ -246,6 +245,7 @@ void Sistema::verificarMesaSeleccionadaConVentaEnCurso()
     }
 
     this->ventaSeleccionada = this->mesaSeleccionada->getVentaEnCurso();
+    cout << "Venta seleccionada: " << this->ventaSeleccionada->getCodigo() << endl;
 }
 
 void Sistema::listarProductosVentaSeleccionada()
@@ -283,37 +283,34 @@ void Sistema::seleccionarProductoDeVenta(string codigoProducto)
     strcpy(codigo, codigoProducto.c_str());
 
     IKey *key = new String(codigo);
-    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
-    ICollection* productosVenta = this->ventaSeleccionada->getProductos();
 
-    if (this->productoSeleccionado == nullptr || !productosVenta->member(this->productoSeleccionado))
+    this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
+
+    if(this->productoSeleccionado == nullptr)
+    {
+        delete key;
+        delete[] codigo; // Liberar memoria del codigo
+        throw invalid_argument("El producto seleccionado no existe.");
+    }
+
+    IDictionary* productosVenta = this->ventaSeleccionada->getProductos();
+
+
+    if (!productosVenta->member(key))
     {
         delete key;
         delete[] codigo; 
-        throw invalid_argument("El producto seleccionado no existe o no pertenece a la venta.");
+        productosVenta->clearDictionary(); // Limpiar la coleccion de productos
+        delete productosVenta; // Liberar memoria de la coleccion
+        throw invalid_argument("El producto seleccionado no pertenece a la venta.");
     }
 
     delete key;
+    productosVenta->clearDictionary(); // Setear a null el producto seleccionado en la coleccion
+    delete productosVenta; // Liberar memoria de la coleccion
     delete[] codigo; 
 }
 
-ICollection * Sistema::obtenerProductosDeUnaVenta()
-{
-    ICollection *productos = new List();
-    IIterator *it = this->productos->getIterator();
-    while (it->hasCurrent())
-    {
-        Producto *producto = dynamic_cast<Producto *>(it->getCurrent());
-        if (producto->getTipo() == TipoPlato)
-        {
-            DtProducto *dtproducto = dynamic_cast<Plato *>(producto)->getInfo();
-            productos->add(dtproducto);
-        }
-        it->next();
-    }
-    delete it; // Liberar memoria del iterador
-    return productos;
-}
 void Sistema::quitarProductoVenta(int cantidad)
 {
     if (this->productoSeleccionado == nullptr || cantidad <= 0)
