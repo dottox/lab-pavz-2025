@@ -22,8 +22,7 @@ private:
 
     // ####### --------------- Agregar producto a una venta --------------- #######
     Mozo *mozoSeleccionado;
-    Producto *prodctoSeleccionado;
-    int cantidadProductoSeleccionado;
+    Producto *productoSeleccionado;
 
     // ###### --------------- Facturar venta ---------------  #######
     Mesa *mesaSeleccionada;
@@ -39,8 +38,15 @@ private:
 
     Cliente *clienteTemporal;
 
-    const int cantMozosAsignados = 9; // Rango 1-9
-    const int cantMesasAsignadas = 20; // Rango 1-20         
+    // ####### --------------- VENTA DOMICILIO --------------- #######
+    Cliente *clienteSeleccionado;
+    IDictionary *productosSeleccionadosDomicilio;
+    Repartidor *repartidorSeleccionado;
+    int cantidadProductosSeleccionadosDomicilio;
+    float subtotalVentaDomicilio;
+
+    const int cantMozosAsignados = 9;  // Rango 1-9
+    const int cantMesasAsignadas = 20; // Rango 1-20
 
 public:
     // ###### --------------- Alta producto ---------------  #######
@@ -144,6 +150,13 @@ public:
     void agregarProductoAVenta();
     void cancelarAgregarProductoAVenta();
 
+    // ####### --------------- Quitar producto de una venta --------------- #######
+    void quitarProductoVenta(int);
+    void cancelarQuitarProductoVenta();
+    void verificarMesaSeleccionadaConVentaEnCurso();
+    void listarProductosVentaSeleccionada();
+    void seleccionarProductoDeVenta(string);
+
     // ###### --------------- Alta Empleado ---------------  #######
 
     /**
@@ -229,20 +242,33 @@ public:
 
     // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
 
+    // ####### --------------- INICIO CASO DE USO VENTA DOMICILIO --------------- #######
+
+    bool existeCliente(int);
+    void ventaDomicilio();
+    void seleccionarCliente(int);
+    void seleccionarProductoDomicilio(string, int);
+    void seleccionarRepartidor(int);
+    DtFacturaDomicilio generarFacturaDomicilio();
+    void cancelarVentaDomicilio();
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
+
     void listarEmpleados();
     void listarVentas();
     void listarMesasConVentasEnCurso();
     void listarMesas();
     void listarMozos();
     void listarProductos();
+    void listarRepartidores();
     void imprimirFacturaLocal(DtFacturaLocal);
     void imprimirFacturaDomicilio(DtFacturaDomicilio);
     void imprimirInforme(DtInforme);
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
-    void agregarCliente(string, int, DtDireccion); 
-    void mostrarClienteTemporal(); 
+    void agregarCliente(string, int, DtDireccion);
+    void mostrarClienteTemporal();
     void darAltaCliente();
     void cancelarAltaCliente();
     static Sistema *getInstance();

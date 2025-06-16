@@ -2,8 +2,17 @@
 
 DtFacturaDomicilio::DtFacturaDomicilio() {}
 
-DtFacturaDomicilio::DtFacturaDomicilio(int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal, string nombreRepartidor, Transporte transporte)
-    : DtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal)
+DtFacturaDomicilio::DtFacturaDomicilio(DtFactura factura, string nombreRepartidor, Transporte transporte)
+    : DtFactura(
+          factura.getCodigo(),
+          factura.getCodigoVenta(),
+          factura.getFecha(),
+          factura.getHora(),
+          factura.getProductos(),
+          factura.getSubtotal(),
+          factura.getDescuento(),
+          factura.getMontoTotal(),
+          factura.getIvaTotal())
 {
     this->nombreRepartidor = nombreRepartidor;
     this->transporte = transporte;

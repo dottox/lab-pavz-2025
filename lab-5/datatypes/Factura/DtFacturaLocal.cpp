@@ -3,15 +3,15 @@
 DtFacturaLocal::DtFacturaLocal() {}
 
 DtFacturaLocal::DtFacturaLocal(DtFactura factura, string nombreMozo)
-    : DtFactura(factura.getCodigo(),
-                factura.getCodigoVenta(),
-                factura.getFecha(),
-                factura.getHora(),
-                factura.getProductos(),
-                factura.getSubtotal(),
-                factura.getDescuento(),
-                factura.getMontoTotal(),
-                factura.getIvaTotal())
+    : DtFactura(
+          factura.getCodigoVenta(),
+          factura.getFecha(),
+          factura.getHora(),
+          factura.getProductos(),
+          factura.getSubtotal(),
+          factura.getDescuento(),
+          factura.getMontoTotal(),
+          factura.getIvaTotal())
 {
     this->nombreMozo = nombreMozo;
 }

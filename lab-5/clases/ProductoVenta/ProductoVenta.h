@@ -11,17 +11,21 @@ using namespace std;
 class ProductoVenta : public ICollectible
 {
 private:
+    char *codigoProducto;
+    TipoProducto tipo;
     string descripcion;
-    int cantidad;
     float precio;
-    Producto *producto;
+    int cantidad;
 
 public:
-    ProductoVenta(string, int, float, Producto *);
-    Producto *getProducto();
-    int getCantidad();
-    float getPrecio();
+    ProductoVenta(char *, TipoProducto, string, float, int);
+    DtProducto *getProducto();
+    char *getCodigoProducto();
+    TipoProducto getTipo();
     string getDescripcion();
+    float getPrecio();
+    int getCantidad();
     void setCantidad(int);
+    friend ostream &operator<<(ostream &os, const ProductoVenta &producto);
     ~ProductoVenta();
 };
