@@ -75,10 +75,10 @@ public:
     ICollection *obtenerPlatos();
 
     /**
-     * @brief Añade un plato a un menu.
-     * @param codigo --> Codigo del plato a añadir.
-     * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
+     * @brief Anade un plato a un menu.
+     * @param codigo --> Codigo del plato a anadir.
+     * @param cantidad --> Cantidad de platos a anadir al menu.
+     * @note El sistema ya guarda en una variable el menu al que se le anadira el plato.
      */
     void anadirPlatoAMenu(char *, int);
 
@@ -244,9 +244,9 @@ public:
 
     // ####### --------------- INICIO CASO DE USO VENTA DOMICILIO --------------- #######
 
-    bool existeCliente(int);
+    bool existeCliente(string);
     void ventaDomicilio();
-    void seleccionarCliente(int);
+    void seleccionarCliente(string);
     void seleccionarProductoDomicilio(string, int);
     void seleccionarRepartidor(int);
     DtFacturaDomicilio generarFacturaDomicilio();
@@ -267,7 +267,7 @@ public:
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
-    void agregarCliente(string, int, DtDireccion);
+    void agregarCliente(string, string, DtDireccion);
     void mostrarClienteTemporal();
     void darAltaCliente();
     void cancelarAltaCliente();

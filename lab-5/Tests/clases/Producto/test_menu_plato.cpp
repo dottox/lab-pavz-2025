@@ -16,44 +16,47 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("MenuPlato: Constructor y getters") {
-    DtMenu dtMenu((char*)("M001"), "Menu del Dia");
+TEST_CASE("MenuPlato: Constructor y getters")
+{
+    DtMenu dtMenu((char *)("M001"), "Menu del Dia");
     Menu menu(dtMenu);
 
     CHECK(std::string(menu.getCodigo()) == "M001");
     CHECK(menu.getDescripcion() == "Menu del Dia");
     CHECK(menu.getTipo() == TipoProducto::TipoMenu);
     CHECK(menu.getPrecio() == doctest::Approx(0.0f)); // Precio inicial es 0.0f
-    CHECK(menu.esVacio() == true); // Debería estar vacío al inicio
+    CHECK(menu.esVacio() == true);                    // Debería estar vacío al inicio
 
     // Verificar que no haya platos en el menú
     ICollection *platos = menu.getPlatos();
     CHECK(platos->getSize() == 0);
 }
 
-TEST_CASE("Menu: Destructor") {
-    DtMenu dtMenu((char*)("M002"), "Menu Especial");
+TEST_CASE("Menu: Destructor")
+{
+    DtMenu dtMenu((char *)("M002"), "Menu Especial");
     Menu *menu = new Menu(dtMenu);
 
     // Verificar que el destructor no cause fugas de memoria
     delete menu;
 }
 
-TEST_CASE("Menu: Añadir plato y actualizar precio") {
-    DtMenu dtMenu((char*)("M003"), "Menu Gourmet");
+TEST_CASE("Menu: Anadir plato y actualizar precio")
+{
+    DtMenu dtMenu((char *)("M003"), "Menu Gourmet");
     Menu menu(dtMenu);
 
     // Crear un plato
-    DtPlato dtPlato((char*)("P001"), "Sopa de Mariscos", 200.0f);
+    DtPlato dtPlato((char *)("P001"), "Sopa de Mariscos", 200.0f);
     Plato *plato = new Plato(dtPlato);
 
-    // Añadir el plato al menú
+    // Anadir el plato al menú
     menu.anadirPlato(plato, 1);
-    
-    // Verificar que el plato se haya añadido correctamente
+
+    // Verificar que el plato se haya anadido correctamente
     ICollection *platos = menu.getPlatos();
     CHECK(platos->getSize() == 1);
-    
+
     // Verificar que el precio del menú se actualice correctamente
     menu.actualizarPrecio();
     CHECK(menu.getPrecio() == doctest::Approx(180.0f));
@@ -61,31 +64,33 @@ TEST_CASE("Menu: Añadir plato y actualizar precio") {
     delete plato; // Liberar memoria del plato
 }
 
-TEST_CASE("Menu: Añadir plato con cantidad negativa") {
-    DtMenu dtMenu((char*)("M004"), "Menu de Almuerzo");
+TEST_CASE("Menu: Anadir plato con cantidad negativa")
+{
+    DtMenu dtMenu((char *)("M004"), "Menu de Almuerzo");
     Menu menu(dtMenu);
 
     // Crear un plato
-    DtPlato dtPlato((char*)("P002"), "Ensalada César", 150.0f);
+    DtPlato dtPlato((char *)("P002"), "Ensalada César", 150.0f);
     Plato *plato = new Plato(dtPlato);
 
-    // Intentar añadir el plato con una cantidad negativa
+    // Intentar anadir el plato con una cantidad negativa
     CHECK_THROWS_AS(menu.anadirPlato(plato, -1), std::invalid_argument);
 
     delete plato; // Liberar memoria del plato
 }
-TEST_CASE("Menu: Añadir plato existente") {
-    DtMenu dtMenu((char*)("M005"), "Menu de Almuerzo");
+TEST_CASE("Menu: Anadir plato existente")
+{
+    DtMenu dtMenu((char *)("M005"), "Menu de Almuerzo");
     Menu menu(dtMenu);
 
     // Crear un plato
-    DtPlato dtPlato((char*)("P003"), "Pasta Alfredo", 180.0f);
+    DtPlato dtPlato((char *)("P003"), "Pasta Alfredo", 180.0f);
     Plato *plato = new Plato(dtPlato);
 
-    // Añadir el plato al menú
+    // Anadir el plato al menú
     menu.anadirPlato(plato, 2);
-    
-    // Intentar añadir el mismo plato nuevamente
+
+    // Intentar anadir el mismo plato nuevamente
     CHECK_THROWS_AS(menu.anadirPlato(plato, 3), std::invalid_argument); // Debe lanzar excepción
 
     // Verificar que el precio se mantenga correctamente
@@ -95,18 +100,19 @@ TEST_CASE("Menu: Añadir plato existente") {
     delete plato; // Liberar memoria del plato
 }
 
-TEST_CASE("Menu: Añadir plato con código existente") {
-    DtMenu dtMenu((char*)("M006"), "Menu de Cena");
+TEST_CASE("Menu: Anadir plato con código existente")
+{
+    DtMenu dtMenu((char *)("M006"), "Menu de Cena");
     Menu menu(dtMenu);
 
     // Crear un plato
-    DtPlato dtPlato((char*)("P004"), "Pizza Margarita", 220.0f);
+    DtPlato dtPlato((char *)("P004"), "Pizza Margarita", 220.0f);
     Plato *plato = new Plato(dtPlato);
 
-    // Añadir el plato al menú
+    // Anadir el plato al menú
     menu.anadirPlato(plato, 1);
-    
-    // Intentar añadir el mismo plato nuevamente
+
+    // Intentar anadir el mismo plato nuevamente
     CHECK_THROWS_AS(menu.anadirPlato(plato, 2), std::invalid_argument); // Debe lanzar excepción
 
     // Verificar que el precio se mantenga correctamente
@@ -116,21 +122,22 @@ TEST_CASE("Menu: Añadir plato con código existente") {
     delete plato; // Liberar memoria del plato
 }
 
-TEST_CASE("Menu: Obtener platos") {
-    DtMenu dtMenu((char*)("M007"), "Menu de Cena");
+TEST_CASE("Menu: Obtener platos")
+{
+    DtMenu dtMenu((char *)("M007"), "Menu de Cena");
     Menu menu(dtMenu);
 
     // Crear varios platos
-    DtPlato dtPlato1((char*)("P005"), "Tacos de Pollo", 150.0f);
+    DtPlato dtPlato1((char *)("P005"), "Tacos de Pollo", 150.0f);
     Plato *plato1 = new Plato(dtPlato1);
-    DtPlato dtPlato2((char*)("P006"), "Burrito Vegetariano", 180.0f);
+    DtPlato dtPlato2((char *)("P006"), "Burrito Vegetariano", 180.0f);
     Plato *plato2 = new Plato(dtPlato2);
 
-    // Añadir los platos al menú
+    // Anadir los platos al menú
     menu.anadirPlato(plato1, 2);
     menu.anadirPlato(plato2, 3);
 
-    // Verificar que se hayan añadido correctamente
+    // Verificar que se hayan anadido correctamente
     ICollection *platos = menu.getPlatos();
     CHECK(platos->getSize() == 2);
 
@@ -138,15 +145,16 @@ TEST_CASE("Menu: Obtener platos") {
     delete plato2; // Liberar memoria del segundo plato
 }
 
-TEST_CASE("Menu: Es vacío") {
-    DtMenu dtMenu((char*)("M008"), "Menu de Desayuno");
+TEST_CASE("Menu: Es vacío")
+{
+    DtMenu dtMenu((char *)("M008"), "Menu de Desayuno");
     Menu menu(dtMenu);
 
     // Verificar que el menú esté vacío al inicio
     CHECK(menu.esVacio() == true);
 
-    // Crear un plato y añadirlo al menú
-    DtPlato dtPlato((char*)("P007"), "Tostadas Francesas", 120.0f);
+    // Crear un plato y anadirlo al menú
+    DtPlato dtPlato((char *)("P007"), "Tostadas Francesas", 120.0f);
     Plato *plato = new Plato(dtPlato);
     menu.anadirPlato(plato, 1);
 
@@ -156,43 +164,42 @@ TEST_CASE("Menu: Es vacío") {
     delete plato; // Liberar memoria del plato
 }
 
-TEST_CASE("Menu: Obtener instancia de Menu") {
-    DtMenu dtMenu((char*)("M009"), "Menu de Almuerzo");
+TEST_CASE("Menu: Obtener instancia de Menu")
+{
+    DtMenu dtMenu((char *)("M009"), "Menu de Almuerzo");
     Menu menu(dtMenu);
 
-    CHECK(std::string(menu.getCodigo()) == "M009"); // Verifica que getCodigo retorne el código del menú
+    CHECK(std::string(menu.getCodigo()) == "M009");     // Verifica que getCodigo retorne el código del menú
     CHECK(menu.getDescripcion() == "Menu de Almuerzo"); // Verifica que getDescripcion retorne la descripción del menú
 
     // Verificar que el tipo sea TipoMenu
     CHECK(menu.getTipo() == TipoProducto::TipoMenu);
 }
 
-TEST_CASE("Menu: Setters con valores inválidos") {
-    DtMenu dtMenu((char*)("M010"), "Menu de Cena");
+TEST_CASE("Menu: Setters con valores inválidos")
+{
+    DtMenu dtMenu((char *)("M010"), "Menu de Cena");
     Menu menu(dtMenu);
 
     // Intentar establecer un precio negativo
     CHECK_THROWS_AS(menu.setPrecio(-50.0f), std::invalid_argument);
 }
 
-TEST_CASE("Menu: Setters con venta en curso") {
-    DtMenu dtMenu((char*)("M011"), "Menu de Fiesta");
+TEST_CASE("Menu: Setters con venta en curso")
+{
+    DtMenu dtMenu((char *)("M011"), "Menu de Fiesta");
     Menu menu(dtMenu);
 
     // Crear un plato
-    DtPlato dtPlato((char*)("P008"), "Paella", 250.0f);
+    DtPlato dtPlato((char *)("P008"), "Paella", 250.0f);
     Plato *plato = new Plato(dtPlato);
 
-    // Añadir el plato al menú
+    // Anadir el plato al menú
     menu.anadirPlato(plato, 1);
-    
+
     // Verificar que se pueda cambiar el precio mientras hay una venta en curso
     menu.setPrecio(300.0f);
     CHECK(menu.getPrecio() == doctest::Approx(300.0f));
 
     delete plato; // Liberar memoria del plato
 }
-
-
-
-
