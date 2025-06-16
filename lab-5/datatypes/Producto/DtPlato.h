@@ -10,6 +10,7 @@ class DtPlato : public DtProducto
 public:
     DtPlato();
     DtPlato(char*, string, float);
+    DtPlato(char*, string, float, int);
     DtProducto* clone() const;
     friend ostream& operator<<(ostream&, const DtPlato&);
     ~DtPlato();

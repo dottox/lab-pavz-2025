@@ -85,6 +85,16 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         throw invalid_argument("La cantidad debe ser mayor a 0.");
     }
 
+    //Check if the product already exists in the sale
+    IKey *key = new String(producto->getCodigo());
+    ProductoVenta *productoExistente = (ProductoVenta *)this->productosConsumidos->find(key);
+    if (productoExistente != nullptr) {
+        // If the product already exists, just update the quantity
+        productoExistente->setCantidad(productoExistente->getCantidad() + cantidad);
+        delete key; // Liberar memoria del key
+        return;
+    }
+
     ProductoVenta *productoVenta = new ProductoVenta(
         producto->getCodigo(),
         producto->getTipo(),
@@ -92,8 +102,6 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
         producto->getPrecio(),
         cantidad);
 
-    // Assuming productos is an OrderedDictionary
-    IKey *key = new String(producto->getCodigo());
     this->productosConsumidos->add(key, productoVenta);
     this->cantidadProductos += cantidad;
 }

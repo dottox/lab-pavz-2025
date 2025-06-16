@@ -22,8 +22,6 @@ void cleanScreen()
 void pause()
 {
     cin.clear();
-    cin.ignore();
-    cin.ignore();
     string dummy;
     cout << "Presiona cualquier tecla para continuar.";
     getline(cin, dummy);
@@ -290,7 +288,23 @@ void altaProducto(ISistema *s)
 
 void facturarVenta(ISistema *s)
 {
+
+    int idEmpleado;
+
+    s->listarMozos();
+    cout << "Ingrese el ID del empleado que quiere agregar un producto a una venta: " << endl;
+    cin >> idEmpleado;
+    cin.ignore();
+
+    if (cin.fail() || idEmpleado <= 0)
+    {
+        throw invalid_argument("El ID del empleado debe ser un numero positivo.");
+        return;
+    }
+    s->seleccionarMozo(idEmpleado);
     cleanScreen();
+
+
     s->listarMesasConVentasEnCurso();
 
     int codigoMesa, descuento;
@@ -347,99 +361,139 @@ void facturacionDia(ISistema *s)
 
 void agregarProductoAVenta(ISistema *s)
 {
-    cleanScreen();
+    int idEmpleado;
     int codigoMesa, cantidad;
-    string codigoProducto;
+    string codigoProducto, confirmar;
     bool mantener = true;
 
-    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
-    cout << "(Ingrese '0' para salir)" << endl;
-    cin >> codigoMesa;
+    cleanScreen();
+    s->listarMozos();
+    cout << endl << "Ingrese el ID del empleado que quiere agregar un producto a una venta: ";
+    cin >> idEmpleado;
     cin.ignore();
 
-    if (cin.fail() || codigoMesa < 0)
+    if (cin.fail() || idEmpleado <= 0)
     {
-        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
-    }
-
-    if (codigoMesa == 0)
-    {
-        cout << "Cancelando Operacion." << endl;
+        s->cancelarAgregarProductoAVenta();
+        throw invalid_argument("El ID del empleado debe ser un numero positivo.");
         return;
     }
+    s->seleccionarMozo(idEmpleado);
+    cleanScreen();
+    
 
-    try
-    {
-        s->elegirMesa(codigoMesa);
-        s->verificarMesaSeleccionadaConVentaEnCurso();
-        s->listarProductosVentaSeleccionada();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-        cout << "Cancelando operacion" << endl;
-        s->cancelarQuitarProductoVenta();
-        pause();
-        return;
-    }
+    // Loop para seleccionar la mesa.
+    while(mantener){
+        cleanScreen();
+        
+        try {
+            s->listarMesasConVentasEnCurso();
+        } catch (const invalid_argument &e) {
+            s->cancelarAgregarProductoAVenta();
+            throw e;
+        }
 
+        cout << endl << "Ingrese el numero de la mesa involucrada en la venta ('0' para salir): ";
+        cin >> codigoMesa;
+        cin.ignore();
+    
+        if (cin.fail() || codigoMesa < 0)
+        {
+            cout << endl << "El codigo de la mesa debe ser un numero positivo." << endl;
+            pause();
+            continue;
+        }
+    
+        if (codigoMesa == 0)
+        {
+            cout << endl << "Cancelando Operacion." << endl;
+            s->cancelarAgregarProductoAVenta();
+            return;
+        }
+    
+        try {
+            s->elegirMesa(codigoMesa);
+            s->verificarMesaSeleccionadaConVentaEnCurso();
+        } catch (const invalid_argument &e) {
+            cout << endl << "Error: " << e.what() << endl;
+            pause();
+            continue;
+        }
+        mantener = false; 
+    }
+    
+    cleanScreen();
+    mantener = true;
+    // Loop para agregar los productos a la venta.
     while (mantener)
     {
         cleanScreen();
+        try {
+            s->listarProductos();
+            cout << "-----------------------------------------" << endl;
+            s->listarProductosVentaSeleccionada();
+        } catch (const invalid_argument &e) {
+            s->cancelarAgregarProductoAVenta();
+            throw e;
+        }
 
-        cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
-        cout << "(Ingrese '0' para salir)" << endl;
+        cout << endl << "Ingrese el codigo del producto a agregar a la venta ('0' para salir): ";
         cin >> codigoProducto;
         cin.ignore();
 
         if (cin.fail() || codigoProducto.empty())
         {
-            cout << "El codigo del producto no puede estar vacio." << endl;
+            cout << endl << "El codigo del producto no puede estar vacio." << endl;
             pause();
             continue;
         }
 
         if (codigoProducto == "0")
         {
-            cout << "Cancelando operacion." << endl;
-            s->cancelarQuitarProductoVenta();
-            pause();
+            cout << endl << "Terminando operacion." << endl;
+            s->cancelarAgregarProductoAVenta();
             return;
         }
 
-        try
-        {
-            s->seleccionarProductoDeVenta(codigoProducto);
-        }
-        catch (const invalid_argument &e)
-        {
-            cout << "Error: " << e.what() << endl;
+        try {
+            s->seleccionarProducto(codigoProducto);
+        } catch (const invalid_argument &e) {
+            cout << endl << "Error: " << e.what() << endl;
             pause();
             continue;
         }
 
-        cout << "Ingrese cuantas unidades desea quitar del producto: ";
+
+        cout <<  endl << "Ingrese cuantas unidades desea agregar del producto: ";
         cin >> cantidad;
+        cin.ignore();
 
         if (cin.fail() || cantidad <= 0)
         {
-            cout << "La cantidad debe ser un numero positivo." << endl;
-            cout << "Cancelando operacion" << endl;
+            cout << endl <<  "La cantidad debe ser un numero positivo." << endl;
+            pause();
+            continue;
+        }
+        try {
+            s->setCantidadProductoSeleccionado(cantidad);
+        } catch (const invalid_argument &e) {
+            cout << endl << "Error: " << e.what() << endl;
+            pause();
             continue;
         }
 
-        try
-        {
-            s->quitarProductoVenta(cantidad);
-            cout << "Producto quitado de la venta exitosamente." << endl;
-            s->cancelarQuitarProductoVenta();
-            pause();
-        }
-        catch (const invalid_argument &e)
-        {
-            cout << "Error: " << e.what() << endl;
+        cleanScreen();
+
+        cout << endl << "¿Desea agregar el producto '" << codigoProducto << "' con cantidad " << cantidad << " a la venta? (y/n): ";
+        cin >> confirmar;
+        cin.ignore();
+        if (confirmar != "y" && confirmar != "Y") {
+            cout << endl << "Operacion cancelada." << endl;
             pause();
             continue;
+        } 
+        else {
+            s->agregarProductoAVenta();
         }
     }
 }

@@ -4,22 +4,11 @@
 DtProducto::DtProducto(){}
 
 DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo){
-    this->codigo = new char[strlen(codigo) + 1];
-    strcpy(this->codigo, codigo);
-    this->descripcion = descripcion;
-    this->tipo = tipo;
-    this->precio = 0.0f; // Inicializar precio a 0.0 por defecto
-}
-
-DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo, float precio){
     if(codigo == nullptr || strlen(codigo) == 0) {
         throw invalid_argument("El codigo no puede ser nulo o vacio.");
     }
     if(descripcion.empty()) {
         throw invalid_argument("La descripcion no puede estar vacia.");
-    }
-    if(precio <= 0) {
-        throw invalid_argument("El precio no puede ser negativo o 0.");
     }
     if(tipo != TipoPlato && tipo != TipoMenu) {
         throw invalid_argument("Tipo de producto invalido.");
@@ -28,8 +17,25 @@ DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo
     strcpy(this->codigo, codigo);
     this->descripcion = descripcion;
     this->tipo = tipo;
-    this->precio = precio; 
+    this->precio = 0.0f; // Inicializar precio a 0.0 por defecto
+    this->cantidad = 1; // Inicializar cantidad a 1 por defecto
+}
 
+DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo, float precio) 
+    : DtProducto(codigo, descripcion, tipo) {
+    if(precio <= 0) {
+        throw invalid_argument("El precio no puede ser negativo o 0.");
+    }
+    this->precio = precio; 
+    this->cantidad = 1; // Inicializar cantidad a 1 por defecto
+}
+
+DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo, float precio, int cantidad) 
+    : DtProducto(codigo, descripcion, tipo, precio) {
+    if(cantidad < 0) {
+        throw invalid_argument("La cantidad no puede ser negativa.");
+    }
+    this->cantidad = cantidad; // Inicializar cantidad
 }
 
 DtProducto::DtProducto(const DtProducto& other){
@@ -70,4 +76,8 @@ TipoProducto DtProducto::getTipo() const {
 
 float DtProducto::getPrecio() const {
     return this->precio;
+}
+
+int DtProducto::getCantidad() const {
+    return this->cantidad;
 }

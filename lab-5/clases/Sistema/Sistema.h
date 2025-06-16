@@ -23,6 +23,7 @@ private:
     // ####### --------------- Agregar producto a una venta --------------- #######
     Mozo *mozoSeleccionado;
     Producto *productoSeleccionado;
+    int cantidadProductoSeleccionado;
 
     // ###### --------------- Facturar venta ---------------  #######
     Mesa *mesaSeleccionada;
@@ -146,8 +147,10 @@ public:
     void seleccionarMozo(int);
     // void elegirMesa(int); Ya hecho
     // void listarProductos(); Ya hecho
-    void seleccionarProducto(char *);
+    void seleccionarProducto(string);
     void agregarProductoAVenta();
+    int getCantidadProductoSeleccionado();
+    void setCantidadProductoSeleccionado(int);
     void cancelarAgregarProductoAVenta();
 
     // ####### --------------- Quitar producto de una venta --------------- #######

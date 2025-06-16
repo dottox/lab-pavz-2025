@@ -202,9 +202,9 @@ void Sistema::seleccionarMozo(int numeroMozo)
     delete key; // Liberar memoria del key
 }
 
-void Sistema::seleccionarProducto(char *codigo)
+void Sistema::seleccionarProducto(string codigo)
 {
-    IKey *key = new String(codigo);
+    IKey *key = new String(codigo.c_str());
     this->productoSeleccionado = dynamic_cast<Producto *>(this->productos->find(key));
     if (this->productoSeleccionado == nullptr)
     {
@@ -216,25 +216,47 @@ void Sistema::seleccionarProducto(char *codigo)
 
 void Sistema::agregarProductoAVenta()
 {
-//     if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
-//         this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
-//     {
-//         throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
-//     }
+    if (this->mozoSeleccionado == nullptr || this->mesaSeleccionada == nullptr ||
+        this->productoSeleccionado == nullptr || this->cantidadProductoSeleccionado <= 0)
+    {
+        throw invalid_argument("Debe seleccionar un mozo, una mesa, un producto y una cantidad valida.");
+    }
 
-//     VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
+    IKey* key = new Integer(this->mesaSeleccionada->getNumero());
+    if (this->mozoSeleccionado->getMesasAsignadas()->member(key) == false)
+    {
+        delete key;
+        throw invalid_argument("El mozo seleccionado no tiene asignada la mesa seleccionada.");
+    }
+    delete key;
 
-//     if (ventaEnCurso == nullptr)
-//     {
-//         throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
-//     }
+    VentaLocal *ventaEnCurso = this->mesaSeleccionada->getVentaEnCurso();
+    if (ventaEnCurso == nullptr)
+    {
+        throw invalid_argument("La mesa seleccionada no tiene una venta en curso.");
+    }
 
-//     ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
+    ventaEnCurso->agregarProducto(this->productoSeleccionado, this->cantidadProductoSeleccionado);
+}
+
+int Sistema::getCantidadProductoSeleccionado()
+{
+    return this->cantidadProductoSeleccionado;
+}
+
+void Sistema::setCantidadProductoSeleccionado(int cantidad)
+{
+    if (cantidad <= 0)
+    {
+        throw invalid_argument("La cantidad debe ser mayor a 0.");
+    }
+    this->cantidadProductoSeleccionado = cantidad;
 }
 
 void Sistema::cancelarAgregarProductoAVenta()
 {
     // Limpiar las selecciones temporales
+    this->mozoSeleccionado = nullptr;
     this->mesaSeleccionada = nullptr;
     this->ventaSeleccionada = nullptr;
     this->productoSeleccionado = nullptr;
@@ -633,9 +655,14 @@ void Sistema::listarMesas()
 
 void Sistema::listarMesasConVentasEnCurso()
 {
-    cout << endl
-         << "--- Mesas del Sistema ---" << endl;
-    IIterator *it = this->mesas->getIterator();
+    if (this->mozoSeleccionado == nullptr)
+    {
+        throw invalid_argument("Debe seleccionar un mozo antes de listar las mesas con ventas en curso.");
+        return;
+    }
+
+    cout << "--- Mesas del Sistema ---" << endl;
+    IIterator *it = this->mozoSeleccionado->getMesasAsignadas()->getIterator();
     while (it->hasCurrent())
     {
         Mesa *mesa = (Mesa *)it->getCurrent();
@@ -646,8 +673,7 @@ void Sistema::listarMesasConVentasEnCurso()
         it->next();
     }
     delete it; // Liberar memoria del iterador
-    cout << endl
-         << "-------------------------" << endl;
+    cout << endl << "-------------------------" << endl;
 }
 
 void Sistema::listarProductos()

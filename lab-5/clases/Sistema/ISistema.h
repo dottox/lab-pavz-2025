@@ -146,8 +146,10 @@ public:
     virtual void seleccionarMozo(int) = 0;
     // virtual void elegirMesa(int) = 0; Ya hecho
     // void listarProductos(); Ya hecho
-    virtual void seleccionarProducto(char *) = 0;
+    virtual void seleccionarProducto(string) = 0;
     virtual void agregarProductoAVenta() = 0;
+    virtual int getCantidadProductoSeleccionado() = 0;
+    virtual void setCantidadProductoSeleccionado(int) = 0;
     virtual void cancelarAgregarProductoAVenta() = 0;
 
     // ####### --------------- Quitar productos de venta --------------- #######

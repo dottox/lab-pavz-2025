@@ -11,6 +11,11 @@ DtMenu::DtMenu(char* codigo, string descripcion, float precio) : DtProducto(codi
 
 }
 
+DtMenu::DtMenu(char* codigo, string descripcion, float precio, int cantidad) 
+    : DtProducto(codigo, descripcion, TipoMenu, precio, cantidad) {
+
+}
+
 ostream& operator<<(ostream& os, const DtMenu& menu)
 {
     os << "Menu | Codigo: " << menu.getCodigo() 

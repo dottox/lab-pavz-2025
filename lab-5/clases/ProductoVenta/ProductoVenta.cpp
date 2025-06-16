@@ -14,11 +14,11 @@ DtProducto *ProductoVenta::getProducto()
     DtProducto *producto = nullptr;
     if (this->tipo == TipoProducto::TipoPlato)
     {
-        producto = new DtPlato(this->codigoProducto, this->descripcion, this->precio);
+        producto = new DtPlato(this->codigoProducto, this->descripcion, this->precio, this->cantidad);
     }
     else
     {
-        producto = new DtMenu(this->codigoProducto, this->descripcion, this->precio);
+        producto = new DtMenu(this->codigoProducto, this->descripcion, this->precio, this->cantidad);
     }
     return producto;
 }
