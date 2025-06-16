@@ -1159,41 +1159,49 @@ void ventaADomicilio(ISistema *s)
 
 void quitarProductoVenta(ISistema *s)
 {
-    cleanScreen();
     int codigoMesa, cantidad;
     string codigoProducto;
     bool mantener = true;
+    
+    while(mantener){
+        cleanScreen();
 
-    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
-    cout << "(Ingrese '0' para salir)" << endl;
-    cin >> codigoMesa;
-    cin.ignore();
-
-    if (cin.fail() || codigoMesa < 0)
-    {
-        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
-    }
-
-    if (codigoMesa == 0)
-    {
-        cout << "Cancelando Operacion." << endl;
-        return;
-    }
-
-    try
-    {
-        s->elegirMesa(codigoMesa);
-        s->verificarMesaSeleccionadaConVentaEnCurso();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-        cout << "Cancelando operacion" << endl;
-        s->cancelarQuitarProductoVenta();
-        pause();
-        return;
+        cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+        cout << "(Ingrese '0' para salir)" << endl;
+        cin >> codigoMesa;
+        cin.ignore();
+    
+        if (cin.fail() || codigoMesa < 0)
+        {
+            cout << "El codigo de la mesa debe ser un numero positivo." << endl;
+            pause();
+            continue;
+        }
+    
+        if (codigoMesa == 0)
+        {
+            cout << "Cancelando Operacion." << endl;
+            return;
+        }
+    
+        try
+        {
+            s->elegirMesa(codigoMesa);
+            s->verificarMesaSeleccionadaConVentaEnCurso();
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+            cout << "Cancelando operacion" << endl;
+            s->cancelarQuitarProductoVenta();
+            pause();
+            return;
+        }
+        mantener = false; 
     }
     
+    mantener = true;
+
     while (mantener)
     {
         cleanScreen();
@@ -1254,6 +1262,42 @@ void quitarProductoVenta(ISistema *s)
             continue;
         }
     }
+}
+
+void bajaProducto(ISistema *s)
+{
+    cleanScreen();
+    s->listarProductos();
+
+    int codigoProducto;
+    cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
+    cin >> codigoProducto;
+    cin.ignore();
+
+    if (cin.fail() || codigoProducto < 0)
+    {
+        cout << "El codigo del producto debe ser un numero positivo." << endl;
+        pause();
+        return;
+    }
+
+    if (codigoProducto == 0)
+    {
+        cout << "Cancelando operacion." << endl;
+        return;
+    }
+
+    try
+    {
+        s->seleccionarProducto(codigoProducto);
+        s->quitarProducto();
+        cout << "Producto eliminado exitosamente." << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
 }
 
 int main()
@@ -1331,7 +1375,7 @@ int main()
                     case 2: // Alta Cliente
                         altaCliente(s);
                         break;
-                    case 3:
+                    case 3: // AltaEmpleado
                         agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos
