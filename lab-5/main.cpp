@@ -1309,15 +1309,10 @@ void bajaProducto(ISistema *s)
         return;
     }
 
-    try
-    {
-        s->seleccionarProducto(codigoProducto);
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-    }
-    pause();
+    
+    s->seleccionarProducto(codigoProducto);
+
+    cleanScreen();
 
     s->mostrarProductoSeleccionado();
 

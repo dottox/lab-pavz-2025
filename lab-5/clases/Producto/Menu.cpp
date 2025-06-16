@@ -56,15 +56,23 @@ void Menu::anadirPlato(Plato* plato, int cantidad){
 }
 
 void Menu::quitarPlato(Plato* plato) {
+    cout << "[DEBUG] Iniciando quitarPlato para el plato: " << plato->getCodigo() << endl;
     IKey* key = new String(plato->getCodigo());
+    cout << "[DEBUG] Clave creada para el plato: " << plato->getCodigo() << endl;
 
     if (!this->menuPlatos->member(key)) { 
+        cout << "[DEBUG] El plato no existe en el menu, lanzando excepcion." << endl;
         delete key;
         throw invalid_argument("El plato no existe en el menu, no se ha modificado nada.");
     } else {
+        cout << "[DEBUG] El plato existe en el menu, procediendo a eliminarlo." << endl;
         this->menuPlatos->setNull(key); 
+        cout << "[DEBUG] Plato eliminado del menuPlatos." << endl;
         this->actualizarPrecio(); 
+        cout << "[DEBUG] Precio del menu actualizado tras eliminar el plato." << endl;
     }
+    delete key;
+    cout << "[DEBUG] Clave eliminada tras quitarPlato." << endl;
 }
 
 ostream& operator<<(ostream& os, const Menu& menu)
