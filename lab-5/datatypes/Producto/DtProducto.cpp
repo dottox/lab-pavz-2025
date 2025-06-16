@@ -12,6 +12,18 @@ DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo
 }
 
 DtProducto::DtProducto(const char* codigo, string descripcion, TipoProducto tipo, float precio){
+    if(codigo == nullptr || strlen(codigo) == 0) {
+        throw invalid_argument("El codigo no puede ser nulo o vacio.");
+    }
+    if(descripcion.empty()) {
+        throw invalid_argument("La descripcion no puede estar vacia.");
+    }
+    if(precio <= 0) {
+        throw invalid_argument("El precio no puede ser negativo o 0.");
+    }
+    if(tipo != TipoPlato && tipo != TipoMenu) {
+        throw invalid_argument("Tipo de producto invalido.");
+    }
     this->codigo = new char[strlen(codigo) + 1];
     strcpy(this->codigo, codigo);
     this->descripcion = descripcion;

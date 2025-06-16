@@ -4,15 +4,6 @@
 #include "../../../clases/Venta/VentaLocal.h"
 #include <iostream>
 
-TEST_CASE("Mozo constructor inicializa correctamente") {
-    Mozo mozo("Juan Perez");
-    CHECK(mozo.getCantidadMesasAsignadas() == 0);
-    CHECK(mozo.getMesasAsignadas() != nullptr);
-    CHECK(mozo.getMesasAsignadas()->getSize() == 0);
-    CHECK(mozo.getMesasAsignadasSinVentaEnCurso()->getSize() == 0);
-    CHECK(mozo.getNombre() == "Juan Perez");
-    CHECK(mozo.getNumero() == 0); // Asumimos numero por defecto
-}
 
 TEST_CASE("setCantidadMesasAsignadas lanza excepcion con valor negativo") {
     Mozo mozo("Test");

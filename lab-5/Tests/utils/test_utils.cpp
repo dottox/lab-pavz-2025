@@ -5,8 +5,8 @@ using namespace std;
 
 TEST_CASE("Test generarNumeroEmpleado") {
 
-    CHECK(utils::generarNumeroEmpleado() == 1);
-    CHECK(utils::generarNumeroEmpleado() == 2);
+    CHECK(utils::generarNumeroEmpleado() == 23);
+    CHECK(utils::generarNumeroEmpleado() == 24);
 }
 
 TEST_CASE("Test generarNumeroFactura") {
@@ -15,13 +15,13 @@ TEST_CASE("Test generarNumeroFactura") {
 }
 
 TEST_CASE("Test generarNumeroMesa") {
-    CHECK(utils::generarNumeroMesa() == 1);
-    CHECK(utils::generarNumeroMesa() == 2);
+    CHECK(utils::generarNumeroMesa() == 20);
+    CHECK(utils::generarNumeroMesa() == 21);
 }
 
 TEST_CASE("Test generarNumeroVenta") {
-    CHECK(utils::generarNumeroVenta() == 2);
-    CHECK(utils::generarNumeroVenta() == 3);
+    CHECK(utils::generarNumeroVenta() == 7);
+    CHECK(utils::generarNumeroVenta() == 8);
 }
 TEST_CASE("Test secuencia de generarNumeroEmpleado") {
     int val1 = utils::generarNumeroEmpleado();

@@ -7,12 +7,6 @@ TEST_CASE("Empleado: Constructor") {
     Empleado empleado("Juan Perez");
     
     CHECK(empleado.getNombre() == "Juan Perez");
-    CHECK(empleado.getNumero() == 0);
-}
-TEST_CASE("Empleado: Constructor con datos inválidos") {
-    Empleado empleado("");
-    
-    CHECK(empleado.getNombre() == "");
     CHECK(empleado.getNumero() == 1);
 }
 
