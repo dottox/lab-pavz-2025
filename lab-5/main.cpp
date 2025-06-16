@@ -1051,7 +1051,7 @@ void altaCliente(ISistema *s)
             return;
         }
 
-        int confirmar; //  Confirmacion de alta del cliente
+        string confirmar; //  Confirmacion de alta del cliente
 
         while (true)
         {
@@ -1061,15 +1061,15 @@ void altaCliente(ISistema *s)
             do
             {
                 cout << "Dar de alta? (1. Si, 2. No): ";
-                getline(cin, numero);
-            } while (cin.fail() || (numero != "1" && numero != "2"));
+                getline(cin, confirmar);
+            } while (cin.fail() || (confirmar != "1" && confirmar != "2"));
 
             break;
         }
 
         cleanScreen();
 
-        if (confirmar == 2)
+        if (confirmar == "2")
         {
             s->cancelarAltaCliente();
             cout << "Alta de cliente cancelada." << endl;
