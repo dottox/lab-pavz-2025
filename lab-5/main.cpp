@@ -1156,29 +1156,28 @@ void quitarProductoVenta(ISistema *s)
     int codigoMesa, cantidad;
     string codigoProducto;
     bool mantener = true;
-
-    while (mantener)
-    {
+    
+    while(mantener){
         cleanScreen();
 
         cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
         cin >> codigoMesa;
         cin.ignore();
-
+      
         if (cin.fail() || codigoMesa < 0)
         {
             cout << "El codigo de la mesa debe ser un numero positivo." << endl;
             pause();
             continue;
         }
-
+      
         if (codigoMesa == 0)
         {
             cout << "Cancelando Operacion." << endl;
             return;
         }
-
+      
         try
         {
             s->elegirMesa(codigoMesa);
@@ -1194,7 +1193,7 @@ void quitarProductoVenta(ISistema *s)
         }
         mantener = false;
     }
-
+      
     mantener = true;
 
     while (mantener)
@@ -1256,6 +1255,59 @@ void quitarProductoVenta(ISistema *s)
             pause();
             continue;
         }
+    }
+}
+
+void bajaProducto(ISistema *s)
+{
+    cleanScreen();
+    s->listarProductos();
+
+    int codigoProducto, opcion;
+    cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
+    cin >> codigoProducto;
+    cin.ignore();
+
+    if (cin.fail() || codigoProducto < 0)
+    {
+        cout << "El codigo del producto debe ser un numero positivo." << endl;
+        pause();
+        return;
+    }
+
+    if (codigoProducto == 0)
+    {
+        cout << "Cancelando operacion." << endl;
+        return;
+    }
+
+    try
+    {
+        s->seleccionarProducto((char *)codigoProducto);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
+
+    s->mostrarProductoSeleccionado();
+
+    cout << "¿Desea eliminar el producto seleccionado? (1. Si, 2. No): ";
+    cin >> opcion;
+    cin.ignore();
+
+    if(cin.fail() || opcion == 2)
+    {
+        cout << "Opcion invalida. Operacion cancelada." << endl;
+        s->cancelarBajaProducto();
+        pause();
+        return;
+    }else{
+        s->quitarProductoDelSistema((char *)codigoProducto);
+        cout << "Producto eliminado exitosamente." << endl;
+        s->cancelarBajaProducto();
+        pause();
     }
 }
 
@@ -1334,7 +1386,7 @@ int main()
                     case 2: // Alta Cliente
                         altaCliente(s);
                         break;
-                    case 3:
+                    case 3: // AltaEmpleado
                         agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos

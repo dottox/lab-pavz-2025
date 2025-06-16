@@ -271,6 +271,9 @@ public:
     void mostrarClienteTemporal();
     void darAltaCliente();
     void cancelarAltaCliente();
+    void quitarProductoDelSistema(char*);
+    void mostrarProductoSeleccionado();
+    virtual void cancelarBajaProducto();
     static Sistema *getInstance();
     ~Sistema();
 };
