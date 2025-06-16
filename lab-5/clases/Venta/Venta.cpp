@@ -118,7 +118,7 @@ void Venta::quitarProducto(Producto *producto, int cantidad)
     if (productoVenta->getCantidad() == 0)
     {
         this->productosConsumidos->remove(key); // quita el producto sin borrarlo la cantidad llega a 0
-        this->cantidadProductos -= 1;
+        this->cantidadProductos -= cantidad; // Actualiza la cantidad de productos
     }
 
     delete key; // Liberar memoria del key

@@ -22,7 +22,7 @@ Sistema::Sistema()
     this->transporteSeleccionado = undefinedTransporte;
     this->tipoProductoSeleccionado = TipoProducto::undefinedTipo;
 
-    this->cantidadProductoSeleccionado = 0;
+    this->cantidadProductosSeleccionadosDomicilio = 0;
     this->subtotalVentaDomicilio = 0.0f;
 
     // Poblar el sistema con datos de ejemplo
@@ -258,7 +258,7 @@ void Sistema::listarProductosVentaSeleccionada()
 
     if (venta->getCantidadProductos() == 0)
     {
-        throw invalid_argument("La venta no tiene productos.");
+        throw invalid_argument("La venta no tiene productos o se ha quedado sin ellos.");
     }
 
     cout << "Productos de la venta: " << endl;

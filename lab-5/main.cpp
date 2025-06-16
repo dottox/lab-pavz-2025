@@ -1184,7 +1184,6 @@ void quitarProductoVenta(ISistema *s)
     {
         s->elegirMesa(codigoMesa);
         s->verificarMesaSeleccionadaConVentaEnCurso();
-        s->listarProductosVentaSeleccionada();
     }
     catch (const invalid_argument &e)
     {
@@ -1194,10 +1193,11 @@ void quitarProductoVenta(ISistema *s)
         pause();
         return;
     }
-
+    
     while (mantener)
     {
         cleanScreen();
+        s->listarProductosVentaSeleccionada();
 
         cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
@@ -1232,11 +1232,12 @@ void quitarProductoVenta(ISistema *s)
 
         cout << "Ingrese cuantas unidades desea quitar del producto: ";
         cin >> cantidad;
+        cin.ignore();
 
         if (cin.fail() || cantidad <= 0)
         {
             cout << "La cantidad debe ser un numero positivo." << endl;
-            cout << "Cancelando operacion" << endl;
+            pause();
             continue;
         }
 
@@ -1244,7 +1245,6 @@ void quitarProductoVenta(ISistema *s)
         {
             s->quitarProductoVenta(cantidad);
             cout << "Producto quitado de la venta exitosamente." << endl;
-            s->cancelarQuitarProductoVenta();
             pause();
         }
         catch (const invalid_argument &e)
