@@ -9,15 +9,15 @@ class DtCliente
 {
 private:
     string nombre;
-    int telefono;
+    string telefono;
     DtDireccion direccion;
 
 public:
     DtCliente();
-    DtCliente(string, int, DtDireccion);
+    DtCliente(string, string, DtDireccion);
     string getNombre();
     DtDireccion getDireccion();
-    int getTelefono();
-    friend ostream& operator<<(ostream&, const DtCliente&);
+    string getTelefono();
+    friend ostream &operator<<(ostream &, const DtCliente &);
     ~DtCliente();
 };

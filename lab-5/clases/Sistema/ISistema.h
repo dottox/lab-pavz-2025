@@ -244,9 +244,9 @@ public:
 
     // ####### --------------- INICIO CASO DE USO VENTA DOMICILIO --------------- #######
 
-    virtual bool existeCliente(int) = 0;
+    virtual bool existeCliente(string) = 0;
 
-    virtual void seleccionarCliente(int) = 0;
+    virtual void seleccionarCliente(string) = 0;
 
     virtual void ventaDomicilio() = 0;
 
@@ -276,7 +276,7 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
-    virtual void agregarCliente(string, int, DtDireccion) = 0;
+    virtual void agregarCliente(string, string, DtDireccion) = 0;
     virtual void mostrarClienteTemporal() = 0;
     virtual void darAltaCliente() = 0;
     virtual void cancelarAltaCliente() = 0;

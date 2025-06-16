@@ -12,12 +12,12 @@ string Cliente::getNombre()
     return this->nombre;
 }
 
-int Cliente::getTelefono()
+string Cliente::getTelefono()
 {
     return this->telefono;
 }
 
-DtCliente* Cliente::getDatos()
+DtCliente *Cliente::getDatos()
 {
     return new DtCliente(this->nombre, this->telefono, this->direccion);
 }
@@ -27,7 +27,7 @@ DtDireccion Cliente::getDireccion()
     return this->direccion;
 }
 
-void Cliente::setTelefono(int telefono)
+void Cliente::setTelefono(string telefono)
 {
     this->telefono = telefono;
 }
@@ -41,7 +41,8 @@ void Cliente::setNombre(string nombre)
 {
     this->nombre = nombre;
 }
-ostream & operator<<(ostream &os, const Cliente &Cliente) {
+ostream &operator<<(ostream &os, const Cliente &Cliente)
+{
     os << "Cliente: " << Cliente.nombre << endl
        << "Telefono: " << Cliente.telefono << endl
        << "Direccion: " << Cliente.direccion << endl;
