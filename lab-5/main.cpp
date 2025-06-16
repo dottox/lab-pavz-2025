@@ -961,11 +961,6 @@ void altaCliente(ISistema *s)
 
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        while (nombre.empty())
-        {
-            cout << "Ingrese el nombre del cliente (no puede estar vacio ni empezar con un espacio):" << endl;
-            getline(cin, nombre);
-        }
         do
         {
             cout << "Ingrese el nombre del cliente:" << endl;
@@ -1002,7 +997,7 @@ void altaCliente(ISistema *s)
         {
             cout << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir):" << endl;
             getline(cin, entreCalles);
-        } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0") || nombre[0] == ' ');
+        } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0") || entreCalles[0] == ' ');
 
         if (entreCalles == "0")
         {
@@ -1029,7 +1024,7 @@ void altaCliente(ISistema *s)
             {
                 cout << "Numero de apartamento: ";
                 getline(cin, numeroApto);
-            } while (cin.fail() || !soloNumeros(nombreEdificio) || numeroApto[0] == ' ');
+            } while (cin.fail() || !soloNumeros(numeroApto) || numeroApto[0] == ' ');
         }
 
         DtDireccion direccion; // Declarar antes del if
@@ -1322,19 +1317,20 @@ void bajaProducto(ISistema *s)
     cleanScreen();
     s->listarProductos();
 
-    int codigoProducto, opcion;
+    string codigoProducto;
+    int opcion;
     cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
     cin >> codigoProducto;
     cin.ignore();
 
-    if (cin.fail() || codigoProducto < 0)
+    if (cin.fail() || codigoProducto.empty())
     {
-        cout << "El codigo del producto debe ser un numero positivo." << endl;
+        cout << "El codigo del producto no puede estar vacio." << endl;
         pause();
         return;
     }
 
-    if (codigoProducto == 0)
+    if (codigoProducto == "0")
     {
         cout << "Cancelando operacion." << endl;
         return;
@@ -1342,7 +1338,7 @@ void bajaProducto(ISistema *s)
 
     try
     {
-        s->seleccionarProducto((char *)codigoProducto);
+        s->seleccionarProducto(codigoProducto);
     }
     catch (const invalid_argument &e)
     {
@@ -1365,7 +1361,7 @@ void bajaProducto(ISistema *s)
     }
     else
     {
-        s->quitarProductoDelSistema((char *)codigoProducto);
+        s->quitarProductoDelSistema(codigoProducto);
         cout << "Producto eliminado exitosamente." << endl;
         s->cancelarBajaProducto();
         pause();
@@ -1374,9 +1370,11 @@ void bajaProducto(ISistema *s)
 
 int main()
 {
+    pause(); // Uncomment this line if you want to pause the program at the start
+
     ISistema *s = Factory::getSistema();
 
-    // pause(); // Uncomment this line if you want to pause the program at the start
+    pause(); // Uncomment this line if you want to pause the program after getting the system
 
     bool mantener = true;
     int opcion;

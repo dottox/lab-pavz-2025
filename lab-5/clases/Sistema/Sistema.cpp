@@ -1359,12 +1359,7 @@ void Sistema::cancelarBajaProducto(){
     this->ventaSeleccionada = nullptr;
 }
 
-void Sistema::quitarProductoDelSistema(char* codigo){
-
-    Producto* productoEliminar = (Producto*)this->productos->find(new String(codigo));
-    if(productoEliminar == nullptr){
-        throw invalid_argument("El producto no existe.");
-    }
+void Sistema::quitarProductoDelSistema(string codigo){
 
     try{
         seleccionarProducto(codigo);
