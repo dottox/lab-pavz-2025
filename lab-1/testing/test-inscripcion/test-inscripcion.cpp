@@ -47,7 +47,7 @@ int main()
     assert(fecha02.getMes() == 1);
     assert(fecha02.getAnio() == 1900);
 
-    // Caso día Invalida
+    // Caso dia Invalida
     try
     {
         DtFecha fecha03 = DtFecha(32, 1, 1900);

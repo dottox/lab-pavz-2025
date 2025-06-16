@@ -8,7 +8,6 @@ TEST_CASE("Test DtMesa - Constructor and Getters")
     // Crear un objeto Venta simulado
     Venta *venta = new Venta();
     venta->setSubtotal(100.0);
-    venta->setDescuento(10);
     
     // Crear un objeto DtMesa con la venta simulada
     DtMesa *dtMesa = new DtMesa(1, venta, true);

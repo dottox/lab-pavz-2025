@@ -16,10 +16,8 @@ private:
     string descripcion;
     TipoProducto tipo;
     float precio;
-
 protected:
     Producto(const DtProducto *);
-
 public:
     char* getCodigo() const;
     string getDescripcion() const;

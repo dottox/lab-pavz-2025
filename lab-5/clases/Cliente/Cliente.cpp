@@ -37,6 +37,10 @@ void Cliente::setDireccion(DtDireccion direccion)
     this->direccion = direccion;
 }
 
+void Cliente::setNombre(string nombre)
+{
+    this->nombre = nombre;
+}
 ostream & operator<<(ostream &os, const Cliente &Cliente) {
     os << "Cliente: " << Cliente.nombre << endl
        << "Telefono: " << Cliente.telefono << endl
