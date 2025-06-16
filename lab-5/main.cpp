@@ -121,7 +121,7 @@ void mostrarMenu(ISistema *s, ActorMenu a)
              << endl;
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Iniciar ventas en mesas" << endl;
-        cout << "2. Agregar producto a una venta (En proceso)" << endl;
+        cout << "2. Agregar producto a una venta" << endl;
         cout << "3. Quitar producto de una venta" << endl;
         cout << "4. Facturacion de una venta" << endl;
         cout << "0. Salir" << endl;
