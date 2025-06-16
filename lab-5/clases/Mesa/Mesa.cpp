@@ -40,16 +40,6 @@ void Mesa::setMozo(Mozo *mozo)
 }
 void Mesa::setVentaEnCurso(VentaLocal *venta)
 {
-    if(this->getVentaEnCurso() != nullptr)
-    {
-        throw invalid_argument("La mesa ya tiene una venta en curso.");
-    }
-    if(venta == nullptr || venta->getFactura() != nullptr){
-        throw invalid_argument("La venta ya esta facturada o no existe.");
-    }
-    if(this->mozo == nullptr){
-        throw invalid_argument("La mesa no tiene un mozo asignado.");
-    }
     this->ventaEnCurso = venta;
 }
 

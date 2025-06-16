@@ -39,6 +39,9 @@ private:
 
     Cliente *clienteTemporal;
 
+    const int cantMozosAsignados = 9; // Rango 1-9
+    const int cantMesasAsignadas = 20; // Rango 1-20         
+
 public:
     // ###### --------------- Alta producto ---------------  #######
     /**

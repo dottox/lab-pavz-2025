@@ -450,7 +450,7 @@ void Sistema::poblarSistema()
     this->mesas->add(new Integer(mesa19->getNumero()), mesa19);
     this->mesas->add(new Integer(mesa20->getNumero()), mesa20);
 
-    asignarMesasMozos(2, 2); // Asignar 2 mesas (20,19) para usar el "SetVentaEnCurso"
+    asignarMesasMozos(cantMozosAsignados, cantMesasAsignadas); // Asignar 2 mesas (20, 9) para usar el "SetVentaEnCurso"
 
     cout << "Crear ventas en curso: ";
     mesa20->setVentaEnCurso(venta1);
@@ -935,7 +935,7 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
     int restoMesas = cantMesas % cantMozos;
     int mesasSinResto = mesasXMozo * cantMozos;
 
-    ICollection *asignaciones = new List();
+    ICollection* asignaciones = new List();
     IIterator *itMesasDisponibles = mesasDisponibles->getIterator();
     IIterator *itMozosDisponibles = mozosDisponibles->getIterator();
 
@@ -956,6 +956,8 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 
         if(mozo->getCantidadMesasAsignadas() < mesasXMozo){
             mozo->setMesaAsignada(mesa);
+            DtAsignacion *asignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
+            asignaciones->add(asignacion);
             mesasSinResto--;
         }else{
             itMozosDisponibles->next(); 
@@ -974,9 +976,10 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         {
             Mozo *mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent());
             Mesa *mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
-            
             mozo->setMesaAsignada(mesa);
-                
+            DtAsignacion *asignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
+            asignaciones->add(asignacion);
+            
             itMozosDisponibles->next();
             itMesasDisponibles->next();
         }
@@ -991,11 +994,13 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
     delete mesasDisponibles;
 
     IIterator *itAsignaciones = asignaciones->getIterator();
+    cout << "---------- Asignaciones ----------" << endl;
     while (itAsignaciones->hasCurrent())
     {
         DtAsignacion *asignacion = dynamic_cast<DtAsignacion *>(itAsignaciones->getCurrent());
         if (asignacion != nullptr)
         {
+            cout << "Mozo: " << asignacion->getNumeroMozo() << " | Mesa: " << asignacion->getNumeroMesa() << endl;
         }
         itAsignaciones->next();
     }
