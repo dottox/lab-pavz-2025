@@ -3,27 +3,32 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("Test generarNumeroEmpleado") {
+TEST_CASE("Test generarNumeroEmpleado")
+{
 
     CHECK(utils::generarNumeroEmpleado() == 23);
     CHECK(utils::generarNumeroEmpleado() == 24);
 }
 
-TEST_CASE("Test generarNumeroFactura") {
+TEST_CASE("Test generarNumeroFactura")
+{
     CHECK(utils::generarNumeroFactura() == 1);
     CHECK(utils::generarNumeroFactura() == 2);
 }
 
-TEST_CASE("Test generarNumeroMesa") {
+TEST_CASE("Test generarNumeroMesa")
+{
     CHECK(utils::generarNumeroMesa() == 20);
     CHECK(utils::generarNumeroMesa() == 21);
 }
 
-TEST_CASE("Test generarNumeroVenta") {
+TEST_CASE("Test generarNumeroVenta")
+{
     CHECK(utils::generarNumeroVenta() == 7);
     CHECK(utils::generarNumeroVenta() == 8);
 }
-TEST_CASE("Test secuencia de generarNumeroEmpleado") {
+TEST_CASE("Test secuencia de generarNumeroEmpleado")
+{
     int val1 = utils::generarNumeroEmpleado();
     int val2 = utils::generarNumeroEmpleado();
     int val3 = utils::generarNumeroEmpleado();
@@ -31,7 +36,8 @@ TEST_CASE("Test secuencia de generarNumeroEmpleado") {
     CHECK(val3 == val2 + 1);
 }
 
-TEST_CASE("Test secuencia de generarNumeroFactura") {
+TEST_CASE("Test secuencia de generarNumeroFactura")
+{
     int val1 = utils::generarNumeroFactura();
     int val2 = utils::generarNumeroFactura();
     int val3 = utils::generarNumeroFactura();
@@ -39,7 +45,8 @@ TEST_CASE("Test secuencia de generarNumeroFactura") {
     CHECK(val3 == val2 + 1);
 }
 
-TEST_CASE("Test secuencia de generarNumeroMesa") {
+TEST_CASE("Test secuencia de generarNumeroMesa")
+{
     int val1 = utils::generarNumeroMesa();
     int val2 = utils::generarNumeroMesa();
     int val3 = utils::generarNumeroMesa();
@@ -47,7 +54,8 @@ TEST_CASE("Test secuencia de generarNumeroMesa") {
     CHECK(val3 == val2 + 1);
 }
 
-TEST_CASE("Test secuencia de generarNumeroVenta") {
+TEST_CASE("Test secuencia de generarNumeroVenta")
+{
     int val1 = utils::generarNumeroVenta();
     int val2 = utils::generarNumeroVenta();
     int val3 = utils::generarNumeroVenta();
@@ -55,16 +63,18 @@ TEST_CASE("Test secuencia de generarNumeroVenta") {
     CHECK(val3 == val2 + 1);
 }
 
-TEST_CASE("Test obtenerFechaActual devuelve fecha razonable") {
+TEST_CASE("Test obtenerFechaActual devuelve fecha razonable")
+{
     DtFecha fecha = utils::obtenerFechaActual();
-    CHECK(fecha.getAnio() >= 2024); // Ajusta según el año actual
+    CHECK(fecha.getAnio() >= 2024); // Ajusta según el ano actual
     CHECK(fecha.getMes() >= 1);
     CHECK(fecha.getMes() <= 12);
     CHECK(fecha.getDia() >= 1);
     CHECK(fecha.getDia() <= 31);
 }
 
-TEST_CASE("Test obtenerHoraActual devuelve hora razonable") {
+TEST_CASE("Test obtenerHoraActual devuelve hora razonable")
+{
     DtHora hora = utils::obtenerHoraActual();
     CHECK(hora.getHora() >= 0);
     CHECK(hora.getHora() <= 23);

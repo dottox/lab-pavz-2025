@@ -23,12 +23,11 @@
 // #include <iostream>
 // using namespace std;
 
-
 // TEST_CASE("VentaDomicilio: agregarProducto y generarFactura") {
 //     // Crear productos
 //     Plato* plato1 = new Plato(DtPlato(const_cast<char*>("P001"), "Pizza Margherita", 250.0f));
 //     Plato* plato2 = new Plato(DtPlato(const_cast<char*>("P002"), "Ensalada César", 120.0f));
-    
+
 //     // Verificar que los productos se hayan creado correctamente
 //     CHECK(plato1->getCodigo() == "P001");
 //     CHECK(plato1->getDescripcion() == "Pizza Margherita");
@@ -36,11 +35,11 @@
 //     CHECK(plato2->getCodigo() == "P002");
 //     CHECK(plato2->getDescripcion() == "Ensalada César");
 //     CHECK(plato2->getPrecio() == doctest::Approx(120.0f));
-    
+
 //     // Verificar que los tipos sean correctos
 //     CHECK(plato1->getTipo() == TipoProducto::TipoPlato);
 //     CHECK(plato2->getTipo() == TipoProducto::TipoPlato);
-    
+
 //     // Verificar que los productos sean instancias de Producto
 //     CHECK(dynamic_cast<Producto*>(plato1) != nullptr);
 //     CHECK(dynamic_cast<Producto*>(plato2) != nullptr);
@@ -91,7 +90,7 @@
 
 // TEST_CASE("VentaDomicilio: agregarProducto con cantidad negativa") {
 //     // Crear producto
-//     Plato* plato = new Plato(DtPlato(const_cast<char*>("P005"), "Tortilla Española", 180.0f));
+//     Plato* plato = new Plato(DtPlato(const_cast<char*>("P005"), "Tortilla Espanola", 180.0f));
 
 //     // Crear VentaDomicilio
 //     DtDireccion direccion("Calle Mayor", "456", "Cerca del centro");
@@ -221,10 +220,10 @@
 //     // Crear DtCliente
 //     DtDireccion direccion("Calle del Mar", "123", "Cerca de la playa");
 //     DtCliente cliente("Laura Perez", 912345678, direccion);
-    
+
 //     // Crear VentaDomicilio
 //     VentaDomicilio venta(&cliente);
-    
+
 //     // Verificar que se obtengan los datos del cliente correctamente
 //     CHECK(venta.getDatosCliente()->getNombre() == "Laura Perez");
 //     CHECK(venta.getDatosCliente()->getTelefono() == 912345678);
@@ -237,10 +236,10 @@
 //     // Intentar obtener datos del cliente con datos inválidos
 //     DtDireccion direccion("", "-1", "");
 //     DtCliente cliente("", -5, direccion);
-    
+
 //     // Crear VentaDomicilio
 //     VentaDomicilio venta(&cliente);
-    
+
 //     // Verificar que se obtengan los datos del cliente correctamente
 //     CHECK(venta.getDatosCliente()->getNombre() == "");
 //     CHECK(venta.getDatosCliente()->getTelefono() == -5);
@@ -252,7 +251,7 @@
 // TEST_CASE("VentaDomicilio: getDatosCliente con datos nulos") {
 //     // Intentar obtener datos del cliente con datos nulos
 //     VentaDomicilio venta(nullptr);
-    
+
 //     // Verificar que se lance una excepción al intentar obtener los datos del cliente
 //     CHECK_THROWS_AS(venta.getDatosCliente(), std::invalid_argument);
 // }
@@ -261,10 +260,10 @@
 //     // Crear DtCliente
 //     DtDireccion direccion("Calle del Sol", "456", "Cerca del río");
 //     DtCliente cliente("Miguel Torres", 912345678, direccion);
-    
+
 //     // Crear VentaDomicilio
 //     VentaDomicilio venta(&cliente);
-    
+
 //     // Verificar que se obtengan los datos del cliente correctamente
 //     CHECK(venta.getDatosCliente()->getNombre() == "Miguel Torres");
 //     CHECK(venta.getDatosCliente()->getTelefono() == 912345678);
@@ -277,10 +276,10 @@
 //     // Intentar obtener datos del cliente con datos inválidos
 //     DtDireccion direccion("", "-1", "");
 //     DtCliente cliente("", -1, direccion);
-    
+
 //     // Crear VentaDomicilio
 //     VentaDomicilio venta(&cliente);
-    
+
 //     // Verificar que se obtengan los datos del cliente correctamente
 //     CHECK(venta.getDatosCliente()->getNombre() == "");
 //     CHECK(venta.getDatosCliente()->getTelefono() == -5);
@@ -292,8 +291,7 @@
 // TEST_CASE("VentaDomicilio: getDatosCliente con datos nulos") {
 //     // Intentar obtener datos del cliente con datos nulos
 //     VentaDomicilio venta(nullptr);
-    
+
 //     // Verificar que se lance una excepción al intentar obtener los datos del cliente
 //     CHECK_THROWS_AS(venta.getDatosCliente(), std::invalid_argument);
 // }
-

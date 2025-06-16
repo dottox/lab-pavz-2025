@@ -106,7 +106,7 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
     this->cantidadProductos += cantidad;
 }
 
-void Venta::quitarProducto(Producto *producto, int cantidad)
+void Venta::quitarProductoVenta(Producto *producto, int cantidad)
 {
     IKey *key = new String(producto->getCodigo());
     ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
@@ -128,6 +128,26 @@ void Venta::quitarProducto(Producto *producto, int cantidad)
         this->productosConsumidos->remove(key); // quita el producto sin borrarlo la cantidad llega a 0
         this->cantidadProductos -= cantidad; // Actualiza la cantidad de productos
     }
+
+    delete key; // Liberar memoria del key
+}
+
+void Venta::quitarProductoVenta(char* codigo)
+{
+    IKey *key = new String(codigo);
+    ProductoVenta *productoVenta = (ProductoVenta *)this->productosConsumidos->find(key);
+    if (productoVenta == nullptr)
+    {
+        delete key;
+        throw invalid_argument("El producto no esta en la venta.");
+    }
+
+    int cantidad = productoVenta->getCantidad();
+
+    productoVenta->setCantidad(0);
+
+    this->productosConsumidos->remove(key); 
+    this->cantidadProductos -= cantidad;
 
     delete key; // Liberar memoria del key
 }

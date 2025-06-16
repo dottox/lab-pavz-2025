@@ -24,220 +24,280 @@ using namespace std;
 //   - Obtener clase con ID valido
 //   - Obtener clase con ID invalido
 
-
-
-int main() {
-    Sistema* sistema = new Sistema();
+int main()
+{
+    Sistema *sistema = new Sistema();
 
     // --------------------- SOCIOS -----------------------------
 
     // Agregar socios bases
-      sistema->agregarSocio("12345678", "Juan");
-      sistema->agregarSocio("12345679", "Maria");
+    sistema->agregarSocio("12345678", "Juan");
+    sistema->agregarSocio("12345679", "Maria");
 
     // TC-001: Test de agregar socio con CI de otro socio
-    try {
+    try
+    {
         sistema->agregarSocio("12345678", "Gonzalo");
         throw runtime_error("Error: Se permitio agregar un socio con la misma CI que otro");
-    } catch(const invalid_argument& e) {
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-001 paso correctamente." << endl;
-    } catch (const runtime_error& e) {
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     sistema->agregarSocio("12345670", "Juancho");
 
-
     // TC-002: Test de agregar socio sobre el maximo de socios
-    try {
-      sistema->agregarSocio("12312312", "Gonzalo");
-      throw runtime_error("Error: Se permitio agregar un socio superando el limite maximo");
-    } catch(const invalid_argument& e) {
+    try
+    {
+        sistema->agregarSocio("12312312", "Gonzalo");
+        throw runtime_error("Error: Se permitio agregar un socio superando el limite maximo");
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-002 paso correctamente." << endl;
-    } catch (const runtime_error& e) {
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
-
-
     // --------------------- CLASES -----------------------------
-
 
     // Crear clases bases
     DtSpinning clase1 = DtSpinning(1, "Spinning", Manana, 10);
     DtEntrenamiento clase2 = DtEntrenamiento(2, "Entrenamiento", Tarde, true);
     DtSpinning clase3 = DtSpinning(3, "Spinning", Noche, 10);
-    
+
     // Agregar clases bases
     sistema->agregarClase(clase1);
     sistema->agregarClase(clase2);
-  
+
     // TC-003: Test de agregar una clase que ya existe
-    try{
+    try
+    {
         sistema->agregarClase(clase2);
         throw runtime_error("Error: Se permitio agregar una clase ya existente");
-    } catch(const invalid_argument& e) {
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-003 paso correctamente" << endl;
-    } catch (const runtime_error& e) {
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     sistema->agregarClase(clase3);
 
     // TC-004: Test de agregar una clase superando el maximo de clases
-    try{
+    try
+    {
         DtSpinning clase4 = DtSpinning(4, "Spinning", Manana, 10);
         sistema->agregarClase(clase4);
         throw runtime_error("Error: Se permitio agregar una clase superando el limite maximo");
-    } catch(const invalid_argument& e) {
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-004 paso correctamente." << endl;
-    } catch (const runtime_error& e) {
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
-    
 
     // --------------------- INSCRIPCIONES -----------------------------
 
-    
     // Test agregarInscripcion
-    DtFecha date = DtFecha(1, 1, 2021); // Example date
+    DtFecha date = DtFecha(1, 1, 2021);   // Example date
     DtFecha date2 = DtFecha(15, 3, 2022); // Example date
     DtFecha date3 = DtFecha(20, 4, 2023); // Example date
     DtFecha date4 = DtFecha(10, 5, 2024); // Example date
-    
+
     // Agregar inscripciones bases.
     sistema->agregarInscripcion("12345678", 1, date);
     sistema->agregarInscripcion("12345679", 1, date2);
     sistema->agregarInscripcion("12345670", 1, date3);
 
     // TC-005: Agregar una inscripcion con un socio invalido
-    try{
+    try
+    {
         sistema->agregarInscripcion("00001111", 1, date4);
         throw runtime_error("Error: Se permitio agregar una inscripcion con un socio invalido");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-005 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-006: Agregar una inscripcion con una clase invalida
-    try{
+    try
+    {
         sistema->agregarInscripcion("12345678", 1337, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion con una clase invalida");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-006 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
-    // TC-007: TODO: Añadir testeo de cupos en una clase
+    // TC-007: TODO: Anadir testeo de cupos en una clase
 
     // TC-008: Agregar una inscripcion que ya existe
-    try{
+    try
+    {
         sistema->agregarInscripcion("12345678", 1, date);
         throw runtime_error("Error: Se permitio agregar una inscripcion que ya existe");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-008 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
-    
+
     // --------------------- OBTENER INFO SOCIOS POR CLASE -----------------------------
 
-    
     int cantidad = 2;
-    DtSocio** oISPC_test = sistema->obtenerInfoSociosPorClase(1, cantidad);
+    DtSocio **oISPC_test = sistema->obtenerInfoSociosPorClase(1, cantidad);
     delete[] oISPC_test;
-    
-    
+
     // TC-009: Obtener informacion de mas socios de los que tiene la clase
-    try{
+    try
+    {
         int cantOverMax = 999;
-        DtSocio** tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantOverMax);
+        DtSocio **tc_zero_zero_nine = sistema->obtenerInfoSociosPorClase(1, cantOverMax);
         throw runtime_error("Error: Se permitio saber la informacion de mas socios de los que tiene la clase");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-009 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-010: Obtener informacion socios negativos
-    try{
+    try
+    {
         int cantBelowZero = -999;
-        DtSocio** tc_zero_ten = sistema->obtenerInfoSociosPorClase(1, cantBelowZero);
+        DtSocio **tc_zero_ten = sistema->obtenerInfoSociosPorClase(1, cantBelowZero);
         throw runtime_error("Error: Se permitio saber la informacion de cantidad negativa de socios");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-010 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-011: Obtener informacion de 0 socios
-    try{
+    try
+    {
         int cantZero = 0;
-        DtSocio** tc_zero_eleven = sistema->obtenerInfoSociosPorClase(1, cantZero);
+        DtSocio **tc_zero_eleven = sistema->obtenerInfoSociosPorClase(1, cantZero);
         throw runtime_error("Error: Se permitio saber la informacion de 0 socios");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-011 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
-        // --------------------- OBTENER CLASE -----------------------------
-    
+    // --------------------- OBTENER CLASE -----------------------------
+
     // TC-012: Obtener clase con ID valido
     DtClase tc_zero_twelve = sistema->obtenerClase(1);
     cout << "TC-012 paso correctamente." << endl;
-    
+
     // TC-013: Obtener clase con ID invalido
-    try{
+    try
+    {
         DtClase tc_zero_thirteen = sistema->obtenerClase(1337);
         throw runtime_error("Error: Se obtuvo la clase con id Invalido");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-013 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
     // --------------------- BORRAR INSCRIPCION -----------------------------
     // TC-014: Borrar inscripcion con ID invalido
-    try{
+    try
+    {
         sistema->borrarInscripcion("00001111", 1);
         throw runtime_error("Error: Se permitio borrar una inscripcion con un socio invalido");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-014 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-015: Borrar inscripcion con clase invalida
 
-    try{
+    try
+    {
         sistema->borrarInscripcion("12345678", 1337);
         throw runtime_error("Error: Se permitio borrar una inscripcion con una clase invalida");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-015 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-016: Borrar inscripcion que no existe
 
-    try{
-        
+    try
+    {
+
         sistema->borrarInscripcion("00000000", 1);
         throw runtime_error("Error: Se permitio borrar una inscripcion que no existe");
-    } catch(const invalid_argument& e){
+    }
+    catch (const invalid_argument &e)
+    {
         cout << "TC-016 paso correctamente." << endl;
-    } catch (const runtime_error& e){
+    }
+    catch (const runtime_error &e)
+    {
         terminate();
     }
 
     // TC-017: Borrar inscripcion que existe
 
-    
     sistema->borrarInscripcion("12345678", 1);
     cout << "TC-017 paso correctamente." << endl;
 
     delete sistema;
-    
+
     cout << "[/////////////////////////////- Tests Passed -/////////////////////////////////]" << endl;
 }

@@ -49,7 +49,8 @@ public:
     void setSubtotal(float);
     void agregarPorcentaje(int);
     void agregarProducto(Producto *, int);
-    void quitarProducto(Producto *, int);
+    void quitarProductoVenta(Producto *, int);
+    void quitarProductoVenta(char *);
     DtFacturaLocal generarFactura(string);
     DtFacturaLocal mostrarFacturaLocal();
     DtFacturaDomicilio generarFacturaDomicilio(string, Transporte);
