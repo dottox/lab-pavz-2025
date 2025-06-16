@@ -1319,19 +1319,13 @@ void bajaProducto(ISistema *s)
     cleanScreen();
     s->listarProductos();
 
-    int codigoProducto, opcion;
+    string codigoProducto;
+    int opcion;
     cout << "Ingrese el codigo del producto a eliminar (0 para cancelar): ";
     cin >> codigoProducto;
     cin.ignore();
 
-    if (cin.fail() || codigoProducto < 0)
-    {
-        cout << "El codigo del producto debe ser un numero positivo." << endl;
-        pause();
-        return;
-    }
-
-    if (codigoProducto == 0)
+    if (codigoProducto == "0")
     {
         cout << "Cancelando operacion." << endl;
         return;
@@ -1339,7 +1333,7 @@ void bajaProducto(ISistema *s)
 
     try
     {
-        s->seleccionarProducto((char *)codigoProducto);
+        s->seleccionarProducto(codigoProducto);
     }
     catch (const invalid_argument &e)
     {
