@@ -45,6 +45,7 @@ ostream & operator<<(ostream &os, const Mesa &mesa) {
     }
     return os;
 }
+
 Mesa * Mesa::getMesa() {
     return this; // Retorna la propia instancia de Mesa
 }

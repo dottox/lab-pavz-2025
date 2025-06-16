@@ -15,10 +15,18 @@
 #include "../Venta/VentaLocal.h"
 #include "../Venta/VentaDomicilio.h"
 
+#include "../Cliente/Cliente.h"
+
 #include "../../datatypes/Factura/DtFacturaLocal.h"
 #include "../../datatypes/Producto/DtPlato.h"
 #include "../../datatypes/Producto/DtMenu.h"
 #include "../../datatypes/Informe/DtInforme.h"
+#include "../../datatypes/InfoProducto/DtInfoProducto.h"
+#include "../../datatypes/Fecha/DtFecha.h"
+#include "../../datatypes/Direccion/DtDireccion.h"
+#include "../../datatypes/Direccion/DtDireccionCasa.h"
+#include "../../datatypes/Direccion/DtDireccionApto.h"
+
 
 #include "../../enums/TipoProducto.h"
 #include "../../enums/ActorMenu.h"
@@ -68,7 +76,7 @@ public:
      * @brief Añade un plato a un menu.
      * @param codigo --> Codigo del plato a añadir.
      * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
+     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
      */
     virtual void anadirPlatoAMenu(char *, int) = 0;
 
@@ -78,7 +86,7 @@ public:
     virtual void darAltaProducto() = 0;
 
     /**
-     * @brief Cancela la creación del producto.
+     * @brief Cancela la creacion del producto.
      */
     virtual void cancelarAltaProducto() = 0;
 
@@ -93,13 +101,13 @@ public:
 
     /**
      * @brief El sistema guarda temporalmente el producto seleccionado.
-     * @param codigo --> El código del producto a seleccionar
+     * @param codigo --> El codigo del producto a seleccionar
      */
     // virtual void seleccionarProducto(int) = 0;
 
     /**
      * @brief Elimina el producto seleccionado del sistema.
-     * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
+     * @note Solo borrara al producto si todas las ventas que lo contienen estan facturadas.
      */
     // virtual void quitarProducto() = 0;
 
@@ -177,15 +185,23 @@ public:
     virtual void darAltaVenta() = 0;
     virtual void cancelarAltaVenta() = 0;
     // ###### --------------- FIN CASO DE USO INICIO VENTA  --------------- #######
+    // ####### --------------- INICIO CASO DE USO BUSCAR INFO PRODUCTO --------------- #######
+    /**
+     * @brief Retorna un producto del sistema.
+     * @param codigo --> Codigo del producto a buscar.
+     * @return DtInfoProducto* --> Datos del producto buscado.
+     */
+    virtual DtInfoProducto *obtenerProducto(string) = 0;
+    // ####### --------------- FIN CASO DE USO BUSCAR INFO PRODUCTO --------------- #######
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
-     * @return Sistema* --> El objeto único de la clase Sistema.
+     * @return Sistema* --> El objeto unico de la clase Sistema.
      */
     virtual void poblarSistema() = 0;
 
     /**
-     * @brief Retorna el número de productos del sistema.
+     * @brief Retorna el numero de productos del sistema.
      * @return int --> Cantidad de productos.
      */
     virtual int getCantidadProductos() = 0;
@@ -196,10 +212,22 @@ public:
      */
     virtual DtInforme consultarFacturacion(DtFecha) = 0;
 
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
+    /**
+     * @brief Muestra las ventas de un mozo en un rango de fechas.
+     * @param DtFecha --> Fecha de inicio.
+     * @param DtFecha --> Fecha de fin.
+     */
+    virtual void mostrarVentasMozo(DtFecha, DtFecha) = 0;
+
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
     virtual void addMesaElegida() = 0;
     virtual ICollection *getMesasElegidas() = 0;
     virtual void mostrarMesasElegidas(bool) = 0;
     virtual void listarEmpleados() = 0;
+    virtual void listarMozos() = 0;
     virtual void listarVentas() = 0;
     virtual void listarMesas() = 0;
     virtual void listarProductos() = 0;
@@ -209,4 +237,9 @@ public:
     virtual void imprimirFacturaLocal(DtFacturaLocal) = 0;
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
+    virtual bool validarFecha(string) = 0;
+    virtual void agregarCliente(string, int, DtDireccion) = 0; 
+    virtual void mostrarClienteTemporal() = 0; 
+    virtual void darAltaCliente() = 0;
+    virtual void cancelarAltaCliente() = 0;
 };

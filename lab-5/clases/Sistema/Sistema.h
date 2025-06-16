@@ -11,6 +11,7 @@ private:
     static Sistema *instance;
 
     IDictionary *empleados;
+    IDictionary *clientes;
     IDictionary *ventas;
     IDictionary *mesas;
     IDictionary *productos;
@@ -30,12 +31,13 @@ private:
 
     // ####### --------------- INICIO CASO DE USO INICIAR VENTA --------------- #######
     ICollection *mesasElegidas;
-    
 
     // ####### --------------- Alta empleaado --------------- #######
     Transporte transporteSeleccionado;
     string nombreEmpleado;
     string tipoEmpleado;
+
+    Cliente *clienteTemporal;
 
 public:
     // ###### --------------- Alta producto ---------------  #######
@@ -67,7 +69,7 @@ public:
      * @brief Añade un plato a un menu.
      * @param codigo --> Codigo del plato a añadir.
      * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadirá el plato.
+     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
      */
     void anadirPlatoAMenu(char *, int);
 
@@ -77,7 +79,7 @@ public:
     void darAltaProducto();
 
     /**
-     * @brief Cancela la creación del producto.
+     * @brief Cancela la creacion del producto.
      */
     void cancelarAltaProducto();
 
@@ -116,13 +118,13 @@ public:
 
     /**
      * @brief El sistema guarda temporalmente el producto seleccionado.
-     * @param codigo --> El código del producto a seleccionar
+     * @param codigo --> El codigo del producto a seleccionar
      */
     // void seleccionarProducto(int);
 
     /**
      * @brief Elimina el producto seleccionado del sistema.
-     * @note Solo borrará al producto si todas las ventas que lo contienen están facturadas.
+     * @note Solo borrara al producto si todas las ventas que lo contienen estan facturadas.
      */
     // void quitarProducto();
 
@@ -176,18 +178,18 @@ public:
     void cancelarAltaVenta();
     void addMesaElegida();
     ICollection *getMesasElegidas();
-    void mostrarMesasElegidas(bool); //True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
+    void mostrarMesasElegidas(bool); // True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
 
     // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
-     * @return Sistema* --> El objeto único de la clase Sistema.
+     * @return Sistema* --> El objeto unico de la clase Sistema.
      */
     void poblarSistema();
 
     /**
-     * @brief Retorna el número de productos del sistema.
+     * @brief Retorna el numero de productos del sistema.
      * @return int --> Cantidad de productos.
      */
     int getCantidadProductos();
@@ -198,17 +200,35 @@ public:
      */
     DtInforme consultarFacturacion(DtFecha);
 
+    DtInfoProducto *obtenerProducto(string codigo);
+
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
+    /**
+     * @brief Muestra las ventas de un mozo en un rango de fechas.
+     * @param DtFecha --> Fecha de inicio.
+     * @param DtFecha --> Fecha de fin.
+     */
+    void mostrarVentasMozo(DtFecha, DtFecha);
+
+    // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
+
     void listarEmpleados();
     void listarVentas();
     void listarMesasConVentasEnCurso();
     void listarMesas();
+    void listarMozos();
     void listarProductos();
     void imprimirFacturaLocal(DtFacturaLocal);
     void imprimirFacturaDomicilio(DtFacturaDomicilio);
     void imprimirInforme(DtInforme);
     void listarProductoTemporal();
     void listarTransportes();
-
+    bool validarFecha(string);
+    void agregarCliente(string, int, DtDireccion); 
+    void mostrarClienteTemporal(); 
+    void darAltaCliente();
+    void cancelarAltaCliente();
     static Sistema *getInstance();
     ~Sistema();
 };

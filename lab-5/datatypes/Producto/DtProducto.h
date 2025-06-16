@@ -30,6 +30,6 @@ public:
     TipoProducto getTipo() const;
     float getPrecio() const;
 
-    // Método que retorna una copia profunda del objeto
+    // Metodo que retorna una copia profunda del objeto
     virtual DtProducto* clone() const = 0;
 };

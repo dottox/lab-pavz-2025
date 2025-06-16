@@ -2,7 +2,7 @@
 #define	_ICOLLECTIBLE_H
 
 /**
- *  Elemento de la colección
+ *  Elemento de la coleccion
  */
 class ICollectible
 {

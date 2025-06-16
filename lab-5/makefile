@@ -61,6 +61,11 @@ $(OBJDIR)/DtProducto.o \
 $(OBJDIR)/DtDireccionApto.o \
 $(OBJDIR)/DtDireccion.o \
 $(OBJDIR)/DtDireccionCasa.o \
+$(OBJDIR)/DtPlato.o \
+$(OBJDIR)/DtProducto.o \
+$(OBJDIR)/DtDireccionApto.o \
+$(OBJDIR)/DtDireccionCasa.o \
+$(OBJDIR)/DtDireccion.o \
 $(OBJDIR)/Cliente.o \
 $(OBJDIR)/Mesa.o \
 $(OBJDIR)/Mozo.o \
@@ -131,6 +136,7 @@ $(OBJDIR)/%.o: datatypes/Hora/%.cpp | $(OBJDIR)
 
 $(OBJDIR)/%.o: datatypes/Cliente/%.cpp | $(OBJDIR)
 	$(CXX) -c $< -o $@
+
 	
 $(OBJDIR)/%.o: datatypes/Mesa/%.cpp | $(OBJDIR)
 	$(CXX) -c $< -o $@
@@ -153,10 +159,27 @@ $(OBJDIR)/%.o: clases/ProductoVenta/%.cpp | $(OBJDIR)
 $(OBJDIR)/%.o: main.cpp | $(OBJDIR)
 	$(CXX) -c $< -o $@
 
+$(OBJDIR)/%.o: clases/Cliente/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
+$(OBJDIR)/%.o: clases/Mesa/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
+
+$(OBJDIR)/%.o: clases/Empleado/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
+
+$(OBJDIR)/%.o: clases/ProductoVenta/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
+
+$(OBJDIR)/%.o: main.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
 clean:
 	$(DELETE) $(OBJDIR)/*.o $(OBJDIR)/programa
 
 run: all
 	$(OBJDIR)/programa
+
+
+	make clean
+

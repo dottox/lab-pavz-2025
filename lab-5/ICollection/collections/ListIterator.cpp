@@ -8,7 +8,7 @@ ListIterator::ListIterator(ListNode* n, bool disposeHeadOnDelete):
 ICollectible *ListIterator::getCurrent()
 {
     if(current == NULL)
-        throw std::out_of_range("No hay elemento: se llegó al fin de la colección");
+        throw std::out_of_range("No hay elemento: se llego al fin de la coleccion");
     return current->getElem();
 }
 

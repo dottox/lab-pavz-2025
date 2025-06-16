@@ -33,7 +33,8 @@ void limpiarCin()
     cleanScreen();
     cin.clear();
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    cout << "Has ingresado una opcion invalida." << endl << endl;
+    cout << "Has ingresado una opcion invalida." << endl
+         << endl;
     pause();
 }
 
@@ -59,12 +60,12 @@ void mostrarMenu(ISistema *s, ActorMenu a)
              << endl;
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Alta de producto" << endl;
-        cout << "2. Alta de cliente (No implementado)" << endl;
+        cout << "2. Alta de cliente" << endl;
         cout << "3. Alta de empleado" << endl;
         cout << "4. Asignar mesas a mozos (No implementado)" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
-        cout << "6. Ventas de un mozo (No implementado)" << endl;
-        cout << "7. Información de un producto (No implementado)" << endl;
+        cout << "6. Ventas de un mozo" << endl;
+        cout << "7. Informacion de un producto" << endl;
         cout << "8. Resumen de facturacion de un dia" << endl;
         cout << "9. Baja de producto (No implementado)" << endl;
         cout << "0. Salir" << endl;
@@ -161,14 +162,14 @@ void altaProducto(ISistema *s)
     float precio;
 
     cleanScreen();
-    cout << "Ingrese el código del producto (menu/plato): ";
+    cout << "Ingrese el codigo del producto (menu/plato): ";
     getline(cin, code);
 
     cleanScreen();
     cout << "Ingrese la descripcion del producto (menu/plato): ";
     getline(cin, descripcion);
 
-    char *codigo = new char[code.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+    char *codigo = new char[code.size() + 1]; // Reservar memoria para el codigo, al finalizar el caso de uso se eliminara.
     strcpy(codigo, code.c_str());
 
     if (opcion == 1)
@@ -179,7 +180,7 @@ void altaProducto(ISistema *s)
         cin.ignore();
         if (cin.fail() || precio <= 0)
         {
-            delete[] codigo; // Liberar memoria del código
+            delete[] codigo; // Liberar memoria del codigo
             throw invalid_argument("El precio debe ser un numero positivo.");
         }
         DtPlato dtPlato(codigo, descripcion, precio);
@@ -191,7 +192,7 @@ void altaProducto(ISistema *s)
         DtMenu dtMenu(codigo, descripcion);
         s->crearMenu(dtMenu);
 
-        string code2; // Antes de agregar el plato al menu, creamos una copia del código en forma de char*
+        string code2; // Antes de agregar el plato al menu, creamos una copia del codigo en forma de char*
         int cantidad;
         bool salir = false;
 
@@ -238,7 +239,7 @@ void altaProducto(ISistema *s)
                 continue;
             }
 
-            char *codigoPlato = new char[code2.size() + 1]; // Reservar memoria para el código, al finalizar el caso de uso se eliminará.
+            char *codigoPlato = new char[code2.size() + 1]; // Reservar memoria para el codigo, al finalizar el caso de uso se eliminara.
             strcpy(codigoPlato, code2.c_str());
 
             try
@@ -254,7 +255,7 @@ void altaProducto(ISistema *s)
             pause();
         }
 
-        delete platos; // Liberar memoria de la colección de platos
+        delete platos; // Liberar memoria de la coleccion de platos
     }
 
     cleanScreen();
@@ -279,7 +280,7 @@ void altaProducto(ISistema *s)
     else
     {
         s->cancelarAltaProducto();
-        cout << "Creación de producto cancelada." << endl;
+        cout << "Creacion de producto cancelada." << endl;
     }
     delete[] codigo;
     pause();
@@ -295,17 +296,21 @@ void facturarVenta(ISistema *s)
     cout << "Ingrese el codigo de la mesa: " << endl;
     cin >> codigoMesa;
 
-    cleanScreen();
-
     s->elegirMesa(codigoMesa);
 
     cout << "Ingrese el descuento a aplicar (0-100): ";
-    cin >> descuento;
-
-    while (cin.fail() || descuento < 0 || descuento > 100)
+    while (true)
     {
-        cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
         cin >> descuento;
+
+        if (cin.fail() || descuento < 0 || descuento > 100)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
+        }
+        else
+            break;
     }
 
     s->agregarPorcentaje(descuento);
@@ -454,6 +459,8 @@ void iniciarVenta(ISistema *s)
     bool flag = true;
     int mesaElegida, confirmar;
 
+    s->listarMozos();
+
     cout << "Ingrese el ID del empleado que inicia la venta: ";
     cin >> idEmpleado;
     cin.ignore();
@@ -496,19 +503,19 @@ void iniciarVenta(ISistema *s)
         if (mesaElegida == 0)
         {
             if (s->getMesasElegidas()->isEmpty())
-            if (s->getMesasElegidas()->isEmpty())
-            {
-                cout << "Debes elegir una mesa." << endl;
-                pause();
-                continue;
-            }
+                if (s->getMesasElegidas()->isEmpty())
+                {
+                    cout << "Debes elegir una mesa." << endl;
+                    pause();
+                    continue;
+                }
             flag = false; // Salir del bucle si no se elige una mesa
             continue;
         }
 
         if (cin.fail() || mesaElegida <= 0)
         {
-            cout << "Numero de mesa inválido. Debe ser un numero positivo." << endl;
+            cout << "Numero de mesa invalido. Debe ser un numero positivo." << endl;
             cin.clear();
             pause();
         }
@@ -542,6 +549,353 @@ void iniciarVenta(ISistema *s)
     {
         s->cancelarAltaVenta();
         cout << "Venta cancelada." << endl;
+    }
+    pause();
+}
+
+void informacionProducto(ISistema *s)
+{
+    string codigo;
+    while (true)
+    {
+        cleanScreen();
+        s->listarProductos();
+
+        cout << "Ingrese el codigo del producto a consultar (o '0' para salir): " << endl;
+        cin >> codigo;
+        cin.ignore();
+        // Si el codigo es "0", salimos del bucle
+        if (cin.fail())
+        {
+            limpiarCin();
+            continue;
+        }
+
+        if (codigo == "0")
+            break;
+
+        if (codigo.empty())
+        {
+            cout << "El codigo del producto no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        try
+        {
+            cout << "Informacion del producto: " << endl;
+            DtInfoProducto *producto = s->obtenerProducto(codigo);
+            if (producto)
+            {
+                cout << "-----------------------------------------------------------------------:" << endl;
+                cout << "Codigo: " << producto->getProducto()->getCodigo() << endl;
+                cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
+                cout << "Tipo: " << (producto->getProducto()->getTipo() == TipoPlato ? "Plato" : "Menu") << endl;
+                cout << "Precio: $" << producto->getProducto()->getPrecio() << endl;
+                cout << "Cantidad de ventas: " << producto->getCantidadVentas() << endl;
+                cout << "-----------------------------------------------------------------------:" << endl;
+                delete producto; // Liberar memoria del DtInfoProducto
+            }
+            else
+            {
+                cout << "Producto no encontrado." << endl;
+            }
+        }
+        catch (const invalid_argument &e)
+        {
+            cout << "Error: " << e.what() << endl;
+        }
+        pause();
+    }
+}
+
+void ventasMozo(ISistema *s)
+{
+    cleanScreen();
+    try
+    {
+        s->listarMozos();
+        string idMozo, fechaInicio, fechaFin;
+        cout << "Ingrese el ID del mozo: ";
+        cin >> idMozo;
+        cin.ignore();
+
+        s->seleccionarMozo(stoi(idMozo));
+
+        cout << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
+        cin >> fechaInicio;
+        cin.ignore();
+
+        while (s->validarFecha(fechaInicio) == false)
+        {
+            cout << "Fecha invalida. Formato esperado: DD/MM/AAAA. Intente nuevamente." << endl;
+            cout << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
+            cin >> fechaInicio;
+            cin.ignore();
+        }
+
+        DtFecha dtFechaInicio = DtFecha(stoi(fechaInicio.substr(0, 2)), stoi(fechaInicio.substr(3, 2)), stoi(fechaInicio.substr(6, 4)));
+
+        cout << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
+        cin >> fechaFin;
+        cin.ignore();
+
+        while (s->validarFecha(fechaFin) == false)
+        {
+            cout << "Fecha invalida. Formato esperado: DD/MM/AAAA. Intente nuevamente." << endl;
+            cout << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
+            cin >> fechaFin;
+            cin.ignore();
+        }
+
+        DtFecha dtFechaFin = DtFecha(stoi(fechaFin.substr(0, 2)), stoi(fechaFin.substr(3, 2)), stoi(fechaFin.substr(6, 4)));
+
+        if (dtFechaInicio > dtFechaFin)
+        {
+            cout << "La fecha de inicio no puede ser posterior a la fecha de fin." << endl;
+            pause();
+            return;
+        }
+
+        s->mostrarVentasMozo(dtFechaInicio, dtFechaFin);
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
+}
+
+void altaCliente(ISistema *s)
+{
+    cleanScreen();
+
+    string nombre;
+    int telefono;
+    bool mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese los datos del cliente:" << endl;
+        cout << "Nombre: ";
+        cin >> nombre;
+        getline(cin >> ws, nombre);
+
+        if (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El nombre no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        try
+        {
+            stoi(nombre);
+            cout << "El nombre no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es un nombre valido
+        }
+
+        cout << "Telefono: ";
+        cin >> telefono;
+        cin.ignore();
+
+        if (cin.fail() || telefono <= 0 || to_string(telefono).length() != 9)
+        {
+            cout << "El telefono debe ser un numero y debe contener 9 digitos." << endl;
+            pause();
+            continue;
+        }
+        mantener = false; // Salir del bucle si el nombre y telefono son validos
+    }
+
+    string calle, numero, entre_calles, nombre_edificio, numero_apto; // Direccion del cliente (para armar el DtDireccion)
+    int esCasa = 1;                                                   // Por defecto, asumimos que es una casa (1. Si, 2. No)
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese la direccion del cliente:" << endl;
+        cout << "Calle: ";
+        cin >> calle;
+        getline(cin >> ws, calle);
+
+        if (cin.fail() || calle.empty() || calle.find_first_not_of(' ') == string::npos)
+        {
+            cout << "La calle no puede estar vacia." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(calle);
+            cout << "La calle no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una calle valida
+        }
+
+        cout << "Numero: ";
+        getline(cin >> ws, numero);
+
+        if (cin.fail() || numero.empty() || numero.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El numero no puede estar vacio." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        cout << "Entre calles (opcional, ingrese '0' para omitir): ";
+        getline(cin >> ws, entre_calles);
+
+        if (entre_calles == "0")
+        {
+            entre_calles = ""; // Si el usuario ingresa '0', se omite este campo
+        }
+        else if (entre_calles.empty() || entre_calles.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Las entre calles no pueden estar vacias." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(entre_calles);
+            if (entre_calles != "0")
+            {
+                cout << "Las entre calles no pueden ser un numero." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una entre calle valida
+        }
+
+        cout << "Es una casa? (1. Si, 2. No): ";
+        cin >> esCasa;
+        cin.ignore();
+
+        if (cin.fail() || (esCasa != 1 && esCasa != 2))
+        {
+            cout << "Opcion invalida. Debe ser 1 o 2." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        if (esCasa == 2)
+        {
+            cout << "Nombre del edificio: ";
+            getline(cin >> ws, nombre_edificio);
+
+            if (nombre_edificio.empty() || nombre_edificio.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El nombre del edificio no puede estar vacio." << endl;
+                pause();
+                continue;
+            }
+
+            try
+            {
+                stoi(nombre_edificio);
+                cout << "El nombre del edificio no puede ser un numero." << endl;
+                pause();
+                continue;
+            }
+            catch (const invalid_argument &e)
+            {
+                // Si no se puede convertir a entero, es un nombre de edificio valido
+            }
+
+            cout << "Numero de apartamento: ";
+            getline(cin >> ws, numero_apto);
+
+            if (cin.fail() || numero_apto.empty() || numero_apto.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El numero de apartamento no puede estar vacio." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        else
+        {
+            nombre_edificio = "";
+            numero_apto = "";
+        }
+
+        mantener = false; // Salir del bucle si la direccion es valida
+    }
+
+    DtDireccion direccion; // Declarar antes del if
+
+    if(esCasa == 1)
+    {
+        direccion = DtDireccionCasa(calle, numero, entre_calles);
+    }else{
+        direccion = DtDireccionApto(calle, numero, entre_calles, nombre_edificio, numero_apto);
+    }
+    
+    try{
+        s->agregarCliente(nombre, telefono, direccion); 
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl << "Cancelando alta de cliente." << endl;
+        s->cancelarAltaCliente();
+        pause();
+        return;
+    }
+
+    int confirmar; //  Confirmacion de alta del cliente
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        s->mostrarClienteTemporal();
+
+        cout << "Dar de alta? (1. Si, 2. No): ";
+        cin >> confirmar;
+        cin.ignore();
+
+        if (cin.fail() || (confirmar != 1 && confirmar != 2))
+        {
+            limpiarCin();
+            continue;
+        }
+
+        mantener = false;
+    }
+
+    cleanScreen();
+
+    if (confirmar == 2)
+    {
+        s->cancelarAltaCliente();
+        cout << "Alta de cliente cancelada." << endl;
+        pause();
+        return;
+    }
+
+    try
+    {
+        s->darAltaCliente();
+        cout << "Cliente creado exitosamente." << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
     }
     pause();
 }
@@ -619,6 +973,7 @@ int main()
                         altaProducto(s);
                         break;
                     case 2: // Alta Cliente
+                        altaCliente(s);
                         break;
                     case 3:
                         agregarEmpleado(s);
@@ -627,11 +982,13 @@ int main()
                         break;
                     case 5: // Venta a domicilio
                         break;
-                    case 6: // Ventas de un mozo
+                    case 6:
+                        ventasMozo(s);
                         break;
-                    case 7: // Información de un producto
+                    case 7: // Informacion de un producto
+                        informacionProducto(s);
                         break;
-                    case 8: // Resumen de facturación de un día
+                    case 8: // Resumen de facturacion de un dia
                         facturacionDia(s);
                         break;
                     case 9: // Baja de producto

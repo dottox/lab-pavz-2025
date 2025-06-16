@@ -1,18 +1,11 @@
 #include "Sistema.h"
 
-#include "../../ICollection/collections/List.h"
-#include "../../ICollection/interfaces/IIterator.h"
-#include "../../ICollection/interfaces/IKey.h"
-#include "../../ICollection/String.h"
-#include "../../ICollection/Integer.h"
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../datatypes/Cliente/DtCliente.h"
-
 Sistema *Sistema::instance = NULL;
 
 Sistema::Sistema()
 {
     this->empleados = new OrderedDictionary();
+    this->clientes = new OrderedDictionary();
     this->mesas = new OrderedDictionary();
     this->productos = new OrderedDictionary();
     this->ventas = new OrderedDictionary();
@@ -97,7 +90,7 @@ void Sistema::anadirPlatoAMenu(char *codigo, int cantidad)
     if (plato == nullptr)
     {
         delete key; // Liberar memoria del key
-        throw invalid_argument("El plato con el código proporcionado no existe.");
+        throw invalid_argument("El plato con el codigo proporcionado no existe.");
     }
 
     Menu *menu = dynamic_cast<Menu *>(this->productoCreado);
@@ -126,9 +119,9 @@ void Sistema::darAltaProducto()
         if (menu->esVacio())
         {
             delete key; // Liberar memoria del key
-            cout << "El menú no contiene platos." << endl;
+            cout << "El menu no contiene platos." << endl;
             this->cancelarAltaProducto(); // Limpiar el producto creado
-            throw invalid_argument("El menú no contiene platos, no se puede dar de alta.");
+            throw invalid_argument("El menu no contiene platos, no se puede dar de alta.");
         }
     }
 
@@ -140,7 +133,7 @@ void Sistema::cancelarAltaProducto()
 {
     if (this->productoCreado != nullptr)
     {
-        cout << "Cancelando la creación del producto: " << this->productoCreado->getCodigo() << endl;
+        cout << "Cancelando la creacion del producto: " << this->productoCreado->getCodigo() << endl;
         delete this->productoCreado;    // Liberar memoria del producto creado
         this->productoCreado = nullptr; // Limpiar la variable temporal
     }
@@ -296,12 +289,41 @@ void Sistema::imprimirInforme(DtInforme informe)
     delete it; // Liberar memoria del iterador
 }
 
+void Sistema::mostrarVentasMozo(DtFecha fechaInicio, DtFecha fechaFin)
+{
+    bool ventasEncontradas = false;
+
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        VentaLocal *venta = dynamic_cast<VentaLocal *>(it->getCurrent());
+        if (venta != nullptr)
+        {
+            if (venta->estaFacturada())
+            {
+                FacturaLocal *factura = dynamic_cast<FacturaLocal *>(venta->getFactura());
+                if (factura->getFecha() >= fechaInicio && factura->getFecha() <= fechaFin && factura->getNombreMozo() == this->mozoSeleccionado->getNombre())
+                {
+                    ventasEncontradas = true;
+                    this->imprimirFacturaLocal(venta->mostrarFacturaLocal());
+                }
+            }
+        }
+        it->next();
+    }
+
+    if (!ventasEncontradas)
+    {
+        cout << "No se encontraron ventas facturadas para el mozo en el rango de fechas proporcionado." << endl;
+    }
+}
+
 // // ####### --------------- Utils --------------- #######
 
 void Sistema::poblarSistema()
 {
     // Crear empleados
-    cout << "CRear empledaos: ";
+    cout << "Crear empledaos: ";
     Mozo *emp1 = new Mozo("Juan");
     Mozo *emp2 = new Mozo("Maria");
     Repartidor *emp3 = new Repartidor("Pedro", Bicicleta);
@@ -330,13 +352,38 @@ void Sistema::poblarSistema()
     this->productos->add(new String(menu1->getCodigo()), menu1);
 
     // Crear cliente
-    cout << "Crear cliente: ";
-    DtCliente *cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
+    cout << "Creando clientes con casa" << endl;
+    Cliente* cliente1 = new Cliente(DtCliente("Carlos", 123456789, DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2")));
+    Cliente* cliente2 = new Cliente(DtCliente("Ana", 987654321, DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4")));
+    Cliente* cliente3 = new Cliente(DtCliente("Luis", 555123456, DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera")));
+    Cliente* cliente4 = new Cliente(DtCliente("Sofia", 222333444, DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6")));
+    Cliente* cliente5 = new Cliente(DtCliente("Miguel", 888777666, DtDireccionCasa("Av. Italia", "2020", "Esq. Propios")));
+    Cliente* cliente6 = new Cliente(DtCliente("Lucia", 444555666, DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8")));
+    this->clientes->add(new Integer(cliente1->getTelefono()), cliente1);
+    this->clientes->add(new Integer(cliente2->getTelefono()), cliente2);
+    this->clientes->add(new Integer(cliente3->getTelefono()), cliente3);
+    this->clientes->add(new Integer(cliente4->getTelefono()), cliente4);
+    this->clientes->add(new Integer(cliente5->getTelefono()), cliente5);
+    this->clientes->add(new Integer(cliente6->getTelefono()), cliente6);
+
+    cout << "Creando clientes con dpto" << endl;
+    Cliente* cliente7 = new Cliente(DtCliente("Fernando", 111222333, DtDireccionApto("Av. Brasil", "1500", "", "Apto 101", "Edificio Sol")));
+    Cliente* cliente8 = new Cliente(DtCliente("Valeria", 444333222, DtDireccionApto("Calle 18 de Julio", "", "2500", "Apto 202", "Edificio Luna")));
+    Cliente* cliente9 = new Cliente(DtCliente("Martina", 777888999, DtDireccionApto("Rambla Francia", "", "3500", "Apto 303", "Edificio Mar")));
+    Cliente* cliente10 = new Cliente(DtCliente("Diego", 666555444, DtDireccionApto("Camino Carrasco", "", "4500", "Apto 404", "Edificio Río")));
+    Cliente* cliente11 = new Cliente(DtCliente("Paula", 999000111, DtDireccionApto("Av. Rivera", "5500", "", "Apto 505", "Edificio Parque")));
+    Cliente* cliente12 = new Cliente(DtCliente("Santiago", 333444555, DtDireccionApto("Calle Colonia", "Esto es un cruce jaj", "6500", "Apto 606", "Edificio Centro")));
+    this->clientes->add(new Integer(cliente7->getTelefono()), cliente7);
+    this->clientes->add(new Integer(cliente8->getTelefono()), cliente8);
+    this->clientes->add(new Integer(cliente9->getTelefono()), cliente9);
+    this->clientes->add(new Integer(cliente10->getTelefono()), cliente10);
+    this->clientes->add(new Integer(cliente11->getTelefono()), cliente11);
+    this->clientes->add(new Integer(cliente12->getTelefono()), cliente12);
 
     // Crear ventas
-    cout << "Crear VCentas: ";
+    cout << "Crear Ventas: ";
     VentaLocal *venta1 = new VentaLocal();
-    VentaDomicilio *venta2 = new VentaDomicilio(cliente1);
+    VentaDomicilio *venta2 = new VentaDomicilio(cliente1->getDatos());
     VentaLocal *venta3 = new VentaLocal();
     cout << "Crear Asignar productos: ";
     venta1->agregarProducto(plato1, 2);
@@ -353,7 +400,7 @@ void Sistema::poblarSistema()
     Mesa *mesa6 = new Mesa();
 
     emp1->setMesaAsignada(mesa1);
-    emp2->setMesaAsignada(mesa2);
+    emp1->setMesaAsignada(mesa2);
     emp1->setMesaAsignada(mesa3);
     emp2->setMesaAsignada(mesa4);
     emp1->setMesaAsignada(mesa5);
@@ -494,8 +541,7 @@ void Sistema::imprimirFacturaLocal(DtFacturaLocal factura)
     cout << "Descuento: " << factura.getDescuento() << "%" << endl;
     cout << "Monto Total: " << factura.getMontoTotal() << endl;
     cout << "IVA Total: " << factura.getIvaTotal() << endl;
-    cout << "Nombre Mozo: " << factura.getNombreMozo() << endl;
-    cout << "-------------------------" << endl;
+    cout << "Nombre Mozo: " << factura.getNombreMozo();
 }
 
 void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
@@ -581,9 +627,35 @@ void Sistema::listarTransportes()
     }
 }
 
+void Sistema::listarMozos()
+{
+    cout << "--- Mozos del Sistema ---" << endl;
+    IIterator *it = this->empleados->getIterator();
+    while (it->hasCurrent())
+    {
+        Mozo *mozo = dynamic_cast<Mozo *>(it->getCurrent());
+        if (mozo != nullptr)
+        {
+            cout << *mozo << endl;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+}
+
+bool Sistema::validarFecha(string fecha)
+{
+    if (fecha.length() != 10 || fecha[2] != '/' || fecha[5] != '/')
+    {
+        return false; // Formato incorrecto
+    }
+
+    return true; // Formato correcto
+}
+
 void Sistema::iniciarVenta(string codigo)
 {
-    if(this->mozoSeleccionado == nullptr)
+    if (this->mozoSeleccionado == nullptr)
     {
         throw invalid_argument("Debe seleccionar un mozo antes de iniciar una venta.");
     }
@@ -609,10 +681,9 @@ void Sistema::iniciarVenta(string codigo)
 void Sistema::addMesaElegida()
 {
     if (
-        this->mesaSeleccionada == nullptr || 
-        this->mesaSeleccionada->getMozo() != this->mozoSeleccionado || 
-        this->mesaSeleccionada->getVentaEnCurso() != nullptr
-    )
+        this->mesaSeleccionada == nullptr ||
+        this->mesaSeleccionada->getMozo() != this->mozoSeleccionado ||
+        this->mesaSeleccionada->getVentaEnCurso() != nullptr)
     {
         this->mesaSeleccionada = nullptr;
         throw invalid_argument("La mesa seleccionada no pertenece al mozo seleccionado o tiene una venta en curso.");
@@ -684,10 +755,10 @@ void Sistema::darAltaVenta()
         cout << "Venta iniciada para la mesa " << mesa->getNumero() << endl;
         it->next();
     }
-    delete it;                     // Liberar memoria del iterador
+    delete it;                              // Liberar memoria del iterador
     this->mesasElegidas->clearCollection(); // Limpiar las mesas elegidas
-    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
-    this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
+    this->mesaSeleccionada = nullptr;       // Limpiar la mesa seleccionada
+    this->mozoSeleccionado = nullptr;       // Limpiar el mozo seleccionado
 
     cout << "Todas las mesas elegidas han sido procesadas y se ha iniciado una venta en curso para cada una." << endl;
 }
@@ -695,11 +766,97 @@ void Sistema::darAltaVenta()
 void Sistema::cancelarAltaVenta()
 {
     cout << "Cancelando la alta de venta." << endl;
-    this->mesasElegidas->clearCollection();    // Limpiar la coleccion temporal
-    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
-    this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
+    this->mesasElegidas->clearCollection(); // Limpiar la coleccion temporal
+    this->mesaSeleccionada = nullptr;       // Limpiar la mesa seleccionada
+    this->mozoSeleccionado = nullptr;       // Limpiar el mozo seleccionado
     cout << "No hay mesas elegidas para cancelar." << endl;
 }
+
+DtInfoProducto *Sistema::obtenerProducto(string codigo)
+{
+    IKey *key = new String(codigo.c_str());
+    Producto *producto = (Producto *)this->productos->find(key);
+    delete key; // Liberar memoria del key
+
+    if (producto == nullptr)
+    {
+        throw invalid_argument("El producto con el codigo proporcionado no existe.");
+    }
+
+    int cantidadVentas = 0;
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        Venta *venta = (Venta *)it->getCurrent();
+        if (venta->contieneProducto(producto))
+        {
+            cantidadVentas++;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
+    return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
+}
+
+void Sistema::agregarCliente(string nombre, int telefono, DtDireccion direccion)
+{
+    DtCliente clienteDatos = DtCliente(nombre, telefono, direccion);
+
+    if(this->clienteTemporal != nullptr)
+    {
+        delete this->clienteTemporal; // Liberar memoria del cliente temporal anterior
+        this->clienteTemporal = nullptr;
+    }
+
+    // Verificar si el cliente ya existe
+    IKey *key = new Integer(clienteDatos.getTelefono());
+    if (this->clientes->member(key))
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El cliente ya existe en el sistema.");
+    }
+    delete key;
+
+    Cliente * cliente = new Cliente(clienteDatos); 
+    
+    this->clienteTemporal = cliente;
+}
+
+void Sistema::mostrarClienteTemporal()
+{
+    if (this->clienteTemporal == nullptr)
+    {
+        return;
+    }
+    cout << "--- Cliente Temporal ---" << endl;
+    cout << *this->clienteTemporal << endl;
+}
+
+void Sistema::darAltaCliente(){
+    if(this->clienteTemporal == nullptr)
+    {
+        throw invalid_argument("No hay cliente temporal para dar de alta.");
+    }
+    IKey *key = new Integer(this->clienteTemporal->getTelefono());
+    if (this->clientes->member(key))
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El cliente ya existe en el sistema.");
+    }
+    this->clientes->add(key, this->clienteTemporal);
+    this->clienteTemporal = nullptr; // Limpiar el cliente temporal
+}
+
+void Sistema::cancelarAltaCliente()
+{
+    if (this->clienteTemporal != nullptr)
+    {
+        delete this->clienteTemporal; // Liberar memoria del cliente temporal
+        this->clienteTemporal = nullptr;
+    }
+}
+
 Sistema::~Sistema()
 {
     delete empleados;
@@ -715,5 +872,5 @@ Sistema::~Sistema()
     }
     tipoProductoSeleccionado = TipoProducto::undefinedTipo;
 
-    instance = NULL; // Limpiar la instancia única
+    instance = NULL; // Limpiar la instancia unica
 }
