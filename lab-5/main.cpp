@@ -205,7 +205,7 @@ void altaProducto(ISistema *s)
 
             IIterator *it = platos->getIterator();
 
-            cout << "Platos disponibles para añadir al menu:" << endl;
+            cout << "Platos disponibles para anadir al menu:" << endl;
 
             while (it->hasCurrent())
             {
@@ -218,8 +218,8 @@ void altaProducto(ISistema *s)
             }
             delete it; // Liberar memoria del iterador
 
-            cout << "Seleccione el plato a añadir al menu (ingrese el codigo)." << endl;
-            cout << "Ingrese 'exit' para terminar de añadir platos: " << endl;
+            cout << "Seleccione el plato a anadir al menu (ingrese el codigo)." << endl;
+            cout << "Ingrese 'exit' para terminar de anadir platos: " << endl;
             cin >> code2;
             cin.ignore();
 
@@ -229,7 +229,7 @@ void altaProducto(ISistema *s)
                 continue;
             }
 
-            cout << "Ingrese una cantidad de platos '" << code2 << "' a añadir: ";
+            cout << "Ingrese una cantidad de platos '" << code2 << "' a anadir: ";
             cin >> cantidad;
             cin.ignore();
 
@@ -246,7 +246,7 @@ void altaProducto(ISistema *s)
             try
             {
                 s->anadirPlatoAMenu(codigoPlato, cantidad);
-                cout << "Plato '" << code2 << "' añadido al menu temporal." << endl;
+                cout << "Plato '" << code2 << "' anadido al menu temporal." << endl;
             }
             catch (const invalid_argument &e)
             {
@@ -1162,28 +1162,29 @@ void quitarProductoVenta(ISistema *s)
     int codigoMesa, cantidad;
     string codigoProducto;
     bool mantener = true;
-    
-    while(mantener){
+
+    while (mantener)
+    {
         cleanScreen();
 
         cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
         cin >> codigoMesa;
         cin.ignore();
-    
+
         if (cin.fail() || codigoMesa < 0)
         {
             cout << "El codigo de la mesa debe ser un numero positivo." << endl;
             pause();
             continue;
         }
-    
+
         if (codigoMesa == 0)
         {
             cout << "Cancelando Operacion." << endl;
             return;
         }
-    
+
         try
         {
             s->elegirMesa(codigoMesa);
@@ -1197,9 +1198,9 @@ void quitarProductoVenta(ISistema *s)
             pause();
             return;
         }
-        mantener = false; 
+        mantener = false;
     }
-    
+
     mantener = true;
 
     while (mantener)

@@ -57,12 +57,12 @@ public:
 
     /**
      *
-     * @return true si el tamaño es 0
+     * @return true si el tamano es 0
      */
     bool isEmpty() const;
 
     /**
-     * Devuelve el tamaño del diccionario
+     * Devuelve el tamano del diccionario
      * @return
      */
     int getSize() const;
@@ -87,7 +87,7 @@ public:
     ICollectible *getMax();
 
     /**
-     * Obtiene el valor que corresponde a la clave mas pequeña del diccionario.
+     * Obtiene el valor que corresponde a la clave mas pequena del diccionario.
      * Tira una excepcion de tipo std::out_of_range si el diccionario esta vacio
      * @return
      */

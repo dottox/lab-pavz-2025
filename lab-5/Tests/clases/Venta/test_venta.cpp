@@ -40,7 +40,6 @@
 //     // Verificar que los productos sean instancias de Producto
 //     CHECK(dynamic_cast<Producto*>(plato1) != nullptr);
 //     CHECK(dynamic_cast<Producto*>(plato2) != nullptr);
-    
 
 //     // Crear venta
 //     Venta venta;
@@ -110,10 +109,9 @@
 //     delete plato2;
 // }
 
-
 // TEST_CASE("Venta: agregarProducto con cantidad negativa") {
 //     // Crear producto
-//     Plato* plato = new Plato(DtPlato(const_cast<char*>("P007"), "Tortilla Española", 180.0f));
+//     Plato* plato = new Plato(DtPlato(const_cast<char*>("P007"), "Tortilla Espanola", 180.0f));
 
 //     // Crear venta
 //     Venta venta;
@@ -307,4 +305,3 @@
 //     // Limpiar memoria
 //     delete plato;
 // }
-

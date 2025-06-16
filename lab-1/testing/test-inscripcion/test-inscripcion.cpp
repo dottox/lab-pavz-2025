@@ -77,7 +77,7 @@ int main()
         terminate();
     }
 
-    // Caso año invalido
+    // Caso ano invalido
     try
     {
         DtFecha fecha05 = DtFecha(1, 1, 1899);
@@ -96,7 +96,6 @@ int main()
     assert(fecha06.getAnio() == 1900);
     cout << "TC010: Anio valido aprobado" << endl;
 
-
     DtFecha fecha07 = DtFecha(1, 1, 1901);
     assert(fecha07.getAnio() == 1901);
     cout << "TC011: Anio valido aprobadocs" << endl;
@@ -107,7 +106,7 @@ int main()
     //---------------------------TEST INSCRIPCION------------------------------------------
 
     DtFecha fechaValida = DtFecha(5, 7, 2022);
-    Socio* socio = new Socio(DtSocio("12312323", "Juan"));
+    Socio *socio = new Socio(DtSocio("12312323", "Juan"));
     Inscripcion inscripcion = Inscripcion(fechaValida, socio);
     assert(inscripcion.getFecha().getDia() == 5);
     assert(inscripcion.getFecha().getMes() == 7);
@@ -119,7 +118,6 @@ int main()
 
     delete socio;
     cout << "TC013: Inscripcion creada correctamente" << endl;
-    
 
     return 0;
 }

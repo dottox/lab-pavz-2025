@@ -36,7 +36,7 @@ DtFecha utils::obtenerFechaActual()
     tm *time_info = localtime(&now_time);
 
     // Extraer valores por separado
-    int anio = time_info->tm_year + 1900; // tm_year: años desde 1900
+    int anio = time_info->tm_year + 1900; // tm_year: anos desde 1900
     int mes = time_info->tm_mon + 1;      // tm_mon: meses desde enero (0-11)
     int dia = time_info->tm_mday;
 

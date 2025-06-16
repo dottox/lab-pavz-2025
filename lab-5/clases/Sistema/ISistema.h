@@ -73,10 +73,10 @@ public:
     virtual ICollection *obtenerPlatos() = 0;
 
     /**
-     * @brief Añade un plato a un menu.
-     * @param codigo --> Codigo del plato a añadir.
-     * @param cantidad --> Cantidad de platos a añadir al menu.
-     * @note El sistema ya guarda en una variable el menu al que se le añadira el plato.
+     * @brief Anade un plato a un menu.
+     * @param codigo --> Codigo del plato a anadir.
+     * @param cantidad --> Cantidad de platos a anadir al menu.
+     * @note El sistema ya guarda en una variable el menu al que se le anadira el plato.
      */
     virtual void anadirPlatoAMenu(char *, int) = 0;
 
@@ -156,7 +156,7 @@ public:
     virtual void cancelarQuitarProductoVenta() = 0;
     virtual void verificarMesaSeleccionadaConVentaEnCurso() = 0;
     virtual void listarProductosVentaSeleccionada() = 0;
-    virtual void seleccionarProductoDeVenta(string)= 0;
+    virtual void seleccionarProductoDeVenta(string) = 0;
     // ###### --------------- Alta Empleado ---------------  #######
 
     /**
