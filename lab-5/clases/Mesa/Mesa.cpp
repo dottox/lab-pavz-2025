@@ -45,8 +45,12 @@ void Mesa::setVentaEnCurso(VentaLocal *venta)
 
 ostream &operator<<(ostream &os, const Mesa &mesa)
 {
-    os << "Mesa Numero: " << mesa.numero << endl
-       << "    " << *(mesa.mozo);
+    os << "Mesa Numero: " << mesa.numero << endl;
+    if(mesa.mozo == nullptr){
+        os << "    No tiene mozo asignado";
+    }else{
+        os << "    " << *(mesa.mozo);
+    }
     if (mesa.getVentaEnCurso() != nullptr)
     {
         os << ", Hay venta en curso";

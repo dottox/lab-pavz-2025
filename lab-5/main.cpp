@@ -696,16 +696,22 @@ void asignarMesasMozos(ISistema *s)
         cin.ignore();
     }
 
-    s->asignarMesasMozos(cantMozos, cantMesas);
-
-    pause();
+    try{
+        s->asignarMesasMozos(cantMozos, cantMesas);
+        pause();
+    }catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        pause();
+        return;
+    }
 }
 
 int main()
 {
     ISistema *s = Factory::getSistema();
 
-    // pause(); // Uncomment this line if you want to pause the program at the start
+    pause(); // Uncomment this line if you want to pause the program at the start
 
     bool mantener = true;
     int opcion;

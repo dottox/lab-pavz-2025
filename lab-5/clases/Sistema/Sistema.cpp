@@ -334,13 +334,27 @@ void Sistema::poblarSistema()
     cout << "Crear empledaos: ";
     Mozo *emp1 = new Mozo("Juan");
     Mozo *emp2 = new Mozo("Maria");
-    Repartidor *emp3 = new Repartidor("Pedro", Bicicleta);
+    Mozo *emp3 = new Mozo("Luis");
+    Mozo *emp4 = new Mozo("Ana");
+    Mozo *emp5 = new Mozo("Sofia");
+    Mozo *emp6 = new Mozo("Carlos");
+    Mozo *emp7 = new Mozo("Lucia");
+    Mozo *emp8 = new Mozo("Miguel");
+    Mozo *emp9 = new Mozo("Elena");
+    Repartidor *emp10 = new Repartidor("Pedro", Bicicleta);
 
     // Agregar empleados al sistema
     cout << "ADD empledaos: ";
     this->empleados->add(new Integer(emp1->getNumero()), emp1);
     this->empleados->add(new Integer(emp2->getNumero()), emp2);
     this->empleados->add(new Integer(emp3->getNumero()), emp3);
+    this->empleados->add(new Integer(emp2->getNumero()), emp4);
+    this->empleados->add(new Integer(emp3->getNumero()), emp5);
+    this->empleados->add(new Integer(emp2->getNumero()), emp6);
+    this->empleados->add(new Integer(emp3->getNumero()), emp7);
+    this->empleados->add(new Integer(emp2->getNumero()), emp8);
+    this->empleados->add(new Integer(emp3->getNumero()), emp9);
+    this->empleados->add(new Integer(emp3->getNumero()), emp10);
 
     // Crear productos
     cout << "Crear platos: ";
@@ -381,18 +395,20 @@ void Sistema::poblarSistema()
     Mesa *mesa4 = new Mesa();
     Mesa *mesa5 = new Mesa();
     Mesa *mesa6 = new Mesa();
-
-    emp1->setMesaAsignada(mesa1);
-    emp1->setMesaAsignada(mesa2);
-    emp1->setMesaAsignada(mesa3);
-    emp1->setMesaAsignada(mesa5);
-    emp2->setMesaAsignada(mesa4);
-    emp2->setMesaAsignada(mesa6);
-
-    cout << "Crear ventas en curso: ";
-    mesa1->setVentaEnCurso(venta1);
-    mesa2->setVentaEnCurso(venta3);
-    cout << "Asignar mozos a mesas: ";
+    Mesa *mesa7 = new Mesa();
+    Mesa *mesa8 = new Mesa();
+    Mesa *mesa9 = new Mesa();
+    Mesa *mesa10 = new Mesa();
+    Mesa *mesa11 = new Mesa();
+    Mesa *mesa12 = new Mesa();
+    Mesa *mesa13 = new Mesa();
+    Mesa *mesa14 = new Mesa();
+    Mesa *mesa15 = new Mesa();
+    Mesa *mesa16 = new Mesa();
+    Mesa *mesa17 = new Mesa();
+    Mesa *mesa18 = new Mesa();
+    Mesa *mesa19 = new Mesa();
+    Mesa *mesa20 = new Mesa();
 
     // Agregar mesas al sistema
     this->mesas->add(new Integer(mesa1->getNumero()), mesa1);
@@ -401,6 +417,27 @@ void Sistema::poblarSistema()
     this->mesas->add(new Integer(mesa4->getNumero()), mesa4);
     this->mesas->add(new Integer(mesa5->getNumero()), mesa5);
     this->mesas->add(new Integer(mesa6->getNumero()), mesa6);
+    this->mesas->add(new Integer(mesa7->getNumero()), mesa7);
+    this->mesas->add(new Integer(mesa8->getNumero()), mesa8);
+    this->mesas->add(new Integer(mesa9->getNumero()), mesa9);
+    this->mesas->add(new Integer(mesa10->getNumero()), mesa10);
+    this->mesas->add(new Integer(mesa11->getNumero()), mesa11);
+    this->mesas->add(new Integer(mesa12->getNumero()), mesa12);
+    this->mesas->add(new Integer(mesa13->getNumero()), mesa13);
+    this->mesas->add(new Integer(mesa14->getNumero()), mesa14);
+    this->mesas->add(new Integer(mesa15->getNumero()), mesa15);
+    this->mesas->add(new Integer(mesa16->getNumero()), mesa16);
+    this->mesas->add(new Integer(mesa17->getNumero()), mesa17);
+    this->mesas->add(new Integer(mesa18->getNumero()), mesa18);
+    this->mesas->add(new Integer(mesa19->getNumero()), mesa19);
+    this->mesas->add(new Integer(mesa20->getNumero()), mesa20);
+
+    asignarMesasMozos(2, 6); // Tenemos 2 mozos y 6 mesas creados.
+
+    cout << "Crear ventas en curso: ";
+    mesa1->setVentaEnCurso(venta1);
+    mesa2->setVentaEnCurso(venta3);
+    cout << "Asignar mozos a mesas: ";
 
     // Agregar ventas al sistema
     this->ventas->add(new Integer(venta1->getCodigo()), venta1);
@@ -784,39 +821,46 @@ DtInfoProducto *Sistema::obtenerProducto(string codigo)
 
 // ####### --------------- ASIGNAR MESAS MOZO --------------- #######
 
-bool Sistema::hayVentasEnCurso(){
+bool Sistema::hayVentasEnCurso()
+{
     IIterator *it = this->ventas->getIterator();
     while (it->hasCurrent())
     {
         Venta *venta = (Venta *)it->getCurrent();
         if (!venta->estaFacturada())
         {
-            delete it; // Liberar memoria del iterador
+            delete it;   // Liberar memoria del iterador
             return true; // Hay al menos una venta en curso
         }
         it->next();
     }
-    delete it; 
+    delete it;
     return false; // No hay ventas en curso
 }
 
 void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 {
+    cout << "[DEBUG] Inicio de asignarMesasMozos" << endl;
+
     if (cantMozos > cantMesas)
     {
+        cout << "[DEBUG] Falla: cantMozos > cantMesas" << endl;
         throw invalid_argument("No se pueden asignar mas mozos que mesas.");
     }
 
     if (cantMesas > this->mesas->getSize())
     {
+        cout << "[DEBUG] Falla: cantMesas > cantidad de mesas en el sistema" << endl;
         throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
     }
 
     if (hayVentasEnCurso())
     {
+        cout << "[DEBUG] Falla: hay ventas en curso" << endl;
         throw invalid_argument("No se pueden asignar mesas a mozos mientras haya ventas en curso.");
     }
 
+    cout << "[DEBUG] Preparando iterador de mesas" << endl;
     IIterator *itMesas = this->mesas->getIterator();
     IDictionary *mesasDisponibles = new OrderedDictionary();
     int contadorMesas = 0;
@@ -835,11 +879,13 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         }
         itMesas->next();
     }
+    cout << "[DEBUG] Mesas totales: " << contadorMesas << ", mesas disponibles: " << mesasDisponibles->getSize() << endl;
 
     delete itMesas; // Liberar memoria del iterador
 
+    cout << "[DEBUG] Preparando iterador de mozos" << endl;
     IIterator *itMozos = this->empleados->getIterator();
-    int contadorMozos = 0;
+    IDictionary *mozosDisponibles = new OrderedDictionary();
     int contadorMozosConMenosMesas = 0;
 
     // Verificar que haya suficientes mozos
@@ -848,17 +894,24 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         Mozo *mozo = dynamic_cast<Mozo *>(itMozos->getCurrent());
         if (mozo != nullptr)
         {
-            if (mozo->getCantidadMesasAsignadas() <= contadorMozosConMenosMesas)
+            IKey *key = new Integer(mozo->getNumero());
+            mozosDisponibles->add(key, mozo);
+            if (mozo->getCantidadMesasAsignadas() <= contadorMozosConMenosMesas){
                 contadorMozosConMenosMesas = mozo->getCantidadMesasAsignadas();
-            contadorMozos++;
+            }
         }
         itMozos->next();
     }
-
     delete itMozos; // Liberar memoria del iterador
+
+    int contadorMozos = mozosDisponibles->getSize();
+    cout << "[DEBUG] Mozos totales: " << contadorMozos << endl;
 
     if (contadorMozos < cantMozos)
     {
+        cout << "[DEBUG] Falla: No hay suficientes mozos" << endl;
+        mozosDisponibles->clearDictionary();
+        delete mozosDisponibles; // Liberar memoria del diccionario de mozos
         mesasDisponibles->clearDictionary();
         delete mesasDisponibles; // Liberar memoria del diccionario de mesas
         throw invalid_argument("No hay suficientes mozos para asignar a las mesas.");
@@ -866,6 +919,9 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 
     if (contadorMesas < cantMesas)
     {
+        cout << "[DEBUG] Falla: No hay suficientes mesas" << endl;
+        mozosDisponibles->clearDictionary();
+        delete mozosDisponibles; // Liberar memoria del diccionario de mozos
         mesasDisponibles->clearDictionary();
         delete mesasDisponibles; // Liberar memoria del diccionario de mesas
         throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
@@ -873,40 +929,50 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
 
     int mesasXMozo = cantMesas / cantMozos;
     int restoMesas = cantMesas % cantMozos;
+    cout << "[DEBUG] mesasXMozo: " << mesasXMozo << ", restoMesas: " << restoMesas << endl;
 
-    IIterator *itMozos2 = this->empleados->getIterator();
     ICollection *asignaciones = new List();
     IIterator *itMesasDisponibles = mesasDisponibles->getIterator();
+    IIterator *itMozosDisponibles = mozosDisponibles->getIterator();
 
+    cout << "[DEBUG] Comenzando asignación de mesas a mozos" << endl;
+    cout << "[DEBUG] Mozo con menos mesas: " << contadorMozosConMenosMesas << endl;
     while (itMesasDisponibles->hasCurrent())
     {
-        Mesa *mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
-        if (itMozos2->hasCurrent())
+        Mesa* mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
+        
+        if(!itMozosDisponibles->hasCurrent())
         {
-            Mozo *mozo = dynamic_cast<Mozo *>(itMozos2->getCurrent());
-            if (mozo != nullptr)
-            {
-                if (mozo->getCantidadMesasAsignadas() <= contadorMozosConMenosMesas || restoMesas > 0)
-                {
-                    mozo->setMesaAsignada(mesa);
-                    DtAsignacion *dtAsignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
-                    asignaciones->add(dtAsignacion);
-                    mozo->incrementarCantidadMesasAsignadas();
-                    restoMesas--;
-                }
-                else
-                {
-                    itMozos2->next();
-                }
-            }
+            cout << "[DEBUG] Reiniciando iterador de mozos" << endl;
+            delete itMozosDisponibles; // Liberar memoria del iterador de mozos
+            itMozosDisponibles = this->empleados->getIterator(); // Reiniciar el iterador de mozos
         }
-        itMesasDisponibles->next();
-    }
-    delete itMozos2;           
-    delete itMesasDisponibles; 
-    mesasDisponibles->clearDictionary();
-    delete mesasDisponibles;   
+        Mozo* mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent()); 
 
+        if(mozo->getCantidadMesasAsignadas() < mesasXMozo){
+            mozo->setMesaAsignada(mesa);
+        }else{
+            cout << "[DEBUG] Mozo " << mozo->getNombre() << " ya tiene asignadas " << mozo->getCantidadMesasAsignadas() << " mesas, no se le puede asignar la mesa " << mesa->getNumero() << endl;
+            itMozosDisponibles->next(); 
+        }
+
+        if (mesa->getMozo() != nullptr)
+        {
+            cout << "[DEBUG] Mesa " << mesa->getNumero() << " se le ha asignado el mozo: " << mesa->getMozo()->getNombre() << endl;
+            itMesasDisponibles->next();
+            continue; 
+        }
+    }
+    cout << "[DEBUG] Asignación terminada" << endl;
+
+    delete itMozosDisponibles;
+    delete itMesasDisponibles;
+    mozosDisponibles->clearDictionary();
+    delete mozosDisponibles; 
+    mesasDisponibles->clearDictionary();
+    delete mesasDisponibles;
+
+    cout << "[DEBUG] Imprimiendo asignaciones" << endl;
     IIterator *itAsignaciones = asignaciones->getIterator();
     while (itAsignaciones->hasCurrent())
     {
@@ -917,10 +983,12 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
         }
         itAsignaciones->next();
     }
-    delete itAsignaciones;     
+    delete itAsignaciones;
 
     asignaciones->clearCollection(); // Primo vaciamos la coleccion y luego la limpiamos para no eliminar mozos ni mesas
-    delete asignaciones;    
+    delete asignaciones;
+
+    cout << "[DEBUG] Fin de asignarMesasMozos" << endl;
 }
 
 Sistema::~Sistema()

@@ -40,7 +40,6 @@ void Mozo::setMesaAsignada(Mesa *mesa)
         delete key; // Liberar memoria del key
         throw invalid_argument("La mesa ya esta asignada a este mozo.");
     }
-    cout << "Asignando mesa " << mesa->getNumero() << " al mozo " << this->getNombre() << endl;
     return;
 }
 
