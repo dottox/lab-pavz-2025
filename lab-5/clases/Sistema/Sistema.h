@@ -11,6 +11,7 @@ private:
     static Sistema *instance;
 
     IDictionary *empleados;
+    IDictionary *clientes;
     IDictionary *ventas;
     IDictionary *mesas;
     IDictionary *productos;
@@ -34,6 +35,11 @@ private:
     Transporte transporteSeleccionado;
     string nombreEmpleado;
     string tipoEmpleado;
+
+    Cliente *clienteTemporal;
+
+    const int cantMozosAsignados = 9; // Rango 1-9
+    const int cantMesasAsignadas = 20; // Rango 1-20         
 
 public:
     // ###### --------------- Alta producto ---------------  #######
@@ -184,6 +190,19 @@ public:
     void mostrarMesasElegidas(bool); // True para ver qué mesas están seleccionadas, false para ver solo números de dichas mesas.
 
     // ####### --------------- FIN CASO DE USO INICIAR VENTA --------------- #######
+
+    // ####### --------------- INICIO CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
+    /**
+     * @brief El sistema asigna mesas a un mozo.
+     * @param int --> Numero del mozo.
+     * @param int --> Numero de mesas a asignar.
+     */
+    bool hayVentasEnCurso();
+    void asignarMesasMozos(int, int);
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
     // ###### --------------- Utils ---------------  #######
     /**
      * @brief Pobla todo el sistema
@@ -228,6 +247,10 @@ public:
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
+    void agregarCliente(string, int, DtDireccion); 
+    void mostrarClienteTemporal(); 
+    void darAltaCliente();
+    void cancelarAltaCliente();
     static Sistema *getInstance();
     ~Sistema();
 };

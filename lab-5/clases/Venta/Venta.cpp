@@ -79,7 +79,7 @@ void Venta::agregarProducto(Producto *producto, int cantidad)
 
     cout << "Producto agregado: " << productoVenta->getDescripcion()
          << ", Cantidad: " << productoVenta->getCantidad()
-         << ", Precio: " << productoVenta->getPrecio() << endl;
+         << ", Precio: " << nuevoPrecio << endl;
 
     // Assuming productos is an OrderedDictionary
     IKey *key = new String(producto->getCodigo());

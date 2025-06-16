@@ -21,10 +21,10 @@ int main()
   assert(dataSocio->getNombre() == "Jorge");
 
   
-  // TC-001: Validar setter CI inválido
+  // TC-001: Validar setter CI invalido
   try {
     dataSocio->setCI("asdqwe");
-    throw runtime_error("TC001 Error: Se permitió settear un CI inválido.");
+    throw runtime_error("TC001 Error: Se permitio settear un CI invalido.");
   } catch (const invalid_argument &e) {
     cout << "TC001 funciono correctamente" << endl;
   } catch (const runtime_error &e) {
@@ -39,7 +39,7 @@ int main()
   try
   {
     Socio *s=new Socio(DtSocio("1234567", "Juan"));
-    throw runtime_error("TC002 Error: Se permitió un CI menor a 8 caracteres.");
+    throw runtime_error("TC002 Error: Se permitio un CI menor a 8 caracteres.");
   }
   catch (const invalid_argument &e)
   {
@@ -56,7 +56,7 @@ int main()
   try
   {
     Socio *s=new Socio(DtSocio("123456789", "Juan"));
-    throw runtime_error("TC003 Error: Se permitió un CI mayor a 8 caracteres.");
+    throw runtime_error("TC003 Error: Se permitio un CI mayor a 8 caracteres.");
   }
   catch (const invalid_argument &e)
   {
@@ -71,7 +71,7 @@ int main()
   // TC004: Validar CI invalida con letras
   try{
     Socio *s=new Socio(DtSocio("abcdefgh", "Juan"));
-    throw runtime_error("TC004 Error: Se permitió un CI inválido con letras.");
+    throw runtime_error("TC004 Error: Se permitio un CI invalido con letras.");
   } catch (const invalid_argument &e)
   {
     cout << "TC004 funciono correctamente" << endl;
@@ -85,7 +85,7 @@ int main()
   // TC005: Validar Nombre vacio
   try{
     Socio *s=new Socio(DtSocio("12345678", ""));
-    throw runtime_error("TC005 Error: Se permitió un nombre vacío.");
+    throw runtime_error("TC005 Error: Se permitio un nombre vacio.");
   } catch (const invalid_argument &e)
   {
     cout << "TC005 funciono correctamente" << endl;
@@ -99,7 +99,7 @@ int main()
   // TC006: Validar Nombre con 1 caracter
   try{
     Socio *s=new Socio(DtSocio("12345678", "A"));
-    throw runtime_error("TC006 Error: Se permitió un nombre con 1 caracter.");
+    throw runtime_error("TC006 Error: Se permitio un nombre con 1 caracter.");
   } catch (const invalid_argument &e)
   {
     cout << "TC006 funciono correctamente" << endl;
@@ -113,7 +113,7 @@ int main()
   // TC007: Validar Nombre con 1 caracter
   try{
     Socio *s=new Socio(DtSocio("-1234568", "Abc"));
-    throw runtime_error("TC007 Error: Se permitió un CI con numero negativo.");
+    throw runtime_error("TC007 Error: Se permitio un CI con numero negativo.");
   } catch (const invalid_argument &e)
   {
     cout << "TC007 funciono correctamente" << endl;

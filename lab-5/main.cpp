@@ -23,6 +23,7 @@ void pause()
 {
     cin.clear();
     cin.ignore();
+    cin.ignore();
     string dummy;
     cout << "Presiona cualquier tecla para continuar.";
     getline(cin, dummy);
@@ -60,9 +61,9 @@ void mostrarMenu(ISistema *s, ActorMenu a)
              << endl;
         cout << "Seleccione una opcion:" << endl;
         cout << "1. Alta de producto" << endl;
-        cout << "2. Alta de cliente (No implementado)" << endl;
+        cout << "2. Alta de cliente" << endl;
         cout << "3. Alta de empleado" << endl;
-        cout << "4. Asignar mesas a mozos (No implementado)" << endl;
+        cout << "4. Asignar mesas a mozos" << endl;
         cout << "5. Venta a domicilio (No implementado)" << endl;
         cout << "6. Ventas de un mozo" << endl;
         cout << "7. Informacion de un producto" << endl;
@@ -538,6 +539,212 @@ void agregarEmpleado(ISistema *s)
     }
 }
 
+void agregarEmpleado(ISistema *s)
+{
+    cleanScreen();
+    string nombre, cargo, transporte;
+    int opcion, opcion2;
+    bool bandera = true;
+    while (bandera)
+    {
+        cleanScreen();
+        string nombre, cargo;
+        int opcion, opcion2;
+
+        cout << "Ingrese una opcion:" << endl;
+        cout << "1. Agregar Mozo" << endl;
+        cout << "2. Agregar Repartidor" << endl;
+        cout << "0. Volver al menu anterior" << endl;
+        cin >> opcion;
+        cin.ignore();
+
+        switch (opcion)
+        {
+        case 0:
+            bandera = false;
+            break;
+        case 1:
+            cargo = "Mozo";
+            break;
+        case 2:
+            cargo = "Repartidor";
+            cout << "Seleccione el transporte del repartidor. ";
+            s->listarTransportes();
+            cout << "Ingrese el numero del transporte: ";
+            cin >> opcion2;
+            cin.ignore();
+            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            {
+                limpiarCin();
+                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cin >> opcion2;
+            }
+            s->seleccionarTransporte(opcion2 == 1   ? aPie
+                                     : opcion2 == 2 ? Moto
+                                     : opcion2 == 3 ? Bicicleta
+                                                    : Auto);
+            break;
+        default:
+            cout << "Opcion invalida. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        if (bandera == false)
+            break;
+
+        cout << "Ingrese el nombre del empleado: ";
+        cin >> nombre;
+        cin.ignore();
+
+        bool nombreValido = true;
+        for (char c : nombre)
+        {
+            if (!isalpha(c) && c != ' ')
+            {
+                nombreValido = false;
+                break;
+            }
+        }
+
+        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Nombre invalido. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cin >> opcion;
+
+        if (cin.fail() || (opcion != 1 && opcion != 2))
+        {
+            limpiarCin();
+            cout << "Opcion invalida." << endl;
+            pause();
+            continue;
+        }
+
+        if (opcion == 2)
+        {
+            cout << "Operacion cancelada." << endl;
+            s->cancelarAltaEmpleado();
+            pause();
+            continue;
+        }
+
+        s->agregarEmpleado(nombre, cargo);
+        int id = s->darDeAltaEmpleado();
+        cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
+        pause();
+    }
+}
+
+void agregarEmpleado(ISistema *s)
+{
+    cleanScreen();
+    string nombre, cargo, transporte;
+    int opcion, opcion2;
+    bool bandera = true;
+    while (bandera)
+    {
+        cleanScreen();
+        string nombre, cargo;
+        int opcion, opcion2;
+
+        cout << "Ingrese una opcion:" << endl;
+        cout << "1. Agregar Mozo" << endl;
+        cout << "2. Agregar Repartidor" << endl;
+        cout << "0. Volver al menu anterior" << endl;
+        cin >> opcion;
+        cin.ignore();
+
+        switch (opcion)
+        {
+        case 0:
+            bandera = false;
+            break;
+        case 1:
+            cargo = "Mozo";
+            break;
+        case 2:
+            cargo = "Repartidor";
+            cout << "Seleccione el transporte del repartidor. ";
+            s->listarTransportes();
+            cout << "Ingrese el numero del transporte: ";
+            cin >> opcion2;
+            cin.ignore();
+            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            {
+                limpiarCin();
+                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cin >> opcion2;
+            }
+            s->seleccionarTransporte(opcion2 == 1   ? aPie
+                                     : opcion2 == 2 ? Moto
+                                     : opcion2 == 3 ? Bicicleta
+                                                    : Auto);
+            break;
+        default:
+            cout << "Opcion invalida. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        if (bandera == false)
+            break;
+
+        cout << "Ingrese el nombre del empleado: ";
+        cin >> nombre;
+        cin.ignore();
+
+        bool nombreValido = true;
+        for (char c : nombre)
+        {
+            if (!isalpha(c) && c != ' ')
+            {
+                nombreValido = false;
+                break;
+            }
+        }
+
+        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Nombre invalido. Intente nuevamente." << endl;
+            pause();
+            continue;
+        }
+
+        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+        cout << "1. Si" << endl;
+        cout << "2. No" << endl;
+        cin >> opcion;
+
+        if (cin.fail() || (opcion != 1 && opcion != 2))
+        {
+            limpiarCin();
+            cout << "Opcion invalida." << endl;
+            pause();
+            continue;
+        }
+
+        if (opcion == 2)
+        {
+            cout << "Operacion cancelada." << endl;
+            s->cancelarAltaEmpleado();
+            pause();
+            continue;
+        }
+
+        s->agregarEmpleado(nombre, cargo);
+        int id = s->darDeAltaEmpleado();
+        cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
+        pause();
+    }
+}
+
 void iniciarVenta(ISistema *s)
 {
     cleanScreen();
@@ -546,16 +753,18 @@ void iniciarVenta(ISistema *s)
     bool flag = true;
     int mesaElegida, confirmar;
 
+    s->listarMozos();
+
     cout << "Ingrese el ID del empleado que inicia la venta: ";
     cin >> idEmpleado;
     cin.ignore();
-
-    try
+    
+    if (idEmpleado.empty())
     {
-        stoi(idEmpleado);
-        s->seleccionarMozo(stoi(idEmpleado));
+        throw invalid_argument("El ID del empleado no puede estar vacío.");
     }
-    catch (invalid_argument &e)
+    bool flag = true;
+    while (flag)
     {
         cout << "Error: has ingresado un número no válido." << endl;
         s->cancelarAltaVenta(); // No debería ser necesario, pero por si acaso
@@ -697,7 +906,6 @@ void informacionProducto(ISistema *s)
 void ventasMozo(ISistema *s)
 {
     cleanScreen();
-
     try
     {
         s->listarMozos();
@@ -752,6 +960,282 @@ void ventasMozo(ISistema *s)
     pause();
 }
 
+void asignarMesasMozos(ISistema *s)
+{
+    cleanScreen();
+
+    int cantMozos, cantMesas;
+    cout << "Ingrese la cantidad de mozos a asignar: ";
+    cin >> cantMozos;
+    cin.ignore();
+
+    while (cin.fail() || cantMozos <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMozos;
+        cin.ignore();
+    }
+
+    cout << "Ingrese la cantidad de mesas a asignar: ";
+    cin >> cantMesas;
+    cin.ignore();
+
+    while (cin.fail() || cantMesas <= 0)
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cin >> cantMesas;
+        cin.ignore();
+    }
+
+    try{
+        s->asignarMesasMozos(cantMozos, cantMesas);
+        pause();
+    }catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        pause();
+        return;
+    }
+}
+
+void altaCliente(ISistema *s)
+{
+    cleanScreen();
+
+    string nombre;
+    int telefono;
+    bool mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese los datos del cliente:" << endl;
+        cout << "Nombre: ";
+        cin >> nombre;
+        getline(cin >> ws, nombre);
+
+        if (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El nombre no puede estar vacio." << endl;
+            pause();
+            continue;
+        }
+
+        try
+        {
+            stoi(nombre);
+            cout << "El nombre no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es un nombre valido
+        }
+
+        cout << "Telefono: ";
+        cin >> telefono;
+        cin.ignore();
+
+        if (cin.fail() || telefono <= 0 || to_string(telefono).length() != 9)
+        {
+            cout << "El telefono debe ser un numero y debe contener 9 digitos." << endl;
+            pause();
+            continue;
+        }
+        mantener = false; // Salir del bucle si el nombre y telefono son validos
+    }
+
+    string calle, numero, entre_calles, nombre_edificio, numero_apto; // Direccion del cliente (para armar el DtDireccion)
+    int esCasa = 1;                                                   // Por defecto, asumimos que es una casa (1. Si, 2. No)
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        cout << "Ingrese la direccion del cliente:" << endl;
+        cout << "Calle: ";
+        cin >> calle;
+        getline(cin >> ws, calle);
+
+        if (cin.fail() || calle.empty() || calle.find_first_not_of(' ') == string::npos)
+        {
+            cout << "La calle no puede estar vacia." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(calle);
+            cout << "La calle no puede ser un numero." << endl;
+            pause();
+            continue;
+        }
+        catch (invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una calle valida
+        }
+
+        cout << "Numero: ";
+        getline(cin >> ws, numero);
+
+        if (cin.fail() || numero.empty() || numero.find_first_not_of(' ') == string::npos)
+        {
+            cout << "El numero no puede estar vacio." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        cout << "Entre calles (opcional, ingrese '0' para omitir): ";
+        getline(cin >> ws, entre_calles);
+
+        if (entre_calles == "0")
+        {
+            entre_calles = ""; // Si el usuario ingresa '0', se omite este campo
+        }
+        else if (entre_calles.empty() || entre_calles.find_first_not_of(' ') == string::npos)
+        {
+            cout << "Las entre calles no pueden estar vacias." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        try
+        {
+            stoi(entre_calles);
+            if (entre_calles != "0")
+            {
+                cout << "Las entre calles no pueden ser un numero." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        catch (const invalid_argument &e)
+        {
+            // Si no se puede convertir a entero, es una entre calle valida
+        }
+
+        cout << "Es una casa? (1. Si, 2. No): ";
+        cin >> esCasa;
+        cin.ignore();
+
+        if (cin.fail() || (esCasa != 1 && esCasa != 2))
+        {
+            cout << "Opcion invalida. Debe ser 1 o 2." << endl;
+            limpiarCin();
+            continue;
+        }
+
+        if (esCasa == 2)
+        {
+            cout << "Nombre del edificio: ";
+            getline(cin >> ws, nombre_edificio);
+
+            if (nombre_edificio.empty() || nombre_edificio.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El nombre del edificio no puede estar vacio." << endl;
+                pause();
+                continue;
+            }
+
+            try
+            {
+                stoi(nombre_edificio);
+                cout << "El nombre del edificio no puede ser un numero." << endl;
+                pause();
+                continue;
+            }
+            catch (const invalid_argument &e)
+            {
+                // Si no se puede convertir a entero, es un nombre de edificio valido
+            }
+
+            cout << "Numero de apartamento: ";
+            getline(cin >> ws, numero_apto);
+
+            if (cin.fail() || numero_apto.empty() || numero_apto.find_first_not_of(' ') == string::npos)
+            {
+                cout << "El numero de apartamento no puede estar vacio." << endl;
+                limpiarCin();
+                continue;
+            }
+        }
+        else
+        {
+            nombre_edificio = "";
+            numero_apto = "";
+        }
+
+        mantener = false; // Salir del bucle si la direccion es valida
+    }
+
+    DtDireccion direccion; // Declarar antes del if
+
+    if(esCasa == 1)
+    {
+        direccion = DtDireccionCasa(calle, numero, entre_calles);
+    }else{
+        direccion = DtDireccionApto(calle, numero, entre_calles, nombre_edificio, numero_apto);
+    }
+    
+    try{
+        s->agregarCliente(nombre, telefono, direccion); 
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl << "Cancelando alta de cliente." << endl;
+        s->cancelarAltaCliente();
+        pause();
+        return;
+    }
+
+    int confirmar; //  Confirmacion de alta del cliente
+    mantener = true;
+
+    while (mantener)
+    {
+        cleanScreen();
+        s->mostrarClienteTemporal();
+
+        cout << "Dar de alta? (1. Si, 2. No): ";
+        cin >> confirmar;
+        cin.ignore();
+
+        if (cin.fail() || (confirmar != 1 && confirmar != 2))
+        {
+            limpiarCin();
+            continue;
+        }
+
+        mantener = false;
+    }
+
+    cleanScreen();
+
+    if (confirmar == 2)
+    {
+        s->cancelarAltaCliente();
+        cout << "Alta de cliente cancelada." << endl;
+        pause();
+        return;
+    }
+
+    try
+    {
+        s->darAltaCliente();
+        cout << "Cliente creado exitosamente." << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+    }
+    pause();
+}
+
 void quitarProductoVenta(ISistema *s)
 {
     cleanScreen();
@@ -759,45 +1243,37 @@ void quitarProductoVenta(ISistema *s)
     string codigoProducto;
     bool mantener = true;
 
-    while(mantener){
-        cleanScreen();
-        cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
-        cout << "(Ingrese '0' para salir)" << endl;
-        cin >> codigoMesa;
-        cin.ignore();
-    
-        if(cin.fail() || codigoMesa < 0)
-        {
-            cout << "El codigo de la mesa debe ser un numero positivo." << endl;
-            pause();
-            continue;
-        }
-    
-        if (codigoMesa == 0)
-        {
-            cout << "Cancelando Operacion." << endl;
-            return;
-        }
-    
-        try{
-            s->elegirMesa(codigoMesa);
-            s->verificarMesaSeleccionadaConVentaEnCurso();
-        }catch(const invalid_argument &e)
-        {
-            cout << "Error: " << e.what() << endl;
-            cout << "Cancelando operacion" << endl;
-            s->cancelarQuitarProductoVenta();
-            pause();
-            return;
-        }
-        mantener = false;
+    cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
+    cout << "(Ingrese '0' para salir)" << endl;
+    cin >> codigoMesa;
+    cin.ignore();
+
+    if(cin.fail() || codigoMesa < 0)
+    {
+        throw invalid_argument("El codigo de la mesa debe ser un numero positivo.");
+    }
+
+    if (codigoMesa == 0)
+    {
+        cout << "Cancelando Operacion." << endl;
+        return;
+    }
+
+    try{
+        s->elegirMesa(codigoMesa);
+        s->verificarMesaSeleccionadaConVentaEnCurso();
+        s->listarProductosVentaSeleccionada();
+    }catch(const invalid_argument &e)
+    {
+        cout << "Error: " << e.what() << endl;
+        cout << "Cancelando operacion" << endl;
+        s->cancelarQuitarProductoVenta();
+        pause();
+        return;
     }
     
-    mantener = true;
-    
     while(mantener){
         cleanScreen();
-        s->listarProductosVentaSeleccionada();
 
         cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
         cout << "(Ingrese '0' para salir)" << endl;
@@ -850,14 +1326,13 @@ void quitarProductoVenta(ISistema *s)
             continue;
         }
     }
-   
 }
 
 int main()
 {
     ISistema *s = Factory::getSistema();
 
-    // pause(); // Uncomment this line if you want to pause the program at the start
+    pause(); // Uncomment this line if you want to pause the program at the start
 
     bool mantener = true;
     int opcion;
@@ -926,11 +1401,13 @@ int main()
                         altaProducto(s);
                         break;
                     case 2: // Alta Cliente
+                        altaCliente(s);
                         break;
                     case 3:
                         agregarEmpleado(s);
                         break;
                     case 4: // Asignar mesas a mozos
+                        asignarMesasMozos(s);
                         break;
                     case 5: // Venta a domicilio
                         break;

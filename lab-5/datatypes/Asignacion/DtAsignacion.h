@@ -1,9 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include "../../ICollection/interfaces/ICollectible.h"
 using namespace std;
 
-class DtAsignacion
+class DtAsignacion : public ICollectible
 {
 private:
     int numeroMozo;

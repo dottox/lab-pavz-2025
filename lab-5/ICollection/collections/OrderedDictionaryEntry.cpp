@@ -82,6 +82,16 @@ void OrderedDictionaryEntry::deleteInDepth(){
     }
 }
 
+void OrderedDictionaryEntry::setNullInDepth(){
+    if(lesser != NULL){
+        lesser->setNullInDepth();
+        lesser->setVal(NULL);
+    }if(greater != NULL){
+        greater->setNullInDepth();
+        greater->setVal(NULL);
+    }
+}
+
 OrderedDictionaryEntry::~OrderedDictionaryEntry() {
     delete key;
     delete val;

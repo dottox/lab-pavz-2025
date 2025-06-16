@@ -12,159 +12,171 @@ else
     DELETE := rm -f  
 endif
 
-all: programa
+OBJDIR := output
 
-programa: ICollectible.o ICollection.o IDictionary.o IIterator.o IKey.o OrderedKey.o Integer.o String.o List.o ListIterator.o ListNode.o OrderedDictionary.o OrderedDictionaryEntry.o  ISistema.o utils.o DtCliente.o Plato.o Menu.o MenuPlato.o DtFecha.o DtConsumido.o DtHora.o DtFacturaLocal.o DtFacturaDomicilio.o DtFactura.o FacturaLocal.o FacturaDomicilio.o Factura.o DtInforme.o Producto.o ProductoVenta.o  VentaLocal.o VentaDomicilio.o Venta.o DtInfoProducto.o DtMenu.o DtPlato.o DtProducto.o  DtDireccionApto.o DtDireccion.o Cliente.o Mesa.o Mozo.o Repartidor.o Empleado.o Sistema.o Factory.o main.o
-	g++ $^ -o programa 
+all: $(OBJDIR) programa
 
+# Lista de objetos con ruta dentro de output/
+OBJ := \
+$(OBJDIR)/ICollectible.o \
+$(OBJDIR)/ICollection.o \
+$(OBJDIR)/IDictionary.o \
+$(OBJDIR)/IIterator.o \
+$(OBJDIR)/IKey.o \
+$(OBJDIR)/OrderedKey.o \
+$(OBJDIR)/Integer.o \
+$(OBJDIR)/String.o \
+$(OBJDIR)/List.o \
+$(OBJDIR)/ListIterator.o \
+$(OBJDIR)/ListNode.o \
+$(OBJDIR)/OrderedDictionary.o \
+$(OBJDIR)/OrderedDictionaryEntry.o \
+$(OBJDIR)/ISistema.o \
+$(OBJDIR)/utils.o \
+$(OBJDIR)/DtCliente.o \
+$(OBJDIR)/Plato.o \
+$(OBJDIR)/Menu.o \
+$(OBJDIR)/MenuPlato.o \
+$(OBJDIR)/DtFecha.o \
+$(OBJDIR)/DtConsumido.o \
+$(OBJDIR)/DtHora.o \
+$(OBJDIR)/DtFacturaLocal.o \
+$(OBJDIR)/DtFacturaDomicilio.o \
+$(OBJDIR)/DtFactura.o \
+$(OBJDIR)/FacturaLocal.o \
+$(OBJDIR)/FacturaDomicilio.o \
+$(OBJDIR)/Factura.o \
+$(OBJDIR)/DtInforme.o \
+$(OBJDIR)/Producto.o \
+$(OBJDIR)/ProductoVenta.o \
+$(OBJDIR)/VentaLocal.o \
+$(OBJDIR)/VentaDomicilio.o \
+$(OBJDIR)/Venta.o \
+$(OBJDIR)/DtInfoProducto.o \
+$(OBJDIR)/DtMenu.o \
+$(OBJDIR)/DtMesa.o \
+$(OBJDIR)/DtAsignacion.o \
+$(OBJDIR)/DtPlato.o \
+$(OBJDIR)/DtProducto.o \
+$(OBJDIR)/DtDireccionApto.o \
+$(OBJDIR)/DtDireccion.o \
+$(OBJDIR)/DtDireccionCasa.o \
+$(OBJDIR)/DtPlato.o \
+$(OBJDIR)/DtProducto.o \
+$(OBJDIR)/DtDireccionApto.o \
+$(OBJDIR)/DtDireccionCasa.o \
+$(OBJDIR)/DtDireccion.o \
+$(OBJDIR)/Cliente.o \
+$(OBJDIR)/Mesa.o \
+$(OBJDIR)/Mozo.o \
+$(OBJDIR)/Repartidor.o \
+$(OBJDIR)/Empleado.o \
+$(OBJDIR)/Sistema.o \
+$(OBJDIR)/Factory.o \
+$(OBJDIR)/main.o
 
-ICollectible.o: 
-	g++ -c "ICollection/interfaces/ICollectible.cpp"
+programa: $(OBJ)
+	$(CXX) $^ -o $(OBJDIR)/programa
 
-ICollection.o:
-	g++ -c "ICollection/interfaces/ICollection.cpp"
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
-IDictionary.o:
-	g++ -c "ICollection/interfaces/IDictionary.cpp"
+# Regla genérica para compilar .cpp a output/*.o
+# Cada archivo fuente con su path original, el objeto se genera en output/
+$(OBJDIR)/%.o: ICollection/interfaces/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-IIterator.o:
-	g++ -c "ICollection/interfaces/IIterator.cpp"
+$(OBJDIR)/%.o: ICollection/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-IKey.o:
-	g++ -c "ICollection/interfaces/IKey.cpp"
+$(OBJDIR)/%.o: ICollection/collections/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-OrderedKey.o: IKey.o
-	g++ -c "ICollection/interfaces/OrderedKey.cpp"
+$(OBJDIR)/%.o: utils/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Integer.o: ICollectible.o OrderedKey.o
-	g++ -c "ICollection/Integer.cpp"
+$(OBJDIR)/%.o: clases/Sistema/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-String.o: ICollectible.o OrderedKey.o
-	g++ -c "ICollection/String.cpp"
+$(OBJDIR)/%.o: clases/Factory/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-List.o: ICollection.o
-	g++ -c "ICollection/collections/List.cpp"
+$(OBJDIR)/%.o: clases/Factura/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-ListIterator.o: IIterator.o
-	g++ -c "ICollection/collections/ListIterator.cpp"
+$(OBJDIR)/%.o: clases/Venta/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-ListNode.o:
-	g++ -c "ICollection/collections/ListNode.cpp"
+$(OBJDIR)/%.o: clases/Producto/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-OrderedDictionary.o: IDictionary.o
-	g++ -c "ICollection/collections/OrderedDictionary.cpp"
+$(OBJDIR)/%.o: datatypes/Factura/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-OrderedDictionaryEntry.o:
-	g++ -c "ICollection/collections/OrderedDictionaryEntry.cpp"
+$(OBJDIR)/%.o: datatypes/Informe/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-main.o:
-	g++ -c main.cpp
+$(OBJDIR)/%.o: datatypes/InfoProducto/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-utils.o: 
-	g++ -c "utils/utils.cpp"
+$(OBJDIR)/%.o: datatypes/Producto/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Sistema.o: ISistema.o 
-	g++ -c "clases/Sistema/Sistema.cpp"
+$(OBJDIR)/%.o: datatypes/Consumido/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-ISistema.o: 
-	g++ -c "clases/Sistema/ISistema.cpp"
+$(OBJDIR)/%.o: datatypes/Direccion/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Factory.o: ISistema.o Sistema.o
-	g++ -c "clases/Factory/Factory.cpp"
+$(OBJDIR)/%.o: datatypes/Fecha/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-FacturaLocal.o: Factura.o 
-	g++ -c "clases/Factura/FacturaLocal.cpp"
+$(OBJDIR)/%.o: datatypes/Hora/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-FacturaDomicilio.o: Factura.o
-	g++ -c "clases/Factura/FacturaDomicilio.cpp"
+$(OBJDIR)/%.o: datatypes/Cliente/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
+	
+$(OBJDIR)/%.o: datatypes/Mesa/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Factura.o: DtConsumido.o DtFecha.o DtHora.o DtFactura.o
-	g++ -c "clases/Factura/Factura.cpp"
+$(OBJDIR)/%.o: datatypes/Asignacion/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-VentaLocal.o: Venta.o
-	g++ -c "clases/Venta/VentaLocal.cpp"
+$(OBJDIR)/%.o: clases/Cliente/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-VentaDomicilio.o: Venta.o
-	g++ -c "clases/Venta/VentaDomicilio.cpp"
+$(OBJDIR)/%.o: clases/Mesa/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Venta.o: Producto.o Factura.o
-	g++ -c "clases/Venta/Venta.cpp"
+$(OBJDIR)/%.o: clases/Empleado/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Plato.o: Producto.o
-	g++ -c "clases/Producto/Plato.cpp"
+$(OBJDIR)/%.o: clases/ProductoVenta/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Menu.o: Plato.o Producto.o
-	g++ -c "clases/Producto/Menu.cpp"
+$(OBJDIR)/%.o: main.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-MenuPlato.o: Plato.o Menu.o
-	g++ -c "clases/Producto/MenuPlato.cpp"
+$(OBJDIR)/%.o: clases/Cliente/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-Producto.o: 
-	g++ -c "clases/Producto/Producto.cpp"
+$(OBJDIR)/%.o: clases/Mesa/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-DtFacturaLocal.o: DtFactura.o
-	g++ -c "datatypes/Factura/DtFacturaLocal.cpp"
+$(OBJDIR)/%.o: clases/Empleado/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-DtFacturaDomicilio.o: DtFactura.o
-	g++ -c "datatypes/Factura/DtFacturaDomicilio.cpp"
+$(OBJDIR)/%.o: clases/ProductoVenta/%.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
-DtFactura.o: DtConsumido.o DtFecha.o DtHora.o
-	g++ -c "datatypes/Factura/DtFactura.cpp"
-
-DtInforme.o: 
-	g++ -c "datatypes/Informe/DtInforme.cpp"
-
-DtInfoProducto.o: DtProducto.o
-	g++ -c "datatypes/InfoProducto/DtInfoProducto.cpp"
-
-DtMenu.o: DtProducto.o
-	g++ -c "datatypes/Producto/DtMenu.cpp"
-
-DtPlato.o: DtProducto.o
-	g++ -c "datatypes/Producto/DtPlato.cpp"
-
-DtProducto.o:
-	g++ -c "datatypes/Producto/DtProducto.cpp"
-
-DtConsumido.o:
-	g++ -c "datatypes/Consumido/DtConsumido.cpp"
-
-DtDireccionApto.o:
-	g++ -c  "datatypes/Direccion/DtDireccionApto.cpp"
-
-DtDireccion.o:
-	g++ -c  "datatypes/Direccion/DtDireccion.cpp"
-
-DtFecha.o:
-	g++ -c  "datatypes/Fecha/DtFecha.cpp"
-
-DtHora.o:
-	g++ -c  "datatypes/Hora/DtHora.cpp"
-
-DtCliente.o: DtDireccion.o
-	g++ -c "datatypes/Cliente/DtCliente.cpp"
-
-Cliente.o: DtCliente.o DtDireccion.o
-	g++  -c "clases/Cliente/Cliente.cpp"
-
-Mesa.o: 
-	g++  -c "clases/Mesa/Mesa.cpp"
-
-Mozo.o: Empleado.o 
-	g++  -c "clases/Empleado/Mozo.cpp"
-
-Repartidor.o: Empleado.o
-	g++  -c "clases/Empleado/Repartidor.cpp"
-
-ProductoVenta.o: Producto.o Venta.o
-	g++  -c "clases/ProductoVenta/ProductoVenta.cpp"
-
-Empleado.o:
-	g++  -c "clases/Empleado/Empleado.cpp"
+$(OBJDIR)/%.o: main.cpp | $(OBJDIR)
+	$(CXX) -c $< -o $@
 
 clean:
-	$(DELETE) *.o programa*
+	$(DELETE) $(OBJDIR)/*.o $(OBJDIR)/programa
 
-run: clean all
-	./programa
-	$(MAKE) clean
+run: all
+	$(OBJDIR)/programa
+	make clean
+

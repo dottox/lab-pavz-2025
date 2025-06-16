@@ -1,18 +1,11 @@
 #include "Sistema.h"
 
-#include "../../ICollection/collections/List.h"
-#include "../../ICollection/interfaces/IIterator.h"
-#include "../../ICollection/interfaces/IKey.h"
-#include "../../ICollection/String.h"
-#include "../../ICollection/Integer.h"
-#include "../../ICollection/collections/OrderedDictionary.h"
-#include "../../datatypes/Cliente/DtCliente.h"
-
 Sistema *Sistema::instance = NULL;
 
 Sistema::Sistema()
 {
     this->empleados = new OrderedDictionary();
+    this->clientes = new OrderedDictionary();
     this->mesas = new OrderedDictionary();
     this->productos = new OrderedDictionary();
     this->ventas = new OrderedDictionary();
@@ -179,6 +172,7 @@ DtFacturaLocal Sistema::generarFactura()
 {
     string nombreMozo = this->mesaSeleccionada->getMozo()->getNombre();
     DtFacturaLocal factura = this->ventaSeleccionada->generarFactura(nombreMozo);
+    this->mesaSeleccionada->getMozo()->borrarMesaAsignada(this->mesaSeleccionada); // Eliminar la mesa de las mesas asignadas del mozo
     this->mesaSeleccionada->setVentaEnCurso(nullptr);
     this->mesaSeleccionada = NULL;
     this->ventaSeleccionada = NULL;
@@ -258,7 +252,7 @@ void Sistema::listarProductosVentaSeleccionada()
     }
 
     cout << "Productos de la venta: " << endl;
-    ICollection *consumidosVenta = venta->getProductos();
+    IDictionary *consumidosVenta = venta->getProductos();
     IIterator *it = consumidosVenta->getIterator();
     while (it->hasCurrent())
     {
@@ -273,7 +267,7 @@ void Sistema::listarProductosVentaSeleccionada()
         it->next();
     }
     delete it; 
-    consumidosVenta->clearCollection(); 
+    consumidosVenta->clearDictionary(); 
     delete consumidosVenta;
 }
 
@@ -431,13 +425,27 @@ void Sistema::poblarSistema()
     cout << "Crear empledaos: ";
     Mozo *emp1 = new Mozo("Juan");
     Mozo *emp2 = new Mozo("Maria");
-    Repartidor *emp3 = new Repartidor("Pedro", Bicicleta);
+    Mozo *emp3 = new Mozo("Luis");
+    Mozo *emp4 = new Mozo("Ana");
+    Mozo *emp5 = new Mozo("Sofia");
+    Mozo *emp6 = new Mozo("Carlos");
+    Mozo *emp7 = new Mozo("Lucia");
+    Mozo *emp8 = new Mozo("Miguel");
+    Mozo *emp9 = new Mozo("Elena");
+    Repartidor *emp10 = new Repartidor("Pedro", Bicicleta);
 
     // Agregar empleados al sistema
     cout << "ADD empledaos: ";
     this->empleados->add(new Integer(emp1->getNumero()), emp1);
     this->empleados->add(new Integer(emp2->getNumero()), emp2);
     this->empleados->add(new Integer(emp3->getNumero()), emp3);
+    this->empleados->add(new Integer(emp4->getNumero()), emp4);
+    this->empleados->add(new Integer(emp5->getNumero()), emp5);
+    this->empleados->add(new Integer(emp6->getNumero()), emp6);
+    this->empleados->add(new Integer(emp7->getNumero()), emp7);
+    this->empleados->add(new Integer(emp8->getNumero()), emp8);
+    this->empleados->add(new Integer(emp9->getNumero()), emp9);
+    this->empleados->add(new Integer(emp10->getNumero()), emp10);
 
     // Crear productos
     cout << "Crear platos: ";
@@ -457,18 +465,43 @@ void Sistema::poblarSistema()
     this->productos->add(new String(menu1->getCodigo()), menu1);
 
     // Crear cliente
-    cout << "Crear cliente: ";
-    DtCliente *cliente1 = new DtCliente("Carlos", "123456789", DtDireccion("Calle Falsa", 123, "Pais"));
+    cout << "Creando clientes con casa" << endl;
+    Cliente* cliente1 = new Cliente(DtCliente("Carlos", 123456789, DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2")));
+    Cliente* cliente2 = new Cliente(DtCliente("Ana", 987654321, DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4")));
+    Cliente* cliente3 = new Cliente(DtCliente("Luis", 555123456, DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera")));
+    Cliente* cliente4 = new Cliente(DtCliente("Sofia", 222333444, DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6")));
+    Cliente* cliente5 = new Cliente(DtCliente("Miguel", 888777666, DtDireccionCasa("Av. Italia", "2020", "Esq. Propios")));
+    Cliente* cliente6 = new Cliente(DtCliente("Lucia", 444555666, DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8")));
+    this->clientes->add(new Integer(cliente1->getTelefono()), cliente1);
+    this->clientes->add(new Integer(cliente2->getTelefono()), cliente2);
+    this->clientes->add(new Integer(cliente3->getTelefono()), cliente3);
+    this->clientes->add(new Integer(cliente4->getTelefono()), cliente4);
+    this->clientes->add(new Integer(cliente5->getTelefono()), cliente5);
+    this->clientes->add(new Integer(cliente6->getTelefono()), cliente6);
+
+    cout << "Creando clientes con dpto" << endl;
+    Cliente* cliente7 = new Cliente(DtCliente("Fernando", 111222333, DtDireccionApto("Av. Brasil", "1500", "", "Apto 101", "Edificio Sol")));
+    Cliente* cliente8 = new Cliente(DtCliente("Valeria", 444333222, DtDireccionApto("Calle 18 de Julio", "", "2500", "Apto 202", "Edificio Luna")));
+    Cliente* cliente9 = new Cliente(DtCliente("Martina", 777888999, DtDireccionApto("Rambla Francia", "", "3500", "Apto 303", "Edificio Mar")));
+    Cliente* cliente10 = new Cliente(DtCliente("Diego", 666555444, DtDireccionApto("Camino Carrasco", "", "4500", "Apto 404", "Edificio Río")));
+    Cliente* cliente11 = new Cliente(DtCliente("Paula", 999000111, DtDireccionApto("Av. Rivera", "5500", "", "Apto 505", "Edificio Parque")));
+    Cliente* cliente12 = new Cliente(DtCliente("Santiago", 333444555, DtDireccionApto("Calle Colonia", "Esto es un cruce jaj", "6500", "Apto 606", "Edificio Centro")));
+    this->clientes->add(new Integer(cliente7->getTelefono()), cliente7);
+    this->clientes->add(new Integer(cliente8->getTelefono()), cliente8);
+    this->clientes->add(new Integer(cliente9->getTelefono()), cliente9);
+    this->clientes->add(new Integer(cliente10->getTelefono()), cliente10);
+    this->clientes->add(new Integer(cliente11->getTelefono()), cliente11);
+    this->clientes->add(new Integer(cliente12->getTelefono()), cliente12);
 
     // Crear ventas
     cout << "Crear Ventas: ";
     VentaLocal *venta1 = new VentaLocal();
-    VentaDomicilio *venta2 = new VentaDomicilio(cliente1);
+    VentaDomicilio *venta2 = new VentaDomicilio(cliente1->getDatos());
     VentaLocal *venta3 = new VentaLocal();
     cout << "Crear Asignar productos: ";
     venta1->agregarProducto(plato1, 2);
     venta1->agregarProducto(plato2, 1);
-    venta2->agregarProducto(plato3, 1);
+    // venta2->agregarProducto(plato3, 1);
     venta3->agregarProducto(plato3, 3);
     // Crear mesas
     cout << "Crear Mesas: ";
@@ -478,18 +511,20 @@ void Sistema::poblarSistema()
     Mesa *mesa4 = new Mesa();
     Mesa *mesa5 = new Mesa();
     Mesa *mesa6 = new Mesa();
-
-    emp1->setMesaAsignada(mesa1);
-    emp1->setMesaAsignada(mesa2);
-    emp1->setMesaAsignada(mesa3);
-    emp2->setMesaAsignada(mesa4);
-    emp1->setMesaAsignada(mesa5);
-    emp2->setMesaAsignada(mesa6);
-
-    cout << "Crear VentasEncuroso: ";
-    mesa1->setVentaEnCurso(venta1);
-    mesa2->setVentaEnCurso(venta3);
-    cout << "Asignar mozos a mesas: ";
+    Mesa *mesa7 = new Mesa();
+    Mesa *mesa8 = new Mesa();
+    Mesa *mesa9 = new Mesa();
+    Mesa *mesa10 = new Mesa();
+    Mesa *mesa11 = new Mesa();
+    Mesa *mesa12 = new Mesa();
+    Mesa *mesa13 = new Mesa();
+    Mesa *mesa14 = new Mesa();
+    Mesa *mesa15 = new Mesa();
+    Mesa *mesa16 = new Mesa();
+    Mesa *mesa17 = new Mesa();
+    Mesa *mesa18 = new Mesa();
+    Mesa *mesa19 = new Mesa();
+    Mesa *mesa20 = new Mesa();
 
     // Agregar mesas al sistema
     this->mesas->add(new Integer(mesa1->getNumero()), mesa1);
@@ -498,10 +533,31 @@ void Sistema::poblarSistema()
     this->mesas->add(new Integer(mesa4->getNumero()), mesa4);
     this->mesas->add(new Integer(mesa5->getNumero()), mesa5);
     this->mesas->add(new Integer(mesa6->getNumero()), mesa6);
+    this->mesas->add(new Integer(mesa7->getNumero()), mesa7);
+    this->mesas->add(new Integer(mesa8->getNumero()), mesa8);
+    this->mesas->add(new Integer(mesa9->getNumero()), mesa9);
+    this->mesas->add(new Integer(mesa10->getNumero()), mesa10);
+    this->mesas->add(new Integer(mesa11->getNumero()), mesa11);
+    this->mesas->add(new Integer(mesa12->getNumero()), mesa12);
+    this->mesas->add(new Integer(mesa13->getNumero()), mesa13);
+    this->mesas->add(new Integer(mesa14->getNumero()), mesa14);
+    this->mesas->add(new Integer(mesa15->getNumero()), mesa15);
+    this->mesas->add(new Integer(mesa16->getNumero()), mesa16);
+    this->mesas->add(new Integer(mesa17->getNumero()), mesa17);
+    this->mesas->add(new Integer(mesa18->getNumero()), mesa18);
+    this->mesas->add(new Integer(mesa19->getNumero()), mesa19);
+    this->mesas->add(new Integer(mesa20->getNumero()), mesa20);
+
+    asignarMesasMozos(cantMozosAsignados, cantMesasAsignadas); // Asignar 2 mesas (20, 9) para usar el "SetVentaEnCurso"
+
+    cout << "Crear ventas en curso: ";
+    mesa20->setVentaEnCurso(venta1);
+    mesa19->setVentaEnCurso(venta3);
+    cout << "Asignar mozos a mesas: ";
 
     // Agregar ventas al sistema
     this->ventas->add(new Integer(venta1->getCodigo()), venta1);
-    this->ventas->add(new Integer(venta2->getCodigo()), venta2);
+    // this->ventas->add(new Integer(venta2->getCodigo()), venta2);
     this->ventas->add(new Integer(venta3->getCodigo()), venta3);
 }
 
@@ -621,7 +677,7 @@ void Sistema::imprimirFacturaLocal(DtFacturaLocal factura)
     cout << "Descuento: " << factura.getDescuento() << "%" << endl;
     cout << "Monto Total: " << factura.getMontoTotal() << endl;
     cout << "IVA Total: " << factura.getIvaTotal() << endl;
-    cout << "Nombre Mozo: " << factura.getNombreMozo();
+    cout << "Nombre Mozo: " << factura.getNombreMozo() << endl;
 }
 
 void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
@@ -877,6 +933,237 @@ DtInfoProducto *Sistema::obtenerProducto(string codigo)
     delete it; // Liberar memoria del iterador
     cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
     return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
+}
+
+// ####### --------------- ASIGNAR MESAS MOZO --------------- #######
+
+bool Sistema::hayVentasEnCurso()
+{
+    IIterator *it = this->ventas->getIterator();
+    while (it->hasCurrent())
+    {
+        Venta *venta = (Venta *)it->getCurrent();
+        if (!venta->estaFacturada())
+        {
+            delete it;   // Liberar memoria del iterador
+            return true; // Hay al menos una venta en curso
+        }
+        it->next();
+    }
+    delete it;
+    return false; // No hay ventas en curso
+}
+
+void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
+{
+
+    if (cantMozos > cantMesas)
+    {
+        throw invalid_argument("No se pueden asignar mas mozos que mesas.");
+    }
+
+    if (cantMesas > this->mesas->getSize())
+    {
+        throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
+    }
+
+    if (hayVentasEnCurso())
+    {
+        throw invalid_argument("No se pueden asignar mesas a mozos mientras haya ventas en curso.");
+    }
+
+    IIterator *itMesas = this->mesas->getIterator();
+    IDictionary *mesasDisponibles = new OrderedDictionary();
+    
+    // Verificar que haya suficientes mesas
+    while (itMesas->hasCurrent() && mesasDisponibles->getSize() < cantMesas)
+    {
+        Mesa *mesa = dynamic_cast<Mesa *>(itMesas->getCurrent());
+        if (mesa != nullptr)
+        {
+            if (mesa->getMozo() == nullptr) // Solo agregar mesas sin mozo asignado
+            {
+                mesasDisponibles->add(new Integer(mesa->getNumero()), mesa);
+            }
+        }
+        itMesas->next();
+    }
+
+    int contadorMesas = mesasDisponibles->getSize();
+
+    delete itMesas; // Liberar memoria del iterador
+
+    IIterator *itEmpleados = this->empleados->getIterator();
+    IDictionary *mozosDisponibles = new OrderedDictionary();
+
+    // Verificar que haya suficientes mozos
+    while (itEmpleados->hasCurrent() && mozosDisponibles->getSize() < cantMozos)
+    {
+        Mozo *mozo = dynamic_cast<Mozo *>(itEmpleados->getCurrent());
+        if (mozo != nullptr)
+        {
+            IKey *key = new Integer(mozo->getNumero());
+            mozosDisponibles->add(key, mozo);
+        }
+        itEmpleados->next();
+    }
+    delete itEmpleados; // Liberar memoria del iterador
+
+    int contadorMozos = mozosDisponibles->getSize();
+
+    if (contadorMozos < cantMozos)
+    {
+        mozosDisponibles->clearDictionary();
+        delete mozosDisponibles; // Liberar memoria del diccionario de mozos
+        mesasDisponibles->clearDictionary();
+        delete mesasDisponibles; // Liberar memoria del diccionario de mesas
+        throw invalid_argument("No hay suficientes mozos para asignar a las mesas.");
+    }
+
+    if (contadorMesas < cantMesas)
+    {
+        mozosDisponibles->clearDictionary();
+        delete mozosDisponibles; // Liberar memoria del diccionario de mozos
+        mesasDisponibles->clearDictionary();
+        delete mesasDisponibles; // Liberar memoria del diccionario de mesas
+        throw invalid_argument("No hay suficientes mesas para asignar a los mozos.");
+    }
+
+    int mesasXMozo = cantMesas / cantMozos;
+    int restoMesas = cantMesas % cantMozos;
+    int mesasSinResto = mesasXMozo * cantMozos;
+
+    ICollection* asignaciones = new List();
+    IIterator *itMesasDisponibles = mesasDisponibles->getIterator();
+    IIterator *itMozosDisponibles = mozosDisponibles->getIterator();
+
+    while (itMesasDisponibles->hasCurrent())
+    {
+        Mesa* mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
+        
+        if(!itMozosDisponibles->hasCurrent())
+        {
+            delete itMozosDisponibles; // Liberar memoria del iterador de mozos
+            itMozosDisponibles = mozosDisponibles->getIterator(); // Reiniciar el iterador de mozos
+            if(mesasSinResto == 0)
+            {
+                break;
+            }
+        }
+        Mozo* mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent()); 
+
+        if(mozo->getCantidadMesasAsignadas() < mesasXMozo){
+            mozo->setMesaAsignada(mesa);
+            DtAsignacion *asignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
+            asignaciones->add(asignacion);
+            mesasSinResto--;
+        }else{
+            itMozosDisponibles->next(); 
+        }
+
+        if (mesa->getMozo() != nullptr)
+        {
+            itMesasDisponibles->next();
+            continue; 
+        }
+    }
+
+    if(itMesasDisponibles->hasCurrent())
+    {
+        while (itMesasDisponibles->hasCurrent())
+        {
+            Mozo *mozo = dynamic_cast<Mozo *>(itMozosDisponibles->getCurrent());
+            Mesa *mesa = dynamic_cast<Mesa *>(itMesasDisponibles->getCurrent());
+            mozo->setMesaAsignada(mesa);
+            DtAsignacion *asignacion = new DtAsignacion(mozo->getNumero(), mesa->getNumero());
+            asignaciones->add(asignacion);
+            
+            itMozosDisponibles->next();
+            itMesasDisponibles->next();
+        }
+    }
+
+
+    delete itMozosDisponibles;
+    delete itMesasDisponibles;
+    mozosDisponibles->clearDictionary();
+    delete mozosDisponibles; 
+    mesasDisponibles->clearDictionary();
+    delete mesasDisponibles;
+
+    IIterator *itAsignaciones = asignaciones->getIterator();
+    cout << "---------- Asignaciones ----------" << endl;
+    while (itAsignaciones->hasCurrent())
+    {
+        DtAsignacion *asignacion = dynamic_cast<DtAsignacion *>(itAsignaciones->getCurrent());
+        if (asignacion != nullptr)
+        {
+            cout << "Mozo: " << asignacion->getNumeroMozo() << " | Mesa: " << asignacion->getNumeroMesa() << endl;
+        }
+        itAsignaciones->next();
+    }
+    delete itAsignaciones;
+
+    asignaciones->clearCollection(); // Primero vaciamos la coleccion y luego la limpiamos para no eliminar mozos ni mesas
+    delete asignaciones;
+}
+
+void Sistema::agregarCliente(string nombre, int telefono, DtDireccion direccion)
+{
+    DtCliente clienteDatos = DtCliente(nombre, telefono, direccion);
+
+    if(this->clienteTemporal != nullptr)
+    {
+        delete this->clienteTemporal; // Liberar memoria del cliente temporal anterior
+        this->clienteTemporal = nullptr;
+    }
+
+    // Verificar si el cliente ya existe
+    IKey *key = new Integer(clienteDatos.getTelefono());
+    if (this->clientes->member(key))
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El cliente ya existe en el sistema.");
+    }
+    delete key;
+
+    Cliente * cliente = new Cliente(clienteDatos); 
+    
+    this->clienteTemporal = cliente;
+}
+
+void Sistema::mostrarClienteTemporal()
+{
+    if (this->clienteTemporal == nullptr)
+    {
+        return;
+    }
+    cout << "--- Cliente Temporal ---" << endl;
+    cout << *this->clienteTemporal << endl;
+}
+
+void Sistema::darAltaCliente(){
+    if(this->clienteTemporal == nullptr)
+    {
+        throw invalid_argument("No hay cliente temporal para dar de alta.");
+    }
+    IKey *key = new Integer(this->clienteTemporal->getTelefono());
+    if (this->clientes->member(key))
+    {
+        delete key; // Liberar memoria del key
+        throw invalid_argument("El cliente ya existe en el sistema.");
+    }
+    this->clientes->add(key, this->clienteTemporal);
+    this->clienteTemporal = nullptr; // Limpiar el cliente temporal
+}
+
+void Sistema::cancelarAltaCliente()
+{
+    if (this->clienteTemporal != nullptr)
+    {
+        delete this->clienteTemporal; // Liberar memoria del cliente temporal
+        this->clienteTemporal = nullptr;
+    }
 }
 
 Sistema::~Sistema()

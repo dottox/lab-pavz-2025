@@ -4,6 +4,8 @@
 #include "../Producto/Producto.h"
 #include "../Producto/Plato.h"
 #include "../Producto/Menu.h"
+#include "../Producto/Plato.h"
+#include "../Producto/Menu.h"
 #include "../Factura/Factura.h"
 #include "../Factura/FacturaLocal.h"
 #include "../Factura/FacturaDomicilio.h"

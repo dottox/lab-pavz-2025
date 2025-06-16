@@ -32,7 +32,13 @@ public:
      * @param k la clave a buscar
      */
     virtual void setNull(IKey *k) = 0;
-    
+
+    /**
+     * Vacía el diccionario, no se borra ningun objeto
+     * @param k la clave a buscar
+     */
+    virtual void clearDictionary() = 0;
+
     /**
      * Busca un elemento en el diccionario
      * @param k la clave a buscar

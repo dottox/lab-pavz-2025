@@ -15,11 +15,18 @@
 #include "../Venta/VentaLocal.h"
 #include "../Venta/VentaDomicilio.h"
 
+#include "../Cliente/Cliente.h"
+
 #include "../../datatypes/Factura/DtFacturaLocal.h"
 #include "../../datatypes/Producto/DtPlato.h"
 #include "../../datatypes/Producto/DtMenu.h"
 #include "../../datatypes/Informe/DtInforme.h"
 #include "../../datatypes/InfoProducto/DtInfoProducto.h"
+#include "../../datatypes/Asignacion/DtAsignacion.h"
+#include "../../datatypes/Fecha/DtFecha.h"
+#include "../../datatypes/Direccion/DtDireccion.h"
+#include "../../datatypes/Direccion/DtDireccionCasa.h"
+#include "../../datatypes/Direccion/DtDireccionApto.h"
 
 #include "../../enums/TipoProducto.h"
 #include "../../enums/ActorMenu.h"
@@ -223,6 +230,18 @@ public:
 
     // ####### --------------- INICIO CASO DE USO VENTAS MOZO --------------- #######
 
+    // ####### --------------- INICIO CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
+    /**
+     * @brief El sistema asigna mesas a un mozo.
+     * @param int --> Numero del mozo.
+     * @param int --> Numero de mesas a asignar.
+     */
+    virtual bool hayVentasEnCurso() = 0;
+    virtual void asignarMesasMozos(int, int) = 0;
+
+    /// ####### --------------- FIN CASO DE USO ASIGNAR MESAS MOZO --------------- #######
+
     virtual void addMesaElegida() = 0;
     virtual ICollection *getMesasElegidas() = 0;
     virtual void mostrarMesasElegidas(bool) = 0;
@@ -238,4 +257,8 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
+    virtual void agregarCliente(string, int, DtDireccion) = 0; 
+    virtual void mostrarClienteTemporal() = 0; 
+    virtual void darAltaCliente() = 0;
+    virtual void cancelarAltaCliente() = 0;
 };

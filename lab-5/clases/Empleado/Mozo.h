@@ -13,23 +13,26 @@
 #include "../../ICollection/collections/List.h"
 #include "../../ICollection/collections/OrderedDictionary.h"
 
-
 using namespace std;
 
 class Mesa;
 
-class Mozo : public Empleado{
+class Mozo : public Empleado
+{
 protected:
-    IDictionary * mesasAsignadas;
+    IDictionary *mesasAsignadas;
     int cantidadMesasAsignadas;
 
 public:
     Mozo(string);
     int getCantidadMesasAsignadas() const;
     void setCantidadMesasAsignadas(int cantidad);
-    IDictionary * getMesasAsignadas();
-    ICollection * getMesasAsignadasSinVentaEnCurso();
+    IDictionary *getMesasAsignadas();
+    ICollection *getMesasAsignadasSinVentaEnCurso();
+    void borrarMesaAsignada(Mesa *mesa);
+    void incrementarCantidadMesasAsignadas();
+    void decrementarCantidadMesasAsignadas();
     void setMesaAsignada(Mesa *mesa);
-    friend ostream & operator<<(ostream&, const Mozo&);
+    friend ostream &operator<<(ostream &, const Mozo &);
     ~Mozo();
 };
