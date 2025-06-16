@@ -604,7 +604,7 @@ void agregarEmpleado(ISistema *s)
         switch (opcion)
         {
         case 0:
-            break;
+            return; // Salir del bucle y volver al menu anterior
         case 1:
             cargo = "Mozo";
             break;
@@ -1343,11 +1343,11 @@ void bajaProducto(ISistema *s)
 
 int main()
 {
-    pause(); // Uncomment this line if you want to pause the program at the start
+    // pause(); // Uncomment this line if you want to pause the program at the start
 
     ISistema *s = Factory::getSistema();
 
-    pause(); // Uncomment this line if you want to pause the program after getting the system
+    // pause(); // Uncomment this line if you want to pause the program after getting the system
 
     bool mantener = true;
     int opcion;
