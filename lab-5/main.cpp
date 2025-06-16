@@ -31,21 +31,16 @@ void pause()
     getline(cin, dummy);
 }
 
-bool soloLetras(string s)
+bool soloLetras(const std::string &s)
 {
-    static const std::set<wchar_t> letrasExtras = {
-        L'á', L'é', L'í', L'ó', L'ú',
-        L'Á', L'É', L'Í', L'Ó', L'Ú',
-        L'ñ', L'Ñ'};
-
-    for (wchar_t c : s)
+    for (char c : s)
     {
-        if (!iswalpha(c) && letrasExtras.find(c) == letrasExtras.end())
+        if (std::isdigit(static_cast<unsigned char>(c)))
         {
-            return false;
+            return false; // Encontró un número
         }
     }
-    return true;
+    return true; // No encontró números
 }
 
 bool soloNumeros(const std::string &s)
@@ -60,8 +55,25 @@ bool soloNumeros(const std::string &s)
     return !s.empty(); // opcional: evitar que una cadena vacía sea "válida"
 }
 
+bool esCalleValida(const std::string &s)
+{
+    if (s.empty())
+        return false;
+
+    for (char c : s)
+    {
+        if (!std::isalnum(static_cast<unsigned char>(c)) && c != ' ')
+        {
+            return false; // carácter inválido
+        }
+    }
+    return true;
+}
+
 bool esTelefonoValido(const std::string &s)
 {
+    if (!soloNumeros(s))
+        return false;
     if (s.length() != 9)
         return false;
     for (char c : s)
@@ -912,118 +924,77 @@ void altaCliente(ISistema *s)
     cleanScreen();
 
     string nombre, telefono, calle, numero, entreCalles, nombreEdificio, numeroApto;
-    bool esCasa;
+    int esCasa;
 
     while (true)
     {
         cleanScreen();
-        cout << "Ingrese el nombre del cliente:" << endl;
-        cin >> nombre;
-        cin.ignore();
 
-        while (!soloLetras(nombre) || cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        do
         {
-            cout << "Ingrese un nombre de cliente valido:" << endl;
-            cin.clear();
-            cin >> nombre;
-            cin.ignore();
-        }
-
-        cleanScreen();
-        cout << "Ingrese el telefono del cliente:" << endl;
-        cin >> telefono;
-        cin.ignore();
-
-        while (!soloNumeros(telefono) || cin.fail() || !esTelefonoValido(telefono))
-        {
-            cout << "Ingrese un telefono de cliente valido (9 digitos):" << endl;
-            cin.clear();
-            cin >> telefono;
-            cin.ignore();
-        }
+            cout << "Ingrese el nombre del cliente:" << endl;
+            getline(cin, nombre);
+        } while (!soloLetras(nombre) || cin.fail());
 
         cleanScreen();
 
-        cout << "Ingrese la calle del cliente:" << endl;
-        cin >> calle;
-        cin.ignore();
-
-        while (cin.fail() || calle.empty() || calle.find_first_not_of(' ') == string::npos || !soloLetras(calle))
+        do
         {
-            cout << "Ingrese una calle valida (no puede estar vacia):" << endl;
-            cin.clear();
-            cin >> calle;
-            cin.ignore();
-        }
+            cout << "Ingrese el telefono del cliente (9 digitos):" << endl;
+            getline(cin, telefono);
+        } while (!esTelefonoValido(telefono));
 
-        cout << "Ingrese el numero de calle del cliente:" << endl;
-        cin >> numero;
-        cin.ignore();
+        cleanScreen();
 
-        while (cin.fail() || numero.empty() || numero.find_first_not_of(' ') == string::npos || !soloNumeros(numero))
+        do
         {
-            cout << "Ingrese un numero de calle valido (no puede estar vacio y debe ser un numero):" << endl;
-            cin.clear();
-            cin >> numero;
-            cin.ignore();
-        }
+            cout << "Ingrese la calle del cliente:" << endl;
+            getline(cin, calle);
+        } while (cin.fail() || !esCalleValida(calle));
 
-        cout << "Entre calles (opcional, ingrese '0' para omitir): ";
-        cin >> entreCalles;
-        cin.ignore();
+        cleanScreen();
+
+        do
+        {
+            cout << "Ingrese el numero de calle del cliente:" << endl;
+            getline(cin, numero);
+        } while (cin.fail() || !soloNumeros(numero));
+
+        cleanScreen();
+
+        do
+        {
+            cout << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir):" << endl;
+            getline(cin, entreCalles);
+        } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0"));
 
         if (entreCalles == "0")
         {
             entreCalles = ""; // Si el usuario ingresa '0', se omite este campo
         }
-        else
-        {
-            while (cin.fail() || entreCalles.empty() || entreCalles.find_first_not_of(' ') == string::npos || !soloLetras(entreCalles))
-            {
-                cout << "Ingrese una entre calle valida (no puede estar vacia):" << endl;
-                cin.clear();
-                cin >> entreCalles;
-                cin.ignore();
-            }
-        }
 
-        cout << "Es una casa? (1. Si, 2. No): ";
-        cin >> esCasa;
-        cin.ignore();
+        cleanScreen();
 
-        while (cin.fail() || (esCasa != 1 && esCasa != 2))
+        do
         {
-            cout << "Opcion invalida. Debe ser 1 o 2." << endl;
-            cin.clear();
-            cin >> esCasa;
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
+            cout << "Es una casa? (1. Si, 2. No): ";
+            getline(cin, numero);
+        } while (cin.fail() || (numero != "1" && numero != "2"));
 
         if (esCasa == 2)
         {
-            cout << "Nombre del edificio: ";
-            cin >> nombreEdificio;
-            cin.ignore();
-
-            while (cin.fail() || nombreEdificio.empty() || nombreEdificio.find_first_not_of(' ') == string::npos || !soloLetras(nombreEdificio))
+            do
             {
-                cout << "Ingrese un nombre de edificio valido (no puede estar vacio):" << endl;
-                cin.clear();
-                cin >> nombreEdificio;
-                cin.ignore();
-            }
+                cout << "Nombre del edificio: ";
+                getline(cin, nombreEdificio);
+            } while (cin.fail() || !soloLetras(nombreEdificio));
 
-            cout << "Numero de apartamento: ";
-            cin >> numeroApto;
-            cin.ignore();
-
-            while (cin.fail() || numeroApto.empty() || numeroApto.find_first_not_of(' ') == string::npos || !soloNumeros(numeroApto))
+            do
             {
-                cout << "Ingrese un numero de apartamento valido (no puede estar vacio y debe ser un numero):" << endl;
-                cin.clear();
-                cin >> numeroApto;
-                cin.ignore();
-            }
+                cout << "Numero de apartamento: ";
+                getline(cin, numeroApto);
+            } while (cin.fail() || !soloNumeros(nombreEdificio));
         }
 
         DtDireccion direccion; // Declarar antes del if
@@ -1057,15 +1028,11 @@ void altaCliente(ISistema *s)
             cleanScreen();
             s->mostrarClienteTemporal();
 
-            cout << "Dar de alta? (1. Si, 2. No): ";
-            cin >> confirmar;
-            cin.ignore();
-
-            if (cin.fail() || (confirmar != 1 && confirmar != 2))
+            do
             {
-                limpiarCin();
-                continue;
-            }
+                cout << "Dar de alta? (1. Si, 2. No): ";
+                getline(cin, numero);
+            } while (cin.fail() || (numero != "1" && numero != "2"));
 
             break;
         }
