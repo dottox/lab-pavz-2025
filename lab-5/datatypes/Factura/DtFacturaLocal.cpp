@@ -4,6 +4,7 @@ DtFacturaLocal::DtFacturaLocal() {}
 
 DtFacturaLocal::DtFacturaLocal(DtFactura factura, string nombreMozo)
     : DtFactura(
+          factura.getCodigo(),
           factura.getCodigoVenta(),
           factura.getFecha(),
           factura.getHora(),

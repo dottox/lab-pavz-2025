@@ -784,12 +784,13 @@ void Sistema::imprimirFacturaLocal(DtFacturaLocal factura)
          << "-------------------------" << endl;
     cout << "Factura Local:" << endl;
     cout << "Codigo: " << factura.getCodigo() << endl;
+    cout << "CodigoVenta: " << factura.getCodigoVenta() << endl;
     cout << "Fecha: " << factura.getFecha() << endl;
     cout << "Hora: " << factura.getHora() << endl;
     cout << "Subtotal: " << factura.getSubtotal() << endl;
     cout << "Descuento: " << factura.getDescuento() << "%" << endl;
     cout << "Monto Total: " << factura.getMontoTotal() << endl;
-    cout << "IVA Total: " << factura.getIvaTotal() << endl;
+    cout << "IVA Total: " << factura.getIvaTotal() << "%" << endl;
     cout << "Nombre Mozo: " << factura.getNombreMozo() << endl;
 }
 
@@ -824,7 +825,7 @@ void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
     cout << "Subtotal: " << factura.getSubtotal() << endl;
     cout << "Descuento: " << factura.getDescuento() << "%" << endl;
     cout << "Monto Total: " << factura.getMontoTotal() << endl;
-    cout << "IVA Total: " << factura.getIvaTotal() << endl;
+    cout << "IVA Total: " << factura.getIvaTotal() << "%" << endl;
     cout << "Nombre Repartidor: " << factura.getNombreRepartidor() << endl;
     cout << "Transporte: " << transporteStr << endl;
     cout << "-------------------------" << endl;

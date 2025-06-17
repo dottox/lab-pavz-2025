@@ -223,7 +223,6 @@ DtFacturaLocal Venta::generarFactura(string nombreMozo)
 
     FacturaLocal *factura = new FacturaLocal(facturaLocal);
     this->factura = factura;
-
     return factura->getDatos();
 }
 
