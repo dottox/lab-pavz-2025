@@ -328,5 +328,15 @@ bool Venta::contieneProducto(Producto *producto)
 
 Venta::~Venta()
 {
-    delete productosConsumidos; // Delete the array of Producto pointers
+    cout << "Destruyendo Venta con codigo: " << this->codigo << endl;
+
+    if(this->factura != nullptr){
+        delete this->factura;
+        this->factura = nullptr;
+    }
+
+    if(this->productosConsumidos != nullptr){
+        delete this->productosConsumidos; // Delete the dictionary
+        this->productosConsumidos = nullptr;
+    }
 }
