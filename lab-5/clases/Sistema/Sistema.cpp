@@ -1504,14 +1504,12 @@ Sistema::~Sistema()
         productos = nullptr;
     }
     if (productosSeleccionadosDomicilio != nullptr) {
-        productosSeleccionadosDomicilio->clearDictionary();
         delete productosSeleccionadosDomicilio;
         productosSeleccionadosDomicilio = nullptr;
     } 
 
     // Destruyendo ICollection
     if (mesasElegidas != nullptr) {
-        mesasElegidas->clearCollection();
         delete mesasElegidas;
         mesasElegidas = nullptr;
     }

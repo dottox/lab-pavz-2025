@@ -75,6 +75,9 @@ void Venta::setSubtotal(float subtotal)
 
 void Venta::agregarPorcentaje(int descuento)
 {
+    if(this->contieneMenu()){
+        throw invalid_argument("No se puede agregar un descuento a una venta que contiene un menu.");
+    }
     this->descuento = descuento;
 }
 
@@ -153,6 +156,38 @@ void Venta::quitarProductoVenta(char* codigo)
     delete key; // Liberar memoria del key
 }
 
+void Venta::actualizarPrecioVenta()
+{
+    IIterator *it = this->productosConsumidos->getIterator();
+    this->subtotal = 0.0f; // Reiniciar subtotal
+
+    while (it->hasCurrent())
+    {
+        ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+        this->subtotal += productoVenta->getPrecio() * productoVenta->getCantidad(); // ProductoVenta->getPrecio() retorna el precio unitario
+        it->next();
+    }
+
+    delete it; // Liberar memoria del iterador
+}
+
+bool Venta::contieneMenu()
+{
+    IIterator *it = this->productosConsumidos->getIterator();
+    while (it->hasCurrent())
+    {
+        ProductoVenta *productoVenta = (ProductoVenta *)it->getCurrent();
+        if (productoVenta->getTipo() == TipoMenu)
+        {
+            delete it; // Liberar memoria del iterador
+            return true;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    return false;
+}
+
 DtFacturaLocal Venta::generarFactura(string nombreMozo)
 {
     IIterator *it = this->productosConsumidos->getIterator();
@@ -163,10 +198,11 @@ DtFacturaLocal Venta::generarFactura(string nombreMozo)
         ProductoVenta *productoConsumido = (ProductoVenta *)it->getCurrent();
         this->subtotal += productoConsumido->getPrecio() * productoConsumido->getCantidad();
         DtConsumido *consumido = new DtConsumido(
+            productoConsumido->getCodigoProducto(),
             productoConsumido->getDescripcion(),
             productoConsumido->getCantidad(),
             productoConsumido->getPrecio());
-        IKey *key = new String(productoConsumido->getDescripcion().c_str());
+        IKey *key = new String(consumido->getCodigo());
         productosConsumidos->add(key, consumido);
         it->next();
     }
@@ -201,10 +237,11 @@ DtFacturaDomicilio Venta::generarFacturaDomicilio(string nombreRepartidor, Trans
         ProductoVenta *productoConsumido = (ProductoVenta *)it->getCurrent();
         this->subtotal += productoConsumido->getPrecio() * productoConsumido->getCantidad();
         DtConsumido *consumido = new DtConsumido(
+            productoConsumido->getCodigoProducto(),
             productoConsumido->getDescripcion(),
             productoConsumido->getCantidad(),
             productoConsumido->getPrecio());
-        IKey *key = new String(productoConsumido->getDescripcion().c_str());
+        IKey *key = new String(consumido->getCodigo());
         productosConsumidos->add(key, consumido);
         it->next();
     }

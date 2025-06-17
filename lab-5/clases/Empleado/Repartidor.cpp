@@ -41,4 +41,5 @@ ostream &operator<<(ostream &os, const Repartidor &repartidor)
 
 Repartidor::~Repartidor()
 {
+    cout << "Destruyendo repartidor: " << this->getNombre() << endl;
 }

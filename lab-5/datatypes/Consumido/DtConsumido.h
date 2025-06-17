@@ -8,13 +8,15 @@ using namespace std;
 class DtConsumido : public ICollectible
 {
 private:
+    char* codigo;
     string descripcion;
     int cantidad;
     float precio;
 
 public:
     DtConsumido();
-    DtConsumido(string, int, float);
+    DtConsumido(char*, string, int, float);
+    char* getCodigo();
     string getDescripcion();
     int getCantidad();
     float getPrecio();

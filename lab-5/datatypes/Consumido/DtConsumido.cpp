@@ -2,11 +2,17 @@
 
 DtConsumido::DtConsumido() {}
 
-DtConsumido::DtConsumido(string descripcion, int cantidad, float precio)
+DtConsumido::DtConsumido(char* codigo, string descripcion, int cantidad, float precio)
 {
+    this->codigo = codigo;
     this->descripcion = descripcion;
     this->cantidad = cantidad;
     this->precio = precio;
+}
+
+char* DtConsumido::getCodigo()
+{
+    return this->codigo;
 }
 
 string DtConsumido::getDescripcion()

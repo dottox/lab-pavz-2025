@@ -115,5 +115,12 @@ void Mozo::decrementarCantidadMesasAsignadas()
 
 Mozo::~Mozo()
 {
-    // Destructor implementation
+    cout << "Destruyendo mozo: " << this->getNombre() << endl;
+
+    if(mesasAsignadas != nullptr)
+    {
+        mesasAsignadas->clearDictionary(); 
+        delete mesasAsignadas; 
+        mesasAsignadas = nullptr;
+    }
 }

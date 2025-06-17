@@ -26,6 +26,5 @@ ostream& operator<<(ostream& os, const DtDireccionApto& dtDireccionApto)
 
 DtDireccionApto::~DtDireccionApto()
 {
-    // Destructor implementation (if needed)
-    // Currently, no dynamic memory allocation is done, so nothing specific to clean up.
+    cout << "Destruyendo DtDireccionApto" << endl;
 }

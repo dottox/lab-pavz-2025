@@ -62,5 +62,6 @@ ostream &operator<<(ostream &os, const Cliente &Cliente)
 
 Cliente::~Cliente()
 {
+    cout << "Destruyendo Cliente: " << this->nombre << endl;
     delete this->direccion; 
 }

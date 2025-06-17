@@ -51,6 +51,8 @@ public:
     void agregarProducto(Producto *, int);
     void quitarProductoVenta(Producto *, int);
     void quitarProductoVenta(char *);
+    void actualizarPrecioVenta();
+    bool contieneMenu();
     DtFacturaLocal generarFactura(string);
     DtFacturaLocal mostrarFacturaLocal();
     DtFacturaDomicilio generarFacturaDomicilio(string, Transporte);

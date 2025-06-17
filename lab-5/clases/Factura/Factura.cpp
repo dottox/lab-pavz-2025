@@ -59,4 +59,9 @@ IDictionary *Factura::getProductos()
     return this->productosConsumidos;
 }
 
-Factura::~Factura() {}
+Factura::~Factura() {
+    cout << "Destruyendo Factura con codigo: " << this->codigo << endl;
+    if(this->productosConsumidos != nullptr) {
+        delete this->productosConsumidos; // Liberar memoria del diccionario de productos consumidos
+    }
+}

@@ -10,4 +10,6 @@ ostream& operator<<(ostream& os, const DtDireccionCasa& dtDireccionCasa)
     return os;
 }
 
-DtDireccionCasa::~DtDireccionCasa() {};
+DtDireccionCasa::~DtDireccionCasa() {
+    cout << "Destruyendo DtDireccionCasa" << endl;
+};
