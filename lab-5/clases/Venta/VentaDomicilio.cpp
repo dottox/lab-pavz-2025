@@ -19,5 +19,7 @@ ostream &operator<<(ostream &os, const VentaDomicilio &ventaDomicilio)
 
 VentaDomicilio::~VentaDomicilio()
 {
-    delete this->datosCliente;
+    if(this->datosCliente != nullptr){
+        delete this->datosCliente;
+    }
 }
