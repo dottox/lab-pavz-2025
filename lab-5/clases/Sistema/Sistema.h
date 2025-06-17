@@ -45,6 +45,7 @@ private:
     Repartidor *repartidorSeleccionado;
     int cantidadProductosSeleccionadosDomicilio;
     float subtotalVentaDomicilio;
+    string telefonoTemporal;
 
     const int cantMozosAsignados = 9;  // Rango 1-9
     const int cantMesasAsignadas = 20; // Rango 1-20
@@ -255,7 +256,9 @@ public:
     void seleccionarRepartidor(int);
     DtFacturaDomicilio generarFacturaDomicilio();
     void cancelarVentaDomicilio();
-
+    void setTelefonoTemporal(string);
+    string getTelefonoTemporal();
+    
     /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
 
     void listarEmpleados();

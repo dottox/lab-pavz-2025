@@ -258,6 +258,10 @@ public:
 
     virtual void cancelarVentaDomicilio() = 0;
 
+    virtual void setTelefonoTemporal(string) = 0;
+
+    virtual string getTelefonoTemporal() = 0;
+
     /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
 
     virtual void addMesaElegida() = 0;

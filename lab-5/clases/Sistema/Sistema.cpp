@@ -21,6 +21,7 @@ Sistema::Sistema()
     this->clienteTemporal = NULL;
     this->transporteSeleccionado = undefinedTransporte;
     this->tipoProductoSeleccionado = TipoProducto::undefinedTipo;
+    this->telefonoTemporal = "";
 
     this->cantidadProductosSeleccionadosDomicilio = 0;
     this->subtotalVentaDomicilio = 0.0f;
@@ -1253,6 +1254,7 @@ void Sistema::darAltaCliente()
 
 void Sistema::cancelarAltaCliente()
 {
+    this->telefonoTemporal = ""; // Limpiar el telefono temporal
     if (this->clienteTemporal != nullptr)
     {
         delete this->clienteTemporal; // Liberar memoria del cliente temporal
@@ -1355,6 +1357,7 @@ void Sistema::cancelarVentaDomicilio()
     {
         this->productosSeleccionadosDomicilio->clearDictionary(); // Limpiar los productos seleccionados
     }
+    this->telefonoTemporal = ""; // Limpiar el telefono temporal
     this->repartidorSeleccionado = nullptr;            // Limpiar el repartidor seleccionado
     this->clienteSeleccionado = nullptr;               // Limpiar el cliente seleccionado
     this->cantidadProductosSeleccionadosDomicilio = 0; // Reiniciar la cantidad de productos seleccionados
@@ -1363,17 +1366,22 @@ void Sistema::cancelarVentaDomicilio()
 
 DtFacturaDomicilio Sistema::generarFacturaDomicilio()
 {
-    cout << "[DEBUG] Nombre repartidor." << endl;
     string nombreRepartidor = this->repartidorSeleccionado->getNombre();
-    cout << "[DEBUG] Transporte." << endl;
     Transporte transporte = this->repartidorSeleccionado->getTransporte();
-    cout << "[DEBUG] generando venta domicilio." << endl;
     VentaDomicilio *ventaDomicilio = new VentaDomicilio(this->clienteSeleccionado->getDatos(), this->cantidadProductosSeleccionadosDomicilio, this->subtotalVentaDomicilio, this->productosSeleccionadosDomicilio);
-    cout << "[DEBUG] generando dt factura domicilio." << endl;
     DtFacturaDomicilio facturaDomicilio = ventaDomicilio->generarFacturaDomicilio(nombreRepartidor, transporte);
-    cout << "[DEBUG] Factura generada con exito." << endl;
     return facturaDomicilio;
 }
+
+void Sistema::setTelefonoTemporal(string telefono)
+{
+    this->telefonoTemporal = telefono;
+}
+
+string Sistema::getTelefonoTemporal()
+{
+    return this->telefonoTemporal;
+}   
 
 /// ####### --------------- FIN CASO DE USO ASIGNAR VENTA DOMICILIO --------------- #######
 

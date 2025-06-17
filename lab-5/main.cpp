@@ -1029,29 +1029,35 @@ void altaCliente(ISistema *s)
             cleanScreen();
             cout << "Ingrese el nombre del cliente ('0' para salir): ";
             getline(cin, nombre);
-            if(nombre.empty() || cin.fail() || nombre.find_first_not_of(' ') == string::npos || !soloLetras(nombre)) {
-                cout << "El nombre no puede estar vacio o contener solo espacios." << endl;
-                continue; // Volver a solicitar el nombre
-            }
             if (nombre == "0") {
                 cout << "Cancelando alta de cliente." << endl;
                 s->cancelarAltaCliente();
                 return; // Salir del bucle y cancelar la alta
             }
+            if(nombre.empty() || cin.fail() || nombre.find_first_not_of(' ') == string::npos || !soloLetras(nombre)) {
+                cout << "El nombre no puede estar vacio o contener solo espacios." << endl;
+                continue; // Volver a solicitar el nombre
+            }
         } while (!soloLetras(nombre) || cin.fail() || nombre[0] == ' ' || nombre.empty());
 
 
-        do
-        {
-            cout << endl << "Ingrese el telefono del cliente (9 digitos) ('0' para salir): ";
-            getline(cin, telefono);
-            if (telefono == "0") {
-                cout << "Cancelando alta de cliente." << endl;
-                s->cancelarAltaCliente();
-                return; // Salir del bucle y cancelar la alta
-            }
-        } while (!esTelefonoValido(telefono));
-
+        if (s->getTelefonoTemporal() == "") {
+            do
+            {
+                cout << endl << "Ingrese el telefono del cliente (9 digitos) ('0' para salir): ";
+                getline(cin, telefono);
+                if (telefono == "0") {
+                    cout << "Cancelando alta de cliente." << endl;
+                    s->cancelarAltaCliente();
+                    return; // Salir del bucle y cancelar la alta
+                }
+            } while (!esTelefonoValido(telefono));
+        } else {
+            telefono = s->getTelefonoTemporal(); // Si ya hay un telefono temporal, lo usamos directamente
+            s->setTelefonoTemporal(""); // Limpiamos el telefono temporal para futuras altas
+            cout << endl << "Telefono ya ingresado: " << telefono << endl;
+        }
+            
 
         do
         {
@@ -1221,12 +1227,14 @@ void ventaADomicilio(ISistema *s)
             cout << "El cliente no esta registrado. Desea registrarlo?" << endl;
             cout << "1. Si" << endl;
             cout << "0. No" << endl;
+            cout << endl << "> ";
             int opcion;
             cin >> opcion;
             cin.ignore();
 
             if (opcion == 1)
             {
+                s->setTelefonoTemporal(telefono);
                 altaCliente(s);
             }
             else
@@ -1242,7 +1250,7 @@ void ventaADomicilio(ISistema *s)
         {
             cleanScreen();
             s->listarProductos();
-            cout << "Ingrese el codigo del producto a agregar a la venta (o '0' para finalizar): ";
+            cout << endl << "Ingrese el codigo del producto a agregar a la venta (o '0' para finalizar): ";
             string codigoProducto;
             cin >> codigoProducto;
             cin.ignore();
@@ -1264,7 +1272,7 @@ void ventaADomicilio(ISistema *s)
                 continue; // Volver a solicitar el codigo del producto
             }
 
-            cout << "Ingrese la cantidad de productos a agregar: ";
+            cout << endl << "Ingrese la cantidad de productos a agregar: ";
             int cantidad;
             cin >> cantidad;
             cin.ignore();
