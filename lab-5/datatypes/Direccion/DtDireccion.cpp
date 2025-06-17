@@ -26,7 +26,7 @@ string DtDireccion::getEntreCalles()
 
 ostream& operator<<(ostream& os, const DtDireccion& dtDireccion)
 {
-    os << endl << "Calle: " << dtDireccion.calle << endl 
+    os << "Calle: " << dtDireccion.calle << endl 
        << "Numero: " << dtDireccion.numero << endl
        << "Entre Calles: " << dtDireccion.entreCalles << endl;
     return os;

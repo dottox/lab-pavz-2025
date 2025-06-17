@@ -1015,15 +1015,15 @@ void altaCliente(ISistema *s)
             } while (cin.fail() || numeroApto[0] == ' ');
         }
 
-        DtDireccion direccion; // Declarar antes del if
+        DtDireccion* direccion; // Declarar antes del if
 
         if (esCasa == "1")
         {
-            direccion = DtDireccionCasa(calle, numero, entreCalles);
+            direccion = new DtDireccionCasa(calle, numero, entreCalles);
         }
         else
         {
-            direccion = DtDireccionApto(calle, numero, entreCalles, nombreEdificio, numeroApto);
+            direccion = new DtDireccionApto(calle, numero, entreCalles, nombreEdificio, numeroApto);
         }
 
         try

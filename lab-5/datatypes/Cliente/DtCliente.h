@@ -10,13 +10,13 @@ class DtCliente
 private:
     string nombre;
     string telefono;
-    DtDireccion direccion;
+    DtDireccion* direccion;
 
 public:
     DtCliente();
-    DtCliente(string, string, DtDireccion);
+    DtCliente(string, string, DtDireccion*);
     string getNombre();
-    DtDireccion getDireccion();
+    DtDireccion* getDireccion();
     string getTelefono();
     friend ostream &operator<<(ostream &, const DtCliente &);
     ~DtCliente();

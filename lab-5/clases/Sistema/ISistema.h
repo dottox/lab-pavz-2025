@@ -278,7 +278,7 @@ public:
     virtual void imprimirFacturaDomicilio(DtFacturaDomicilio) = 0;
     virtual void imprimirInforme(DtInforme) = 0;
     virtual bool validarFecha(string) = 0;
-    virtual void agregarCliente(string, string, DtDireccion) = 0;
+    virtual void agregarCliente(string, string, DtDireccion*) = 0;
     virtual void mostrarClienteTemporal() = 0;
     virtual void darAltaCliente() = 0;
     virtual void cancelarAltaCliente() = 0;

@@ -14,17 +14,17 @@ class Cliente : public ICollectible
 private:
     string nombre;
     string telefono;
-    DtDireccion direccion;
+    DtDireccion* direccion;
 
 public:
     Cliente(DtCliente);
     string getNombre();
     string getTelefono();
     DtCliente *getDatos();
-    DtDireccion getDireccion();
+    DtDireccion* getDireccion();
     void setNombre(string);
     void setTelefono(string);
-    void setDireccion(DtDireccion);
+    void setDireccion(DtDireccion*);
     friend ostream &operator<<(ostream &, const Cliente &);
     ~Cliente();
 };
