@@ -181,6 +181,16 @@ void Sistema::cancelarFacturarVenta()
     this->ventaSeleccionada = nullptr; // Limpiar la venta seleccionada
 }
 
+bool Sistema::ventaMesaSeleccionadaTieneMenu() {
+    if (this->mesaSeleccionada == nullptr || this->mesaSeleccionada->getVentaEnCurso() == nullptr)
+    {
+        throw invalid_argument("No hay una mesa seleccionada o no hay una venta en curso.");
+    }
+
+    VentaLocal *venta = this->mesaSeleccionada->getVentaEnCurso();
+    return venta->contieneMenu();
+}
+
 // ####### --------------- Agregar producto a una venta --------------- #######
 void Sistema::seleccionarMozo(int numeroMozo)
 {

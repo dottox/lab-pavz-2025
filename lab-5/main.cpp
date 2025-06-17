@@ -397,7 +397,7 @@ void facturarVenta(ISistema *s)
         cleanScreen();
         s->listarMesasConVentasEnCursoDeMozoSeleccionado();
     
-        cout << "Ingresa el codigo de la mesa a facturar ('0' para salir): " << endl;
+        cout << endl << "Ingresa el codigo de la mesa a facturar ('0' para salir): ";
         cin >> codigoMesa;
 
         if (cin.fail() || codigoMesa < 0)
@@ -426,20 +426,24 @@ void facturarVenta(ISistema *s)
     }
 
 
-    while (true)
-    {
-        cleanScreen();
-        cout << "Ingrese el descuento a aplicar (0-100): ";
-        cin >> descuento;
-        cin.ignore();
-
-        if (cin.fail() || descuento < 0 || descuento > 100)
+    if (!s->ventaMesaSeleccionadaTieneMenu()) {
+        while (true)
         {
-            cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
-            pause();
+            cleanScreen();
+            cout << "Ingrese el descuento a aplicar (0-100): ";
+            cin >> descuento;
+            cin.ignore();
+    
+            if (cin.fail() || descuento < 0 || descuento > 100)
+            {
+                cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
+                pause();
+            }
+            else
+                break;
         }
-        else
-            break;
+    } else {
+        descuento = 0;
     }
 
     s->agregarPorcentaje(descuento);

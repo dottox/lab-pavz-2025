@@ -135,6 +135,7 @@ public:
     virtual DtFacturaLocal generarFactura() = 0;
 
     virtual void cancelarFacturarVenta() = 0;
+    virtual bool ventaMesaSeleccionadaTieneMenu() = 0;
 
     // ####### --------------- Agregar producto a una venta --------------- #######
 

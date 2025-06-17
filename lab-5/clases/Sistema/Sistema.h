@@ -114,6 +114,7 @@ public:
     DtFacturaLocal generarFactura();
 
     void cancelarFacturarVenta();
+    bool ventaMesaSeleccionadaTieneMenu();
 
     // ###### --------------- Facturar venta ---------------  #######
 
