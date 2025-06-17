@@ -210,6 +210,7 @@ void altaProducto(ISistema *s)
     }
 
     int opcion;
+    cout << endl << "> ";
     cin >> opcion;
 
     cin.ignore();
@@ -243,8 +244,7 @@ void altaProducto(ISistema *s)
         }
     }
 
-    cleanScreen();
-    cout << "Ingrese la descripcion del producto (menu/plato): ";
+    cout << endl << "Ingrese la descripcion del producto (menu/plato): ";
     getline(cin, descripcion);
 
     char *codigo = new char[code.size() + 1]; // Reservar memoria para el codigo, al finalizar el caso de uso se eliminara.
@@ -252,8 +252,7 @@ void altaProducto(ISistema *s)
 
     if (opcion == 1)
     {
-        cleanScreen();
-        cout << "Ingrese el precio del producto: ";
+        cout << endl << "Ingrese el precio del producto: ";
         cin >> precio;
         cin.ignore();
         if (cin.fail() || precio <= 0)
@@ -282,7 +281,7 @@ void altaProducto(ISistema *s)
 
             IIterator *it = platos->getIterator();
 
-            cout << "Platos disponibles para anadir al menu:" << endl;
+            cout << "--- Platos disponibles para anadir al menu ---" << endl;
 
             while (it->hasCurrent())
             {
@@ -295,8 +294,9 @@ void altaProducto(ISistema *s)
             }
             delete it; // Liberar memoria del iterador
 
-            cout << "Seleccione el plato a anadir al menu (ingrese el codigo)." << endl;
+            cout << endl << "Seleccione el plato a anadir al menu (ingrese el codigo)." << endl;
             cout << "Ingrese 'exit' para terminar de anadir platos: " << endl;
+            cout << endl << "> ";
             cin >> code2;
             cin.ignore();
 
@@ -306,7 +306,7 @@ void altaProducto(ISistema *s)
                 continue;
             }
 
-            cout << "Ingrese una cantidad de platos '" << code2 << "' a anadir: ";
+            cout << endl << "Ingrese una cantidad de platos '" << code2 << "' a anadir: ";
             cin >> cantidad;
             cin.ignore();
 
@@ -664,6 +664,7 @@ void agregarEmpleado(ISistema *s)
         cout << "1. Agregar Mozo" << endl;
         cout << "2. Agregar Repartidor" << endl;
         cout << "0. Volver al menu anterior" << endl;
+        cout << endl << "> ";
         cin >> opcion;
         cin.ignore();
 
@@ -681,7 +682,7 @@ void agregarEmpleado(ISistema *s)
             s->listarTransportes();
             do
             {
-                cout << "Ingrese el numero del transporte ('0' para salir): ";
+                cout << endl << "Ingrese el numero del transporte ('0' para salir): ";
                 cin >> opcion2;
                 cin.ignore();
                 if (opcion2 == 0) {
@@ -717,9 +718,11 @@ void agregarEmpleado(ISistema *s)
 
         do
         {
+            cleanScreen();
             cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
             cout << "1. Si" << endl;
             cout << "2. No" << endl;
+            cout << endl << "> ";
             getline(cin, opcion3);
         } while (cin.fail() || (opcion3 != "1" && opcion3 != "2"));
 
@@ -733,6 +736,7 @@ void agregarEmpleado(ISistema *s)
 
         s->agregarEmpleado(nombre, cargo);
         int id = s->darDeAltaEmpleado();
+        cleanScreen();
         cout << "Empleado '" << nombre << "' con ID " << id << " creado exitosamente." << endl;
         pause();
     }
@@ -859,7 +863,7 @@ void informacionProducto(ISistema *s)
         cleanScreen();
         s->listarProductos();
 
-        cout << "Ingrese el codigo del producto a consultar (o '0' para salir): " << endl;
+        cout << endl << "Ingrese el codigo del producto a consultar (o '0' para salir): ";
         cin >> codigo;
         cin.ignore();
         // Si el codigo es "0", salimos del bucle
@@ -881,10 +885,10 @@ void informacionProducto(ISistema *s)
 
         try
         {
-            cout << "Informacion del producto: " << endl;
             DtInfoProducto *producto = s->obtenerProducto(codigo);
             if (producto)
             {
+                cout << "Informacion del producto: " << endl;
                 cout << "-----------------------------------------------------------------------:" << endl;
                 cout << "Codigo: " << producto->getProducto()->getCodigo() << endl;
                 cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
@@ -982,7 +986,7 @@ void asignarMesasMozos(ISistema *s)
         cin.ignore();
     }
 
-    cout << "Ingrese la cantidad de mesas a asignar: ";
+    cout << endl << "Ingrese la cantidad de mesas a asignar: ";
     cin >> cantMesas;
     cin.ignore();
 
@@ -1034,7 +1038,6 @@ void altaCliente(ISistema *s)
 
         do
         {
-            cleanScreen();
             cout << endl << "Ingrese el telefono del cliente (9 digitos) ('0' para salir): ";
             getline(cin, telefono);
             if (telefono == "0") {
@@ -1047,8 +1050,7 @@ void altaCliente(ISistema *s)
 
         do
         {
-            cleanScreen();
-            cout << endl << "Ingrese la calle del cliente: ";
+            cout << endl << "Ingrese la calle del cliente ('0' para salir): ";
             getline(cin, calle);
             if (calle == "0") {
                 cout << "Cancelando alta de cliente." << endl;
@@ -1060,8 +1062,7 @@ void altaCliente(ISistema *s)
         
         do
         {
-            cleanScreen();
-            cout << endl << "Ingrese el numero de calle del cliente: ";
+            cout << endl << "Ingrese el numero de calle del cliente ('0' para salir): ";
             getline(cin, numero);
             if (numero == "0") {
                 cout << "Cancelando alta de cliente." << endl;
@@ -1073,26 +1074,25 @@ void altaCliente(ISistema *s)
         
         do
         {
-            cleanScreen();
-            cout << endl << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir): ";
+            cout << endl << "(Opcional) Ingrese la entre calle del cliente ('0' para salir, '-1' para omitir): ";
             getline(cin, entreCalles);
             if (entreCalles == "0") {
                 cout << "Cancelando alta de cliente." << endl;
                 s->cancelarAltaCliente();
                 return; // Salir del bucle y cancelar la alta
             }
-        } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0") || entreCalles[0] == ' ');
+        } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "-1") || entreCalles[0] == ' ');
 
-        if (entreCalles == "0")
+        if (entreCalles == "-1")
         {
-            entreCalles = ""; // Si el usuario ingresa '0', se omite este campo
+            entreCalles = ""; // Si el usuario ingresa '-1', se omite este campo
         }
 
         
         do
         {
             cleanScreen();
-            cout << "Es una casa? (0. Cancelar | 1. Si | 2. No): ";
+            cout << "Vive en edificio o en casa? (0. Salir | 1. Casa | 2. Edificio): ";
             getline(cin, esCasa);
             if (esCasa == "0") {
                 cout << "Cancelando alta de cliente." << endl;
@@ -1105,8 +1105,7 @@ void altaCliente(ISistema *s)
         {
             do
             {
-                cleanScreen();
-                cout << "Nombre del edificio ('0' para cancelar): ";
+                cout << endl << "Nombre del edificio ('0' para cancelar): ";
                 getline(cin, nombreEdificio);
                 if (nombreEdificio == "0") {
                 cout << "Cancelando alta de cliente." << endl;
@@ -1117,8 +1116,7 @@ void altaCliente(ISistema *s)
 
             do
             {
-                cleanScreen();
-                cout << "Numero de apartamento ('0' para cancelar): ";
+                cout << endl << "Numero de apartamento ('0' para cancelar): ";
                 getline(cin, numeroApto);
                 if (numeroApto == "0") {
                 cout << "Cancelando alta de cliente." << endl;
@@ -1510,6 +1508,7 @@ int main()
 
         mostrarMenu(s, opcionMenu);
 
+        cout << endl << "> ";
         cin >> opcion;
 
         if (cin.fail())
@@ -1546,6 +1545,7 @@ int main()
         {
             mostrarMenu(s, opcionMenu);
 
+            cout << endl << "> ";
             cin >> opcion;
 
             if (cin.fail())
