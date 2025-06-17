@@ -368,7 +368,18 @@ void altaProducto(ISistema *s)
 
 void facturarVenta(ISistema *s)
 {
-
+    if(s->getCantidadMozos() == 0)
+    {
+        cout << "No hay mozos disponibles para facturar una venta." << endl;
+        pause();
+        return;
+    }
+    if(s->getCantidadMesas() == 0)
+    {
+        cout << "No hay mesas disponibles para facturar una venta." << endl;
+        pause();
+        return;
+    }
     int idEmpleado;
     int codigoMesa, descuento;
 
@@ -479,6 +490,24 @@ void facturacionDia(ISistema *s)
 
 void agregarProductoAVenta(ISistema *s)
 {
+    if(s->getCantidadProductos() == 0)
+    {
+        cout << "No hay productos disponibles para agregar a una venta." << endl;
+        pause();
+        return;
+    }
+    if(s->getCantidadMesas() == 0)
+    {
+        cout << "No hay mesas disponibles para agregar a una venta." << endl;
+        pause();
+        return;
+    }
+    if(s->getCantidadMozos() == 0)
+    {
+        cout << "No hay mozos disponibles para agregar a una venta." << endl;
+        pause();
+        return;
+    }
     int idEmpleado;
     int codigoMesa, cantidad;
     string codigoProducto, confirmar;
@@ -745,6 +774,12 @@ void agregarEmpleado(ISistema *s)
 
 void iniciarVenta(ISistema *s)
 {
+    if(s->getCantidadMozos() == 0)
+    {
+        cout << "No hay mozos disponibles para iniciar una venta." << endl;
+        pause();
+        return;
+    }
     cleanScreen();
 
     int idEmpleado;
@@ -914,6 +949,11 @@ void informacionProducto(ISistema *s)
 
 void ventasMozo(ISistema *s)
 {
+    if(s->getCantidadMozos() == 0) {
+        cout << "No hay mozos disponibles para consultar ventas." << endl;
+        pause();
+        return;
+    }
     cleanScreen();
     try
     {
@@ -971,6 +1011,11 @@ void ventasMozo(ISistema *s)
 
 void asignarMesasMozos(ISistema *s)
 {
+    if(s->getCantidadMozos() == 0 || s->getCantidadMesas() == 0) {
+        cout << "No hay mozos o mesas disponibles para asignar." << endl;
+        pause();
+        return;
+    }
     cleanScreen();
 
     int cantMozos, cantMesas;
@@ -978,11 +1023,11 @@ void asignarMesasMozos(ISistema *s)
     cin >> cantMozos;
     cin.ignore();
 
-    while (cin.fail() || cantMozos <= 0)
+    while (cin.fail() || cantMozos <= 0 || cantMozos > s->getCantidadMozos())
     {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cout << "Cantidad invalida. Ingrese un numero positivo o la cantidad seleccionada es mayor a la disponible: " << endl;
         cin >> cantMozos;
         cin.ignore();
     }
@@ -991,11 +1036,11 @@ void asignarMesasMozos(ISistema *s)
     cin >> cantMesas;
     cin.ignore();
 
-    while (cin.fail() || cantMesas <= 0)
+    while (cin.fail() || cantMesas <= 0 || cantMesas > s->getCantidadMesas())
     {
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Cantidad invalida. Ingrese un numero positivo: ";
+        cout << "Cantidad invalida. Ingrese un numero positivo o la cantidad seleccionada es mayor a la disponible: " << endl;
         cin >> cantMesas;
         cin.ignore();
     }
@@ -1204,6 +1249,19 @@ void altaCliente(ISistema *s)
 
 void ventaADomicilio(ISistema *s)
 {
+    //Preguntar si existen productos Y repartidores
+    if(s->getCantidadProductos() == 0)
+    {
+        cout << "No hay productos disponibles para la venta a domicilio." << endl;
+        pause();
+        return;
+    }
+    if(s->getCantidadRepartidores() == 0)
+    {
+        cout << "No hay repartidores disponibles para la venta a domicilio." << endl;
+        pause();
+        return;
+    }
     cleanScreen();
     string telefono;
     cout << "Ingrese el telefono del cliente: ";
@@ -1289,6 +1347,7 @@ void ventaADomicilio(ISistema *s)
             s->seleccionarProductoDomicilio(codigoProducto, cantidad);
         }
         cleanScreen();
+        
         s->listarRepartidores();
 
         int idRepartidor;

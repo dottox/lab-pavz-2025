@@ -639,6 +639,37 @@ int Sistema::getCantidadProductos()
 {
     return this->productos->getSize();
 }
+int Sistema::getCantidadRepartidores(){
+    IIterator *it=this->empleados->getIterator();
+    int contador = 0;
+    while(it->hasCurrent()){
+        Repartidor *repartidor = (Repartidor *)it->getCurrent();
+        if(repartidor != nullptr){
+            contador++;
+        }
+        it->next();
+    }
+    delete it; 
+    return contador;
+}
+int Sistema::getCantidadMozos()
+{
+    IIterator *it=this->empleados->getIterator();
+    int contador = 0;
+    while(it->hasCurrent()){
+        Mozo *mozo=(Mozo*)it->getCurrent();
+        if(mozo != nullptr){
+            contador++;
+        }
+        it->next();
+    }
+    delete it;
+    return contador;
+}
+int Sistema::getCantidadMesas()
+{
+    return this->mesas->getSize();
+}
 
 void Sistema::listarEmpleados()
 {

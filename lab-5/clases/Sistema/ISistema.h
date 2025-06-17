@@ -287,5 +287,8 @@ public:
     virtual void quitarProductoDelSistema(string) = 0;
     virtual void mostrarProductoSeleccionado() = 0;
     virtual void cancelarBajaProducto() = 0;
+    virtual int getCantidadRepartidores() = 0;
+    virtual int getCantidadMozos() = 0;
+    virtual int getCantidadMesas() = 0;
     virtual bool existeProducto(string) = 0;
 };
