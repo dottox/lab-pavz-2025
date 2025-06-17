@@ -1309,13 +1309,13 @@ void quitarProductoVenta(ISistema *s)
     cleanScreen();
     s->listarMozos();
     cout << endl
-         << "Ingrese el ID del empleado que quiere agregar un producto a una venta ('0' para salir): ";
+         << "Ingrese el ID del empleado que quiere quitar un producto a una venta ('0' para salir): ";
     cin >> idEmpleado;
     cin.ignore();
 
     if (cin.fail() || idEmpleado < 0)
     {
-        s->cancelarAgregarProductoAVenta();
+        s->cancelarQuitarProductoVenta();
         throw invalid_argument("El ID del empleado debe ser un numero positivo.");
         return;
     }
