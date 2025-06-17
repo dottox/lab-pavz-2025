@@ -75,7 +75,7 @@ void Venta::setSubtotal(float subtotal)
 
 void Venta::agregarPorcentaje(int descuento)
 {
-    if(this->contieneMenu()){
+    if(this->contieneMenu() && descuento > 0){
         throw invalid_argument("No se puede agregar un descuento a una venta que contiene un menu.");
     }
     this->descuento = descuento;
