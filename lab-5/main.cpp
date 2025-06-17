@@ -1227,39 +1227,36 @@ void ventaADomicilio(ISistema *s)
                 return;
             }
         }
-        else
+        cleanScreen();
+        s->seleccionarCliente(telefono);
+        while (true)
         {
             cleanScreen();
-            s->seleccionarCliente(telefono);
-            while (true)
+            s->listarProductos();
+            cout << "Ingrese el codigo del producto a agregar a la venta (o '0' para finalizar): ";
+            string codigoProducto;
+            cin >> codigoProducto;
+            cin.ignore();
+
+            if (codigoProducto == "0")
             {
-                cleanScreen();
-                s->listarProductos();
-                cout << "Ingrese el codigo del producto a agregar a la venta (o '0' para finalizar): ";
-                string codigoProducto;
-                cin >> codigoProducto;
-                cin.ignore();
-
-                if (codigoProducto == "0")
-                {
-                    break; // Salir del bucle si el usuario ingresa '0'
-                }
-
-                cout << "Ingrese la cantidad de productos a agregar: ";
-                int cantidad;
-                cin >> cantidad;
-                cin.ignore();
-
-                while (cin.fail() || cantidad <= 0)
-                {
-                    cout << "Ingrese la cantidad de productos a agregar (debe ser un numero positivo): ";
-                    cin.clear();
-                    cin >> cantidad;
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
-
-                s->seleccionarProductoDomicilio(codigoProducto, cantidad);
+                break; // Salir del bucle si el usuario ingresa '0'
             }
+
+            cout << "Ingrese la cantidad de productos a agregar: ";
+            int cantidad;
+            cin >> cantidad;
+            cin.ignore();
+
+            while (cin.fail() || cantidad <= 0)
+            {
+                cout << "Ingrese la cantidad de productos a agregar (debe ser un numero positivo): ";
+                cin.clear();
+                cin >> cantidad;
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+
+            s->seleccionarProductoDomicilio(codigoProducto, cantidad);
         }
         cleanScreen();
         s->listarRepartidores();
@@ -1483,6 +1480,14 @@ void bajaProducto(ISistema *s)
     }
 }
 
+void borrarSistema(ISistema *s)
+{
+    cleanScreen();
+    delete s; // Liberar memoria del sistema
+    cout << "Sistema borrado exitosamente." << endl;
+    pause();
+}
+
 int main()
 {
     // pause(); // Uncomment this line if you want to pause the program at the start
@@ -1665,5 +1670,6 @@ int main()
             }
         }
     }
+    borrarSistema(s); // Liberar memoria del sistema
     return 0;
 }

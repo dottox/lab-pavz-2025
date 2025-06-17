@@ -1480,23 +1480,73 @@ void Sistema::quitarProductoDelSistema(string codigo){
 
 Sistema::~Sistema()
 {
-    delete empleados;
-    delete ventas;
-    delete mesas;
-    delete productos;
+    cout << "Destruyendo Sistema..." << endl;
 
-    // Limpiar variables de alta de producto
-    if (productoCreado != NULL)
-    {
-        delete productoCreado;
-        productoCreado = NULL;
+    // Destruyendo IDictionarys
+    if (empleados != nullptr) {
+        delete empleados;
+        empleados = nullptr;
     }
-    tipoProductoSeleccionado = TipoProducto::undefinedTipo;
+    if (clientes != nullptr) {
+        delete clientes;
+        clientes = nullptr;
+    }
+    if (ventas != nullptr) {
+        delete ventas;
+        ventas = nullptr;
+    }
+    if (mesas != nullptr) {
+        delete mesas;
+        mesas = nullptr;
+    }
+    if (productos != nullptr) {
+        delete productos;
+        productos = nullptr;
+    }
+    if (productosSeleccionadosDomicilio != nullptr) {
+        productosSeleccionadosDomicilio->clearDictionary();
+        delete productosSeleccionadosDomicilio;
+        productosSeleccionadosDomicilio = nullptr;
+    } 
 
-    instance = NULL; // Limpiar la instancia unica
-}
+    // Destruyendo ICollection
+    if (mesasElegidas != nullptr) {
+        mesasElegidas->clearCollection();
+        delete mesasElegidas;
+        mesasElegidas = nullptr;
+    }
 
-void Sistema::resetInstance() {
-    delete instance;
-    instance = nullptr;
+    // Destruyendo Punteros
+    if (productoCreado != nullptr) {
+        delete productoCreado;
+        productoCreado = nullptr;
+    }
+    if (mozoSeleccionado != nullptr) {
+        delete mozoSeleccionado;
+        mozoSeleccionado = nullptr;
+    }
+    if (productoSeleccionado != nullptr) {
+        delete productoSeleccionado;
+        productoSeleccionado = nullptr;
+    }
+    if (mesaSeleccionada != nullptr) {
+        delete mesaSeleccionada;
+        mesaSeleccionada = nullptr;
+    }
+    if (ventaSeleccionada != nullptr) {
+        delete ventaSeleccionada;
+        ventaSeleccionada = nullptr;
+    }
+    if (clienteTemporal != nullptr) {
+        delete clienteTemporal;
+        clienteTemporal = nullptr;
+    }
+    if (clienteSeleccionado != nullptr) {
+        delete clienteSeleccionado;
+        clienteSeleccionado = nullptr;
+    }
+    if (repartidorSeleccionado != nullptr) {
+        delete repartidorSeleccionado;
+        repartidorSeleccionado = nullptr;
+    }
 }
