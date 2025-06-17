@@ -677,9 +677,14 @@ void agregarEmpleado(ISistema *s)
             s->listarTransportes();
             do
             {
-                cout << "Ingrese el numero del transporte: ";
+                cout << "Ingrese el numero del transporte ('0' para salir): ";
                 cin >> opcion2;
                 cin.ignore();
+                if (opcion2 == 0) {
+                    cout << "Cancelando alta de empleado." << endl;
+                    s->cancelarAltaEmpleado();
+                    return; // Salir del bucle y cancelar la alta
+                }
             } while (cin.fail() || opcion2 < 1 || opcion2 > 4);
 
             s->seleccionarTransporte(opcion2 == 1   ? aPie
@@ -697,8 +702,13 @@ void agregarEmpleado(ISistema *s)
 
         do
         {
-            cout << "Ingrese el nombre del empleado: ";
+            cout << "Ingrese el nombre del empleado ('0' para salir): ";
             getline(cin, nombre);
+            if (nombre == "0") {
+                cout << "Cancelando alta de empleado." << endl;
+                s->cancelarAltaEmpleado();
+                return;
+            }
         } while (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos || !soloLetras(nombre));
 
         do
@@ -1008,40 +1018,65 @@ void altaCliente(ISistema *s)
         do
         {
             cleanScreen();
-            cout << "Ingrese el nombre del cliente:" << endl;
+            cout << "Ingrese el nombre del cliente ('0' para salir): ";
             getline(cin, nombre);
+            if (nombre == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (!soloLetras(nombre) || cin.fail() || nombre[0] == ' ' || nombre.empty());
 
 
         do
         {
             cleanScreen();
-            cout << "Ingrese el telefono del cliente (9 digitos):" << endl;
+            cout << endl << "Ingrese el telefono del cliente (9 digitos) ('0' para salir): ";
             getline(cin, telefono);
+            if (telefono == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (!esTelefonoValido(telefono));
 
 
         do
         {
             cleanScreen();
-            cout << "Ingrese la calle del cliente:" << endl;
+            cout << endl << "Ingrese la calle del cliente: ";
             getline(cin, calle);
+            if (calle == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (cin.fail() || !esCalleValida(calle) || calle[0] == ' ');
 
         
         do
         {
             cleanScreen();
-            cout << "Ingrese el numero de calle del cliente:" << endl;
+            cout << endl << "Ingrese el numero de calle del cliente: ";
             getline(cin, numero);
+            if (numero == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (cin.fail() || !soloNumeros(numero) || numero[0] == ' ');
 
         
         do
         {
             cleanScreen();
-            cout << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir):" << endl;
+            cout << endl << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir): ";
             getline(cin, entreCalles);
+            if (entreCalles == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0") || entreCalles[0] == ' ');
 
         if (entreCalles == "0")
@@ -1053,8 +1088,13 @@ void altaCliente(ISistema *s)
         do
         {
             cleanScreen();
-            cout << "Es una casa? (1. Si, 2. No): ";
+            cout << "Es una casa? (0. Cancelar | 1. Si | 2. No): ";
             getline(cin, esCasa);
+            if (esCasa == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
         } while (cin.fail() || (esCasa != "1" && esCasa != "2"));
 
         if (esCasa == "2")
@@ -1062,15 +1102,25 @@ void altaCliente(ISistema *s)
             do
             {
                 cleanScreen();
-                cout << "Nombre del edificio: ";
+                cout << "Nombre del edificio ('0' para cancelar): ";
                 getline(cin, nombreEdificio);
+                if (nombreEdificio == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
             } while (cin.fail() || !soloLetras(nombreEdificio) || nombreEdificio[0] == ' ');
 
             do
             {
                 cleanScreen();
-                cout << "Numero de apartamento: ";
+                cout << "Numero de apartamento ('0' para cancelar): ";
                 getline(cin, numeroApto);
+                if (numeroApto == "0") {
+                cout << "Cancelando alta de cliente." << endl;
+                s->cancelarAltaCliente();
+                return; // Salir del bucle y cancelar la alta
+            }
             } while (cin.fail() || numeroApto[0] == ' ');
         }
 
