@@ -279,5 +279,6 @@ public:
     void mostrarProductoSeleccionado();
     virtual void cancelarBajaProducto();
     static Sistema *getInstance();
+    bool existeProducto(string);
     ~Sistema();
 };

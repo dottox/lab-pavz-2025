@@ -35,13 +35,14 @@ bool soloLetras(const std::string &s)
 {
     for (char c : s)
     {
-        if (std::isdigit(static_cast<unsigned char>(c)))
+        if (!isalpha(static_cast<unsigned char>(c)) && c != ' ')
         {
-            return false; // Encontró un número
+            return false; // No es letra ni espacio
         }
     }
-    return true; // No encontró números
+    return true;
 }
+
 
 bool soloNumeros(const std::string &s)
 {
@@ -1024,6 +1025,10 @@ void altaCliente(ISistema *s)
             cleanScreen();
             cout << "Ingrese el nombre del cliente ('0' para salir): ";
             getline(cin, nombre);
+            if(nombre.empty() || cin.fail() || nombre.find_first_not_of(' ') == string::npos || !soloLetras(nombre)) {
+                cout << "El nombre no puede estar vacio o contener solo espacios." << endl;
+                continue; // Volver a solicitar el nombre
+            }
             if (nombre == "0") {
                 cout << "Cancelando alta de cliente." << endl;
                 s->cancelarAltaCliente();
@@ -1191,6 +1196,8 @@ void altaCliente(ISistema *s)
     }
 }
 
+
+
 void ventaADomicilio(ISistema *s)
 {
     cleanScreen();
@@ -1246,18 +1253,31 @@ void ventaADomicilio(ISistema *s)
             {
                 break; // Salir del bucle si el usuario ingresa '0'
             }
+            if(cin.fail() || codigoProducto.empty())
+            {
+                cout << "El codigo del producto no puede estar vacio." << endl;
+                pause();
+                continue; // Volver a solicitar el codigo del producto
+            }
+            if(!s->existeProducto(codigoProducto))
+            {
+                cout << "El producto no existe." << endl;
+                pause();
+                continue; // Volver a solicitar el codigo del producto
+            }
 
             cout << "Ingrese la cantidad de productos a agregar: ";
             int cantidad;
             cin >> cantidad;
             cin.ignore();
 
-            while (cin.fail() || cantidad <= 0)
+            if(cin.fail() || cantidad <= 0)
             {
-                cout << "Ingrese la cantidad de productos a agregar (debe ser un numero positivo): ";
+                cout << "La cantidad debe ser un numero positivo." << endl;
+                pause();
                 cin.clear();
-                cin >> cantidad;
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                continue; // Volver a solicitar el codigo y la cantidad
             }
 
             s->seleccionarProductoDomicilio(codigoProducto, cantidad);
@@ -1266,16 +1286,43 @@ void ventaADomicilio(ISistema *s)
         s->listarRepartidores();
 
         int idRepartidor;
-        cout << endl
-             << "Ingrese el ID del repartidor: ";
-        cin >> idRepartidor;
-        cin.ignore();
+        while (true)
+        {
+            cout << endl << "Ingrese el ID del repartidor: ";
+            cin >> idRepartidor;
+            cin.ignore();
 
-        s->seleccionarRepartidor(idRepartidor);
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "ID invalido. Intente nuevamente." << endl;
+                pause();
+                continue;
+            }
 
+            try
+            {
+                s->seleccionarRepartidor(idRepartidor);
+                break; 
+            }
+            catch (const invalid_argument &e)
+            {
+                cleanScreen();
+                cout << "Error: " << e.what() << endl;
+            }
+        }
+        
+        cleanScreen();
         int confirmar;
         cout << "Desea confirmar la venta a domicilio? (1. Si, 0. No): ";
         cin >> confirmar;
+        if (cin.fail() || (confirmar != 0 && confirmar != 1))
+        {
+            cout << "Opcion invalida. Debe ingresar 1 o 0." << endl;
+            s->cancelarVentaDomicilio();
+            return;
+        }
         cin.ignore();
 
         cleanScreen();

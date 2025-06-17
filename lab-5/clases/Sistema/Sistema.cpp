@@ -1363,10 +1363,15 @@ void Sistema::cancelarVentaDomicilio()
 
 DtFacturaDomicilio Sistema::generarFacturaDomicilio()
 {
+    cout << "[DEBUG] Nombre repartidor." << endl;
     string nombreRepartidor = this->repartidorSeleccionado->getNombre();
+    cout << "[DEBUG] Transporte." << endl;
     Transporte transporte = this->repartidorSeleccionado->getTransporte();
+    cout << "[DEBUG] generando venta domicilio." << endl;
     VentaDomicilio *ventaDomicilio = new VentaDomicilio(this->clienteSeleccionado->getDatos(), this->cantidadProductosSeleccionadosDomicilio, this->subtotalVentaDomicilio, this->productosSeleccionadosDomicilio);
+    cout << "[DEBUG] generando dt factura domicilio." << endl;
     DtFacturaDomicilio facturaDomicilio = ventaDomicilio->generarFacturaDomicilio(nombreRepartidor, transporte);
+    cout << "[DEBUG] Factura generada con exito." << endl;
     return facturaDomicilio;
 }
 
@@ -1486,6 +1491,13 @@ void Sistema::quitarProductoDelSistema(string codigo){
    
 }
 
+bool Sistema::existeProducto(string codigo)
+{
+    IKey *key = new String(codigo.c_str());
+    bool existe = this->productos->member(key);
+    delete key; // Liberar memoria del key
+    return existe;
+}
 Sistema::~Sistema()
 {
     // Destruyendo IDictionarys
