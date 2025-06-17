@@ -3,7 +3,7 @@
 
 TEST_CASE("Test DtConsumido - Constructor and Getters")
 {
-    DtConsumido *consumido = new DtConsumido("Pizza", 2, 15.50);
+    DtConsumido *consumido = new DtConsumido((char*)"001", "Pizza", 2, 15.50);
 
     CHECK(consumido->getDescripcion() == "Pizza");
     CHECK(consumido->getCantidad() == 2);
