@@ -939,49 +939,48 @@ void altaCliente(ISistema *s)
 {
     cleanScreen();
 
-    string nombre, telefono, calle, numero, entreCalles, nombreEdificio, numeroApto;
-    int esCasa;
+    string nombre, telefono, calle, numero, entreCalles, nombreEdificio, numeroApto, esCasa;
 
     while (true)
     {
-        cleanScreen();
 
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         do
         {
+            cleanScreen();
             cout << "Ingrese el nombre del cliente:" << endl;
             getline(cin, nombre);
         } while (!soloLetras(nombre) || cin.fail() || nombre[0] == ' ' || nombre.empty());
 
-        cleanScreen();
 
         do
         {
+            cleanScreen();
             cout << "Ingrese el telefono del cliente (9 digitos):" << endl;
             getline(cin, telefono);
         } while (!esTelefonoValido(telefono));
 
-        cleanScreen();
 
         do
         {
+            cleanScreen();
             cout << "Ingrese la calle del cliente:" << endl;
             getline(cin, calle);
         } while (cin.fail() || !esCalleValida(calle) || calle[0] == ' ');
 
-        cleanScreen();
-
+        
         do
         {
+            cleanScreen();
             cout << "Ingrese el numero de calle del cliente:" << endl;
             getline(cin, numero);
         } while (cin.fail() || !soloNumeros(numero) || numero[0] == ' ');
 
-        cleanScreen();
-
+        
         do
         {
+            cleanScreen();
             cout << "Ingrese la entre calle del cliente (opcional, ingrese '0' para omitir):" << endl;
             getline(cin, entreCalles);
         } while (cin.fail() || (!esCalleValida(entreCalles) && entreCalles != "0") || entreCalles[0] == ' ');
@@ -991,32 +990,34 @@ void altaCliente(ISistema *s)
             entreCalles = ""; // Si el usuario ingresa '0', se omite este campo
         }
 
-        cleanScreen();
-
+        
         do
         {
+            cleanScreen();
             cout << "Es una casa? (1. Si, 2. No): ";
-            getline(cin, numero);
-        } while (cin.fail() || (numero != "1" && numero != "2"));
+            getline(cin, esCasa);
+        } while (cin.fail() || (esCasa != "1" && esCasa != "2"));
 
-        if (esCasa == 2)
+        if (esCasa == "2")
         {
             do
             {
+                cleanScreen();
                 cout << "Nombre del edificio: ";
                 getline(cin, nombreEdificio);
             } while (cin.fail() || !soloLetras(nombreEdificio) || nombreEdificio[0] == ' ');
 
             do
             {
+                cleanScreen();
                 cout << "Numero de apartamento: ";
                 getline(cin, numeroApto);
-            } while (cin.fail() || !soloNumeros(numeroApto) || numeroApto[0] == ' ');
+            } while (cin.fail() || numeroApto[0] == ' ');
         }
 
         DtDireccion direccion; // Declarar antes del if
 
-        if (esCasa == 1)
+        if (esCasa == "1")
         {
             direccion = DtDireccionCasa(calle, numero, entreCalles);
         }
@@ -1042,11 +1043,10 @@ void altaCliente(ISistema *s)
 
         while (true)
         {
-            cleanScreen();
-            s->mostrarClienteTemporal();
-
             do
             {
+                cleanScreen();
+                s->mostrarClienteTemporal();
                 cout << "Dar de alta? (1. Si, 2. No): ";
                 getline(cin, confirmar);
             } while (cin.fail() || (confirmar != "1" && confirmar != "2"));

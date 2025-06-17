@@ -44,8 +44,20 @@ void Cliente::setNombre(string nombre)
 ostream &operator<<(ostream &os, const Cliente &Cliente)
 {
     os << "Cliente: " << Cliente.nombre << endl
-       << "Telefono: " << Cliente.telefono << endl
-       << "Direccion: " << Cliente.direccion << endl;
+       << "Telefono: " << Cliente.telefono << endl;
+    // Try to print as DtDireccionApto
+    try {
+        const DtDireccionApto& direccionApto = dynamic_cast<const DtDireccionApto&>(Cliente.direccion);
+        os << "Direccion: " << direccionApto << endl;
+    } catch (const std::bad_cast&) {
+        try {
+            const DtDireccionCasa& direccionCasa = dynamic_cast<const DtDireccionCasa&>(Cliente.direccion);
+            os << "Direccion: " << direccionCasa << endl;
+        } catch (const std::bad_cast&) {
+            // Fallback to base class
+            os << "Direccion: " << Cliente.direccion << endl;
+        }
+    }
     return os;
 }
 
