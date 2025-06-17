@@ -118,12 +118,7 @@ public:
 
     // ###### --------------- Facturar venta ---------------  #######
 
-    /**
-     * @brief El sistema guarda temporalmente la mesa elegida.
-     * @param int --> Codigo de mesa.
-     */
-
-    virtual void elegirMesa(int) = 0;
+    // virtual void elegirMesaDeMozoSeleccionado(int) = 0; Ya hecho
 
     /**
      * @brief El sistema agrega el descuento a la venta.
@@ -138,6 +133,8 @@ public:
      */
 
     virtual DtFacturaLocal generarFactura() = 0;
+
+    virtual void cancelarFacturarVenta() = 0;
 
     // ####### --------------- Agregar producto a una venta --------------- #######
 

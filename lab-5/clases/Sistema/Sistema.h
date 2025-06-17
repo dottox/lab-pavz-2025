@@ -97,12 +97,7 @@ public:
 
     // ###### --------------- Facturar venta ---------------  #######
 
-    /**
-     * @brief El sistema guarda temporalmente la mesa elegida.
-     * @param int --> Codigo de mesa.
-     */
-
-    void elegirMesa(int);
+    // void elegirMesaDeMozoSeleccionado(int); // Ya hecho
 
     /**
      * @brief El sistema agrega el descuento a la venta.
@@ -117,6 +112,8 @@ public:
      */
 
     DtFacturaLocal generarFactura();
+
+    void cancelarFacturarVenta();
 
     // ###### --------------- Facturar venta ---------------  #######
 

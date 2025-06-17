@@ -152,20 +152,6 @@ void Sistema::cancelarAltaProducto()
 
 // ###### --------------- Facturar venta ---------------  #######
 
-void Sistema::elegirMesa(int codigoMesa)
-{
-    IKey *key = new Integer(codigoMesa);
-    Mesa *mesa = (Mesa *)this->mesas->find(key);
-    if (mesa == nullptr)
-    {
-        delete key;
-        throw invalid_argument("La mesa con el codigo proporcionado no existe.");
-    }
-    this->mesaSeleccionada = mesa;
-    delete key;
-    return;
-}
-
 void Sistema::agregarPorcentaje(int descuento)
 {
     VentaLocal *venta = this->mesaSeleccionada->getVentaEnCurso();
@@ -187,6 +173,12 @@ DtFacturaLocal Sistema::generarFactura()
     this->mesaSeleccionada = NULL;
     this->ventaSeleccionada = NULL;
     return factura;
+}
+
+void Sistema::cancelarFacturarVenta()
+{
+    this->mesaSeleccionada = nullptr; // Limpiar la mesa seleccionada
+    this->ventaSeleccionada = nullptr; // Limpiar la venta seleccionada
 }
 
 // ####### --------------- Agregar producto a una venta --------------- #######

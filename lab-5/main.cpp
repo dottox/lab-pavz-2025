@@ -369,39 +369,74 @@ void facturarVenta(ISistema *s)
 {
 
     int idEmpleado;
+    int codigoMesa, descuento;
+
+    cleanScreen();
 
     s->listarMozos();
-    cout << "Ingrese el ID del empleado que quiere agregar un producto a una venta: " << endl;
+    cout << endl << "Ingrese el ID del empleado que quiere facturar una venta ('0' para salir): ";
     cin >> idEmpleado;
     cin.ignore();
 
-    if (cin.fail() || idEmpleado <= 0)
+    if (cin.fail() || idEmpleado < 0)
     {
         throw invalid_argument("El ID del empleado debe ser un numero positivo.");
         return;
     }
+
+    if (idEmpleado == 0)
+    {
+        cout << "Cancelando operacion." << endl;
+        s->cancelarFacturarVenta();
+        return;
+    }
     s->seleccionarMozo(idEmpleado);
-    cleanScreen();
+    
+    
+    while (true) {
+        cleanScreen();
+        s->listarMesasConVentasEnCursoDeMozoSeleccionado();
+    
+        cout << "Ingresa el codigo de la mesa a facturar ('0' para salir): " << endl;
+        cin >> codigoMesa;
 
-    s->listarMesasConVentasEnCurso();
+        if (cin.fail() || codigoMesa < 0)
+        {
+            cout << "El codigo de la mesa debe ser un numero positivo." << endl;
+            pause();
+            continue; // Volver a solicitar el codigo de la mesa
+        }
 
-    int codigoMesa, descuento;
+        if (codigoMesa == 0)
+        {
+            cout << "Cancelando operacion." << endl;
+            s->cancelarFacturarVenta();
+            return;
+        }
+    
+        try {
+            s->elegirMesaDeMozoSeleccionado(codigoMesa);
+            s->verificarMesaSeleccionadaConVentaEnCurso();
+            break;
+        } catch (const invalid_argument &e) {
+            cout << "Error: " << e.what() << endl;
+            pause();
+            continue; // Volver a solicitar el codigo de la mesa
+        }   
+    }
 
-    cout << "Ingrese el codigo de la mesa: " << endl;
-    cin >> codigoMesa;
 
-    s->elegirMesa(codigoMesa);
-
-    cout << "Ingrese el descuento a aplicar (0-100): ";
     while (true)
     {
+        cleanScreen();
+        cout << "Ingrese el descuento a aplicar (0-100): ";
         cin >> descuento;
+        cin.ignore();
 
         if (cin.fail() || descuento < 0 || descuento > 100)
         {
-            cin.clear();
-            cin.ignore(1000, '\n');
             cout << "Descuento invalido. Ingrese un descuento entre 0 y 100: ";
+            pause();
         }
         else
             break;
@@ -447,14 +482,21 @@ void agregarProductoAVenta(ISistema *s)
     cleanScreen();
     s->listarMozos();
     cout << endl
-         << "Ingrese el ID del empleado que quiere agregar un producto a una venta: ";
+         << "Ingrese el ID del empleado que quiere agregar un producto a una venta ('0' para salir): ";
     cin >> idEmpleado;
     cin.ignore();
 
-    if (cin.fail() || idEmpleado <= 0)
+    if (cin.fail() || idEmpleado < 0)
     {
         s->cancelarAgregarProductoAVenta();
         throw invalid_argument("El ID del empleado debe ser un numero positivo.");
+        return;
+    }
+
+    if (idEmpleado == 0)
+    {
+        cout << "Cancelando operacion." << endl;
+        s->cancelarAgregarProductoAVenta();
         return;
     }
     s->seleccionarMozo(idEmpleado);
@@ -498,7 +540,7 @@ void agregarProductoAVenta(ISistema *s)
 
         try
         {
-            s->elegirMesa(codigoMesa);
+            s->elegirMesaDeMozoSeleccionado(codigoMesa);
             s->verificarMesaSeleccionadaConVentaEnCurso();
         }
         catch (const invalid_argument &e)
@@ -692,28 +734,25 @@ void iniciarVenta(ISistema *s)
 
     s->listarMozos();
 
-    cout << "Ingrese el ID del empleado que inicia la venta: ";
+    cout << "Ingrese el ID del empleado que inicia la venta ('0' para salir): ";
     cin >> idEmpleado;
     cin.ignore();
 
-    if (cin.fail() || idEmpleado <= 0)
+    if (cin.fail() || idEmpleado < 0)
     {
         cout << "El ID del empleado debe ser un numero positivo." << endl;
         pause();
         return;
     }
 
-    try
+    if (idEmpleado == 0)
     {
-        s->seleccionarMozo(idEmpleado);
-    }
-    catch (invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-        s->cancelarAltaVenta(); // No debería ser necesario, pero por si acaso
-        pause();
+        cout << "Cancelando operacion." << endl;
+        s->cancelarAltaVenta();
         return;
     }
+
+    s->seleccionarMozo(idEmpleado);
 
     while (flag)
     {
@@ -766,7 +805,7 @@ void iniciarVenta(ISistema *s)
         try
         {
             // Elegir la mesa
-            s->elegirMesa(mesaElegida);
+            s->elegirMesaDeMozoSeleccionado(mesaElegida);
             s->addMesaElegida(); // Agregar la mesa elegida al sistema
         }
         catch (const invalid_argument &e)
@@ -1220,16 +1259,23 @@ void quitarProductoVenta(ISistema *s)
     cleanScreen();
     s->listarMozos();
     cout << endl
-         << "Ingrese el ID del empleado que quiere agregar un producto a una venta: ";
+         << "Ingrese el ID del empleado que quiere agregar un producto a una venta ('0' para salir): ";
     cin >> idEmpleado;
     cin.ignore();
 
-    if (cin.fail() || idEmpleado <= 0)
+    if (cin.fail() || idEmpleado < 0)
     {
         s->cancelarAgregarProductoAVenta();
         throw invalid_argument("El ID del empleado debe ser un numero positivo.");
         return;
     }
+
+    if (idEmpleado == 0)
+    {
+        cout << "Cancelando operacion." << endl;
+        s->cancelarQuitarProductoVenta();
+        return;
+    }   
     s->seleccionarMozo(idEmpleado);
     cleanScreen();
 
