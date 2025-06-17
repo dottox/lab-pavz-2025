@@ -91,5 +91,7 @@ ostream& operator<<(ostream& os, const Menu& menu)
 
 Menu::~Menu(){
     cout  << "Destruyendo Menu: " << this->getCodigo() << endl;
-    delete this->menuPlatos; // Liberar memoria del diccionario de platos
+    if(this->menuPlatos != nullptr) {
+        delete this->menuPlatos; 
+    }
 }

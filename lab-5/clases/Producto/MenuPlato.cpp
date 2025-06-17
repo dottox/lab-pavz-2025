@@ -20,4 +20,6 @@ void MenuPlato::setCantidad(int cantidad){
 
 MenuPlato::~MenuPlato(){
     cout << "Destruyendo MenuPlato con Plato '" << this->getPlato()->getCodigo() << "' (x" << this->getCantidad() <<")" << endl;
+    this->plato = nullptr; 
+    delete this->plato; 
 }

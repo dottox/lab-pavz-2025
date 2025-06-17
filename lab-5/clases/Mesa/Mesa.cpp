@@ -68,5 +68,9 @@ Mesa * Mesa::getMesa() {
 
 Mesa::~Mesa()
 {
-    // Destructor logic if needed, currently does nothing
+    cout << "Destruyendo Mesa Numero: " << this->numero << endl;
+    this->mozo = nullptr; 
+    delete mozo;
+    this->ventaEnCurso = nullptr;
+    delete ventaEnCurso;  
 }
