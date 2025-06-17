@@ -280,5 +280,8 @@ public:
     virtual void cancelarBajaProducto();
     static Sistema *getInstance();
     bool existeProducto(string);
+    int getCantidadRepartidores();
+    int getCantidadMozos();
+    int getCantidadMesas();
     ~Sistema();
 };
