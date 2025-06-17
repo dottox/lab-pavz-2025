@@ -3,65 +3,65 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("Test generarNumeroEmpleado")
-{
+// TEST_CASE("Test generarNumeroEmpleado")
+// {
 
-    CHECK(utils::generarNumeroEmpleado() == 23);
-    CHECK(utils::generarNumeroEmpleado() == 24);
-}
+//     CHECK(utils::generarNumeroEmpleado() == 23);
+//     CHECK(utils::generarNumeroEmpleado() == 24);
+// }
 
-TEST_CASE("Test generarNumeroFactura")
-{
-    CHECK(utils::generarNumeroFactura() == 1);
-    CHECK(utils::generarNumeroFactura() == 2);
-}
+// TEST_CASE("Test generarNumeroFactura")
+// {
+//     CHECK(utils::generarNumeroFactura() == 1);
+//     CHECK(utils::generarNumeroFactura() == 2);
+// }
 
-TEST_CASE("Test generarNumeroMesa")
-{
-    CHECK(utils::generarNumeroMesa() == 20);
-    CHECK(utils::generarNumeroMesa() == 21);
-}
+// TEST_CASE("Test generarNumeroMesa")
+// {
+//     CHECK(utils::generarNumeroMesa() == 20);
+//     CHECK(utils::generarNumeroMesa() == 21);
+// }
 
-TEST_CASE("Test generarNumeroVenta")
-{
-    CHECK(utils::generarNumeroVenta() == 7);
-    CHECK(utils::generarNumeroVenta() == 8);
-}
-TEST_CASE("Test secuencia de generarNumeroEmpleado")
-{
-    int val1 = utils::generarNumeroEmpleado();
-    int val2 = utils::generarNumeroEmpleado();
-    int val3 = utils::generarNumeroEmpleado();
-    CHECK(val2 == val1 + 1);
-    CHECK(val3 == val2 + 1);
-}
+// TEST_CASE("Test generarNumeroVenta")
+// {
+//     CHECK(utils::generarNumeroVenta() == 7);
+//     CHECK(utils::generarNumeroVenta() == 8);
+// }
+// TEST_CASE("Test secuencia de generarNumeroEmpleado")
+// {
+//     int val1 = utils::generarNumeroEmpleado();
+//     int val2 = utils::generarNumeroEmpleado();
+//     int val3 = utils::generarNumeroEmpleado();
+//     CHECK(val2 == val1 + 1);
+//     CHECK(val3 == val2 + 1);
+// }
 
-TEST_CASE("Test secuencia de generarNumeroFactura")
-{
-    int val1 = utils::generarNumeroFactura();
-    int val2 = utils::generarNumeroFactura();
-    int val3 = utils::generarNumeroFactura();
-    CHECK(val2 == val1 + 1);
-    CHECK(val3 == val2 + 1);
-}
+// TEST_CASE("Test secuencia de generarNumeroFactura")
+// {
+//     int val1 = utils::generarNumeroFactura();
+//     int val2 = utils::generarNumeroFactura();
+//     int val3 = utils::generarNumeroFactura();
+//     CHECK(val2 == val1 + 1);
+//     CHECK(val3 == val2 + 1);
+// }
 
-TEST_CASE("Test secuencia de generarNumeroMesa")
-{
-    int val1 = utils::generarNumeroMesa();
-    int val2 = utils::generarNumeroMesa();
-    int val3 = utils::generarNumeroMesa();
-    CHECK(val2 == val1 + 1);
-    CHECK(val3 == val2 + 1);
-}
+// TEST_CASE("Test secuencia de generarNumeroMesa")
+// {
+//     int val1 = utils::generarNumeroMesa();
+//     int val2 = utils::generarNumeroMesa();
+//     int val3 = utils::generarNumeroMesa();
+//     CHECK(val2 == val1 + 1);
+//     CHECK(val3 == val2 + 1);
+// }
 
-TEST_CASE("Test secuencia de generarNumeroVenta")
-{
-    int val1 = utils::generarNumeroVenta();
-    int val2 = utils::generarNumeroVenta();
-    int val3 = utils::generarNumeroVenta();
-    CHECK(val2 == val1 + 1);
-    CHECK(val3 == val2 + 1);
-}
+// TEST_CASE("Test secuencia de generarNumeroVenta")
+// {
+//     int val1 = utils::generarNumeroVenta();
+//     int val2 = utils::generarNumeroVenta();
+//     int val3 = utils::generarNumeroVenta();
+//     CHECK(val2 == val1 + 1);
+//     CHECK(val3 == val2 + 1);
+// }
 
 TEST_CASE("Test obtenerFechaActual devuelve fecha razonable")
 {

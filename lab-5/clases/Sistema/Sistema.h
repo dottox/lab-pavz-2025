@@ -278,5 +278,6 @@ public:
     void mostrarProductoSeleccionado();
     virtual void cancelarBajaProducto();
     static Sistema *getInstance();
+    void resetInstance();
     ~Sistema();
 };

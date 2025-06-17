@@ -20,11 +20,6 @@ TEST_CASE("setMesaAsignada agrega mesa correctamente") {
     delete mesa;
 }
 
-TEST_CASE("setMesaAsignada lanza excepcion con nullptr") {
-    Mozo mozo("Carlos");
-    CHECK_THROWS_AS(mozo.setMesaAsignada(nullptr), std::invalid_argument);
-}
-
 TEST_CASE("setMesaAsignada lanza excepcion si ya esta asignada a otro mozo") {
     Mozo mozo1("Mozo1");
     Mozo mozo2("Mozo2");

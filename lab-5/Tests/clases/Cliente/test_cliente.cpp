@@ -9,11 +9,11 @@ TEST_CASE("Cliente: Constructor")
 {
 
     DtDireccion dir("Calle 123", "12345", "Ciudad");
-    DtCliente dtCliente("Juan", 99123456, dir);
+    DtCliente dtCliente("Juan", "99123456", dir);
     Cliente cliente(dtCliente);
 
     CHECK(cliente.getNombre() == "Juan");
-    CHECK(cliente.getTelefono() == 99123456);
+    CHECK(cliente.getTelefono() == "99123456");
     CHECK(cliente.getDireccion().getCalle() == "Calle 123");
     CHECK(cliente.getDireccion().getNumero() == "12345");
     CHECK(cliente.getDireccion().getEntreCalles() == "Ciudad");
@@ -22,14 +22,14 @@ TEST_CASE("Cliente: Constructor")
 TEST_CASE("Cliente: Setters y getters")
 {
     DtDireccion dir("Calle 456", "67890", "Otra Ciudad");
-    DtCliente dtCliente("Maria", 99987654, dir);
+    DtCliente dtCliente("Maria", "99987654", dir);
     Cliente cliente(dtCliente);
     cliente.setNombre("Ana");
-    cliente.setTelefono(99123456);
+    cliente.setTelefono("99123456");
     DtDireccion nuevaDir("Calle 789", "54321", "Nueva Ciudad");
     cliente.setDireccion(nuevaDir);
     CHECK(cliente.getNombre() == "Ana");
-    CHECK(cliente.getTelefono() == 99123456);
+    CHECK(cliente.getTelefono() == "99123456");
     CHECK(cliente.getDireccion().getCalle() == "Calle 789");
     CHECK(cliente.getDireccion().getNumero() == "54321");
     CHECK(cliente.getDireccion().getEntreCalles() == "Nueva Ciudad");
@@ -37,7 +37,7 @@ TEST_CASE("Cliente: Setters y getters")
 TEST_CASE("Cliente: Destructor")
 {
     DtDireccion dir("Calle 123", "12345", "Ciudad");
-    DtCliente dtCliente("Juan", 99123456, dir);
+    DtCliente dtCliente("Juan", "99123456", dir);
     Cliente *cliente = new Cliente(dtCliente);
 
     // Verificar que el destructor no cause fugas de memoria
