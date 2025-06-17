@@ -202,6 +202,29 @@ void Sistema::seleccionarMozo(int numeroMozo)
     delete key; // Liberar memoria del key
 }
 
+void Sistema::listarMesasConVentasEnCursoDeMozoSeleccionado()
+{
+    if (this->mozoSeleccionado == nullptr)
+    {
+        throw invalid_argument("Debe seleccionar un mozo antes de listar las mesas con ventas en curso.");
+        return;
+    }
+
+    cout << "--- Mesas con venta en curso del mozo seleccionado ---" << endl;
+    IIterator *it = this->mozoSeleccionado->getMesasAsignadas()->getIterator();
+    while (it->hasCurrent())
+    {
+        Mesa *mesa = (Mesa *)it->getCurrent();
+        if (mesa->getVentaEnCurso() != nullptr)
+        {
+            cout << *mesa << endl;
+        }
+        it->next();
+    }
+    delete it; // Liberar memoria del iterador
+    cout << endl << "-------------------------" << endl;
+}
+
 void Sistema::seleccionarProducto(string codigo)
 {
     IKey *key = new String(codigo.c_str());
@@ -263,6 +286,21 @@ void Sistema::cancelarAgregarProductoAVenta()
 }
 
 // ####### --------------- Quitar producto de una venta --------------- #######
+
+void Sistema::elegirMesaDeMozoSeleccionado(int codigoMesa)
+{
+    IKey *key = new Integer(codigoMesa);
+    Mesa *mesa = (Mesa *)this->mozoSeleccionado->getMesasAsignadas()->find(key);
+    if (mesa == nullptr)
+    {
+        delete key;
+        throw invalid_argument("La mesa con el codigo proporcionado no existe o no pertenece al mozo.");
+    }
+    this->mesaSeleccionada = mesa;
+    delete key;
+    return;
+}
+
 void Sistema::verificarMesaSeleccionadaConVentaEnCurso()
 {
     if (this->mesaSeleccionada->getVentaEnCurso() == nullptr)
@@ -277,11 +315,6 @@ void Sistema::verificarMesaSeleccionadaConVentaEnCurso()
 void Sistema::listarProductosVentaSeleccionada()
 {
     VentaLocal *venta = (VentaLocal *)this->ventaSeleccionada;
-
-    if (venta->getCantidadProductos() == 0)
-    {
-        throw invalid_argument("La venta no tiene productos o se ha quedado sin ellos.");
-    }
 
     cout << "Productos de la venta: " << endl;
     IDictionary *consumidosVenta = venta->getProductos();
@@ -355,6 +388,7 @@ void Sistema::quitarProductoVenta(int cantidad)
 
 void Sistema::cancelarQuitarProductoVenta()
 {
+    this->mozoSeleccionado = nullptr; // Limpiar el mozo seleccionado
     this->productoSeleccionado = nullptr; // Limpiar la variable temporal
     this->mesaSeleccionada = nullptr;     // Limpiar la mesa seleccionada
     this->ventaSeleccionada = nullptr;    // Limpiar la venta seleccionada
@@ -664,14 +698,9 @@ void Sistema::listarMesas()
 
 void Sistema::listarMesasConVentasEnCurso()
 {
-    if (this->mozoSeleccionado == nullptr)
-    {
-        throw invalid_argument("Debe seleccionar un mozo antes de listar las mesas con ventas en curso.");
-        return;
-    }
 
     cout << "--- Mesas del Sistema ---" << endl;
-    IIterator *it = this->mozoSeleccionado->getMesasAsignadas()->getIterator();
+    IIterator *it = this->mesas->getIterator();
     while (it->hasCurrent())
     {
         Mesa *mesa = (Mesa *)it->getCurrent();

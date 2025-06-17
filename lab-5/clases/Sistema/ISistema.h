@@ -139,13 +139,12 @@ public:
 
     virtual DtFacturaLocal generarFactura() = 0;
 
-    // ###### --------------- Facturar venta ---------------  #######
-
     // ####### --------------- Agregar producto a una venta --------------- #######
 
     virtual void seleccionarMozo(int) = 0;
     // virtual void elegirMesa(int) = 0; Ya hecho
     // void listarProductos(); Ya hecho
+    virtual void listarMesasConVentasEnCursoDeMozoSeleccionado() = 0;
     virtual void seleccionarProducto(string) = 0;
     virtual void agregarProductoAVenta() = 0;
     virtual int getCantidadProductoSeleccionado() = 0;
@@ -156,6 +155,7 @@ public:
 
     virtual void quitarProductoVenta(int) = 0;
     virtual void cancelarQuitarProductoVenta() = 0;
+    virtual void elegirMesaDeMozoSeleccionado(int) = 0;
     virtual void verificarMesaSeleccionadaConVentaEnCurso() = 0;
     virtual void listarProductosVentaSeleccionada() = 0;
     virtual void seleccionarProductoDeVenta(string) = 0;

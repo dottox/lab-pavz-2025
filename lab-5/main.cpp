@@ -45,14 +45,28 @@ bool soloLetras(const std::string &s)
 
 bool soloNumeros(const std::string &s)
 {
-    for (char c : s)
+    if (s.empty())
+        return false;
+
+    size_t i = 0;
+
+    // Permitir signo negativo al inicio
+    if (s[0] == '-')
     {
-        if (!std::isdigit(static_cast<unsigned char>(c)))
+        if (s.length() == 1)
+            return false; // solo "-" no es un número
+        i = 1;
+    }
+
+    for (; i < s.length(); ++i)
+    {
+        if (!std::isdigit(static_cast<unsigned char>(s[i])))
         {
             return false;
         }
     }
-    return !s.empty(); // opcional: evitar que una cadena vacía sea "válida"
+
+    return true;
 }
 
 bool esCalleValida(const std::string &s)
@@ -222,6 +236,12 @@ void altaProducto(ISistema *s)
     cleanScreen();
     cout << "Ingrese el codigo del producto (menu/plato): ";
     getline(cin, code);
+
+    if (soloNumeros(code)) {
+        if (stoi(code) <= 0) {
+            throw invalid_argument("El codigo debe ser un numero positivo.");
+        }
+    }
 
     cleanScreen();
     cout << "Ingrese la descripcion del producto (menu/plato): ";
@@ -447,7 +467,7 @@ void agregarProductoAVenta(ISistema *s)
 
         try
         {
-            s->listarMesasConVentasEnCurso();
+            s->listarMesasConVentasEnCursoDeMozoSeleccionado();
         }
         catch (const invalid_argument &e)
         {
@@ -1193,16 +1213,34 @@ void ventaADomicilio(ISistema *s)
 
 void quitarProductoVenta(ISistema *s)
 {
-    int codigoMesa, cantidad;
+    int codigoMesa, cantidad, idEmpleado;
     string codigoProducto;
     bool mantener = true;
+
+    cleanScreen();
+    s->listarMozos();
+    cout << endl
+         << "Ingrese el ID del empleado que quiere agregar un producto a una venta: ";
+    cin >> idEmpleado;
+    cin.ignore();
+
+    if (cin.fail() || idEmpleado <= 0)
+    {
+        s->cancelarAgregarProductoAVenta();
+        throw invalid_argument("El ID del empleado debe ser un numero positivo.");
+        return;
+    }
+    s->seleccionarMozo(idEmpleado);
+    cleanScreen();
+
 
     while (mantener)
     {
         cleanScreen();
 
-        cout << "Ingrese el numero de la mesa involucrada en la venta: " << endl;
-        cout << "(Ingrese '0' para salir)" << endl;
+        s->listarMesasConVentasEnCursoDeMozoSeleccionado();
+
+        cout << endl << "Ingrese el numero de la mesa involucrada en la venta ('0' para salir): " << endl;
         cin >> codigoMesa;
         cin.ignore();
 
@@ -1221,7 +1259,7 @@ void quitarProductoVenta(ISistema *s)
 
         try
         {
-            s->elegirMesa(codigoMesa);
+            s->elegirMesaDeMozoSeleccionado(codigoMesa);
             s->verificarMesaSeleccionadaConVentaEnCurso();
         }
         catch (const invalid_argument &e)
@@ -1242,8 +1280,7 @@ void quitarProductoVenta(ISistema *s)
         cleanScreen();
         s->listarProductosVentaSeleccionada();
 
-        cout << "Ingrese el codigo del producto a quitar de la venta: " << endl;
-        cout << "(Ingrese '0' para salir)" << endl;
+        cout << endl << "Ingrese el codigo del producto a quitar de la venta ('0' para salir): ";
         cin >> codigoProducto;
         cin.ignore();
 
@@ -1273,7 +1310,7 @@ void quitarProductoVenta(ISistema *s)
             continue;
         }
 
-        cout << "Ingrese cuantas unidades desea quitar del producto: ";
+        cout << endl << "Ingrese cuantas unidades desea quitar del producto: ";
         cin >> cantidad;
         cin.ignore();
 

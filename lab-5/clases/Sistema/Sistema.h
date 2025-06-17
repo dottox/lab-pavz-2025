@@ -147,6 +147,7 @@ public:
     void seleccionarMozo(int);
     // void elegirMesa(int); Ya hecho
     // void listarProductos(); Ya hecho
+    void listarMesasConVentasEnCursoDeMozoSeleccionado();
     void seleccionarProducto(string);
     void agregarProductoAVenta();
     int getCantidadProductoSeleccionado();
@@ -154,8 +155,10 @@ public:
     void cancelarAgregarProductoAVenta();
 
     // ####### --------------- Quitar producto de una venta --------------- #######
+    // void seleccionarMozo(int); Ya hecho
     void quitarProductoVenta(int);
     void cancelarQuitarProductoVenta();
+    void elegirMesaDeMozoSeleccionado(int);
     void verificarMesaSeleccionadaConVentaEnCurso();
     void listarProductosVentaSeleccionada();
     void seleccionarProductoDeVenta(string);
