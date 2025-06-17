@@ -693,7 +693,7 @@ void iniciarVenta(ISistema *s)
 {
     cleanScreen();
 
-    string idEmpleado;
+    int idEmpleado;
     bool flag = true;
     int mesaElegida, confirmar;
 
@@ -703,14 +703,20 @@ void iniciarVenta(ISistema *s)
     cin >> idEmpleado;
     cin.ignore();
 
+    if (cin.fail() || idEmpleado <= 0)
+    {
+        cout << "El ID del empleado debe ser un numero positivo." << endl;
+        pause();
+        return;
+    }
+
     try
     {
-        stoi(idEmpleado);
-        s->seleccionarMozo(stoi(idEmpleado));
+        s->seleccionarMozo(idEmpleado);
     }
     catch (invalid_argument &e)
     {
-        cout << "Error: has ingresado un número no valido." << endl;
+        cout << "Error: " << e.what() << endl;
         s->cancelarAltaVenta(); // No debería ser necesario, pero por si acaso
         pause();
         return;
@@ -722,7 +728,7 @@ void iniciarVenta(ISistema *s)
         try
         {
             s->mostrarMesasElegidas(false);
-            s->iniciarVenta(idEmpleado);
+            s->iniciarVenta(to_string(idEmpleado));
         }
         catch (const invalid_argument &e)
         {
@@ -733,30 +739,37 @@ void iniciarVenta(ISistema *s)
             return;
         }
 
-        cout << "Ingrese el numero de la mesa para iniciar la venta: " << endl
-             << "Ingrese '0' para continuar: ";
+        cout << endl << "Ingrese el numero de la mesa para iniciar la venta." << endl
+             << "('0' para continuar, '-1' para salir): " << endl;
         cin >> mesaElegida;
         cin.ignore();
 
-        if (mesaElegida == 0)
-        {
-            if (s->getMesasElegidas()->isEmpty())
-                if (s->getMesasElegidas()->isEmpty())
-                {
-                    cout << "Debes elegir una mesa." << endl;
-                    pause();
-                    continue;
-                }
-            flag = false; // Salir del bucle si no se elige una mesa
-            continue;
-        }
-
-        if (cin.fail() || mesaElegida <= 0)
+        if (cin.fail() || mesaElegida < -1)
         {
             cout << "Numero de mesa invalido. Debe ser un numero positivo." << endl;
-            cin.clear();
             pause();
+            continue;
         }
+        
+        if (mesaElegida == 0)
+        {
+            if (s->getMesasElegidas()->isEmpty()) {
+                cout << "Debes elegir una mesa." << endl;
+                pause();
+                continue;
+            } else {
+                flag = false; // Salimos del bucle si se elige continuar sin seleccionar una mesa
+                continue;
+            }
+        }
+
+        if (mesaElegida == -1) {
+            cout << "Saliendo de la operacion." << endl;
+            s->cancelarAltaVenta();
+            return;
+        }
+
+
         try
         {
             // Elegir la mesa
@@ -767,6 +780,7 @@ void iniciarVenta(ISistema *s)
         {
             cout << "Error: " << e.what() << endl;
             pause();
+            continue;
         }
     }
 

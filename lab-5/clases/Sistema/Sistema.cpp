@@ -732,6 +732,9 @@ void Sistema::imprimirFacturaDomicilio(DtFacturaDomicilio factura)
     case Auto:
         transporteStr = "Auto";
         break;
+    default:
+        transporteStr = "Transporte no definido";
+        break;
     }
 
     cout << endl

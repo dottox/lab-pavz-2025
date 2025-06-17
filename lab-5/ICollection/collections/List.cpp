@@ -75,7 +75,7 @@ void List::setNull(ICollectible *c)
             head = current->getNext();
         else
             previous->setNext(current->getNext());
-        current == nullptr;
+        current = nullptr;
     }
 }
 
