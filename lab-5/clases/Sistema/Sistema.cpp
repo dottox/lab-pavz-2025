@@ -1495,3 +1495,8 @@ Sistema::~Sistema()
 
     instance = NULL; // Limpiar la instancia unica
 }
+
+void Sistema::resetInstance() {
+    delete instance;
+    instance = nullptr;
+}

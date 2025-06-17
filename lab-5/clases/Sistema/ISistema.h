@@ -282,4 +282,5 @@ public:
     virtual void quitarProductoDelSistema(string) = 0;
     virtual void mostrarProductoSeleccionado() = 0;
     virtual void cancelarBajaProducto() = 0;
+    virtual void resetInstance() = 0;
 };
