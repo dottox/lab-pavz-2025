@@ -16,17 +16,10 @@ DtFactura::DtFactura(int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *p
 }
 
 // Para mostrar una factura existente
-DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal)
+DtFactura::DtFactura(int codigo, int codigoVenta, DtFecha fecha, DtHora hora, IDictionary *productos, float subtotal, int descuento, float montoTotal, float ivaTotal) :
+    DtFactura(codigoVenta, fecha, hora, productos, subtotal, descuento, montoTotal, ivaTotal)
 {
     this->codigo = codigo;
-    this->codigoVenta = codigoVenta;
-    this->fecha = fecha;
-    this->hora = hora;
-    this->productosConsumidos = productos;
-    this->subtotal = subtotal;
-    this->descuento = descuento;
-    this->montoTotal = montoTotal;
-    this->ivaTotal = ivaTotal;
 }
 
 DtFactura DtFactura::getFactura()

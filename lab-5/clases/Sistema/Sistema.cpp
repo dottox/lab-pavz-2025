@@ -166,8 +166,17 @@ DtFacturaLocal Sistema::generarFactura()
 {
     string nombreMozo = this->mesaSeleccionada->getMozo()->getNombre();
     DtFacturaLocal factura = this->ventaSeleccionada->generarFactura(nombreMozo);
-    this->mesaSeleccionada->getMozo()->borrarMesaAsignada(this->mesaSeleccionada); // Eliminar la mesa de las mesas asignadas del mozo
-    this->mesaSeleccionada->setVentaEnCurso(nullptr);
+
+    IIterator* it = this->mesas->getIterator();
+    while (it->hasCurrent()) {
+        Mesa *mesa = dynamic_cast<Mesa *>(it->getCurrent());
+        if (mesa->getVentaEnCurso() == dynamic_cast<VentaLocal*>(this->ventaSeleccionada)) {
+            mesa->getMozo()->borrarMesaAsignada(mesa);
+            mesa->setVentaEnCurso(nullptr);
+        }
+        it->next();
+    }
+
     this->mesaSeleccionada = NULL;
     this->ventaSeleccionada = NULL;
     return factura;
@@ -1001,6 +1010,8 @@ void Sistema::darAltaVenta()
     {
         throw invalid_argument("No hay mesas elegidas para iniciar una venta.");
     }
+
+    // Ver si todas las mesas estan disponibles para la venta
     IIterator *it = this->mesasElegidas->getIterator();
     while (it->hasCurrent())
     {
@@ -1009,18 +1020,25 @@ void Sistema::darAltaVenta()
         {
             throw invalid_argument("La mesa " + to_string(mesa->getNumero()) + " ya tiene una venta en curso.");
         }
-        VentaLocal *ventaLocal = new VentaLocal();
+        it->next();
+    }
+
+    it = this->mesasElegidas->getIterator();
+    VentaLocal *ventaLocal = new VentaLocal();
+    while (it->hasCurrent())
+    {
+        Mesa *mesa = (Mesa *)it->getCurrent();
         mesa->setVentaEnCurso(ventaLocal);
-        this->ventas->add(new Integer(ventaLocal->getCodigo()), ventaLocal);
         cout << "Venta iniciada para la mesa " << mesa->getNumero() << endl;
         it->next();
     }
+    this->ventas->add(new Integer(ventaLocal->getCodigo()), ventaLocal);
     delete it;                              // Liberar memoria del iterador
     this->mesasElegidas->clearCollection(); // Limpiar las mesas elegidas
     this->mesaSeleccionada = nullptr;       // Limpiar la mesa seleccionada
     this->mozoSeleccionado = nullptr;       // Limpiar el mozo seleccionado
 
-    cout << "Todas las mesas elegidas han sido procesadas y se ha iniciado una venta en curso para cada una." << endl;
+    cout << "Todas las mesas elegidas han sido procesadas y se ha iniciado una venta para todas." << endl;
 }
 
 void Sistema::cancelarAltaVenta()

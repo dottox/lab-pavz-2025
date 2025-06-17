@@ -958,14 +958,20 @@ void ventasMozo(ISistema *s)
     try
     {
         s->listarMozos();
-        string idMozo, fechaInicio, fechaFin;
-        cout << "Ingrese el ID del mozo: ";
+        int idMozo;
+        string fechaInicio, fechaFin;
+        cout << endl << "Ingrese el ID del mozo: ";
         cin >> idMozo;
         cin.ignore();
 
-        s->seleccionarMozo(stoi(idMozo));
+        if (cin.fail() || idMozo <= 0)
+        {
+            throw invalid_argument("El ID del mozo debe ser un numero positivo.");
+        }
 
-        cout << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
+        s->seleccionarMozo(idMozo);
+
+        cout << endl << "Ingrese la fecha de inicio de la consulta (DD/MM/AAAA): ";
         cin >> fechaInicio;
         cin.ignore();
 
@@ -979,7 +985,7 @@ void ventasMozo(ISistema *s)
 
         DtFecha dtFechaInicio = DtFecha(stoi(fechaInicio.substr(0, 2)), stoi(fechaInicio.substr(3, 2)), stoi(fechaInicio.substr(6, 4)));
 
-        cout << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
+        cout << endl << "Ingrese la fecha de fin de la consulta (DD/MM/AAAA): ";
         cin >> fechaFin;
         cin.ignore();
 
