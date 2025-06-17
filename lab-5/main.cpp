@@ -462,6 +462,7 @@ void facturarVenta(ISistema *s)
 
     cleanScreen();
     s->imprimirFacturaLocal(s->generarFactura());
+    
     pause();
 }
 
