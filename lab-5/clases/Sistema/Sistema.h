@@ -97,12 +97,7 @@ public:
 
     // ###### --------------- Facturar venta ---------------  #######
 
-    /**
-     * @brief El sistema guarda temporalmente la mesa elegida.
-     * @param int --> Codigo de mesa.
-     */
-
-    void elegirMesa(int);
+    // void elegirMesaDeMozoSeleccionado(int); // Ya hecho
 
     /**
      * @brief El sistema agrega el descuento a la venta.
@@ -117,6 +112,8 @@ public:
      */
 
     DtFacturaLocal generarFactura();
+
+    void cancelarFacturarVenta();
 
     // ###### --------------- Facturar venta ---------------  #######
 
@@ -147,6 +144,7 @@ public:
     void seleccionarMozo(int);
     // void elegirMesa(int); Ya hecho
     // void listarProductos(); Ya hecho
+    void listarMesasConVentasEnCursoDeMozoSeleccionado();
     void seleccionarProducto(string);
     void agregarProductoAVenta();
     int getCantidadProductoSeleccionado();
@@ -154,8 +152,10 @@ public:
     void cancelarAgregarProductoAVenta();
 
     // ####### --------------- Quitar producto de una venta --------------- #######
+    // void seleccionarMozo(int); Ya hecho
     void quitarProductoVenta(int);
     void cancelarQuitarProductoVenta();
+    void elegirMesaDeMozoSeleccionado(int);
     void verificarMesaSeleccionadaConVentaEnCurso();
     void listarProductosVentaSeleccionada();
     void seleccionarProductoDeVenta(string);
@@ -270,7 +270,7 @@ public:
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
-    void agregarCliente(string, string, DtDireccion);
+    void agregarCliente(string, string, DtDireccion*);
     void mostrarClienteTemporal();
     void darAltaCliente();
     void cancelarAltaCliente();
