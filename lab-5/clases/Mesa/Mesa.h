@@ -24,7 +24,7 @@ public:
     void setMozo(Mozo*);
     void setVentaEnCurso(VentaLocal*);
     Mesa * getMesa();
-    DtMesa getDtMesa() const;
+    DtMesa getDtMesa() const; // ni está hecho XD
     friend ostream & operator<<(ostream&, const Mesa&);
     ~Mesa();
 };

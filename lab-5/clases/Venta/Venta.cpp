@@ -284,17 +284,12 @@ Factura *Venta::getFactura()
     return this->factura;
 }
 
-Venta::~Venta()
-{
-    delete productosConsumidos; // Delete the array of Producto pointers
-}
-
 ostream &operator<<(ostream &os, const Venta &venta)
 {
     os << "Codigo: " << venta.codigo
-       << ", Subtotal: " << venta.subtotal
-       << ", Descuento: " << venta.descuento;
-
+    << ", Subtotal: " << venta.subtotal
+    << ", Descuento: " << venta.descuento;
+    
     if (venta.factura != nullptr)
     {
         os << ", Facturada: Si";
@@ -303,7 +298,7 @@ ostream &operator<<(ostream &os, const Venta &venta)
     {
         os << ", Facturada: No";
     }
-
+    
     if (venta.productosConsumidos->isEmpty())
     {
         os << ", No tiene productos consumidos";
@@ -311,7 +306,7 @@ ostream &operator<<(ostream &os, const Venta &venta)
     else
     {
         os << ", Cantidad de Productos: " << venta.cantidadProductos << endl
-           << "Productos Consumidos: " << endl;
+        << "Productos Consumidos: " << endl;
         IIterator *it = venta.productosConsumidos->getIterator();
         while (it->hasCurrent())
         {
@@ -329,4 +324,9 @@ bool Venta::contieneProducto(Producto *producto)
     bool contiene = this->productosConsumidos->member(key);
     delete key; // Liberar memoria del key
     return contiene;
+}
+
+Venta::~Venta()
+{
+    delete productosConsumidos; // Delete the array of Producto pointers
 }

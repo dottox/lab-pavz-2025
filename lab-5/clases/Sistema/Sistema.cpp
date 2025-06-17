@@ -568,6 +568,7 @@ void Sistema::poblarSistema()
     cout << "Crear Asignar productos: ";
     venta1->agregarProducto(plato1, 2);
     venta1->agregarProducto(plato2, 1);
+    venta1->agregarProducto(menu1, 1);
     // venta2->agregarProducto(plato3, 1);
     venta3->agregarProducto(plato3, 3);
     // Crear mesas
