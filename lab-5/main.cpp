@@ -1240,7 +1240,7 @@ void quitarProductoVenta(ISistema *s)
 
         s->listarMesasConVentasEnCursoDeMozoSeleccionado();
 
-        cout << endl << "Ingrese el numero de la mesa involucrada en la venta ('0' para salir): " << endl;
+        cout << endl << "Ingrese el numero de la mesa involucrada en la venta ('0' para salir): ";
         cin >> codigoMesa;
         cin.ignore();
 
