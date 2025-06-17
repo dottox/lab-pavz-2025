@@ -485,17 +485,25 @@ void Sistema::poblarSistema()
     Plato *plato1 = new Plato(DtPlato((char *)"P001", "Ensalada Caesar", 150.0));
     Plato *plato2 = new Plato(DtPlato((char *)"P002", "Pizza Margherita", 200.0));
     Plato *plato3 = new Plato(DtPlato((char *)"P003", "Sopa de Tomate", 100.0));
+    Plato *plato4 = new Plato(DtPlato((char *)"P004", "Monter Energy MangoLoco", 120.0));
+    Plato *plato5 = new Plato(DtPlato((char *)"P005", "Hamburguesa Vampirica", 500.0));
     Menu *menu1 = new Menu(DtMenu((char *)"M001", "Menu del Dia"));
+    Menu *menu2 = new Menu(DtMenu((char *)"M002", "Menu Mounstroso"));
     cout << "ADD Platos: ";
     menu1->anadirPlato(plato1, 1);
     menu1->anadirPlato(plato2, 2);
+    menu2->anadirPlato(plato4, 2);
+    menu2->anadirPlato(plato5, 1);
 
     // Agregar productos al sistema
     cout << "ADD productos: ";
     this->productos->add(new String(plato1->getCodigo()), plato1);
     this->productos->add(new String(plato2->getCodigo()), plato2);
     this->productos->add(new String(plato3->getCodigo()), plato3);
+    this->productos->add(new String(plato4->getCodigo()), plato4);
+    this->productos->add(new String(plato5->getCodigo()), plato5);
     this->productos->add(new String(menu1->getCodigo()), menu1);
+    this->productos->add(new String(menu2->getCodigo()), menu2);
 
     // Crear cliente
     cout << "Creando clientes con casa" << endl;
@@ -1363,13 +1371,18 @@ void Sistema::cancelarBajaProducto(){
 }
 
 void Sistema::quitarProductoDelSistema(string codigo){
+    cout << "[DEBUG] Iniciando quitarProductoDelSistema para codigo: " << codigo << endl;
 
     try{
+        cout << "[DEBUG] Seleccionando producto..." << endl;
         seleccionarProducto(codigo);
+        cout << "[DEBUG] Producto seleccionado: " << this->productoSeleccionado->getCodigo() << endl;
     }catch(const invalid_argument& e){
+        cout << "[DEBUG] Error al seleccionar producto: " << e.what() << endl;
         throw invalid_argument("El producto no existe.");
     }
 
+    cout << "[DEBUG] Buscando ventas en curso con el producto..." << endl;
     IIterator* it = this->ventas->getIterator();
     IDictionary* ventasSinFacturaConProducto = new OrderedDictionary();
 
@@ -1378,6 +1391,7 @@ void Sistema::quitarProductoDelSistema(string codigo){
         IDictionary* productos = venta->getProductos();
 
         if(productos->member(new String(this->productoSeleccionado->getCodigo())) && !venta->estaFacturada()){
+            cout << "[DEBUG] Venta en curso encontrada con el producto. Codigo venta: " << venta->getCodigo() << endl;
             ventasSinFacturaConProducto->add(new Integer(venta->getCodigo()), venta);
         }        
 
@@ -1386,12 +1400,15 @@ void Sistema::quitarProductoDelSistema(string codigo){
     delete it;
     
     if(!ventasSinFacturaConProducto->isEmpty()){
+        cout << "[DEBUG] Hay ventas en curso con el producto. Abortando baja." << endl;
         throw invalid_argument("Hay ventas en curso con el producto seleccionado.");
     }
 
+    cout << "[DEBUG] No hay ventas en curso con el producto. Continuando..." << endl;
     ventasSinFacturaConProducto->clearDictionary();
     delete ventasSinFacturaConProducto;
 
+    cout << "[DEBUG] Quitando producto de ventas facturadas..." << endl;
     IIterator * borrarVenta = this->ventas->getIterator();
 
     while(borrarVenta->hasCurrent()){
@@ -1400,6 +1417,7 @@ void Sistema::quitarProductoDelSistema(string codigo){
         IKey* key = new String(this->productoSeleccionado->getCodigo());
 
         if(productos->member(key) && venta->estaFacturada()){
+            cout << "[DEBUG] Quitando producto de venta facturada. Codigo venta: " << venta->getCodigo() << endl;
             venta->quitarProductoVenta(this->productoSeleccionado->getCodigo());
         }
 
@@ -1410,28 +1428,41 @@ void Sistema::quitarProductoDelSistema(string codigo){
     Plato* plato = dynamic_cast<Plato*>(this->productoSeleccionado);
     if (plato != nullptr)
     {
+        cout << "[DEBUG] El producto es un Plato. Quitando de los menus..." << endl;
         IIterator* borrarPlato = this->productos->getIterator();
         while(borrarPlato->hasCurrent())
         {
+            Producto * productoActual = (Producto *)borrarPlato->getCurrent();
+            cout << "[DEBUG] Revisando producto: " << productoActual->getCodigo() << endl;
             Menu* menu = dynamic_cast<Menu*>(borrarPlato->getCurrent());
             if(menu != nullptr)
             {
-                menu->quitarPlato(plato);
+                cout << "[DEBUG] Producto es un Menu. Revisando si contiene el plato: " << plato->getCodigo() << endl;
+                if(menu->getPlatos()->member(plato))
+                {
+                    cout << "[DEBUG] Quitando plato del menu: " << menu->getCodigo() << endl;
+                    menu->quitarPlato(plato);
+                }
                 if(menu->getPlatos()->isEmpty())
                 {
-                    quitarProductoDelSistema(menu->getCodigo());
+                    string codigoMenu = menu->getCodigo();
+                    cout << "[DEBUG] Menu vacio tras quitar plato. Quitando menu: " << codigoMenu << endl;
+                    quitarProductoDelSistema(codigoMenu);
                 }
             }
             borrarPlato->next();
         }
         delete borrarPlato;
 
+        cout << "[DEBUG] Quitando plato del sistema: " << plato->getCodigo() << endl;
         this->productos->remove(new String(plato->getCodigo()));
     }else{
         Menu* menu = dynamic_cast<Menu*>(this->productoSeleccionado);
+        cout << "[DEBUG] El producto es un Menu. Quitando menu del sistema: " << menu->getCodigo() << endl;
         this->productos->remove(new String(menu->getCodigo()));
     }
 
+    cout << "[DEBUG] Fin quitarProductoDelSistema para codigo: " << codigo << endl;
 }
 
 Sistema::~Sistema()

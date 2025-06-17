@@ -186,6 +186,7 @@ void OrderedDictionary::setNull(IKey *k)
             parent->setLesser(L);
     }
 
+    delete current->getKey(); 
     current->setVal(NULL);
 }
 

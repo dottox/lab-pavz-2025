@@ -589,15 +589,11 @@ void agregarProductoAVenta(ISistema *s)
 void agregarEmpleado(ISistema *s)
 {
     cleanScreen();
-    string nombre, cargo, transporte;
-    int opcion, opcion2;
-    bool bandera = true;
-    while (bandera)
+    while (true)
     {
         cleanScreen();
-        string nombre, cargo;
+        string nombre, cargo, transporte, opcion3;
         int opcion, opcion2;
-
         cout << "Ingrese una opcion:" << endl;
         cout << "1. Agregar Mozo" << endl;
         cout << "2. Agregar Repartidor" << endl;
@@ -608,24 +604,22 @@ void agregarEmpleado(ISistema *s)
         switch (opcion)
         {
         case 0:
-            bandera = false;
-            break;
+            return; // Salir del bucle y volver al menu anterior
         case 1:
             cargo = "Mozo";
             break;
         case 2:
+            cleanScreen();
             cargo = "Repartidor";
             cout << "Seleccione el transporte del repartidor. ";
             s->listarTransportes();
-            cout << "Ingrese el numero del transporte: ";
-            cin >> opcion2;
-            cin.ignore();
-            while (cin.fail() || opcion2 < 1 || opcion2 > 4)
+            do
             {
-                limpiarCin();
-                cout << "Opcion invalida. Ingrese un número entre 1 y 4: ";
+                cout << "Ingrese el numero del transporte: ";
                 cin >> opcion2;
-            }
+                cin.ignore();
+            } while (cin.fail() || opcion2 < 1 || opcion2 > 4);
+
             s->seleccionarTransporte(opcion2 == 1   ? aPie
                                      : opcion2 == 2 ? Moto
                                      : opcion2 == 3 ? Bicicleta
@@ -637,44 +631,23 @@ void agregarEmpleado(ISistema *s)
             continue;
         }
 
-        if (bandera == false)
-            break;
+        cleanScreen();
 
-        cout << "Ingrese el nombre del empleado: ";
-        cin >> nombre;
-        cin.ignore();
-
-        bool nombreValido = true;
-        for (char c : nombre)
+        do
         {
-            if (!isalpha(c) && c != ' ')
-            {
-                nombreValido = false;
-                break;
-            }
-        }
+            cout << "Ingrese el nombre del empleado: ";
+            getline(cin, nombre);
+        } while (cin.fail() || nombre.empty() || nombre.find_first_not_of(' ') == string::npos || !soloLetras(nombre));
 
-        if (!nombreValido || nombre.empty() || nombre.find_first_not_of(' ') == string::npos)
+        do
         {
-            cout << "Nombre invalido. Intente nuevamente." << endl;
-            pause();
-            continue;
-        }
+            cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
+            cout << "1. Si" << endl;
+            cout << "2. No" << endl;
+            getline(cin, opcion3);
+        } while (cin.fail() || (opcion3 != "1" && opcion3 != "2"));
 
-        cout << "Desea agregar el empleado '" << nombre << "' con cargo '" << cargo << "'?" << endl;
-        cout << "1. Si" << endl;
-        cout << "2. No" << endl;
-        cin >> opcion;
-
-        if (cin.fail() || (opcion != 1 && opcion != 2))
-        {
-            limpiarCin();
-            cout << "Opcion invalida." << endl;
-            pause();
-            continue;
-        }
-
-        if (opcion == 2)
+        if (opcion3 == "2")
         {
             cout << "Operacion cancelada." << endl;
             s->cancelarAltaEmpleado();
@@ -1350,15 +1323,10 @@ void bajaProducto(ISistema *s)
         return;
     }
 
-    try
-    {
-        s->seleccionarProducto(codigoProducto);
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << "Error: " << e.what() << endl;
-    }
-    pause();
+    
+    s->seleccionarProducto(codigoProducto);
+
+    cleanScreen();
 
     s->mostrarProductoSeleccionado();
 
@@ -1384,11 +1352,11 @@ void bajaProducto(ISistema *s)
 
 int main()
 {
-    pause(); // Uncomment this line if you want to pause the program at the start
+    // pause(); // Uncomment this line if you want to pause the program at the start
 
     ISistema *s = Factory::getSistema();
 
-    pause(); // Uncomment this line if you want to pause the program after getting the system
+    // pause(); // Uncomment this line if you want to pause the program after getting the system
 
     bool mantener = true;
     int opcion;
