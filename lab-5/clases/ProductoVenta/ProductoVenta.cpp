@@ -66,4 +66,5 @@ ostream &operator<<(ostream &os, const ProductoVenta &producto)
 ProductoVenta::~ProductoVenta()
 {
     this->codigoProducto = nullptr;
+    delete[] this->codigoProducto; // Liberar memoria del codigo
 }
