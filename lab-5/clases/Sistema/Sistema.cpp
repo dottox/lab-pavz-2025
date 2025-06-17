@@ -541,12 +541,12 @@ void Sistema::poblarSistema()
 
     // Crear cliente
     cout << "Creando clientes con casa" << endl;
-    Cliente *cliente1 = new Cliente(DtCliente("Carlos", "123456789", DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2")));
-    Cliente *cliente2 = new Cliente(DtCliente("Ana", "987654321", DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4")));
-    Cliente *cliente3 = new Cliente(DtCliente("Luis", "555123456", DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera")));
-    Cliente *cliente4 = new Cliente(DtCliente("Sofia", "222333444", DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6")));
-    Cliente *cliente5 = new Cliente(DtCliente("Miguel", "888777666", DtDireccionCasa("Av. Italia", "2020", "Esq. Propios")));
-    Cliente *cliente6 = new Cliente(DtCliente("Lucia", "444555666", DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8")));
+    Cliente *cliente1 = new Cliente(DtCliente("Carlos", "123456789", new DtDireccionCasa("Av. Libertador", "1234", "Entre Calles 1 y 2")));
+    Cliente *cliente2 = new Cliente(DtCliente("Ana", "987654321", new DtDireccionCasa("Calle 8", "5678", "Entre Calles 3 y 4")));
+    Cliente *cliente3 = new Cliente(DtCliente("Luis", "555123456", new DtDireccionCasa("Boulevard Artigas", "4321", "Esq. Rivera")));
+    Cliente *cliente4 = new Cliente(DtCliente("Sofia", "222333444", new DtDireccionCasa("Camino Maldonado", "1010", "Entre Calles 5 y 6")));
+    Cliente *cliente5 = new Cliente(DtCliente("Miguel", "888777666", new DtDireccionCasa("Av. Italia", "2020", "Esq. Propios")));
+    Cliente *cliente6 = new Cliente(DtCliente("Lucia", "444555666", new DtDireccionCasa("Calle 25 de Mayo", "3030", "Entre Calles 7 y 8")));
     this->clientes->add(new String(cliente1->getTelefono().c_str()), cliente1);
     this->clientes->add(new String(cliente2->getTelefono().c_str()), cliente2);
     this->clientes->add(new String(cliente3->getTelefono().c_str()), cliente3);
@@ -555,12 +555,12 @@ void Sistema::poblarSistema()
     this->clientes->add(new String(cliente6->getTelefono().c_str()), cliente6);
 
     cout << "Creando clientes con dpto" << endl;
-    Cliente *cliente7 = new Cliente(DtCliente("Fernando", "111222333", DtDireccionApto("Av. Brasil", "1500", "", "Apto 101", "Edificio Sol")));
-    Cliente *cliente8 = new Cliente(DtCliente("Valeria", "444333222", DtDireccionApto("Calle 18 de Julio", "", "2500", "Apto 202", "Edificio Luna")));
-    Cliente *cliente9 = new Cliente(DtCliente("Martina", "777888999", DtDireccionApto("Rambla Francia", "", "3500", "Apto 303", "Edificio Mar")));
-    Cliente *cliente10 = new Cliente(DtCliente("Diego", "666555444", DtDireccionApto("Camino Carrasco", "", "4500", "Apto 404", "Edificio Río")));
-    Cliente *cliente11 = new Cliente(DtCliente("Paula", "999000111", DtDireccionApto("Av. Rivera", "5500", "", "Apto 505", "Edificio Parque")));
-    Cliente *cliente12 = new Cliente(DtCliente("Santiago", "333444555", DtDireccionApto("Calle Colonia", "Esto es un cruce jaj", "6500", "Apto 606", "Edificio Centro")));
+    Cliente *cliente7 = new Cliente(DtCliente("Fernando", "111222333", new DtDireccionApto("Av. Brasil", "1500", "", "Apto 101", "Edificio Sol")));
+    Cliente *cliente8 = new Cliente(DtCliente("Valeria", "444333222", new DtDireccionApto("Calle 18 de Julio", "", "2500", "Apto 202", "Edificio Luna")));
+    Cliente *cliente9 = new Cliente(DtCliente("Martina", "777888999", new DtDireccionApto("Rambla Francia", "", "3500", "Apto 303", "Edificio Mar")));
+    Cliente *cliente10 = new Cliente(DtCliente("Diego", "666555444", new DtDireccionApto("Camino Carrasco", "", "4500", "Apto 404", "Edificio Río")));
+    Cliente *cliente11 = new Cliente(DtCliente("Paula", "999000111", new DtDireccionApto("Av. Rivera", "5500", "", "Apto 505", "Edificio Parque")));
+    Cliente *cliente12 = new Cliente(DtCliente("Santiago", "333444555", new DtDireccionApto("Calle Colonia", "Esto es un cruce jaj", "6500", "Apto 606", "Edificio Centro")));
     this->clientes->add(new String(cliente7->getTelefono().c_str()), cliente7);
     this->clientes->add(new String(cliente8->getTelefono().c_str()), cliente8);
     this->clientes->add(new String(cliente9->getTelefono().c_str()), cliente9);
@@ -1202,9 +1202,8 @@ void Sistema::asignarMesasMozos(int cantMozos, int cantMesas)
     delete asignaciones;
 }
 
-void Sistema::agregarCliente(string nombre, string telefono, DtDireccion direccion)
+void Sistema::agregarCliente(string nombre, string telefono, DtDireccion* direccion)
 {
-    DtCliente clienteDatos = DtCliente(nombre, telefono, direccion);
 
     if (this->clienteTemporal != nullptr)
     {
@@ -1213,7 +1212,7 @@ void Sistema::agregarCliente(string nombre, string telefono, DtDireccion direcci
     }
 
     // Verificar si el cliente ya existe
-    IKey *key = new String(clienteDatos.getTelefono().c_str());
+    IKey *key = new String(telefono.c_str());
     if (this->clientes->member(key))
     {
         delete key; // Liberar memoria del key
@@ -1221,7 +1220,7 @@ void Sistema::agregarCliente(string nombre, string telefono, DtDireccion direcci
     }
     delete key;
 
-    Cliente *cliente = new Cliente(clienteDatos);
+    Cliente *cliente = new Cliente(DtCliente(nombre, telefono, direccion));
 
     this->clienteTemporal = cliente;
 }

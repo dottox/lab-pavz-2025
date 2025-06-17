@@ -273,7 +273,7 @@ public:
     void listarProductoTemporal();
     void listarTransportes();
     bool validarFecha(string);
-    void agregarCliente(string, string, DtDireccion);
+    void agregarCliente(string, string, DtDireccion*);
     void mostrarClienteTemporal();
     void darAltaCliente();
     void cancelarAltaCliente();

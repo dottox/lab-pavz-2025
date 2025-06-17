@@ -4,7 +4,7 @@ DtCliente::DtCliente()
 {
 }
 
-DtCliente::DtCliente(string nombre, string telefono, DtDireccion direccion)
+DtCliente::DtCliente(string nombre, string telefono, DtDireccion* direccion)
 {
     this->nombre = nombre;
     this->telefono = telefono;
@@ -21,7 +21,7 @@ string DtCliente::getTelefono()
     return this->telefono;
 }
 
-DtDireccion DtCliente::getDireccion()
+DtDireccion* DtCliente::getDireccion()
 {
     return this->direccion;
 }
