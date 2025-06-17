@@ -24,9 +24,6 @@ Sistema::Sistema()
 
     this->cantidadProductosSeleccionadosDomicilio = 0;
     this->subtotalVentaDomicilio = 0.0f;
-
-    // Poblar el sistema con datos de ejemplo
-    this->poblarSistema();
 }
 
 Sistema *Sistema::getInstance()
@@ -1366,10 +1363,15 @@ void Sistema::cancelarVentaDomicilio()
 
 DtFacturaDomicilio Sistema::generarFacturaDomicilio()
 {
+    cout << "[DEBUG] Nombre repartidor." << endl;
     string nombreRepartidor = this->repartidorSeleccionado->getNombre();
+    cout << "[DEBUG] Transporte." << endl;
     Transporte transporte = this->repartidorSeleccionado->getTransporte();
+    cout << "[DEBUG] generando venta domicilio." << endl;
     VentaDomicilio *ventaDomicilio = new VentaDomicilio(this->clienteSeleccionado->getDatos(), this->cantidadProductosSeleccionadosDomicilio, this->subtotalVentaDomicilio, this->productosSeleccionadosDomicilio);
+    cout << "[DEBUG] generando dt factura domicilio." << endl;
     DtFacturaDomicilio facturaDomicilio = ventaDomicilio->generarFacturaDomicilio(nombreRepartidor, transporte);
+    cout << "[DEBUG] Factura generada con exito." << endl;
     return facturaDomicilio;
 }
 
@@ -1489,71 +1491,94 @@ void Sistema::quitarProductoDelSistema(string codigo){
    
 }
 
+bool Sistema::existeProducto(string codigo)
+{
+    IKey *key = new String(codigo.c_str());
+    bool existe = this->productos->member(key);
+    delete key; // Liberar memoria del key
+    return existe;
+}
 Sistema::~Sistema()
 {
-    cout << "Destruyendo Sistema..." << endl;
-
     // Destruyendo IDictionarys
+    // Destruir empleados (elimina todos los objetos Mozo/Repartidor)
     if (empleados != nullptr) {
         delete empleados;
         empleados = nullptr;
     }
+
+    // Destruir clientes (elimina todos los objetos Cliente)
     if (clientes != nullptr) {
         delete clientes;
         clientes = nullptr;
     }
+
+    // Destruir ventas (elimina todos los objetos Venta)
     if (ventas != nullptr) {
         delete ventas;
         ventas = nullptr;
     }
+
+    // Destruir mesas (elimina todos los objetos Mesa)
     if (mesas != nullptr) {
         delete mesas;
         mesas = nullptr;
     }
+
+    // Destruir productos (elimina todos los objetos Producto)
     if (productos != nullptr) {
         delete productos;
         productos = nullptr;
     }
+
+    // Destruir productos seleccionados para domicilio (elimina todos los objetos ProductoVenta)
     if (productosSeleccionadosDomicilio != nullptr) {
         delete productosSeleccionadosDomicilio;
         productosSeleccionadosDomicilio = nullptr;
-    } 
+    }
 
-    // Destruyendo ICollection
+    // Destruir mesas elegidas (solo la colección, no las mesas)
     if (mesasElegidas != nullptr) {
         delete mesasElegidas;
         mesasElegidas = nullptr;
     }
 
-    // Destruyendo Punteros
+    // Destruir producto temporal creado (si existe)
     if (productoCreado != nullptr) {
         delete productoCreado;
         productoCreado = nullptr;
     }
+
     if (mozoSeleccionado != nullptr) {
         delete mozoSeleccionado;
         mozoSeleccionado = nullptr;
     }
+
     if (productoSeleccionado != nullptr) {
         delete productoSeleccionado;
         productoSeleccionado = nullptr;
     }
+
     if (mesaSeleccionada != nullptr) {
         delete mesaSeleccionada;
         mesaSeleccionada = nullptr;
     }
+
     if (ventaSeleccionada != nullptr) {
         delete ventaSeleccionada;
         ventaSeleccionada = nullptr;
     }
+
     if (clienteTemporal != nullptr) {
         delete clienteTemporal;
         clienteTemporal = nullptr;
     }
+
     if (clienteSeleccionado != nullptr) {
         delete clienteSeleccionado;
         clienteSeleccionado = nullptr;
     }
+
     if (repartidorSeleccionado != nullptr) {
         delete repartidorSeleccionado;
         repartidorSeleccionado = nullptr;
