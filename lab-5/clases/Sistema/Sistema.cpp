@@ -440,8 +440,6 @@ DtInforme Sistema::consultarFacturacion(DtFecha fecha)
     return DtInforme(totalIngresos, ventasFacturadas);
 };
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/*******  a9df266d-0516-4d10-9217-e269e4c02af0  *******/
 void Sistema::imprimirInforme(DtInforme informe)
 {
     cout << "Total Ingresos: " << informe.getTotalIngresos() << endl;
@@ -1074,7 +1072,6 @@ DtInfoProducto *Sistema::obtenerProducto(string codigo)
         it->next();
     }
     delete it; // Liberar memoria del iterador
-    cout << "Cantidad de ventas del producto " << codigo << ": " << cantidadVentas << endl;
     return new DtInfoProducto((DtProducto *)producto, cantidadVentas);
 }
 

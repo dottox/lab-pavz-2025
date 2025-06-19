@@ -19,5 +19,6 @@ IDictionary *DtInforme::getVentas()
 
 DtInforme::~DtInforme()
 {
-    delete this->ventas; // Liberar memoria del diccionario de ventas
+    ventas->clearDictionary();
+    delete ventas;
 }

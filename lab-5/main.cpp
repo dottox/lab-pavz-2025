@@ -470,9 +470,15 @@ void facturacionDia(ISistema *s)
 {
     cleanScreen();
     string fecha;
-    cout << "Ingrese la fecha para la facturacion del dia (DD/MM/AAAA): ";
+    cout << "Ingrese la fecha para la facturacion del dia (DD/MM/AAAA) ('0' para cancelar): ";
     cin >> fecha;
     cin.ignore();
+
+    if (fecha == "0")
+    {
+        cout << "Cancelando operacion." << endl;
+        return;
+    }
 
     while (fecha.size() != 10 || fecha[2] != '/' || fecha[5] != '/')
     {
@@ -922,6 +928,7 @@ void informacionProducto(ISistema *s)
 
         try
         {
+            cleanScreen();
             DtInfoProducto *producto = s->obtenerProducto(codigo);
             if (producto)
             {

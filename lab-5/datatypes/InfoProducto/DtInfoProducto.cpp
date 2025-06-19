@@ -4,7 +4,6 @@ DtInfoProducto::DtInfoProducto() {}
 
 DtInfoProducto::DtInfoProducto(DtProducto* producto, int cantidadVentas)
 {
-    cout << "Creando DtInfoProducto con producto: " << producto->getCodigo() << " y cantidad de ventas: " << cantidadVentas << endl;
     this->producto = producto;
     this->cantidadVentas = cantidadVentas;
 }
