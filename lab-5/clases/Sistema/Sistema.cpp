@@ -1342,15 +1342,21 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
 {
     IKey *key = new String(codigo.c_str());
 
+    cout << "DEBUG 1" << endl;
     Producto *producto = (Producto *)this->productos->find(key);
+    cout << "DEBUG 2" << endl;
+    
     if (producto == nullptr)
     {
         delete key;
         throw invalid_argument("El producto con el codigo proporcionado no existe.");
     }
+    delete key; // Liberar memoria del key
     
-    
-    ProductoVenta *productoVentaExistente = (ProductoVenta *)this->productosSeleccionadosDomicilio->find(key);
+    IKey* keyProducto = new String(producto->getCodigo());
+    cout << "DEBUG 3" << endl;
+    ProductoVenta *productoVentaExistente = (ProductoVenta *)this->productosSeleccionadosDomicilio->find(keyProducto);
+    cout << "DEBUG 4" << endl;
     
     if (productoVentaExistente != nullptr)
     {
@@ -1362,7 +1368,7 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
         ProductoVenta *productoVenta = new ProductoVenta(producto->getCodigo(), producto->getTipo(), producto->getDescripcion(), producto->getPrecio(), cantidad);
         this->productosSeleccionadosDomicilio->add(keyProductoNuevo, productoVenta);
     }
-    delete key; // Liberar memoria del key
+    delete keyProducto; // Liberar memoria del keyProducto
 
     this->subtotalVentaDomicilio += producto->getPrecio() * cantidad; // Actualizar el subtotal de la venta a domicilio
     this->cantidadProductosSeleccionadosDomicilio++;
@@ -1401,6 +1407,8 @@ void Sistema::cancelarVentaDomicilio()
     if (this->productosSeleccionadosDomicilio != nullptr)
     {
         this->productosSeleccionadosDomicilio->clearDictionary(); // Limpiar los productos seleccionados
+        delete this->productosSeleccionadosDomicilio; // Liberar memoria
+        this->productosSeleccionadosDomicilio = new OrderedDictionary(); // Reiniciar la coleccion de productos seleccionados
     }
     this->telefonoTemporal = ""; // Limpiar el telefono temporal
     this->repartidorSeleccionado = nullptr;            // Limpiar el repartidor seleccionado
