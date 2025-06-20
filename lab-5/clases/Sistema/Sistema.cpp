@@ -1342,9 +1342,7 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
 {
     IKey *key = new String(codigo.c_str());
 
-    cout << "DEBUG 1" << endl;
     Producto *producto = (Producto *)this->productos->find(key);
-    cout << "DEBUG 2" << endl;
     
     if (producto == nullptr)
     {
@@ -1354,9 +1352,7 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
     delete key; // Liberar memoria del key
     
     IKey* keyProducto = new String(producto->getCodigo());
-    cout << "DEBUG 3" << endl;
     ProductoVenta *productoVentaExistente = (ProductoVenta *)this->productosSeleccionadosDomicilio->find(keyProducto);
-    cout << "DEBUG 4" << endl;
     
     if (productoVentaExistente != nullptr)
     {
