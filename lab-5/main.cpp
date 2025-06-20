@@ -1353,8 +1353,6 @@ void ventaADomicilio(ISistema *s)
             {
                 cout << "La cantidad debe ser un numero positivo." << endl;
                 pause();
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 continue; // Volver a solicitar el codigo y la cantidad
             }
 
@@ -1364,21 +1362,13 @@ void ventaADomicilio(ISistema *s)
         
         s->listarRepartidores();
 
+
         int idRepartidor;
         while (true)
         {
             cout << endl << "Ingrese el ID del repartidor: ";
             cin >> idRepartidor;
             cin.ignore();
-
-            if (cin.fail())
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "ID invalido. Intente nuevamente." << endl;
-                pause();
-                continue;
-            }
 
             try
             {
@@ -1396,13 +1386,13 @@ void ventaADomicilio(ISistema *s)
         int confirmar;
         cout << "Desea confirmar la venta a domicilio? (1. Si, 0. No): ";
         cin >> confirmar;
+        cin.ignore();
         if (cin.fail() || (confirmar != 0 && confirmar != 1))
         {
             cout << "Opcion invalida. Debe ingresar 1 o 0." << endl;
             s->cancelarVentaDomicilio();
             return;
         }
-        cin.ignore();
 
         cleanScreen();
         if (confirmar == 1 && !cin.fail())
@@ -1410,6 +1400,7 @@ void ventaADomicilio(ISistema *s)
             cout << "Venta a domicilio iniciada exitosamente." << endl;
             s->imprimirFacturaDomicilio(s->generarFacturaDomicilio());
             pause();
+            s->cancelarVentaDomicilio();
         }
         else
         {

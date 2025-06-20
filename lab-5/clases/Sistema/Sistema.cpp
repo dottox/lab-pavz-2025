@@ -1348,12 +1348,10 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
         delete key;
         throw invalid_argument("El producto con el codigo proporcionado no existe.");
     }
-
-    delete key; // Liberar memoria del key
-
-    IKey *keyProducto = new String(producto->getCodigo());
-    ProductoVenta *productoVentaExistente = (ProductoVenta *)this->productosSeleccionadosDomicilio->find(keyProducto);
-
+    
+    
+    ProductoVenta *productoVentaExistente = (ProductoVenta *)this->productosSeleccionadosDomicilio->find(key);
+    
     if (productoVentaExistente != nullptr)
     {
         productoVentaExistente->setCantidad(productoVentaExistente->getCantidad() + cantidad);
@@ -1364,10 +1362,10 @@ void Sistema::seleccionarProductoDomicilio(string codigo, int cantidad)
         ProductoVenta *productoVenta = new ProductoVenta(producto->getCodigo(), producto->getTipo(), producto->getDescripcion(), producto->getPrecio(), cantidad);
         this->productosSeleccionadosDomicilio->add(keyProductoNuevo, productoVenta);
     }
+    delete key; // Liberar memoria del key
 
     this->subtotalVentaDomicilio += producto->getPrecio() * cantidad; // Actualizar el subtotal de la venta a domicilio
     this->cantidadProductosSeleccionadosDomicilio++;
-    delete keyProducto; // Liberar memoria del key del producto
 }
 
 void Sistema::listarRepartidores()

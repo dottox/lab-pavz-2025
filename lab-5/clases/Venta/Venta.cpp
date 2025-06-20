@@ -234,7 +234,6 @@ DtFacturaDomicilio Venta::generarFacturaDomicilio(string nombreRepartidor, Trans
     while (it->hasCurrent())
     {
         ProductoVenta *productoConsumido = (ProductoVenta *)it->getCurrent();
-        this->subtotal += productoConsumido->getPrecio() * productoConsumido->getCantidad();
         DtConsumido *consumido = new DtConsumido(
             productoConsumido->getCodigoProducto(),
             productoConsumido->getDescripcion(),
@@ -246,6 +245,7 @@ DtFacturaDomicilio Venta::generarFacturaDomicilio(string nombreRepartidor, Trans
     }
 
     delete it;
+
 
     DtFacturaDomicilio facturaDomicilio = DtFacturaDomicilio(
         DtFactura(
